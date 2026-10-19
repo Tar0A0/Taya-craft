@@ -1212,6 +1212,346 @@ body {
   .planner-summary { grid-template-columns: 58px 1fr; gap: .7rem; padding: .75rem; }
   .planner-score { width: 56px; height: 56px; border-width: 3px; font-size: 1rem; }
 }
+
+/* ═══════════════════════════════════════════
+   WOOD & CLEAN WHITE THEME
+   ═══════════════════════════════════════════ */
+:root {
+  --amber: #a66f45;
+  --amber-glow: rgba(166, 111, 69, 0.12);
+  --teal: #648879;
+  --teal-glow: rgba(100, 136, 121, 0.12);
+  --green: #718866;
+  --green-glow: rgba(113, 136, 102, 0.12);
+  --dark-bg: #f6f4ef;
+  --card-bg: #fffefa;
+  --card-border: #e6dfd4;
+  --surface: #f0ede6;
+  --text-primary: #38352f;
+  --text-secondary: #777168;
+}
+html { overflow-x: clip; }
+body {
+  background: #f8f7f3;
+  color: var(--text-primary);
+}
+::selection { background: rgba(166, 111, 69, 0.2); color: #38352f; }
+::-webkit-scrollbar-track { background: #f1eee7; }
+::-webkit-scrollbar-thumb:hover { background: #8e5b38; }
+.nav {
+  background: rgba(250, 249, 246, 0.92);
+  border-bottom-color: rgba(166, 111, 69, 0.18);
+  box-shadow: 0 4px 18px rgba(73, 59, 43, 0.04);
+}
+.nav.scrolled { background: rgba(250, 249, 246, 0.98); }
+.nav-logo { color: #8e5b38; }
+.nav-logo span { color: var(--teal); }
+.nav-links a { color: #716a60; }
+.nav-links a:hover { color: #8e5b38; }
+.nav-links a::after { background: var(--amber); }
+.hamburger span { background: var(--text-primary); }
+.section-tag { letter-spacing: 2.5px; }
+.section-title { color: #35332e; letter-spacing: 0.01em; }
+.section-subtitle { color: #746f66; }
+.pixel-corner::before, .pixel-corner::after { border-color: #b98b62; }
+.pixel-corner.teal::before, .pixel-corner.teal::after { border-color: #79988a; }
+.pixel-corner.green::before, .pixel-corner.green::after { border-color: #849773; }
+.hero-bg img { filter: brightness(0.88) saturate(0.68); }
+.hero-overlay {
+  background: linear-gradient(180deg, rgba(248,247,243,0.47) 0%, rgba(248,247,243,0.38) 44%, rgba(248,247,243,0.94) 100%);
+}
+.hero h1 { color: #38352f; text-shadow: 0 3px 24px rgba(255,255,255,0.5); }
+.hero h1 .highlight { color: #98633f; }
+.hero-chinese { color: #426856; font-weight: 800; }
+.hero-tagline { color: #403b34; font-weight: 500; text-shadow: 0 1px 4px rgba(255,255,255,0.72); }
+.hero-sub { color: #5e574e; font-weight: 500; }
+.hero-badge {
+  border-color: rgba(166,111,69,0.38);
+  background: rgba(255,254,250,0.76);
+  color: #895b3d;
+}
+.scanline-overlay { display: none; }
+.hero-cta {
+  background: linear-gradient(135deg, #b77b50, #95633f);
+  color: #fffdf9;
+  clip-path: none;
+  border-radius: 999px;
+  box-shadow: 0 8px 22px rgba(128,83,50,0.2);
+}
+.hero-cta:hover { box-shadow: 0 12px 28px rgba(128,83,50,0.28); }
+.scroll-indicator span { color: #6e685f; }
+.scroll-line { background: linear-gradient(to bottom, #a66f45, transparent); }
+.hud-corner { border-color: rgba(136,96,62,0.35); }
+.concept-intro .big-quote { color: var(--text-primary); }
+.concept-intro .big-quote em { color: #98633f; }
+.dlc-card, .pain-card, .step-box, .unlock-card, .benefit-card {
+  background: #fffefa;
+  border-color: #e6dfd4;
+  border-radius: 14px;
+  box-shadow: 0 8px 24px rgba(75,61,45,0.045);
+}
+.dlc-card { border-top-width: 3px; }
+.dlc-card:hover, .pain-card:hover, .benefit-card:hover {
+  box-shadow: 0 14px 32px rgba(75,61,45,0.1);
+}
+.dlc-card.amber:hover, .benefit-card:nth-child(1):hover { border-color: #b77b50; }
+.dlc-card.teal:hover, .benefit-card:nth-child(2):hover { border-color: #79988a; }
+.dlc-card.green:hover, .benefit-card:nth-child(3):hover { border-color: #849773; }
+.dlc-card .dlc-name, .pain-card h4, .benefit-card h4,
+.step-box h3, .unlock-card .unlock-name { color: var(--text-primary); }
+.dlc-card .dlc-age, .dlc-card .dlc-modules li,
+.pain-card p, .step-box p, .unlock-card .unlock-desc,
+.stat-label, .stat-desc, .circular-info p, .cycle-steps li,
+.vr-text p, .track-info p { color: var(--text-secondary); }
+.insight-bg {
+  background: linear-gradient(180deg, #f0eee8 0%, #f7f6f1 52%, #f8f7f3 100%);
+}
+.age-tab {
+  background: #f5f2ec;
+  border-color: #e3ddd2;
+  color: #746d63;
+}
+.age-tab.active { color: #403b34; background: #fffefa; border-bottom-color: #a66f45; }
+.age-tab:hover:not(.active) { color: #403b34; background: #fffefa; }
+.age-panel {
+  background: #fffefa;
+  border-color: #e3ddd2;
+  box-shadow: 0 10px 28px rgba(75,61,45,0.055);
+}
+.age-panel h4 { color: var(--text-primary); }
+.pain-points h5 { color: #b56b5e; }
+.pain-list li::before { color: #b56b5e; }
+.solution-points h5, .solution-list li::before { color: #648879; }
+.insight-quote { background: rgba(166,111,69,0.09); border-left-color: #a66f45; }
+.insight-quote p { color: #48433b; }
+.pain-card:hover { border-color: #c98b7b; }
+.core-problem {
+  background: linear-gradient(135deg, rgba(181,107,94,0.09), rgba(181,107,94,0.025));
+  border-color: rgba(181,107,94,0.27);
+  border-radius: 14px;
+}
+.core-problem p { color: #9d5d51; }
+.prototype-bg {
+  background: linear-gradient(180deg, #f0eee8 0%, #f6f4ef 50%, #f0eee8 100%);
+}
+.step-number { color: #98633f; }
+.step-box h3 { font-family: 'Noto Sans TC', sans-serif; letter-spacing: 0.04em; }
+.step-arrow { color: #a66f45; }
+.unlock-card::before { background: linear-gradient(135deg, rgba(166,111,69,0.1), transparent); }
+.unlock-card:hover { border-color: #b77b50; }
+.unlock-card h4, .unlock-tag { color: #98633f; }
+.unlock-tag {
+  background: rgba(166,111,69,0.08);
+  border-color: rgba(166,111,69,0.22);
+  border-radius: 999px;
+}
+.track-system img, .vr-feature img, .insight-image,
+.problem-image, .circular-economy img {
+  border-color: #e3ddd2;
+  border-radius: 16px;
+  box-shadow: 0 12px 30px rgba(75,61,45,0.08);
+}
+.tech-tag {
+  background: rgba(100,136,121,0.09);
+  border-color: rgba(100,136,121,0.25);
+  border-radius: 999px;
+  color: #527464;
+}
+.benefit-card:nth-child(1) .benefit-tag, .benefit-card:nth-child(1) .stat-number { color: #98633f; }
+.benefit-card:nth-child(2) .benefit-tag, .benefit-card:nth-child(2) .stat-number { color: #5f8172; }
+.benefit-card:nth-child(3) .benefit-tag, .benefit-card:nth-child(3) .stat-number { color: #718866; }
+.cycle-step-num { background: rgba(113,136,102,0.1); border-color: rgba(113,136,102,0.3); color: #657c59; }
+.footer {
+  background: linear-gradient(180deg, #f0eee8, #e9e5dc);
+  border-top-color: #ddd5c8;
+}
+.footer-brand h3 { color: #98633f; }
+.footer-competition h4, .footer-refs h4 { color: var(--text-primary); }
+.footer-brand p, .footer-competition p, .footer-refs li, .footer-bottom p { color: var(--text-secondary); }
+.footer-bottom { border-top-color: #d9d2c7; }
+.section-divider { background: linear-gradient(90deg, transparent, #ded8cd, transparent); }
+.nav-links.open {
+  background: rgba(250,249,246,0.98);
+  border-bottom-color: #e3ddd2;
+  box-shadow: 0 12px 24px rgba(75,61,45,0.08);
+}
+.game-lab, .module-panel, .module-card, .game-stat, .console-card {
+  color: var(--text-primary);
+  background: #fffefa;
+  border-color: #e6dfd4;
+  box-shadow: 0 8px 24px rgba(75,61,45,0.045);
+}
+.stage-option { background: #fffefa; border-color: #e6dfd4; color: var(--text-primary); }
+.stage-option.active {
+  border-color: #b77b50;
+  background: linear-gradient(135deg, rgba(166,111,69,0.11), #fffefa);
+}
+.module-icon { background: #f1eee7; }
+.module-card.owned { border-color: rgba(113,136,102,0.55); background: rgba(113,136,102,0.07); }
+.secondary-btn {
+  border-color: rgba(100,136,121,0.4);
+  background: rgba(100,136,121,0.08);
+  color: #527464;
+}
+.module-action { background: linear-gradient(135deg, #b77b50, #95633f); color: #fffdf9; }
+.module-card.owned .module-action { background: rgba(113,136,102,0.1); color: #657c59; border-color: rgba(113,136,102,0.3); }
+.game-stat span, .module-card p, .console-card p { color: var(--text-secondary); }
+.sim-game {
+  --sim-accent: #648879;
+  background: #fffefa;
+  border: 1px solid #ded6c9;
+  border-radius: 20px;
+  box-shadow: 0 20px 54px rgba(75,61,45,0.1);
+}
+.sim-topbar { background: #f4f1e9; border-bottom-color: #e6dfd4; }
+.sim-brand { color: #8e5b38; }
+.sim-controls { flex-wrap: wrap; }
+.sim-controls button, .sim-action {
+  background: #fffefa;
+  border-color: #ddd5c8;
+  color: #514b43;
+  border-radius: 10px;
+  box-shadow: 0 2px 5px rgba(75,61,45,0.04);
+}
+.sim-controls button:hover, .sim-action:hover {
+  border-color: #9a7657;
+  background: #faf7f1;
+  box-shadow: 0 5px 12px rgba(75,61,45,0.1);
+}
+.sim-controls .sim-play {
+  color: #fffefa;
+  background: #698778;
+  border-color: #698778;
+}
+.sim-controls .sim-play:hover { background: #567464; }
+.sim-hud { background: #e2dbcf; border-bottom-color: #e2dbcf; }
+.sim-hud-item { background: #fffefa; }
+.sim-hud-item span { color: #81796e; }
+.sim-hud-item strong { color: #403b34; }
+.sim-hud-item.money strong { color: #98633f; }
+.sim-sidebar { background: #f6f3ec; border-right-color: #e6dfd4; }
+.sim-portrait {
+  background: linear-gradient(145deg, #e8d6bd, #c9a986);
+  box-shadow: 0 6px 18px rgba(128,83,50,0.12);
+}
+.sim-profile input { color: #403b34; border-bottom-color: #d4cbbb; }
+.sim-needs-title, .sim-profile small, .sim-need-head span:last-child { color: #777168; }
+.sim-need-head { color: #514b43; }
+.sim-meter { background: #e7e2d8; }
+.sim-meter-fill { background: linear-gradient(90deg, #73927d, #a8c19d); }
+.sim-meter-fill.low { background: linear-gradient(90deg, #c67868, #d9a06f); }
+.sim-room {
+  --room-sky: #dcebf0;
+  border-color: #d6cbb9;
+  border-radius: 14px;
+  background: linear-gradient(180deg, var(--room-sky) 0%, #f4eee1 58%, #bd9873 58%, #a77c5a 100%);
+  box-shadow: inset 0 0 0 5px rgba(255,250,240,0.35), 0 8px 20px rgba(75,61,45,0.1);
+}
+.sim-room[data-period="night"] { --room-sky: #8f9cac; filter: saturate(0.78) brightness(0.9); }
+.sim-window {
+  border-color: #fbf8f0;
+  border-radius: 7px;
+  box-shadow: 0 5px 16px rgba(73,87,87,0.16);
+}
+.sim-rug { background: rgba(231,207,168,0.86); }
+.sim-thought {
+  background: #fffefa;
+  color: #514b43;
+  border: 1px solid rgba(177,157,128,0.35);
+  box-shadow: 0 5px 16px rgba(73,59,43,0.13);
+}
+.sim-thought::after { border-top-color: #fffefa; }
+.sim-room-caption {
+  left: .8rem; bottom: .7rem;
+  padding: .25rem .55rem;
+  border: 1px solid rgba(255,250,240,0.42);
+  border-radius: 999px;
+  background: rgba(75,58,41,0.35);
+  color: #fffaf1;
+  text-shadow: none;
+}
+.sim-avatar { transform-origin: center bottom; }
+.sim-action:disabled { box-shadow: none; }
+.sim-message { background: rgba(100,136,121,0.1); color: #496d5c; }
+.sim-message.error { color: #99594e; background: rgba(181,107,94,0.1); }
+.sim-hint { color: #8b8378; }
+.home-planner {
+  border-color: #e1d8ca;
+  border-radius: 18px;
+  background: linear-gradient(145deg, #f1eee7, #faf9f5);
+  box-shadow: 0 10px 28px rgba(75,61,45,0.05);
+}
+.planner-heading h3, .planner-box h4, .planner-summary h4 { color: #403b34; }
+.planner-heading p, .planner-summary p, .planner-score small { color: #777168; }
+.planner-form, .planner-box { border-color: #e4ddd2; background: rgba(255,254,250,0.85); }
+.planner-field label, .planner-priorities legend { color: #514b43; }
+.planner-field select {
+  border-color: #d8cfc1;
+  background: #fffefa;
+  color: #403b34;
+}
+.planner-check { border-color: #ddd5c8; color: #6f685e; }
+.planner-check:has(input:checked) {
+  border-color: #648879;
+  color: #496d5c;
+  background: rgba(100,136,121,0.09);
+}
+.planner-check input { accent-color: #648879; }
+.planner-submit {
+  background: linear-gradient(135deg, #759585, #5d7d6d);
+  color: #fffefa;
+  border-radius: 999px;
+}
+.planner-summary { border-color: rgba(100,136,121,0.25); background: rgba(100,136,121,0.07); }
+.planner-score { border-color: #648879; color: #527464; }
+.plan-map { border-color: #c3a783; background: #e8dfd0; }
+.plan-zone { border-color: rgba(128,107,80,0.14); background: #f7f0e4; color: #514b43; }
+.plan-zone:nth-child(2) { background: #e9eee5; }
+.plan-zone:nth-child(3) { background: #f1e7dc; }
+.plan-zone:nth-child(4) { background: #ece8f0; }
+.plan-zone small { color: #777168; }
+.plan-item { border-color: #e6dfd4; background: #fffefa; }
+.plan-item strong { color: #403b34; }
+.plan-item button {
+  border-color: rgba(100,136,121,0.35);
+  background: rgba(100,136,121,0.09);
+  color: #496d5c;
+}
+.planner-note { color: #827a6f; }
+.planner-empty { border-color: #d8cfc1; color: #777168; }
+.sim-game button:focus-visible, .planner-form :focus-visible,
+.nav a:focus-visible, .hero-cta:focus-visible {
+  outline: 3px solid rgba(166,111,69,0.48);
+  outline-offset: 3px;
+}
+.sim-game button, .planner-submit, .age-tab, .dlc-card, .pain-card,
+.step-box, .unlock-card, .benefit-card, .plan-zone, .plan-item {
+  transition-timing-function: cubic-bezier(.2,.75,.25,1);
+}
+.sim-game button:active, .planner-submit:active { transform: translateY(1px) scale(0.985); }
+.plan-zone { animation: roomZoneIn .35s ease both; }
+.plan-zone:nth-child(2) { animation-delay: .04s; }
+.plan-zone:nth-child(3) { animation-delay: .08s; }
+.plan-zone:nth-child(4) { animation-delay: .12s; }
+@keyframes roomZoneIn {
+  from { opacity: 0; transform: translateY(5px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@media (max-width: 768px) {
+  .nav-links { background: rgba(250,249,246,0.98); }
+}
+@media (max-width: 560px) {
+  .sim-controls { justify-content: flex-start; }
+  .sim-controls button { flex: 1 1 auto; }
+}
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    scroll-behavior: auto !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
 </style>
 </head>
 <body>
@@ -1519,6 +1859,7 @@ body {
       <div class="sim-controls">
         <button class="sim-play" id="simToggle" type="button" aria-pressed="false">▶ 開始生活</button>
         <button id="simSpeed" type="button" aria-label="切換遊戲速度">速度 1×</button>
+        <button id="simSound" type="button" aria-label="關閉音效" aria-pressed="true">♫ 音效開</button>
         <button id="simReset" type="button">重新開始</button>
       </div>
     </div>
@@ -1820,6 +2161,53 @@ function loadSimState() {
 
 let simState = loadSimState();
 const simMessage = document.getElementById('simMessage');
+const simSoundButton = document.getElementById('simSound');
+let simSoundEnabled = true;
+let simAudioContext;
+
+function updateSimSoundButton() {
+  simSoundButton.textContent = simSoundEnabled ? '♫ 音效開' : '♪ 音效關';
+  simSoundButton.setAttribute('aria-pressed', String(simSoundEnabled));
+  simSoundButton.setAttribute('aria-label', simSoundEnabled ? '關閉音效' : '開啟音效');
+}
+
+async function playSimSound(tone = 'tap') {
+  if (!simSoundEnabled) return;
+  const AudioContextConstructor = window.AudioContext || window.webkitAudioContext;
+  if (!AudioContextConstructor) {
+    console.warn('此瀏覽器不支援生活模擬器音效。');
+    simSoundEnabled = false;
+    simSoundButton.disabled = true;
+    simSoundButton.textContent = '音效不可用';
+    simSoundButton.setAttribute('aria-label', '此瀏覽器不支援音效');
+    simSoundButton.setAttribute('aria-pressed', 'false');
+    return;
+  }
+  try {
+    if (!simAudioContext) simAudioContext = new AudioContextConstructor();
+    if (simAudioContext.state === 'suspended') await simAudioContext.resume();
+    const frequencies = { tap: 520, action: 660, confirm: 740, error: 240 };
+    const oscillator = simAudioContext.createOscillator();
+    const volume = simAudioContext.createGain();
+    const now = simAudioContext.currentTime;
+    oscillator.type = 'sine';
+    oscillator.frequency.setValueAtTime(frequencies[tone] || frequencies.tap, now);
+    volume.gain.setValueAtTime(0.0001, now);
+    volume.gain.exponentialRampToValueAtTime(0.045, now + 0.012);
+    volume.gain.exponentialRampToValueAtTime(0.0001, now + 0.14);
+    oscillator.connect(volume);
+    volume.connect(simAudioContext.destination);
+    oscillator.start(now);
+    oscillator.stop(now + 0.15);
+  } catch (error) {
+    console.error('無法播放生活模擬器音效：', error);
+    simSoundEnabled = false;
+    simSoundButton.disabled = true;
+    simSoundButton.textContent = '音效不可用';
+    simSoundButton.setAttribute('aria-label', '音效播放失敗');
+    simSoundButton.setAttribute('aria-pressed', 'false');
+  }
+}
 
 function saveSimState() {
   try {
@@ -1911,6 +2299,7 @@ function advanceSimTime(minutes) {
 
 function performSimAction(action) {
   if (simState.money < action.cost) {
+    playSimSound('error');
     showSimMessage('家庭基金不足，先在家工作賺取一些基金吧。', true);
     return;
   }
@@ -1922,6 +2311,7 @@ function performSimAction(action) {
   simState.lastAction = action.text;
   saveSimState();
   renderSim();
+  playSimSound('action');
   showSimMessage(`${action.text}（時間經過 ${action.minutes} 分鐘）`);
 }
 
@@ -1993,6 +2383,7 @@ function renderPlannerFurniture() {
         return;
       }
       saveSimState();
+      playSimSound('confirm');
       renderHomePlan();
     });
     container.appendChild(row);
@@ -2060,6 +2451,7 @@ document.getElementById('plannerForm').addEventListener('submit', event => {
   );
   simState.planReady = true;
   saveSimState();
+  playSimSound('confirm');
   renderHomePlan();
   document.getElementById('plannerResults').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
 });
@@ -2082,13 +2474,20 @@ document.getElementById('simToggle').addEventListener('click', () => {
   simState.paused = !simState.paused;
   saveSimState();
   renderSim();
+  playSimSound('tap');
   showSimMessage(simState.paused ? '生活已暫停，需求不會隨時間下降。' : '生活開始了！記得留意角色的需求。');
 });
 document.getElementById('simSpeed').addEventListener('click', () => {
   simState.speed = simState.speed === 3 ? 1 : simState.speed + 1;
   saveSimState();
   renderSim();
+  playSimSound('tap');
   showSimMessage(`遊戲速度已切換為 ${simState.speed}×。`);
+});
+simSoundButton.addEventListener('click', () => {
+  simSoundEnabled = !simSoundEnabled;
+  updateSimSoundButton();
+  if (simSoundEnabled) playSimSound('confirm');
 });
 document.getElementById('simReset').addEventListener('click', () => {
   simState = {
@@ -2100,6 +2499,7 @@ document.getElementById('simReset').addEventListener('click', () => {
   restorePlannerForm();
   saveSimState();
   renderSim();
+  playSimSound('confirm');
   document.getElementById('plannerResults').innerHTML =
     '<div class="planner-empty">設定生活條件後，開始分析你的空間與家具配置。</div>';
   showSimMessage('新生活開始了！照顧好小日的一天吧。');
