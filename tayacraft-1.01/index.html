@@ -7878,14 +7878,12 @@ initSimActionsUI();
 renderSim();
 requestAnimationFrame(gameFrameLoop);
 
-// ─── 6. 3D STRUCTURAL CUTAWAY & EXPLODED MODEL VIEWER (#snap3DCanvas) ───
+// ─── 6. 3D STRUCTURAL CUTAWAY & EXPLODED MODEL VIEWER (#snap3DCanvas — GSAP 3 Driven) ───
 const snapCanvas = document.getElementById('snap3DCanvas');
 const snapCtx = snapCanvas ? snapCanvas.getContext('2d') : null;
 let snapCurrentMod = 'work';
 let snapExploded = false;
-let snapAnimProgress = 1; // 0 = exploded/separated, 1 = locked together
-let snapTargetProgress = 1;
-let snapYaw = 0.68;
+const snapAnimState = { progress: 1, yaw: 0.68 }; // Driven by GSAP tweens!
 let snapDragging = false;
 let snapDragStartX = 0;
 
@@ -7930,14 +7928,12 @@ const snapModulesData = {
 
 function renderSnap3DModel() {
   if (!snapCtx || !snapCanvas) return;
-  snapAnimProgress += (snapTargetProgress - snapAnimProgress) * 0.12;
-
   const W = snapCanvas.width;
   const H = snapCanvas.height;
   snapCtx.clearRect(0, 0, W, H);
 
   const iso = createIsoProjector(snapCtx, {
-    yaw: snapYaw,
+    yaw: snapAnimState.yaw,
     pitch: 0.52,
     scale: 68,
     cx: 2.2,
@@ -7946,55 +7942,52 @@ function renderSnap3DModel() {
     oy: H * 0.62
   });
 
-  // Separation gap between the 4 structural layers (0 when locked, 0.85 when exploded)
-  const gap = (1 - snapAnimProgress) * 0.95;
+  const gap = (1 - snapAnimState.progress) * 0.95;
 
-  // LAYER 01: 3D Structural Wall & Studs (y = 0.2)
+  // LAYER 01: 3D Structural Wall & Studs
   const yL1 = 0.2;
   iso.drawShadow(0.6, yL1, 3.2, 0.35 + gap * 2.6, 0.14);
-  iso.drawBox(0.6, yL1, 0, 3.2, 0.28, 2.5, '#dfd8cc'); // Wall gypsum board
-  // Internal steel/wood studs visible on top cutaway
+  iso.drawBox(0.6, yL1, 0, 3.2, 0.28, 2.5, '#dfd8cc');
   [0.85, 1.75, 2.65, 3.45].forEach(sx => {
     iso.drawBox(sx, yL1 + 0.04, 0, 0.14, 0.2, 2.55, '#94a3b8');
   });
 
   // LAYER 02: 3D 6063-T6 Aluminum Dual-Channel Rail + Power/Water Bus
   const yL2 = yL1 + 0.28 + gap * 0.85;
-  iso.drawBox(0.65, yL2, 0.95, 3.1, 0.22, 0.32, '#64748b'); // Main Aluminum Extrusion
-  iso.drawBox(0.65, yL2 + 0.06, 1.04, 3.1, 0.18, 0.08, '#38bdf8'); // Glowing 110V/24V Power Bus
-  iso.drawBox(0.65, yL2 + 0.06, 0.97, 3.1, 0.16, 0.05, '#f59e0b'); // Integrated Conduit
+  iso.drawBox(0.65, yL2, 0.95, 3.1, 0.22, 0.32, '#64748b');
+  iso.drawBox(0.65, yL2 + 0.06, 1.04, 3.1, 0.18, 0.08, '#38bdf8');
+  iso.drawBox(0.65, yL2 + 0.06, 0.97, 3.1, 0.16, 0.05, '#f59e0b');
 
   // LAYER 03: 3D Gravity Auto-Lock Cleat & Safety Pin
   const yL3 = yL2 + 0.22 + gap * 0.95;
-  iso.drawBox(1.1, yL3, 0.98, 0.38, 0.22, 0.28, '#d97706'); // Left Snap Cleat
-  iso.drawBox(2.85, yL3, 0.98, 0.38, 0.22, 0.28, '#d97706'); // Right Snap Cleat
+  iso.drawBox(1.1, yL3, 0.98, 0.38, 0.22, 0.28, '#d97706');
+  iso.drawBox(2.85, yL3, 0.98, 0.38, 0.22, 0.28, '#d97706');
 
   // LAYER 04: 3D DLC Furniture Module
   const yL4 = yL3 + 0.22 + gap * 1.1;
   if (snapCurrentMod === 'work') {
-    iso.drawBox(0.9, yL4, 0.96, 2.5, 1.15, 0.1, '#9c6639'); // Walnut Desk
-    iso.drawBox(1.6, yL4 + 0.2, 1.06, 1.1, 0.12, 0.62, '#1e293b'); // 3D Monitor
-    iso.drawBox(1.65, yL4 + 0.28, 1.12, 1.0, 0.04, 0.5, '#38bdf8'); // Glowing Screen
-    iso.drawBox(2.95, yL4 + 0.2, 1.06, 0.2, 0.2, 0.55, '#f59e0b'); // Desk Lamp
+    iso.drawBox(0.9, yL4, 0.96, 2.5, 1.15, 0.1, '#9c6639');
+    iso.drawBox(1.6, yL4 + 0.2, 1.06, 1.1, 0.12, 0.62, '#1e293b');
+    iso.drawBox(1.65, yL4 + 0.28, 1.12, 1.0, 0.04, 0.5, '#38bdf8');
+    iso.drawBox(2.95, yL4 + 0.2, 1.06, 0.2, 0.2, 0.55, '#f59e0b');
   } else if (snapCurrentMod === 'family') {
-    iso.drawBox(0.9, yL4, 0.05, 2.5, 1.35, 0.95, '#527464'); // Island Base
-    iso.drawBox(0.84, yL4 - 0.04, 1.0, 2.62, 1.45, 0.1, '#f8f5ee'); // Quartz Countertop
-    iso.drawBox(1.15, yL4 + 0.3, 1.03, 0.85, 0.65, 0.09, '#94a3b8'); // Sink
-    iso.drawBox(2.25, yL4 + 0.3, 1.03, 0.85, 0.65, 0.09, '#1e293b'); // IH Cooktop
-    iso.drawBox(2.45, yL4 + 0.45, 1.12, 0.42, 0.38, 0.26, '#e11d48'); // Pot
+    iso.drawBox(0.9, yL4, 0.05, 2.5, 1.35, 0.95, '#527464');
+    iso.drawBox(0.84, yL4 - 0.04, 1.0, 2.62, 1.45, 0.1, '#f8f5ee');
+    iso.drawBox(1.15, yL4 + 0.3, 1.03, 0.85, 0.65, 0.09, '#94a3b8');
+    iso.drawBox(2.25, yL4 + 0.3, 1.03, 0.85, 0.65, 0.09, '#1e293b');
+    iso.drawBox(2.45, yL4 + 0.45, 1.12, 0.42, 0.38, 0.26, '#e11d48');
   } else if (snapCurrentMod === 'storage') {
-    iso.drawBox(1.0, yL4, 0.05, 2.3, 0.85, 2.25, '#8c5e3c'); // Tall Cabinet
+    iso.drawBox(1.0, yL4, 0.05, 2.3, 0.85, 2.25, '#8c5e3c');
     iso.drawBox(1.1, yL4 + 0.8, 0.15, 1.0, 0.08, 1.0, '#f4efe4');
     iso.drawBox(2.2, yL4 + 0.8, 0.15, 1.0, 0.08, 1.0, '#f4efe4');
-    iso.drawBox(1.1, yL4 + 0.15, 1.25, 2.1, 0.72, 0.52, '#fde68a'); // Illuminated shelf
+    iso.drawBox(1.1, yL4 + 0.15, 1.25, 2.1, 0.72, 0.52, '#fde68a');
   } else if (snapCurrentMod === 'safe') {
-    iso.drawBox(0.85, yL4, 0.98, 2.6, 0.24, 0.14, '#d97706'); // Ergonomic Handrail Bar
-    iso.drawBox(0.95, yL4 + 0.04, 0.9, 2.4, 0.16, 0.07, '#84cc16'); // Nightlight LED Strip
-    iso.drawBox(1.0, yL4, 0.35, 0.2, 0.2, 0.65, '#94a3b8'); // Support Bracket
+    iso.drawBox(0.85, yL4, 0.98, 2.6, 0.24, 0.14, '#d97706');
+    iso.drawBox(0.95, yL4 + 0.04, 0.9, 2.4, 0.16, 0.07, '#84cc16');
+    iso.drawBox(1.0, yL4, 0.35, 0.2, 0.2, 0.65, '#94a3b8');
     iso.drawBox(3.1, yL4, 0.35, 0.2, 0.2, 0.65, '#94a3b8');
   }
 
-  // Draw dashed 3D alignment guide lines and layer callout tags when Exploded
   if (gap > 0.08) {
     snapCtx.save();
     snapCtx.setLineDash([5, 4]);
@@ -8011,7 +8004,6 @@ function renderSnap3DModel() {
     snapCtx.restore();
   }
 
-  // 3D Layer Callout Badges
   const callouts = [
     { label: 'L01 牆體骨幹', x: 0.6, y: yL1 + 0.1, z: 2.35, col: '#64748b' },
     { label: 'L02 鋁軌與匯流槽', x: 0.65, y: yL2 + 0.1, z: 1.45, col: '#0284c7' },
@@ -8021,7 +8013,7 @@ function renderSnap3DModel() {
   callouts.forEach(c => {
     const pt = iso.project(c.x, c.y, c.z);
     snapCtx.save();
-    snapCtx.font = '700 11px "Noto Sans TC", sans-serif';
+    snapCtx.font = '700 11px "Inter", "Noto Sans TC", sans-serif';
     const w = snapCtx.measureText(c.label).width + 12;
     snapCtx.fillStyle = c.col;
     snapCtx.beginPath();
@@ -8049,10 +8041,15 @@ function updateSnapSimUI(modKey, replay = false) {
   document.getElementById('snapDataValue').textContent = data.value;
   document.getElementById('snapModNote').textContent = data.note;
 
+  // GSAP content transition on the status panel & data cells
+  gsap.fromTo(
+    '.snap-status-panel > *, .snap-data-cell',
+    { y: 12, autoAlpha: 0 },
+    { y: 0, autoAlpha: 1, duration: 0.38, stagger: 0.04, ease: "power2.out", overwrite: "auto" }
+  );
+
   const badge = document.getElementById('snapStatusBadge');
   if (replay || !snapExploded) {
-    snapAnimProgress = 0.15;
-    snapTargetProgress = 1;
     snapExploded = false;
     document.getElementById('snapBtnLocked').classList.add('active');
     document.getElementById('snapBtnExploded').classList.remove('active');
@@ -8060,6 +8057,11 @@ function updateSnapSimUI(modKey, replay = false) {
       badge.className = 'snap-status-badge locked';
       badge.innerHTML = '<span>✓</span> 3D 模型狀態：卡扣已咬合鎖定';
     }
+    gsap.fromTo(
+      snapAnimState,
+      { progress: 0.1 },
+      { progress: 1, duration: 0.72, ease: "back.out(1.5)", overwrite: "auto" }
+    );
     playSimSound('snap');
   }
 }
@@ -8074,7 +8076,7 @@ document.querySelectorAll('.snap-sim-btn').forEach(btn => {
 
 document.getElementById('snapBtnLocked')?.addEventListener('click', () => {
   snapExploded = false;
-  snapTargetProgress = 1;
+  gsap.to(snapAnimState, { progress: 1, duration: 0.65, ease: "back.out(1.4)", overwrite: "auto" });
   document.getElementById('snapBtnLocked').classList.add('active');
   document.getElementById('snapBtnExploded').classList.remove('active');
   const badge = document.getElementById('snapStatusBadge');
@@ -8087,7 +8089,7 @@ document.getElementById('snapBtnLocked')?.addEventListener('click', () => {
 
 document.getElementById('snapBtnExploded')?.addEventListener('click', () => {
   snapExploded = true;
-  snapTargetProgress = 0;
+  gsap.to(snapAnimState, { progress: 0, duration: 0.65, ease: "power3.out", overwrite: "auto" });
   document.getElementById('snapBtnExploded').classList.add('active');
   document.getElementById('snapBtnLocked').classList.remove('active');
   const badge = document.getElementById('snapStatusBadge');
@@ -8103,6 +8105,7 @@ document.getElementById('snapBtnReplay')?.addEventListener('click', () => {
 });
 
 if (snapCanvas) {
+  const quickSnapYaw = gsap.quickTo(snapAnimState, 'yaw', { duration: 0.25, ease: "power2.out" });
   snapCanvas.addEventListener('pointerdown', e => {
     snapDragging = true;
     snapDragStartX = e.clientX;
@@ -8112,7 +8115,8 @@ if (snapCanvas) {
     if (!snapDragging) return;
     const dx = e.clientX - snapDragStartX;
     snapDragStartX = e.clientX;
-    snapYaw = Math.max(0.25, Math.min(1.25, snapYaw + dx * 0.007));
+    const nextYaw = gsap.utils.clamp(0.25, 1.25, snapAnimState.yaw + dx * 0.007);
+    quickSnapYaw(nextYaw);
   });
   const endDrag = () => { snapDragging = false; };
   snapCanvas.addEventListener('pointerup', endDrag);
@@ -8120,9 +8124,10 @@ if (snapCanvas) {
   requestAnimationFrame(renderSnap3DModel);
 }
 
-// ─── 7. 30-YEAR LIFECYCLE & ESG CALCULATOR (IDEA 3) ───
+// ─── 7. 30-YEAR LIFECYCLE & ESG CALCULATOR (GSAP Animated Numbers & Bars) ───
 let calcYears = 30;
 let calcArea = 25;
+const calcTweenVals = { tradTotal: 0, tayaTotal: 0, savings: 0 };
 
 function updateLifecycleCalc() {
   const renovations = Math.max(1, Math.round(calcYears / 10));
@@ -8140,10 +8145,21 @@ function updateLifecycleCalc() {
   const savings = tradTotal - tayaTotal;
   const savingsPct = Math.round((savings / tradTotal) * 100);
 
-  document.getElementById('calcTradCost').textContent = `NT$ ${tradTotal.toLocaleString()}`;
-  document.getElementById('calcTayaCost').textContent = `NT$ ${tayaTotal.toLocaleString()}`;
-  document.getElementById('calcSavingsCallout').textContent =
-    `⚡ 累計節省 NT$ ${savings.toLocaleString()}（降低約 ${savingsPct}% 長期改裝支出）`;
+  // GSAP number count-up tween for calculator totals
+  gsap.to(calcTweenVals, {
+    tradTotal,
+    tayaTotal,
+    savings,
+    duration: 0.65,
+    ease: "power2.out",
+    overwrite: "auto",
+    onUpdate: () => {
+      document.getElementById('calcTradCost').textContent = `NT$ ${Math.round(calcTweenVals.tradTotal).toLocaleString()}`;
+      document.getElementById('calcTayaCost').textContent = `NT$ ${Math.round(calcTweenVals.tayaTotal).toLocaleString()}`;
+      document.getElementById('calcSavingsCallout').textContent =
+        `⚡ 累計節省 NT$ ${Math.round(calcTweenVals.savings).toLocaleString()}（降低約 ${savingsPct}% 長期改裝支出）`;
+    }
+  });
 
   document.getElementById('calcTradRenovations').textContent = `${renovations} 次大規模拆除施工`;
   document.getElementById('calcTayaRenovations').textContent = `0 次打牆（${Math.max(1, renovations - 1)} 次模組快拆升級）`;
@@ -8158,7 +8174,9 @@ function updateLifecycleCalc() {
   document.getElementById('chartCostDiffLabel').textContent = `節省 ${savingsPct}% 長期預算`;
   document.getElementById('chartTradCostLabel').textContent = `${tradCostWan}萬`;
   document.getElementById('chartTayaCostLabel').textContent = `${tayaCostWan}萬`;
-  document.getElementById('barTayaCost').style.width = `${Math.max(15, Math.min(100, Math.round((tayaTotal / tradTotal) * 100)))}%`;
+
+  const barPct = gsap.utils.clamp(15, 100, Math.round((tayaTotal / tradTotal) * 100));
+  gsap.to('#barTayaCost', { width: barPct + '%', duration: 0.6, ease: "power3.out", overwrite: "auto" });
 
   const wasteDiff = (tradWaste - tayaWaste).toFixed(1);
   document.getElementById('chartWasteDiffLabel').textContent = `減廢 74%（減少 ${wasteDiff} 噸廢棄物）`;
@@ -8188,8 +8206,9 @@ document.querySelectorAll('#calcAreaBtns .calc-btn').forEach(btn => {
 
 updateLifecycleCalc();
 
-// ─── 8. GSAP PAGE ANIMATIONS & NAVIGATION ───
+// ─── 8. GSAP 3 PAGE & UI ANIMATIONS (gsap-core, gsap-timeline, gsap-scrolltrigger, gsap-performance) ───
 gsap.registerPlugin(ScrollTrigger);
+gsap.defaults({ ease: "power2.out", duration: 0.6 });
 
 const nav = document.getElementById('nav');
 const hamburger = document.getElementById('hamburger');
@@ -8211,48 +8230,78 @@ navLinks.querySelectorAll('a').forEach(a => {
   });
 });
 
-const heroTl = gsap.timeline({ defaults: { ease: "power3.out" } });
-heroTl
-  .from('.hero-badge', { y: 30, opacity: 0, duration: 0.8 }, 0.3)
-  .from('.hero h1', { y: 50, opacity: 0, duration: 1 }, 0.5)
-  .from('.hero-chinese', { y: 30, opacity: 0, duration: 0.8 }, 0.8)
-  .from('.hero-tagline', { y: 30, opacity: 0, duration: 0.8 }, 1)
-  .from('.hero-sub', { y: 20, opacity: 0, duration: 0.6 }, 1.2)
-  .from('.hero-cta', { y: 20, opacity: 0, duration: 0.6 }, 1.4)
-  .from('.scroll-indicator', { opacity: 0, duration: 1 }, 1.8)
-  .from('.hud-corner', { opacity: 0, scale: 0.5, duration: 0.6, stagger: 0.1 }, 1);
+// Use gsap.matchMedia() for responsive & prefers-reduced-motion accessibility
+const mm = gsap.matchMedia();
+mm.add(
+  {
+    canAnimate: "(prefers-reduced-motion: no-preference)",
+    reduceMotion: "(prefers-reduced-motion: reduce)"
+  },
+  context => {
+    const { canAnimate } = context.conditions;
+    if (!canAnimate) return;
 
-gsap.to('#heroBgImg', {
-  y: 100,
-  scale: 1.15,
-  ease: "none",
-  scrollTrigger: { trigger: '.hero', start: 'top top', end: 'bottom top', scrub: 1 }
-});
+    // 1. Hero Timeline with position parameters ("<0.15") instead of manual delays
+    const heroTl = gsap.timeline({ defaults: { ease: "power3.out", duration: 0.75 } });
+    heroTl
+      .from('.hero-badge', { y: 24, autoAlpha: 0 }, 0.15)
+      .from('.hero h1', { y: 36, autoAlpha: 0, duration: 0.9 }, "<0.15")
+      .from('.hero-chinese', { y: 24, autoAlpha: 0 }, "<0.18")
+      .from('.hero-tagline', { y: 24, autoAlpha: 0 }, "<0.15")
+      .from('.hero-sub', { y: 18, autoAlpha: 0 }, "<0.12")
+      .from('.hero-cta', { y: 18, autoAlpha: 0, scale: 0.96 }, "<0.12")
+      .from('.scroll-indicator', { autoAlpha: 0, duration: 0.9 }, "<0.2");
 
-gsap.utils.toArray('.section-tag').forEach(tag => {
-  gsap.from(tag, { x: -30, opacity: 0, duration: 0.6, scrollTrigger: { trigger: tag, start: 'top 85%' } });
-});
-gsap.utils.toArray('.section-title').forEach(title => {
-  gsap.from(title, { y: 40, opacity: 0, duration: 0.8, scrollTrigger: { trigger: title, start: 'top 85%' } });
-});
-gsap.utils.toArray('.section-subtitle').forEach(sub => {
-  gsap.from(sub, { y: 30, opacity: 0, duration: 0.7, delay: 0.15, scrollTrigger: { trigger: sub, start: 'top 85%' } });
-});
+    // 2. Parallax Hero Background Scrub
+    gsap.to('#heroBgImg', {
+      yPercent: 12,
+      scale: 1.12,
+      ease: "none",
+      scrollTrigger: { trigger: '.hero', start: 'top top', end: 'bottom top', scrub: 1 }
+    });
 
-gsap.utils.toArray('.dlc-card').forEach((card, i) => {
-  gsap.from(card, { y: 50, opacity: 0, duration: 0.6, delay: i * 0.12, scrollTrigger: { trigger: card, start: 'top 88%' } });
-});
+    // 3. Section Headers
+    gsap.utils.toArray('.section-tag, .section-title, .section-subtitle').forEach(el => {
+      gsap.from(el, {
+        y: 28,
+        autoAlpha: 0,
+        duration: 0.65,
+        scrollTrigger: { trigger: el, start: 'top 88%', toggleActions: 'play none none none' }
+      });
+    });
 
+    // 4. ScrollTrigger.batch() for all grid cards (high performance, zero layout thrashing)
+    ScrollTrigger.batch('.dlc-card, .pain-card, .arch-card, .benefit-card, .step-box', {
+      interval: 0.08,
+      batchMax: 4,
+      start: 'top 88%',
+      onEnter: batch => {
+        gsap.from(batch, {
+          y: 34,
+          autoAlpha: 0,
+          stagger: 0.1,
+          duration: 0.6,
+          ease: "power2.out",
+          overwrite: "auto"
+        });
+      }
+    });
+  }
+);
+
+// 5. DLC Progress Bars using GPU-friendly width/scaleX
 ScrollTrigger.create({
   trigger: '.dlc-grid',
-  start: 'top 80%',
+  start: 'top 82%',
+  once: true,
   onEnter: () => {
     document.querySelectorAll('.dlc-progress .bar').forEach(bar => {
-      bar.style.width = bar.dataset.width + '%';
+      gsap.to(bar, { width: (bar.dataset.width || 100) + '%', duration: 1.2, ease: "power3.out" });
     });
   }
 });
 
+// 6. Insight Age Tabs with GSAP transition
 const tabs = document.querySelectorAll('.age-tab');
 const panels = document.querySelectorAll('.age-panel');
 tabs.forEach(tab => {
@@ -8262,28 +8311,42 @@ tabs.forEach(tab => {
     tab.classList.add('active');
     const map = { young: 'panel-young', family: 'panel-family', senior: 'panel-senior' };
     const panel = document.getElementById(map[tab.dataset.tab]);
-    panel.classList.add('active');
-    gsap.from(panel, { y: 18, opacity: 0, duration: 0.35, ease: "power2.out" });
+    if (panel) {
+      panel.classList.add('active');
+      gsap.fromTo(
+        panel.children,
+        { y: 14, autoAlpha: 0 },
+        { y: 0, autoAlpha: 1, duration: 0.35, stagger: 0.05, ease: "power2.out", overwrite: "auto" }
+      );
+    }
   });
 });
 
-gsap.utils.toArray('.arch-card').forEach((card, i) => {
-  gsap.from(card, { y: 35, opacity: 0, duration: 0.55, delay: i * 0.1, scrollTrigger: { trigger: '.track-architecture', start: 'top 85%' } });
+// 7. Game Deck Tab Switching GSAP Micro-animations
+document.querySelectorAll('.sim-deck-tab').forEach(tab => {
+  tab.addEventListener('click', () => {
+    const activePanel = document.querySelector('.sim-deck-panel.active');
+    if (activePanel) {
+      gsap.fromTo(
+        activePanel.children,
+        { y: 10, autoAlpha: 0 },
+        { y: 0, autoAlpha: 1, duration: 0.28, stagger: 0.03, ease: "power2.out", overwrite: "auto" }
+      );
+    }
+  });
 });
 
-gsap.utils.toArray('.benefit-card').forEach((card, i) => {
-  gsap.from(card, { y: 50, opacity: 0, duration: 0.65, delay: i * 0.12, scrollTrigger: { trigger: card, start: 'top 88%' } });
-});
-
+// 8. Benefit Stat Counters with GSAP snap
 document.querySelectorAll('.counter').forEach(counter => {
   const target = parseInt(counter.dataset.target, 10);
   ScrollTrigger.create({
     trigger: counter,
-    start: 'top 85%',
+    start: 'top 86%',
+    once: true,
     onEnter: () => {
       gsap.to(counter, {
         innerText: target,
-        duration: 1.8,
+        duration: 1.6,
         ease: "power2.out",
         snap: { innerText: 1 },
         onUpdate: () => { counter.textContent = Math.round(parseFloat(counter.textContent)); }
@@ -8300,9 +8363,10 @@ window.addEventListener('scroll', () => {
     if (window.scrollY >= sec.offsetTop - 120) current = sec.getAttribute('id');
   });
   navAnchors.forEach(a => {
-    a.style.color = a.getAttribute('href') === '#' + current ? 'var(--amber)' : '';
+    a.style.color = a.getAttribute('href') === '#' + current ? 'var(--teal)' : '';
   });
 });
+
 </script>
 </body>
 </html>
