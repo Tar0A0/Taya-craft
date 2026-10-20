@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>TAYACRAFT — 3D 空間進化生活模擬器</title>
+<title>TAYACRAFT — 3D 空間裝潢與人生模擬遊戲</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700;900&family=Orbitron:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
@@ -2313,6 +2313,365 @@ body {
   color: #fffefa;
 }
 
+
+
+/* ═══════════════════════════════════════════
+   V4 DEEP RENOVATION & SIMULATION GAME UI
+   ═══════════════════════════════════════════ */
+.sim-deck-tabs {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+}
+.sim-deck-tab {
+  padding: 0.62rem 0.25rem;
+  font-size: 0.72rem;
+  letter-spacing: 0;
+}
+.sim-deck-panel {
+  max-height: 640px;
+  overflow-y: auto;
+}
+
+/* Environment Lighting & Blinds Sliders Bar */
+.sim-env-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 0.65rem;
+  padding: 0.5rem 0.85rem;
+  border-radius: 12px;
+  background: #fffefa;
+  border: 1px solid #e2d9c8;
+  font-size: 0.74rem;
+}
+.sim-env-group {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  color: #494239;
+  font-weight: 700;
+}
+.sim-env-group input[type="range"] {
+  width: 96px;
+  accent-color: #98633f;
+  cursor: pointer;
+}
+.sim-env-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+.sim-tool-pill {
+  padding: 0.34rem 0.68rem;
+  border-radius: 8px;
+  border: 1px solid #d4c9b5;
+  background: #f8f5ee;
+  color: #484138;
+  font: inherit;
+  font-size: 0.72rem;
+  font-weight: 800;
+  cursor: pointer;
+  transition: all 0.18s ease;
+}
+.sim-tool-pill:hover {
+  border-color: #98633f;
+  background: #f1ebe0;
+}
+.sim-tool-pill.active {
+  background: #527464;
+  border-color: #527464;
+  color: #fffefa;
+}
+.sim-tool-pill.quote {
+  background: linear-gradient(135deg, #98633f, #7d4f30);
+  border-color: #7d4f30;
+  color: #fffefa;
+}
+
+/* Scenario / Commission Card */
+.scenario-box {
+  padding: 0.7rem 0.8rem;
+  border-radius: 12px;
+  background: linear-gradient(135deg, rgba(152, 99, 63, 0.08), rgba(82, 116, 100, 0.08));
+  border: 1px solid #dfd5c5;
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+}
+.scenario-box label {
+  font-size: 0.72rem;
+  font-weight: 800;
+  color: #8e5b38;
+}
+.scenario-box select {
+  width: 100%;
+  padding: 0.42rem 0.55rem;
+  border-radius: 8px;
+  border: 1px solid #d5cab8;
+  background: #fffefa;
+  color: #38352f;
+  font: inherit;
+  font-size: 0.76rem;
+  font-weight: 700;
+}
+.scenario-goals {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  font-size: 0.71rem;
+  color: #5c554c;
+}
+.scenario-goals li.done {
+  color: #3f6240;
+  font-weight: 700;
+}
+
+/* Combo Tags Box */
+.combo-tags-box {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+  padding: 0.45rem 0.6rem;
+  border-radius: 10px;
+  background: #f7f4ec;
+  border: 1px dashed #d6cbb9;
+}
+.combo-chip {
+  font-size: 0.67rem;
+  font-weight: 800;
+  padding: 2px 8px;
+  border-radius: 999px;
+  background: #e9e3d6;
+  color: #787066;
+}
+.combo-chip.active {
+  background: linear-gradient(135deg, #d97706, #b45309);
+  color: #fffefa;
+  box-shadow: 0 2px 8px rgba(217, 119, 6, 0.28);
+}
+
+/* Hardscape & MEP Controls */
+.hardscape-section {
+  border: 1px solid #e6dfd2;
+  border-radius: 11px;
+  padding: 0.65rem 0.75rem;
+  background: #faf8f3;
+  display: flex;
+  flex-direction: column;
+  gap: 0.48rem;
+}
+.hardscape-section h4 {
+  font-size: 0.78rem;
+  color: #38352f;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.hardscape-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.38rem;
+}
+.hardscape-btn {
+  padding: 0.42rem 0.4rem;
+  border-radius: 7px;
+  border: 1px solid #dcd3c2;
+  background: #fffefa;
+  color: #4b453c;
+  font: inherit;
+  font-size: 0.69rem;
+  font-weight: 700;
+  cursor: pointer;
+  text-align: center;
+  transition: all 0.16s ease;
+}
+.hardscape-btn:hover {
+  border-color: #98633f;
+}
+.hardscape-btn.active {
+  background: #527464;
+  border-color: #527464;
+  color: #fffefa;
+}
+.mep-status-bar {
+  padding: 0.45rem 0.6rem;
+  border-radius: 8px;
+  font-size: 0.71rem;
+  font-weight: 700;
+  background: rgba(82, 116, 100, 0.1);
+  color: #3f5d4e;
+  border: 1px solid rgba(82, 116, 100, 0.25);
+}
+.mep-status-bar.warn {
+  background: rgba(217, 119, 6, 0.12);
+  color: #92400e;
+  border-color: rgba(217, 119, 6, 0.35);
+}
+
+/* Shop Channels & Categories */
+.shop-channel-tabs {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.35rem;
+}
+.shop-channel-btn {
+  padding: 0.45rem 0.35rem;
+  border-radius: 8px;
+  border: 1px solid #dcd3c2;
+  background: #faf7f0;
+  color: #5a5349;
+  font: inherit;
+  font-size: 0.71rem;
+  font-weight: 800;
+  cursor: pointer;
+}
+.shop-channel-btn.active {
+  background: #98633f;
+  border-color: #98633f;
+  color: #fffefa;
+}
+.shop-cat-pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.3rem;
+}
+.shop-cat-pill {
+  padding: 0.26rem 0.55rem;
+  border-radius: 999px;
+  border: 1px solid #ded5c5;
+  background: #fffefa;
+  color: #635c52;
+  font: inherit;
+  font-size: 0.68rem;
+  font-weight: 700;
+  cursor: pointer;
+}
+.shop-cat-pill.active {
+  background: #527464;
+  border-color: #527464;
+  color: #fffefa;
+}
+.shop-items-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 0.42rem;
+  max-height: 310px;
+  overflow-y: auto;
+  padding-right: 2px;
+}
+.shop-item-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  padding: 0.48rem 0.6rem;
+  border-radius: 9px;
+  border: 1px solid #e4ddd0;
+  background: #fffefa;
+  font-size: 0.72rem;
+}
+.shop-item-card.owned {
+  border-color: #527464;
+  background: rgba(82, 116, 100, 0.07);
+}
+.shop-item-info strong {
+  display: block;
+  font-size: 0.74rem;
+  color: #38352f;
+}
+.shop-item-info small {
+  display: block;
+  font-size: 0.65rem;
+  color: #756e64;
+}
+.shop-item-actions {
+  display: flex;
+  gap: 0.3rem;
+  align-items: center;
+}
+.shop-buy-btn {
+  padding: 0.32rem 0.58rem;
+  border-radius: 7px;
+  border: 1px solid #527464;
+  background: #527464;
+  color: #fffefa;
+  font: inherit;
+  font-size: 0.68rem;
+  font-weight: 700;
+  cursor: pointer;
+  white-space: nowrap;
+}
+.shop-buy-btn.owned {
+  background: #f3efe6;
+  border-color: #c7bba6;
+  color: #5a5248;
+}
+.shop-buy-btn.locked {
+  background: #e5e0d5;
+  border-color: #c5bdb0;
+  color: #7d756b;
+  cursor: not-allowed;
+}
+
+/* Quote & Screenshot Export Modal */
+.sim-quote-modal {
+  position: fixed;
+  z-index: 2000;
+  inset: 0;
+  background: rgba(24, 19, 14, 0.65);
+  backdrop-filter: blur(5px);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 1.2rem;
+}
+.sim-quote-modal.open {
+  display: flex;
+}
+.sim-quote-dialog {
+  max-width: 680px;
+  width: 100%;
+  max-height: 88vh;
+  overflow-y: auto;
+  background: #fffefa;
+  border: 2px solid #98633f;
+  border-radius: 20px;
+  padding: 1.5rem;
+  box-shadow: 0 24px 60px rgba(20, 14, 8, 0.42);
+}
+.sim-quote-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid #e6dfd2;
+  padding-bottom: 0.75rem;
+  margin-bottom: 1rem;
+}
+.sim-quote-preview {
+  width: 100%;
+  border-radius: 12px;
+  border: 1px solid #dcd3c2;
+  margin-bottom: 1rem;
+}
+.sim-quote-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.78rem;
+  margin-bottom: 1rem;
+}
+.sim-quote-table th, .sim-quote-table td {
+  padding: 0.45rem 0.6rem;
+  border-bottom: 1px solid #ece6da;
+  text-align: left;
+}
+.sim-quote-table th {
+  background: #f5f1e8;
+  color: #5c5449;
+  font-weight: 800;
+}
+
 </style>
 </head>
 <body>
@@ -2719,9 +3078,9 @@ body {
 
 <!-- ═══════════════════ LIFE SIMULATOR 3D GAME ═══════════════════ -->
 <section class="section" id="game">
-  <span class="section-tag amber">TAYA LIFE 3D · 空間進化生活模擬遊戲</span>
+  <span class="section-tag amber">TAYA LIFE 3D · 深度空間裝潢＆生活模擬遊戲</span>
   <h2 class="section-title">住進你的 3D 居家故事，親手升級每一段人生</h2>
-  <p class="section-subtitle">直接點擊 3D 家具自動尋路互動，或在「建造模式」按住牆上 3D 模組沿軌道自由滑移位置！開啟「🔍 軌道 X 光透視」與「⚡ 換裝對比體驗」，見證免打牆的空間進化。</p>
+  <p class="section-subtitle">支援「畸零格局／輕隔間／材質分區／水電插座」、「20+ 款 3D 主題家具（電競RGB、公仔展示櫃、掃地機器人、貓跳台）」、「二手拍賣＆盲盒」、「動線測試＆空間 Combo 加成」與「估價單匯出」！</p>
 
   <div class="sim-game" aria-label="TAYACRAFT 3D 生活與空間建造模擬遊戲">
     <!-- 頂部控制列 -->
@@ -2730,7 +3089,7 @@ body {
         <span class="sim-brand-badge">3D SIM</span>
         <div>
           TAYA LIFE 3D
-          <small>MODULAR HOME EVOLUTION GAME</small>
+          <small>MODULAR RENOVATION &amp; LIFE GAME</small>
         </div>
       </div>
       <div class="sim-controls">
@@ -2748,7 +3107,7 @@ body {
         <span class="sim-stage-icon">🌱</span>
         <div>
           <strong>STAGE 1 · 25~40歲 建立生活</strong>
-          <small>小宅高效辦公與朋友聚會 · 推薦 WORK DLC</small>
+          <small>小宅高效辦公與電競娛樂 · 推薦 WORK DLC</small>
         </div>
       </button>
       <button type="button" class="sim-stage-btn" data-stage="family" id="stageBtnFamily">
@@ -2767,57 +3126,74 @@ body {
       </button>
     </div>
 
-    <!-- HUD 狀態列 (含 ESG 減碳積分) -->
+    <!-- HUD 狀態列 -->
     <div class="sim-hud">
       <div class="sim-hud-item"><span>遊戲日程</span><strong id="simDay">第 1 天</strong></div>
-      <div class="sim-hud-item"><span>現在時間</span><strong id="simClock">08:00 ☀️</strong></div>
-      <div class="sim-hud-item money"><span>家庭基金</span><strong id="simMoney">§ 420</strong></div>
-      <div class="sim-hud-item score"><span>空間適配度</span><strong id="simSpaceScore">78 分</strong></div>
+      <div class="sim-hud-item"><span>現在時間</span><strong id="simClock">08:30 ☀️</strong></div>
+      <div class="sim-hud-item money"><span>可用預算</span><strong id="simMoney">§ 650</strong></div>
+      <div class="sim-hud-item score"><span>空間評分</span><strong id="simSpaceScore">78 分</strong></div>
       <div class="sim-hud-item esg"><span>ESG 減碳累積</span><strong id="simEsgScore">🌱 30 kg</strong></div>
       <div class="sim-hud-item"><span>居民心情</span><strong id="simMood">愉快 ✨</strong></div>
     </div>
 
-    <!-- 遊戲主體：左 3D 房間視窗 + 右 整合控制艙 -->
+    <!-- 遊戲主體：左 3D 房間視窗 + 右 四分頁整合控制艙 -->
     <div class="sim-layout">
       <div class="sim-viewport-col">
         <!-- 想法 E：傳統敲牆裝修 vs TAYACRAFT 軌道快拆 同場對照列 -->
         <div class="sim-compare-bar">
-          <span class="sim-compare-label">⚡ 換裝模式實測對照：</span>
+          <span class="sim-compare-label">⚡ 換裝實測＆動線診斷：</span>
           <div class="sim-compare-actions">
-            <button type="button" class="sim-cmp-btn trad" id="btnDemoTradRenov">💥 模擬「傳統打牆裝修」(粉塵/噪音/耗時30天)</button>
-            <button type="button" class="sim-cmp-btn taya" id="btnDemoTayaSnap">⚡ 模擬「TAYA 軌道快拆」(零粉塵/30分鐘鎖定)</button>
+            <button type="button" class="sim-cmp-btn trad" id="btnDemoTradRenov">💥 傳統打牆裝修 (粉塵/清運費)</button>
+            <button type="button" class="sim-cmp-btn taya" id="btnDemoTayaSnap">⚡ TAYA 軌道快拆 (零粉塵鎖定)</button>
+            <button type="button" class="sim-tool-pill" id="btnPathCheck" title="派小人從玄關大門走往床、書桌、衛浴，檢測動線是否卡死">🚶 動線檢查</button>
+            <button type="button" class="sim-tool-pill quote" id="btnExportQuote" title="切換視角拍照並生成裝潢購物車估價單">📸 截圖＆估價單</button>
+          </div>
+        </div>
+
+        <!-- 日夜燈光滑桿 ＆ 百葉窗進光量滑桿 -->
+        <div class="sim-env-bar">
+          <div class="sim-env-group">
+            <label for="simTimeSlider">🌅 光影時刻 (<span id="simTimePeriodLabel">☀️ 白天</span>)</label>
+            <input type="range" id="simTimeSlider" min="0" max="1410" step="30" value="510" title="拖曳切換白天、黃昏與深夜；深夜時 RGB 主機、展示櫃與霓虹燈條會真正發光！" />
+          </div>
+          <div class="sim-env-group">
+            <label for="simBlindsSlider">🪟 百葉窗開合 (<span id="simBlindsValLabel">80%</span>)</label>
+            <input type="range" id="simBlindsSlider" min="0" max="100" step="10" value="80" title="調整落地百葉窗角度，改變陽光進光量與光影條紋" />
+          </div>
+          <div class="sim-env-actions">
+            <button type="button" class="sim-tool-pill" id="simCamBlueprint" title="切換 3D 等距視角 / 2D 平面藍圖視角">🗺️ 2D 藍圖視角</button>
           </div>
         </div>
 
         <div class="sim-room" id="simRoom" data-period="day" aria-label="3D 互動居家空間">
-          <canvas class="sim-room-canvas" id="simRoomCanvas" width="880" height="550" tabindex="0" role="application" aria-label="3D 居家模擬地圖；點擊 3D 家具可自動走過去互動，按住牆上 DLC 模組可沿軌道左右拖曳滑動位置"></canvas>
+          <canvas class="sim-room-canvas" id="simRoomCanvas" width="880" height="550" tabindex="0" role="application" aria-label="3D 居家模擬地圖；點擊家具互動、按住牆上 DLC 沿軌道滑動、按住桌上小物可自由微調座標與堆疊"></canvas>
 
           <div class="sim-room-hud-top">
             <div class="sim-room-badges">
-              <span class="sim-room-caption" id="simRoomCaption">18 坪 · 25~40歲 建立生活階段</span>
+              <span class="sim-room-caption" id="simRoomCaption">18 坪 · 標準矩形格局</span>
               <div class="sim-buff-tags" id="simBuffTags"></div>
             </div>
             <div class="sim-cam-controls">
               <button type="button" class="sim-cam-btn" id="simCamXray" title="透視牆內預埋鋁合金軌道、水電匯流槽與自鎖卡扣">🔍 軌道 X 光透視</button>
               <button type="button" class="sim-cam-btn" id="simCamRotate" title="切換 4 向視角（亦可在空白處按住滑鼠拖曳旋轉）">🎥 旋轉視角</button>
-              <button type="button" class="sim-cam-btn" id="simCamTime" title="切換日夜光影">🌓 日夜切換</button>
+              <button type="button" class="sim-cam-btn" id="simCamTime" title="快速切換白天／黃昏／深夜燈光秀">🌓 日夜燈光</button>
             </div>
           </div>
 
           <div class="sim-room-message" id="simRoomMessage" role="status" aria-live="polite"></div>
 
-          <!-- 想法 C：人生轉折突發事件彈窗 -->
+          <!-- 人生轉折突發事件彈窗 -->
           <div class="sim-event-modal" id="simEventModal" role="dialog" aria-modal="true" aria-labelledby="simEventTitle">
             <div class="sim-event-card">
               <span class="sim-event-kicker" id="simEventKicker">⚡ 人生階段突發事件 · LIFE EVENT</span>
               <h4 id="simEventTitle">遠距工作專案暴增！</h4>
-              <p id="simEventDesc">臨時在狹小的餐桌上彎腰用筆電加班，導致腰痠背痛、效率大減！是否立即在牆面軌道扣入「WORK DLC 壁掛折疊工作桌」？</p>
+              <p id="simEventDesc">臨時在狹小的餐桌上彎腰用筆電加班，導致腰痠背痛、效率大減！</p>
               <div class="sim-event-choices" id="simEventChoices"></div>
             </div>
           </div>
 
           <div class="sim-room-hud-bottom">
-            <span class="sim-interaction-prompt" id="simInteractionPrompt">💡 點擊 3D 家具自動走過去互動 · 按住牆上 DLC 模組可沿軌道滑動移位</span>
+            <span class="sim-interaction-prompt" id="simInteractionPrompt">💡 點擊 3D 家具互動 · 拖曳牆上 DLC 沿軌道滑移 · 拖曳桌上小物可自由微調堆疊</span>
           </div>
         </div>
 
@@ -2828,22 +3204,49 @@ body {
             <button type="button" data-direction="down" aria-label="向下">▼</button>
             <button type="button" data-direction="right" aria-label="向右">▶</button>
           </div>
-          <span class="sim-controls-hint">🖱️ 點擊 3D 家具互動 · ↔️ 拖曳牆上 DLC 沿軌道滑動 · 🎥 空白處拖曳旋轉視角</span>
+          <span class="sim-controls-hint">🖱️ 點擊家具互動 · ↔️ 拖曳 DLC 滑軌移位 · 📦 拖曳桌上小物自由堆疊</span>
           <button class="sim-interact-btn" id="simInteract" type="button">⚡ E 互動</button>
         </div>
 
-        <div class="sim-message" id="simMessage" role="status" aria-live="polite">歡迎來到 TAYA LIFE 3D！點擊房間內的 3D 家具或右側按鈕開始今天的生活。</div>
+        <div class="sim-message" id="simMessage" role="status" aria-live="polite">歡迎來到 TAYA LIFE 3D！可在右側切換「關卡劇本」、「硬裝材質與輕隔間」或至「主題商城＆二手盲盒」添購裝備。</div>
       </div>
 
-      <!-- 右側：雙分頁整合控制艙 -->
+      <!-- 右側：四分頁深度控制艙 -->
       <aside class="sim-deck">
         <div class="sim-deck-tabs" role="tablist">
-          <button type="button" class="sim-deck-tab active" data-deck-tab="live" id="tabBtnLive">🕹️ 日常與委託 (LIVE)</button>
-          <button type="button" class="sim-deck-tab" data-deck-tab="build" id="tabBtnBuild">🔨 軌道工坊＆循環 (BUILD)</button>
+          <button type="button" class="sim-deck-tab active" data-deck-tab="live" id="tabBtnLive">🕹️ 生活＆劇本</button>
+          <button type="button" class="sim-deck-tab" data-deck-tab="hardscape" id="tabBtnHardscape">🧱 硬裝＆水電</button>
+          <button type="button" class="sim-deck-tab" data-deck-tab="shop" id="tabBtnShop">🛋️ 商城＆盲盒</button>
+          <button type="button" class="sim-deck-tab" data-deck-tab="build" id="tabBtnBuild">⚡ 軌道＆循環</button>
         </div>
 
-        <!-- 分頁 1：日常與委託 -->
+        <!-- 分頁 1：生活互動 ＆ 挑戰劇本關卡 -->
         <div class="sim-deck-panel active" id="deckPanelLive">
+          <!-- 劇本與挑戰委託選擇器 -->
+          <div class="scenario-box">
+            <div style="display:flex; justify-content:space-between; align-items:center;">
+              <label for="scenarioSelect">🎬 挑戰劇本／委託模式</label>
+              <span id="scenarioStatusBadge" style="font-size:0.68rem; font-weight:800; color:#527464;">進行中</span>
+            </div>
+            <select id="scenarioSelect">
+              <option value="sandbox">🏖️ 自由沙盒模式 (無限制自由設計)</option>
+              <option value="micro5">📦 關卡1：極限 5 坪套房改造 (預算§380 · 承重柱限制)</option>
+              <option value="streamer">🎙️ 關卡2：委託人A 硬核實況主 (需極致電競角+吸音牆)</option>
+              <option value="catlover">🐱 關卡3：委託人B 收藏家與貓奴 (展示櫃+貓跳台+全木地板)</option>
+              <option value="moving">🚚 關卡4：無痛搬家挑戰 (鎖定舊家具不可賣 · 評分達88)</option>
+            </select>
+            <ul class="scenario-goals" id="scenarioGoalsList"></ul>
+          </div>
+
+          <!-- 空間 Combo 加成即時標籤 -->
+          <div>
+            <div class="sim-actions-head" style="margin-bottom:0.25rem;">
+              <h4>✨ 空間加乘 (Room Combos)</h4>
+              <span id="comboBonusSummary" style="color:#d97706; font-weight:800;">目前加成 +0 分</span>
+            </div>
+            <div class="combo-tags-box" id="comboTagsBox"></div>
+          </div>
+
           <div class="sim-profile">
             <div class="sim-portrait" id="simPortrait" aria-hidden="true">😄</div>
             <div style="flex:1;">
@@ -2856,7 +3259,7 @@ body {
 
           <div class="sim-quest-card" id="simQuestCard" aria-live="polite">
             <div>
-              <span class="sim-quest-kicker">✦ 居家委託 · DAILY QUEST</span>
+              <span class="sim-quest-kicker">✦ 每日小委託 · DAILY QUEST</span>
               <strong class="sim-quest-title" id="simQuestTitle">讀取今日委託…</strong>
               <div class="sim-quest-description" id="simQuestDescription"></div>
             </div>
@@ -2872,18 +3275,19 @@ body {
           <div>
             <div class="sim-actions-head">
               <h4>🎯 點擊執行生活行動</h4>
-              <span>頭頂顯示 3D 進度氣泡與加成飄字</span>
+              <span>賺取資金添購家具</span>
             </div>
-            <div class="sim-actions" id="simActions" style="margin-top:0.45rem;"></div>
+            <div class="sim-actions" id="simActions" style="margin-top:0.4rem;"></div>
           </div>
         </div>
 
-        <!-- 分頁 2：軌道建造與 DLC 工坊 + 二手循環交易所 -->
-        <div class="sim-deck-panel" id="deckPanelBuild">
+        <!-- 分頁 2：進階空間與硬裝系統 (畸零格局、輕隔間、結構柱、材質塗裝、水電插座) -->
+        <div class="sim-deck-panel" id="deckPanelHardscape">
           <div class="build-settings-row">
             <div class="build-field">
               <label for="plannerArea">📐 住宅坪數規模</label>
               <select id="plannerArea">
+                <option value="5">5 坪｜極限微型套房</option>
                 <option value="12">12 坪｜都會小宅</option>
                 <option value="18" selected>18 坪｜標準兩房</option>
                 <option value="25">25 坪｜家庭三房</option>
@@ -2901,6 +3305,78 @@ body {
             </div>
           </div>
 
+          <div class="hardscape-section">
+            <h4><span>🧩 房型格局與畸零地設定</span><small style="color:#777168;">考驗空間利用</small></h4>
+            <div class="hardscape-grid" id="layoutShapeBtns">
+              <button type="button" class="hardscape-btn active" data-shape="rect">📐 標準矩形</button>
+              <button type="button" class="hardscape-btn" data-shape="lshape">🧩 L型畸零格局</button>
+              <button type="button" class="hardscape-btn" data-shape="balcony">🌤️ 陽台外推</button>
+            </div>
+          </div>
+
+          <div class="hardscape-section">
+            <h4><span>🧱 輕隔間牆與結構限制</span><small style="color:#994639;">拆牆需付清運費§45</small></h4>
+            <div class="hardscape-grid">
+              <button type="button" class="hardscape-btn" id="btnTogglePartition">🧱 輕隔間牆 (建§60/拆§45)</button>
+              <button type="button" class="hardscape-btn active" id="btnTogglePillar">🏛️ 承重柱＆管道間</button>
+              <button type="button" class="hardscape-btn" id="btnToggleWalkup">🪜 無電梯公寓(+15%搬運費)</button>
+            </div>
+          </div>
+
+          <div class="hardscape-section">
+            <h4><span>🪵 地板分區鋪設材質</span><small style="color:#527464;">玄關磁磚＋分區地板</small></h4>
+            <div class="hardscape-grid" id="floorMatBtns">
+              <button type="button" class="hardscape-btn active" data-floor="wood">🪵 全室超耐磨木</button>
+              <button type="button" class="hardscape-btn" data-floor="zoned">✨ 磁磚+木+電競毯</button>
+              <button type="button" class="hardscape-btn" data-floor="tile">🪨 現代拋光石材</button>
+            </div>
+          </div>
+
+          <div class="hardscape-section">
+            <h4><span>🎨 牆面塗裝與聲學工程</span><small style="color:#527464;">實況主必備吸音棉</small></h4>
+            <div class="hardscape-grid" id="wallMatBtns">
+              <button type="button" class="hardscape-btn active" data-wall="warm">🎨 溫潤跳色乳膠</button>
+              <button type="button" class="hardscape-btn" data-wall="stone">🧱 北歐文化石牆</button>
+              <button type="button" class="hardscape-btn" data-wall="acoustic">🔇 六角吸音棉牆</button>
+            </div>
+          </div>
+
+          <div class="hardscape-section">
+            <h4><span>⚡ 水電插座＆延長線壓條配置</span><small id="mepBadgeText">供電正常</small></h4>
+            <div class="mep-status-bar" id="mepStatusBar">
+              🔌 牆面設有 2 組固定插座；高階電器若遠離插座需加裝壓條或啟用 TAYA 軌道供電。
+            </div>
+            <button type="button" class="hardscape-btn" id="btnBuyCableRaceway" style="width:100%;">🔌 鋪設「隱藏式延長線與地板壓條」(§25 · 消除跨區接電扣分)</button>
+          </div>
+        </div>
+
+        <!-- 分頁 3：主題家具商城 ＆ 二手拍賣網 ＆ 特價盲盒 -->
+        <div class="sim-deck-panel" id="deckPanelShop">
+          <div class="shop-channel-tabs" role="tablist">
+            <button type="button" class="shop-channel-btn active" data-channel="new">🏬 全新家具行</button>
+            <button type="button" class="shop-channel-btn" data-channel="used">♻️ 二手拍賣(3~7折)</button>
+            <button type="button" class="shop-channel-btn" data-channel="blindbox">🎁 特價盲盒(§35)</button>
+          </div>
+
+          <div class="shop-cat-pills" id="shopCatPills">
+            <button type="button" class="shop-cat-pill active" data-cat="all">全部</button>
+            <button type="button" class="shop-cat-pill" data-cat="tech">🎮 電競科技</button>
+            <button type="button" class="shop-cat-pill" data-cat="collect">🏆 收藏娛樂</button>
+            <button type="button" class="shop-cat-pill" data-cat="appliance">☕ 生活家電</button>
+            <button type="button" class="shop-cat-pill" data-cat="lighting">💡 照明氛圍</button>
+            <button type="button" class="shop-cat-pill" data-cat="pet">🐾 寵物植栽</button>
+          </div>
+
+          <div id="shopChannelHeader" style="display:flex; justify-content:space-between; align-items:center; font-size:0.71rem; color:#655e54;">
+            <span id="shopChannelHint">💡 標註 [桌上小物] 可在 3D 畫面拖曳微調座標並自動疊上桌面！</span>
+            <button type="button" class="sim-tool-pill" id="btnRefreshUsed" style="display:none; padding:2px 8px; font-size:0.68rem;">🔄 刷新拍賣</button>
+          </div>
+
+          <div class="shop-items-grid" id="shopItemsGrid"></div>
+        </div>
+
+        <!-- 分頁 4：TAYA 軌道核心 DLC ＆ 原廠循環交易所 -->
+        <div class="sim-deck-panel" id="deckPanelBuild">
           <div>
             <div class="sim-actions-head" style="margin-bottom:0.4rem;">
               <h4>⚡ TAYA 軌道核心 DLC 模組</h4>
@@ -2941,13 +3417,12 @@ body {
             </div>
           </div>
 
-          <!-- 想法 D：二手模組回收交易所 (Circular Market) -->
           <div class="circular-market-box">
             <div class="circular-market-head">
               <h4>♻️ 原廠循環換購交易所</h4>
               <span class="circular-esg-pill" id="circularEsgBadge">已減碳 30 kg CO₂e</span>
             </div>
-            <p class="circular-market-desc">舊階段模組可由大雅原廠 <strong>8 折回購整新</strong>，或以 <strong>7 折優惠租購認證整新模組</strong>，賺取回購金與 ESG 減碳積分：</p>
+            <p class="circular-market-desc">舊階段模組可由大雅原廠 <strong>8 折回購整新</strong>，或以 <strong>7 折優惠租購認證整新模組</strong>，且免收無電梯樓層搬運費：</p>
             <div class="circular-trade-actions">
               <button type="button" class="circular-btn" id="btnCircularTradeIn">🔄 舊模組回售折抵 (+§90 · 🌱+20kg)</button>
               <button type="button" class="circular-btn" id="btnCircularRefurb">♻️ 租購認證整新包 (省30% · 🌱+25kg)</button>
@@ -2957,13 +3432,32 @@ body {
 
           <div class="furn-catalog-box">
             <h4>
-              <span>🪑 添購進階 3D 家具配置</span>
+              <span>🪑 經典客廳基礎配置</span>
               <span id="buildFitSummary" style="color:var(--teal); font-size:0.72rem;">空間適配良好</span>
             </h4>
             <div class="plan-furniture" id="planFurniture"></div>
           </div>
         </div>
       </aside>
+    </div>
+  </div>
+
+  <!-- 🧾 裝潢估價單與截圖匯出 Modal -->
+  <div class="sim-quote-modal" id="simQuoteModal" role="dialog" aria-modal="true" aria-labelledby="simQuoteTitle">
+    <div class="sim-quote-dialog">
+      <div class="sim-quote-head">
+        <div>
+          <span class="section-tag amber" style="margin:0;">TAYACRAFT RENOVATION BILL OF MATERIALS</span>
+          <h3 id="simQuoteTitle" style="font-size:1.2rem; color:#38352f;">🧾 空間裝潢估價單 ＆ 3D 配置截圖</h3>
+        </div>
+        <button type="button" class="sim-tool-pill" id="btnCloseQuote">✕ 關閉</button>
+      </div>
+      <img id="simQuotePreviewImg" class="sim-quote-preview" alt="3D 空間配置截圖預覽" />
+      <div id="simQuoteSummaryBox"></div>
+      <div style="display:flex; justify-content:flex-end; gap:0.6rem; margin-top:0.8rem;">
+        <button type="button" class="sim-tool-pill" id="btnQuoteSwitchBlueprint">🗺️ 切換 2D 藍圖／3D 等距重拍</button>
+        <a id="btnDownloadQuoteImg" class="sim-tool-pill quote" download="tayacraft-room-design.png" style="text-decoration:none;">💾 下載 PNG 配置設計圖</a>
+      </div>
     </div>
   </div>
 </section>
@@ -3304,23 +3798,23 @@ function createIsoProjector(ctx, cfg) {
 }
 
 // ─── 2. GAME STATE & DATA DEFINITIONS ───
-const simStorageKey = 'tayacraft-life-sim-v2';
+const simStorageKey = 'tayacraft-life-sim-v3';
 const simDefaultState = {
   name: '小日',
   stage: 'starter', // 'starter' | 'family' | 'senior'
   needs: { hunger: 76, energy: 80, hygiene: 72, social: 64, fun: 70 },
-  money: 420,
+  money: 800,
   day: 1,
   minutes: 510, // 08:30
   paused: true,
   speed: 1,
   camAngleIndex: 0,
-  lastAction: '歡迎回家！點擊 3D 家具或右側按鈕開始互動。',
-  player: { x: 4.8, y: 4.5, targetX: null, targetY: null, pendingAction: null },
+  lastAction: '歡迎來到全新空屋！請至「🛋️ 家具商城」或「🛠️ 軌道工坊」添購並自由擺設家具。',
+  player: { x: 4.8, y: 4.5, angle: 0.85, targetAngle: 0.85, targetX: null, targetY: null, pendingAction: null },
   quest: null,
   profile: { area: 18, people: 2 },
-  furniture: ['sofa-set', 'tv-wall'],
-  dlcs: { work: true, family: false, storage: false, safe: false },
+  furniture: [],
+  dlcs: { work: false, family: false, storage: false, safe: false },
   trackPos: { work: 5.1, family: 2.1, storage: 7.35, safe: 2.05 },
   esgScore: 30,
   xrayMode: false,
@@ -3354,6 +3848,8 @@ const simQuestCatalog = [
 ];
 
 const extraFurnitureCatalog = [
+  { id: 'bed-set', name: '舒適雙人臥床', icon: '🛏️', area: 2.2, desc: '安穩睡眠恢復精力核心' },
+  { id: 'shower-pod', name: '乾濕分離衛浴艙', icon: '🚿', area: 1.5, desc: '清爽沖澡恢復潔淨感' },
   { id: 'sofa-set', name: '北歐雙人沙發組', icon: '🛋️', area: 1.8, desc: '舒適客廳休憩核心' },
   { id: 'tv-wall', name: '智慧影音電視牆', icon: '📺', area: 0.9, desc: '娛樂與家庭劇院加成' },
   { id: 'kitchen-cart', name: '移動式料理推車', icon: '🥘', area: 0.6, desc: '彈性增加備料空間' },
@@ -3417,6 +3913,8 @@ function loadSimState() {
       player: {
         x: Number.isFinite(parsed.player?.x) ? Math.max(1.2, Math.min(8.2, parsed.player.x)) : 4.8,
         y: Number.isFinite(parsed.player?.y) ? Math.max(1.2, Math.min(6.4, parsed.player.y)) : 4.5,
+        angle: Number.isFinite(parsed.player?.angle) ? parsed.player.angle : 0.85,
+        targetAngle: Number.isFinite(parsed.player?.targetAngle) ? parsed.player.targetAngle : 0.85,
         targetX: null,
         targetY: null,
         pendingAction: null
@@ -3426,9 +3924,9 @@ function loadSimState() {
         area: [12, 18, 25, 32].includes(Number(parsed.profile?.area)) ? Number(parsed.profile.area) : 18,
         people: [1, 2, 3, 4].includes(Number(parsed.profile?.people)) ? Number(parsed.profile.people) : 2
       },
-      furniture: Array.isArray(parsed.furniture) ? parsed.furniture : ['sofa-set', 'tv-wall'],
+      furniture: Array.isArray(parsed.furniture) ? parsed.furniture : [],
       dlcs: {
-        work: Boolean(parsed.dlcs?.work ?? true),
+        work: Boolean(parsed.dlcs?.work),
         family: Boolean(parsed.dlcs?.family),
         storage: Boolean(parsed.dlcs?.storage),
         safe: Boolean(parsed.dlcs?.safe)
@@ -3538,6 +4036,18 @@ function getSpaceScore() {
   else score -= 6; // Clutter penalty when storage DLC is off
   if (isDlcActive('safe')) score += 6;
   score += Math.min(8, simState.furniture.length * 2);
+  if (typeof getActiveCombos === 'function') {
+    score += getActiveCombos().reduce((s, c) => s + c.bonus, 0);
+  }
+  if (typeof checkMepPowerStatus === 'function') {
+    score -= checkMepPowerStatus().penalty;
+  }
+  if (Array.isArray(simState.v4Items)) {
+    score += Math.min(12, simState.v4Items.length * 2);
+  }
+  if (Array.isArray(simState.flawedItems)) {
+    score -= simState.flawedItems.length * 3;
+  }
   return Math.max(35, Math.min(100, Math.round(score)));
 }
 
@@ -3594,15 +4104,6 @@ function getSceneObjects() {
       ix: wx + 1.0, iy: 1.65,
       isDlc: true, slideAxis: 'x', slideMin: 4.3, slideMax: 6.5
     });
-  } else {
-    list.push({
-      id: 'work',
-      label: '臨時小餐桌筆電 (未裝 WORK DLC)',
-      action: 'work',
-      x: 5.5, y: 0.45, z: 0, dx: 1.1, dy: 0.8, dz: 0.9,
-      ix: 6.0, iy: 1.55,
-      isPainPoint: true
-    });
   }
 
   // 2. FAMILY Zone (Slidable along Back Wall Track!)
@@ -3615,15 +4116,6 @@ function getSceneObjects() {
       x: fx, y: 0.25, z: 0, dx: 2.3, dy: 1.65, dz: 1.25,
       ix: fx + 1.15, iy: 2.25,
       isDlc: true, slideAxis: 'x', slideMin: 1.8, slideMax: 3.9
-    });
-  } else {
-    list.push({
-      id: 'family',
-      label: '簡易微波流理台 (未裝 FAMILY DLC)',
-      action: 'eat',
-      x: 2.4, y: 0.25, z: 0, dx: 1.35, dy: 0.75, dz: 1.1,
-      ix: 3.1, iy: 1.35,
-      isPainPoint: true
     });
   }
 
@@ -3638,26 +4130,18 @@ function getSceneObjects() {
       ix: sx + 0.65, iy: 1.4,
       isDlc: true, slideAxis: 'x', slideMin: 6.7, slideMax: 7.5
     });
-  } else {
-    // Clutter boxes on floor when STORAGE DLC is not installed!
-    list.push({
-      id: 'clutter',
-      label: '散落紙箱雜物 (安裝 STORAGE DLC 可收納)',
-      action: 'relax',
-      x: 7.3, y: 0.45, z: 0, dx: 1.25, dy: 0.95, dz: 0.75,
-      ix: 7.8, iy: 1.65,
-      isPainPoint: true
-    });
   }
 
   // 4. SHOWER / BATH Zone (Left Wall back corner: x=0.22..1.75, y=0.25..1.9)
-  list.push({
-    id: 'shower',
-    label: '乾濕分離衛浴艙',
-    action: 'shower',
-    x: 0.22, y: 0.25, z: 0, dx: 1.5, dy: 1.65, dz: 2.15,
-    ix: 1.95, iy: 1.2
-  });
+  if (simState.furniture.includes('shower-pod')) {
+    list.push({
+      id: 'shower',
+      label: '乾濕分離衛浴艙',
+      action: 'shower',
+      x: 0.22, y: 0.25, z: 0, dx: 1.5, dy: 1.65, dz: 2.15,
+      ix: 1.95, iy: 1.2
+    });
+  }
 
   // 5. SAFE DLC Handrails (Slidable along Left Wall Track!)
   if (isDlcActive('safe')) {
@@ -3681,14 +4165,6 @@ function getSceneObjects() {
       x: 0.55, y: 3.55, z: 0, dx: 1.25, dy: 2.1, dz: 0.95,
       ix: 2.15, iy: 4.6
     });
-  } else {
-    list.push({
-      id: 'sofa',
-      label: '簡易布坐墊',
-      action: 'relax',
-      x: 0.75, y: 4.0, z: 0, dx: 0.9, dy: 1.1, dz: 0.45,
-      ix: 1.95, iy: 4.55
-    });
   }
 
   // 7. TV Wall / Coffee Table (x=2.3..3.2, y=4.0..5.1)
@@ -3703,13 +4179,15 @@ function getSceneObjects() {
   }
 
   // 8. BED Zone (Right side: x=6.2..8.6, y=3.7..5.7)
-  list.push({
-    id: 'bed',
-    label: isDlcActive('storage') ? '掀床高密度收納雙人床' : '舒適雙人臥床',
-    action: 'sleep',
-    x: 6.3, y: 3.65, z: 0, dx: 2.3, dy: 1.95, dz: 1.15,
-    ix: 5.85, iy: 4.65
-  });
+  if (simState.furniture.includes('bed-set')) {
+    list.push({
+      id: 'bed',
+      label: isDlcActive('storage') ? '掀床高密度收納雙人床' : '舒適雙人臥床',
+      action: 'sleep',
+      x: 6.3, y: 3.65, z: 0, dx: 2.3, dy: 1.95, dz: 1.15,
+      ix: 5.85, iy: 4.65
+    });
+  }
 
   // 9. Extra Optional 3D Furniture
   if (simState.furniture.includes('kitchen-cart')) {
@@ -3915,79 +4393,294 @@ function draw3DFurnitureObject(iso, obj, now, isNight) {
   }
 }
 
-// Draws a 3D Volumetric Humanoid Character Model at (px, py)
-function draw3DCharacter(iso, px, py, now, isMainPlayer = true) {
-  const isMoving = roomKeys.size > 0 || (simState.player.targetX !== null && isMainPlayer);
-  const walkCycle = isMoving ? Math.sin(now / 95) * 0.12 : 0;
-  const bob = isMoving ? Math.abs(Math.sin(now / 95)) * 0.06 : Math.sin(now / 600) * 0.02;
+// ─── 3B. ORIENTED 3D CHARACTER RENDERER & AUTONOMOUS COMPANION AI (360° Turning) ───
+function lerpAngleShortest(cur, target, t) {
+  let diff = ((target - cur + Math.PI) % (Math.PI * 2)) - Math.PI;
+  if (diff < -Math.PI) diff += Math.PI * 2;
+  return cur + diff * Math.min(1, t);
+}
+
+// Companion autonomous agents (active whenever people >= 2)
+const companionAgents = [
+  {
+    id: 'comp-1',
+    name: '小雅',
+    x: 2.35,
+    y: 4.35,
+    angle: 0.45,
+    targetAngle: 0.45,
+    targetX: 3.6,
+    targetY: 2.8,
+    isMoving: false,
+    shirtCol: '#e07a5f',
+    pantsCol: '#3d405b',
+    hairCol: '#5c3317',
+    hasPonytail: true,
+    blinkSeed: 1300,
+    activeAct: null, // { icon, label, startAt, duration, lookX, lookY }
+    nextDecisionAt: 800
+  },
+  {
+    id: 'comp-2',
+    name: '樂樂',
+    x: 6.1,
+    y: 4.8,
+    angle: 2.2,
+    targetAngle: 2.2,
+    targetX: null,
+    targetY: null,
+    isMoving: false,
+    shirtCol: '#f59e0b',
+    pantsCol: '#334155',
+    hairCol: '#292524',
+    hasPonytail: false,
+    blinkSeed: 2500,
+    activeAct: null,
+    nextDecisionAt: 1600
+  }
+];
+
+let lastPlayerInputAt = performance.now();
+
+// Helper to compute & draw an oriented 3D box rotated by (angle) around (cx, cy)
+function createOrientedPart(iso, cx, cy, zBase, angle, f0, s0, z0, df, ds, dz, baseColor, opts = {}) {
+  const fx = Math.cos(angle);
+  const fy = Math.sin(angle);
+  const rx = -fy;
+  const ry = fx;
+
+  const toWorld = (f, s, z) => ({
+    x: cx + f * fx + s * rx,
+    y: cy + f * fy + s * ry,
+    z: zBase + z
+  });
+
+  const cMid = toWorld(f0 + df * 0.5, s0 + ds * 0.5, z0 + dz * 0.5);
+  const sortDepth = iso.project(cMid.x, cMid.y, cMid.z).depth + (z0 + dz * 0.5) * 0.28 + (opts.priority || 0);
+
+  return {
+    depth: sortDepth,
+    draw() {
+      const w00 = toWorld(f0, s0, z0);
+      const w10 = toWorld(f0 + df, s0, z0);
+      const w11 = toWorld(f0 + df, s0 + ds, z0);
+      const w01 = toWorld(f0, s0 + ds, z0);
+
+      const p000 = iso.project(w00.x, w00.y, zBase + z0);
+      const p100 = iso.project(w10.x, w10.y, zBase + z0);
+      const p110 = iso.project(w11.x, w11.y, zBase + z0);
+      const p010 = iso.project(w01.x, w01.y, zBase + z0);
+
+      const p001 = iso.project(w00.x, w00.y, zBase + z0 + dz);
+      const p101 = iso.project(w10.x, w10.y, zBase + z0 + dz);
+      const p111 = iso.project(w11.x, w11.y, zBase + z0 + dz);
+      const p011 = iso.project(w01.x, w01.y, zBase + z0 + dz);
+
+      const stroke = opts.stroke !== undefined ? opts.stroke : 'rgba(40,30,20,0.16)';
+      const faces = [
+        {
+          // Front (+F)
+          depth: (p100.depth + p110.depth + p111.depth + p101.depth) * 0.25,
+          pts: [p100, p110, p111, p101],
+          col: shadeHex(baseColor, Math.round((fx * 0.5 + fy * 0.5) * 10 - 4))
+        },
+        {
+          // Back (-F)
+          depth: (p000.depth + p010.depth + p011.depth + p001.depth) * 0.25,
+          pts: [p010, p000, p001, p011],
+          col: shadeHex(baseColor, Math.round((-fx * 0.5 - fy * 0.5) * 10 - 14))
+        },
+        {
+          // Right (+S)
+          depth: (p010.depth + p110.depth + p111.depth + p011.depth) * 0.25,
+          pts: [p110, p010, p011, p111],
+          col: shadeHex(baseColor, Math.round((rx * 0.5 + ry * 0.5) * 10 - 10))
+        },
+        {
+          // Left (-S)
+          depth: (p000.depth + p100.depth + p101.depth + p001.depth) * 0.25,
+          pts: [p000, p100, p101, p001],
+          col: shadeHex(baseColor, Math.round((-rx * 0.5 - ry * 0.5) * 10 - 10))
+        }
+      ];
+
+      // Sort 4 vertical faces back-to-front and draw the 2 camera-facing ones
+      faces.sort((a, b) => a.depth - b.depth);
+      faces.slice(2).forEach(f => iso.drawPoly(f.pts, f.col, stroke, 0.65));
+
+      // Top face (+Z)
+      const topCol = opts.topColor || shadeHex(baseColor, 14);
+      iso.drawPoly([p001, p101, p111, p011], topCol, stroke, 0.65);
+    }
+  };
+}
+
+// Draws a lively, directional 3D Character Model that turns toward its movement/interaction direction
+function draw3DCharacter(iso, px, py, now, isMainPlayer = true, compAgent = null) {
+  const isMoving = isMainPlayer
+    ? (roomKeys.size > 0 || simState.player.targetX !== null)
+    : Boolean(compAgent && compAgent.isMoving);
+
+  const actState = isMainPlayer ? activeInteraction : (compAgent ? compAgent.activeAct : null);
+  const isInteracting = Boolean(actState && (now - actState.startAt < actState.duration));
+
+  // Idle subtle head-turn look-around when standing still
+  const baseAngle = isMainPlayer
+    ? (simState.player.angle ?? 0.85)
+    : (compAgent ? compAgent.angle : 0.45);
+  const idleSway = (!isMoving && !isInteracting) ? Math.sin((now + (isMainPlayer ? 0 : 900)) / 1400) * 0.14 : 0;
+  const angle = baseAngle + idleSway;
+
+  const stridePhase = (now + (isMainPlayer ? 0 : 350)) / 92;
+  const legSwing = isMoving ? Math.sin(stridePhase) * 0.14 : 0;
+  const armSwing = isMoving ? Math.sin(stridePhase) * 0.16 : Math.sin(now / 700) * 0.025;
+  const leftLift = isMoving ? Math.max(0, Math.sin(stridePhase)) * 0.065 : 0;
+  const rightLift = isMoving ? Math.max(0, -Math.sin(stridePhase)) * 0.065 : 0;
+  const bob = isMoving
+    ? Math.abs(Math.sin(stridePhase)) * 0.055
+    : isInteracting
+      ? Math.abs(Math.sin(now / 150)) * 0.035
+      : Math.sin(now / 520) * 0.02;
   const zBase = bob;
 
+  // Ground shadow
   iso.drawShadow(px - 0.22, py - 0.22, 0.44, 0.44, 0.24);
 
-  // Legs
-  iso.drawBox(px - 0.14, py - 0.08 + walkCycle, zBase, 0.12, 0.14, 0.42, '#475569');
-  iso.drawBox(px + 0.02, py - 0.08 - walkCycle, zBase, 0.12, 0.14, 0.42, '#475569');
-
-  // Torso outfit color by stage
-  const shirtCol = !isMainPlayer ? '#d97706'
+  const shirtCol = !isMainPlayer
+    ? (compAgent?.shirtCol || '#e07a5f')
     : simState.stage === 'starter' ? '#527464'
     : simState.stage === 'family' ? '#3b82f6'
     : '#8b5cf6';
-  iso.drawBox(px - 0.18, py - 0.14, zBase + 0.42, 0.36, 0.28, 0.48, shirtCol);
+  const pantsCol = !isMainPlayer ? (compAgent?.pantsCol || '#3d405b') : '#475569';
+  const hairCol = (isMainPlayer && simState.stage === 'senior')
+    ? '#cbd5e1'
+    : (!isMainPlayer ? (compAgent?.hairCol || '#5c3317') : '#3f2e21');
+  const skinCol = '#f3c697';
 
-  // Arms
-  iso.drawBox(px - 0.27, py - 0.09 - walkCycle, zBase + 0.48, 0.09, 0.18, 0.38, '#f1c292');
-  iso.drawBox(px + 0.18, py - 0.09 + walkCycle, zBase + 0.48, 0.09, 0.18, 0.38, '#f1c292');
+  const parts = [];
+  const addPart = (f0, s0, z0, df, ds, dz, col, opts) => {
+    parts.push(createOrientedPart(iso, px, py, zBase, angle, f0, s0, z0, df, ds, dz, col, opts));
+  };
 
-  // Head
-  iso.drawBox(px - 0.16, py - 0.15, zBase + 0.9, 0.32, 0.3, 0.32, '#f3c697');
+  // 1. Two-tone Sneakers & Legs (swing along forward axis F!)
+  // Left shoe & leg (s: -0.15 .. -0.02)
+  addPart(-0.07 + legSwing, -0.15, leftLift, 0.19, 0.13, 0.09, '#f8fafc');
+  addPart(-0.06 + legSwing, -0.145, leftLift + 0.05, 0.15, 0.12, 0.07, isMainPlayer ? '#334155' : '#9a3412');
+  addPart(-0.07 + legSwing * 0.75, -0.145, leftLift + 0.11, 0.14, 0.12, 0.31, pantsCol);
 
-  // Hair (Silver hair in Senior stage!)
-  const hairCol = (isMainPlayer && simState.stage === 'senior') ? '#cbd5e1' : (!isMainPlayer ? '#78350f' : '#3f2e21');
-  iso.drawBox(px - 0.18, py - 0.17, zBase + 1.14, 0.36, 0.34, 0.12, hairCol);
-  iso.drawBox(px - 0.18, py - 0.17, zBase + 0.96, 0.36, 0.1, 0.18, hairCol);
+  // Right shoe & leg (s: +0.02 .. +0.15)
+  addPart(-0.07 - legSwing, 0.02, rightLift, 0.19, 0.13, 0.09, '#f8fafc');
+  addPart(-0.06 - legSwing, 0.025, rightLift + 0.05, 0.15, 0.12, 0.07, isMainPlayer ? '#334155' : '#9a3412');
+  addPart(-0.07 - legSwing * 0.75, 0.025, rightLift + 0.11, 0.14, 0.12, 0.31, pantsCol);
 
-  if (!isMainPlayer) return;
+  // 2. Waist Belt & Torso
+  addPart(-0.12, -0.17, 0.40, 0.24, 0.34, 0.06, '#292524');
+  addPart(-0.12, -0.17, 0.45, 0.24, 0.34, 0.44, shirtCol);
+  // Front collar / shirt detail (+F side)
+  addPart(0.09, -0.08, 0.76, 0.045, 0.16, 0.12, '#faf6ee', { priority: 0.02 });
+  // Back sling pack / cardigan accent (-F side, makes turning around super clear!)
+  addPart(-0.18, -0.12, 0.50, 0.06, 0.24, 0.28, isMainPlayer ? '#b07d4f' : '#f4a261');
 
-  // Sims-style Rotating 3D Plumbob Crystal above player head
-  const mood = getSimMood();
-  const crystalCol = mood.score >= 70 ? '#4ade80' : mood.score >= 45 ? '#facc15' : '#f87171';
-  const cz = zBase + 1.48 + Math.sin(now / 300) * 0.06;
-  iso.drawBox(px - 0.07, py - 0.07, cz, 0.14, 0.14, 0.18, crystalCol, { stroke: '#ffffff' });
+  // 3. Animated Arms & Hands
+  const actWave = isInteracting ? Math.sin(now / 95) * 0.08 : 0;
+  const leftArmF = isInteracting ? 0.08 + actWave : -0.05 - armSwing;
+  const rightArmF = isInteracting ? 0.08 - actWave : -0.05 + armSwing;
+  const armZ = isInteracting ? 0.56 : 0.48;
+  const armLenF = isInteracting ? 0.22 : 0.12;
+  const armH = isInteracting ? 0.26 : 0.36;
 
-  // Floating Name & 3D Overhead Action Progress Bubble (Idea C)
-  const headPt = iso.project(px, py, cz + 0.28);
+  // Left sleeve, arm & hand
+  addPart(leftArmF, -0.26, armZ, armLenF, 0.09, armH, skinCol);
+  addPart(leftArmF - 0.01, -0.265, 0.72, 0.13, 0.10, 0.15, shadeHex(shirtCol, -6));
+  // Right sleeve, arm & hand
+  addPart(rightArmF, 0.17, armZ, armLenF, 0.09, armH, skinCol);
+  addPart(rightArmF - 0.01, 0.165, 0.72, 0.13, 0.10, 0.15, shadeHex(shirtCol, -6));
+
+  // 4. Neck & Head
+  addPart(-0.05, -0.06, 0.88, 0.10, 0.12, 0.06, skinCol);
+  addPart(-0.14, -0.15, 0.92, 0.28, 0.30, 0.31, skinCol, { priority: 0.05 });
+  // Left & Right Ears
+  addPart(-0.03, -0.18, 1.02, 0.07, 0.04, 0.09, shadeHex(skinCol, -6));
+  addPart(-0.03, 0.14, 1.02, 0.07, 0.04, 0.09, shadeHex(skinCol, -6));
+
+  // 5. Expressive Face on Front (+F) of Head: Blinking Eyes & Rosy Cheeks!
+  const blinkSeed = isMainPlayer ? 400 : (compAgent?.blinkSeed || 1300);
+  const isBlinking = ((now + blinkSeed) % 3400) < 140;
+  const eyeH = isBlinking ? 0.018 : 0.065;
+  const eyeZ = isBlinking ? 1.06 : 1.04;
+  // Left & Right Eyes on front face (f = +0.135)
+  addPart(0.125, -0.105, eyeZ, 0.03, 0.048, eyeH, '#1e293b', { stroke: null, priority: 0.09 });
+  addPart(0.125, 0.057, eyeZ, 0.03, 0.048, eyeH, '#1e293b', { stroke: null, priority: 0.09 });
+  // Rosy blush cheeks
+  addPart(0.122, -0.125, 0.98, 0.025, 0.05, 0.038, '#f48c8c', { stroke: null, priority: 0.08 });
+  addPart(0.122, 0.075, 0.98, 0.025, 0.05, 0.038, '#f48c8c', { stroke: null, priority: 0.08 });
+
+  // 6. 3D Hair: Top Cap, Front Bangs (+F), Side Locks, Back Hair (-F) & Bouncy Ponytail
+  addPart(-0.16, -0.17, 1.17, 0.32, 0.34, 0.11, hairCol, { priority: 0.12 }); // Top crown
+  addPart(0.08, -0.16, 1.11, 0.085, 0.32, 0.08, hairCol, { priority: 0.11 }); // Front bangs
+  addPart(-0.17, -0.165, 0.95, 0.12, 0.33, 0.24, hairCol, { priority: 0.06 }); // Back hair cover
+  addPart(-0.08, -0.175, 1.04, 0.16, 0.04, 0.15, hairCol, { priority: 0.07 }); // Left sideburn
+  addPart(-0.08, 0.135, 1.04, 0.16, 0.04, 0.15, hairCol, { priority: 0.07 }); // Right sideburn
+
+  if (!isMainPlayer && compAgent?.hasPonytail) {
+    // Bouncy 3D ponytail on the back (-F)
+    const tailBounce = isMoving ? Math.sin(stridePhase * 2) * 0.04 : 0;
+    addPart(-0.25, -0.06, 1.03 + tailBounce, 0.10, 0.12, 0.16, hairCol, { priority: 0.07 });
+  }
+
+  // Sort all character sub-parts back-to-front for accurate 360-degree rotation!
+  parts.sort((a, b) => a.depth - b.depth);
+  parts.forEach(p => p.draw());
+
+  // 7. Overhead Plumbob & Status / Action Bubble
+  const cz = zBase + 1.48 + Math.sin(now / 300) * 0.05;
+  if (isMainPlayer) {
+    const mood = getSimMood();
+    const crystalCol = mood.score >= 70 ? '#4ade80' : mood.score >= 45 ? '#facc15' : '#f87171';
+    iso.drawBox(px - 0.065, py - 0.065, cz, 0.13, 0.13, 0.17, crystalCol, { stroke: '#ffffff' });
+  }
+
+  const headPt = iso.project(px, py, cz + (isMainPlayer ? 0.26 : 0.08));
   roomCtx.save();
-  if (activeInteraction) {
-    const prog = Math.min(1, (now - activeInteraction.startAt) / activeInteraction.duration);
-    const actObj = simActions.find(a => a.id === activeInteraction.actionId);
-    const icon = actObj ? actObj.icon : '⚡';
-    const bx = headPt.x, by = headPt.y - 26;
-    // Bubble background
+  if (isInteracting && actState) {
+    const prog = Math.min(1, (now - actState.startAt) / actState.duration);
+    const actObj = isMainPlayer ? simActions.find(a => a.id === actState.actionId) : null;
+    const icon = actState.icon || (actObj ? actObj.icon : '⚡');
+    const bx = headPt.x, by = headPt.y - 24;
     roomCtx.fillStyle = 'rgba(255, 254, 250, 0.95)';
     roomCtx.beginPath();
-    roomCtx.arc(bx, by, 18, 0, Math.PI * 2);
+    roomCtx.arc(bx, by, 17, 0, Math.PI * 2);
     roomCtx.fill();
-    // Progress Ring
     roomCtx.strokeStyle = '#e2d9c8';
-    roomCtx.lineWidth = 3.5;
+    roomCtx.lineWidth = 3.2;
     roomCtx.beginPath();
-    roomCtx.arc(bx, by, 18, 0, Math.PI * 2);
+    roomCtx.arc(bx, by, 17, 0, Math.PI * 2);
     roomCtx.stroke();
-    roomCtx.strokeStyle = '#527464';
+    roomCtx.strokeStyle = isMainPlayer ? '#527464' : '#e07a5f';
     roomCtx.beginPath();
-    roomCtx.arc(bx, by, 18, -Math.PI / 2, -Math.PI / 2 + prog * Math.PI * 2);
+    roomCtx.arc(bx, by, 17, -Math.PI / 2, -Math.PI / 2 + prog * Math.PI * 2);
     roomCtx.stroke();
-    roomCtx.font = '15px sans-serif';
+    roomCtx.font = '14px sans-serif';
     roomCtx.textAlign = 'center';
     roomCtx.textBaseline = 'middle';
     roomCtx.fillText(icon, bx, by + 1);
+
+    if (actState.label) {
+      roomCtx.font = '700 10.5px "Noto Sans TC", sans-serif';
+      const lw = roomCtx.measureText(actState.label).width + 12;
+      roomCtx.fillStyle = isMainPlayer ? 'rgba(82, 116, 100, 0.92)' : 'rgba(180, 83, 9, 0.9)';
+      roomCtx.beginPath();
+      roomCtx.roundRect(bx - lw / 2, by - 36, lw, 16, 8);
+      roomCtx.fill();
+      roomCtx.fillStyle = '#ffffff';
+      roomCtx.fillText(actState.label, bx, by - 27);
+    }
   } else {
     roomCtx.font = '700 11px "Noto Sans TC", sans-serif';
     roomCtx.textAlign = 'center';
-    const tagText = simState.name;
+    const tagText = isMainPlayer ? simState.name : (compAgent?.name || '小雅');
     const tw = roomCtx.measureText(tagText).width + 12;
-    roomCtx.fillStyle = 'rgba(40, 32, 24, 0.78)';
+    roomCtx.fillStyle = isMainPlayer ? 'rgba(40, 32, 24, 0.78)' : 'rgba(124, 45, 18, 0.78)';
     roomCtx.beginPath();
     roomCtx.roundRect(headPt.x - tw / 2, headPt.y - 16, tw, 18, 9);
     roomCtx.fill();
@@ -3995,6 +4688,149 @@ function draw3DCharacter(iso, px, py, now, isMainPlayer = true) {
     roomCtx.fillText(tagText, headPt.x, headPt.y - 3);
   }
   roomCtx.restore();
+}
+
+// Updates autonomous AI for companions (and idle main player when unpaused)
+function updateAutonomousCharacters(now, dt) {
+  const activeCount = Math.max(0, Math.min(companionAgents.length, (simState.profile.people || 2) - 1));
+  const sceneObjs = getSceneObjects();
+  const v4List = (typeof V4_SHOP_CATALOG !== 'undefined' && Array.isArray(simState.v4Items))
+    ? simState.v4Items.map(id => V4_SHOP_CATALOG.find(m => m.id === id)).filter(Boolean)
+    : [];
+
+  for (let i = 0; i < activeCount; i++) {
+    const comp = companionAgents[i];
+
+    // Check if active interaction finished
+    if (comp.activeAct && now - comp.activeAct.startAt >= comp.activeAct.duration) {
+      if (comp.activeAct.rewardMood) {
+        simState.needs.social = clampNeed(simState.needs.social + 2);
+        simState.needs.fun = clampNeed(simState.needs.fun + 2);
+        spawnFloatingText(comp.activeAct.popText || '💬+2', comp.x, comp.y, 1.55, '#fde047');
+      }
+      comp.activeAct = null;
+      comp.nextDecisionAt = now + 1100 + Math.random() * 1400;
+    }
+
+    // Move toward target if walking
+    if (comp.targetX !== null && comp.targetY !== null) {
+      const dx = comp.targetX - comp.x;
+      const dy = comp.targetY - comp.y;
+      const dist = Math.hypot(dx, dy);
+      if (dist < 0.14) {
+        comp.x = comp.targetX;
+        comp.y = comp.targetY;
+        comp.targetX = null;
+        comp.targetY = null;
+        comp.isMoving = false;
+        if (comp.pendingAct) {
+          comp.activeAct = {
+            ...comp.pendingAct,
+            startAt: now
+          };
+          if (Number.isFinite(comp.pendingAct.lookX) && Number.isFinite(comp.pendingAct.lookY)) {
+            comp.targetAngle = Math.atan2(comp.pendingAct.lookY - comp.y, comp.pendingAct.lookX - comp.x);
+          }
+          comp.pendingAct = null;
+        } else {
+          comp.nextDecisionAt = now + 1200 + Math.random() * 1500;
+        }
+      } else {
+        comp.isMoving = true;
+        const moveSpd = 2.15;
+        comp.x = Math.max(0.85, Math.min(8.2, comp.x + (dx / dist) * moveSpd * dt));
+        comp.y = Math.max(1.15, Math.min(6.0, comp.y + (dy / dist) * moveSpd * dt));
+        comp.targetAngle = Math.atan2(dy, dx);
+      }
+    } else {
+      comp.isMoving = false;
+      // Pick next autonomous destination & interaction when timer fires
+      if (!comp.activeAct && now >= comp.nextDecisionAt) {
+        const candidates = [];
+
+        // 1. Placed DLCs & Base Furniture
+        sceneObjs.forEach(obj => {
+          const actMap = {
+            work: { icon: '💻', label: '遠端協作中', popText: '✨協作+§6' },
+            family: { icon: '🍳', label: '備料料理中', popText: '🥪料理+飽足' },
+            storage: { icon: '📦', label: '整理收納櫃', popText: '✨整潔UP' },
+            shower: { icon: '🫧', label: '整理衛浴', popText: '🫧清爽' },
+            safe: { icon: '🛡️', label: '檢查感應燈', popText: '🛡️安全確認' },
+            sofa: { icon: '🛋️', label: '沙發閱讀放鬆', popText: '🎨心情+3' },
+            tv: { icon: '📺', label: '觀看影音節目', popText: '🎵娛樂+3' },
+            bed: { icon: '🛏️', label: '鋪床整理臥室', popText: '⚡舒適UP' },
+            cart: { icon: '☕', label: '沖泡手沖咖啡', popText: '☕香氣滿滿' },
+            plant: { icon: '🌿', label: '幫植栽澆水', popText: '🌿綠意療癒' }
+          };
+          const meta = actMap[obj.id] || { icon: '✨', label: '使用家具', popText: '✨+2' };
+          candidates.push({
+            tx: Math.max(0.9, Math.min(8.1, obj.ix)),
+            ty: Math.max(1.2, Math.min(5.9, obj.iy)),
+            lookX: obj.x + obj.dx * 0.5,
+            lookY: obj.y + obj.dy * 0.5,
+            icon: meta.icon,
+            label: meta.label,
+            popText: meta.popText,
+            duration: 2600 + Math.random() * 900,
+            rewardMood: true
+          });
+        });
+
+        // 2. Placed V4 Shop Items
+        v4List.forEach(item => {
+          if (item.id === 'robot-vac') return;
+          const pos = getV4ItemPos(item);
+          candidates.push({
+            tx: Math.max(0.9, Math.min(8.1, pos.x + item.dx * 0.5 + 0.55)),
+            ty: Math.max(1.2, Math.min(5.9, pos.y + item.dy * 0.5 + 0.55)),
+            lookX: pos.x + item.dx * 0.5,
+            lookY: pos.y + item.dy * 0.5,
+            icon: item.icon,
+            label: `體驗${item.name.slice(0, 6)}`,
+            popText: `${item.icon}好喜歡!`,
+            duration: 2400 + Math.random() * 800,
+            rewardMood: true
+          });
+        });
+
+        // 3. Social wave near Main Player (25% chance)
+        if (Math.random() < 0.25) {
+          const offsetAngle = Math.random() * Math.PI * 2;
+          candidates.push({
+            tx: Math.max(1.0, Math.min(8.0, simState.player.x + Math.cos(offsetAngle) * 0.85)),
+            ty: Math.max(1.2, Math.min(5.8, simState.player.y + Math.sin(offsetAngle) * 0.85)),
+            lookX: simState.player.x,
+            lookY: simState.player.y,
+            icon: '👋',
+            label: `與${simState.name}寒暄`,
+            popText: '💬+3',
+            duration: 2100,
+            rewardMood: true
+          });
+        }
+
+        // 4. Empty room exploration points (always available so companion moves even in an empty room!)
+        const inspectSpots = [
+          { tx: 4.5, ty: 1.45, lookX: 4.5, lookY: 0.1, icon: '📐', label: '巡視預埋軌道牆' },
+          { tx: 1.45, ty: 1.65, lookX: 1.2, lookY: 0.1, icon: '☀️', label: '欣賞窗外採光' },
+          { tx: 2.6, ty: 4.3, lookX: 4.5, lookY: 3.3, icon: '🔍', label: '構思客廳擺設' },
+          { tx: 6.4, ty: 3.9, lookX: 7.5, lookY: 3.9, icon: '💭', label: '規劃臥室動線' },
+          { tx: 4.6, ty: 4.7, lookX: simState.player.x, lookY: simState.player.y, icon: '😊', label: '期待新家具到來' }
+        ];
+        inspectSpots.forEach(s => candidates.push({ ...s, duration: 2200, rewardMood: false }));
+
+        const picked = candidates[Math.floor(Math.random() * candidates.length)];
+        if (picked) {
+          comp.targetX = picked.tx;
+          comp.targetY = picked.ty;
+          comp.pendingAct = picked;
+        }
+      }
+    }
+
+    // Smoothly rotate companion angle toward targetAngle
+    comp.angle = lerpAngleShortest(comp.angle ?? 0.45, comp.targetAngle ?? 0.45, dt * 10.5);
+  }
 }
 
 function renderGameRoom(now = performance.now()) {
@@ -4006,13 +4842,22 @@ function renderGameRoom(now = performance.now()) {
   const H = roomCanvas.height;
   roomCtx.clearRect(0, 0, W, H);
 
-  const isNight = simState.minutes >= 1140 || simState.minutes < 360;
+  const isNight = simState.minutes >= 1200 || simState.minutes < 360;
+  const isDusk = !isNight && (simState.minutes >= 1020 && simState.minutes < 1200);
+  const isBlueprint = Boolean(simState.hardscape?.blueprintMode);
 
-  // Ambient studio backdrop gradient
+  // Ambient studio backdrop gradient (Supports Day / Dusk / Night / 2D Blueprint)
   const bgGrad = roomCtx.createLinearGradient(0, 0, 0, H);
-  if (isNight) {
-    bgGrad.addColorStop(0, '#1e293b');
-    bgGrad.addColorStop(1, '#0f172a');
+  if (isBlueprint) {
+    bgGrad.addColorStop(0, '#0c4a6e');
+    bgGrad.addColorStop(1, '#082f49');
+  } else if (isNight) {
+    bgGrad.addColorStop(0, '#0f172a');
+    bgGrad.addColorStop(1, '#020617');
+  } else if (isDusk) {
+    bgGrad.addColorStop(0, '#7c2d12');
+    bgGrad.addColorStop(0.5, '#9a3412');
+    bgGrad.addColorStop(1, '#431407');
   } else {
     bgGrad.addColorStop(0, '#efe9dd');
     bgGrad.addColorStop(1, '#dfd5c3');
@@ -4020,19 +4865,19 @@ function renderGameRoom(now = performance.now()) {
   roomCtx.fillStyle = bgGrad;
   roomCtx.fillRect(0, 0, W, H);
 
-  // Room dimensions scale subtly with selected坪數
-  const areaScale = simState.profile.area >= 32 ? 1.05 : simState.profile.area >= 25 ? 1.0 : simState.profile.area >= 18 ? 0.95 : 0.9;
+  // Room dimensions scale with selected坪數 (supports 5坪 micro-studio!)
+  const areaScale = simState.profile.area >= 32 ? 1.05 : simState.profile.area >= 25 ? 1.0 : simState.profile.area >= 18 ? 0.95 : simState.profile.area <= 5 ? 0.78 : 0.9;
   const isShaking = now < renovShakeUntil;
   const shakeX = isShaking ? (Math.random() - 0.5) * 9 : 0;
   const shakeY = isShaking ? (Math.random() - 0.5) * 7 : 0;
   const iso = createIsoProjector(roomCtx, {
-    yaw: currentYaw,
-    pitch: 0.54,
-    scale: 52 * areaScale,
+    yaw: isBlueprint ? 0.0 : currentYaw,
+    pitch: isBlueprint ? 1.42 : 0.54,
+    scale: (isBlueprint ? 56 : 52) * areaScale,
     cx: 4.5,
     cy: 3.3,
     ox: W * 0.5 + shakeX,
-    oy: H * 0.62 + shakeY
+    oy: (isBlueprint ? H * 0.52 : H * 0.62) + shakeY
   });
   window._currentRoomIso = iso;
 
@@ -4144,23 +4989,26 @@ function renderGameRoom(now = performance.now()) {
   const playerDepth = iso.project(simState.player.x, simState.player.y, 0.6).depth;
   renderables.push({
     depth: playerDepth,
-    draw: () => draw3DCharacter(iso, simState.player.x, simState.player.y, now, true)
+    draw: () => draw3DCharacter(iso, simState.player.x, simState.player.y, now, true, null)
   });
 
-  // Companion 3D Character when people >= 2
-  if (simState.profile.people >= 2) {
-    const compX = 1.65;
-    const compY = 4.55;
-    const compDepth = iso.project(compX, compY, 0.6).depth;
+  // Autonomous Companion 3D Character(s) when people >= 2
+  const activeCompCount = Math.max(0, Math.min(companionAgents.length, (simState.profile.people || 2) - 1));
+  for (let ci = 0; ci < activeCompCount; ci++) {
+    const comp = companionAgents[ci];
+    const compDepth = iso.project(comp.x, comp.y, 0.6).depth;
     renderables.push({
       depth: compDepth,
-      draw: () => draw3DCharacter(iso, compX, compY, now + 400, false)
+      draw: () => draw3DCharacter(iso, comp.x, comp.y, now + ci * 400, false, comp)
     });
   }
 
   // Sort back-to-front
   renderables.sort((a, b) => a.depth - b.depth);
   renderables.forEach(r => r.draw());
+  if (typeof drawV4HardscapeAndProps === 'function') {
+    drawV4HardscapeAndProps(iso, now, isNight, isDusk);
+  }
 
   // 6. Draw 3D Floating Label over Hovered Furniture
   if (hoveredObject) {
@@ -4296,13 +5144,15 @@ function gameFrameLoop(now) {
   let vy = Number(roomKeys.has('down')) - Number(roomKeys.has('up'));
 
   if (vx !== 0 || vy !== 0) {
-    // Manual control overrides auto-walk target
+    // Manual control overrides auto-walk target & rotates character toward movement direction
+    lastPlayerInputAt = now;
     simState.player.targetX = null;
     simState.player.targetY = null;
     simState.player.pendingAction = null;
     const len = Math.hypot(vx, vy);
     simState.player.x = Math.max(0.8, Math.min(8.3, simState.player.x + (vx / len) * speed * dt));
     simState.player.y = Math.max(1.1, Math.min(6.1, simState.player.y + (vy / len) * speed * dt));
+    simState.player.targetAngle = Math.atan2(vy, vx);
   } else if (simState.player.targetX !== null && simState.player.targetY !== null) {
     // Auto-walk pathfinding toward clicked 3D furniture or action target
     const dx = simState.player.targetX - simState.player.x;
@@ -4313,6 +5163,11 @@ function gameFrameLoop(now) {
       simState.player.y = simState.player.targetY;
       simState.player.targetX = null;
       simState.player.targetY = null;
+      if (Number.isFinite(simState.player.lookAtX) && Number.isFinite(simState.player.lookAtY)) {
+        simState.player.targetAngle = Math.atan2(simState.player.lookAtY - simState.player.y, simState.player.lookAtX - simState.player.x);
+        simState.player.lookAtX = null;
+        simState.player.lookAtY = null;
+      }
       if (simState.player.pendingAction) {
         const act = simState.player.pendingAction;
         simState.player.pendingAction = null;
@@ -4321,11 +5176,44 @@ function gameFrameLoop(now) {
     } else {
       simState.player.x += (dx / dist) * speed * 1.15 * dt;
       simState.player.y += (dy / dist) * speed * 1.15 * dt;
+      simState.player.targetAngle = Math.atan2(dy, dx);
+    }
+  } else if (!simState.paused && !activeInteraction && now - lastPlayerInputAt > 5500) {
+    // Autonomous stroll for main player when game is running and player is idle
+    lastPlayerInputAt = now + 2500;
+    const objs = getSceneObjects();
+    if (objs.length > 0 && Math.random() < 0.65) {
+      const pick = objs[Math.floor(Math.random() * objs.length)];
+      simState.player.targetX = pick.ix;
+      simState.player.targetY = pick.iy;
+      simState.player.lookAtX = pick.x + pick.dx * 0.5;
+      simState.player.lookAtY = pick.y + pick.dy * 0.5;
+    } else {
+      simState.player.targetX = 1.4 + Math.random() * 6.0;
+      simState.player.targetY = 1.5 + Math.random() * 4.0;
     }
   }
 
+  // Smoothly interpolate main player facing angle
+  simState.player.angle = lerpAngleShortest(
+    simState.player.angle ?? 0.85,
+    simState.player.targetAngle ?? 0.85,
+    dt * 12
+  );
+
+  // Update autonomous companion AI every frame
+  updateAutonomousCharacters(now, dt);
+
   if (activeInteraction && now - activeInteraction.startAt > activeInteraction.duration) {
     activeInteraction = null;
+  }
+
+  // Autonomous Robot Vacuum patrolling floor (會在地上自動移動的掃地機器人)
+  if (typeof hasV4Item === 'function' && hasV4Item('robot-vac') && typeof robotVacState === 'object') {
+    robotVacState.x += robotVacState.vx * dt;
+    robotVacState.y += robotVacState.vy * dt;
+    if (robotVacState.x < 1.1 || robotVacState.x > 7.6) robotVacState.vx *= -1;
+    if (robotVacState.y < 1.5 || robotVacState.y > 5.7) robotVacState.vy *= -1;
   }
 
   const nearObj = getNearestSceneObject();
@@ -4374,6 +5262,24 @@ roomCanvas.addEventListener('pointerdown', event => {
   didDragOnCanvas = false;
   pointerDownInfo = { x: event.clientX, y: event.clientY, res };
 
+  // Check if clicking on a Sub-grid Tabletop V4 item first!
+  if (window._currentRoomIso && typeof V4_SHOP_CATALOG !== 'undefined') {
+    const rect = roomCanvas.getBoundingClientRect();
+    const sx = (event.clientX - rect.left) * (roomCanvas.width / rect.width);
+    const sy = (event.clientY - rect.top) * (roomCanvas.height / rect.height);
+    for (const id of (simState.v4Items || [])) {
+      const meta = V4_SHOP_CATALOG.find(m => m.id === id && m.isSubgrid);
+      if (!meta) continue;
+      const pos = getV4ItemPos(meta);
+      const pt = window._currentRoomIso.project(pos.x + meta.dx / 2, pos.y + meta.dy / 2, pos.z + meta.dz / 2);
+      if (Math.hypot(sx - pt.x, sy - pt.y) < 38) {
+        draggingSubgridItem = meta;
+        roomCanvas.setPointerCapture(event.pointerId);
+        return;
+      }
+    }
+  }
+
   if (res && res.hit && res.hit.isDlc && res.hit.slideAxis) {
     draggingModule = {
       id: res.hit.id,
@@ -4391,6 +5297,20 @@ roomCanvas.addEventListener('pointerdown', event => {
 });
 
 roomCanvas.addEventListener('pointermove', event => {
+  if (draggingSubgridItem && window._currentRoomIso) {
+    didDragOnCanvas = true;
+    const rect = roomCanvas.getBoundingClientRect();
+    const sx = (event.clientX - rect.left) * (roomCanvas.width / rect.width);
+    const sy = (event.clientY - rect.top) * (roomCanvas.height / rect.height);
+    const fl = window._currentRoomIso.unprojectFloor(sx, sy);
+    ensureV4State();
+    simState.v4Positions[draggingSubgridItem.id] = {
+      x: Math.round(Math.max(0.4, Math.min(8.1, fl.x - draggingSubgridItem.dx / 2)) * 20) / 20,
+      y: Math.round(Math.max(0.25, Math.min(5.9, fl.y - draggingSubgridItem.dy / 2)) * 20) / 20
+    };
+    return;
+  }
+
   if (draggingModule && window._currentRoomIso) {
     if (Math.hypot(event.clientX - (pointerDownInfo?.x || 0), event.clientY - (pointerDownInfo?.y || 0)) > 5) {
       didDragOnCanvas = true;
@@ -4425,6 +5345,17 @@ roomCanvas.addEventListener('pointermove', event => {
 });
 
 function finishCanvasPointer(event) {
+  if (draggingSubgridItem) {
+    if (didDragOnCanvas) {
+      const pos = getV4ItemPos(draggingSubgridItem);
+      triggerSnapEffect(draggingSubgridItem.id);
+      playSimSound('snap');
+      saveSimState();
+      renderSim();
+      showRoomBanner(`📦 「${draggingSubgridItem.name}」已微調至 (${pos.x.toFixed(1)}m, ${pos.y.toFixed(1)}m)${pos.z > 0.2 ? ' 並自動疊上桌面！' : ''}`);
+    }
+    draggingSubgridItem = null;
+  }
   if (draggingModule) {
     if (didDragOnCanvas) {
       triggerSnapEffect(draggingModule.id);
@@ -4464,14 +5395,20 @@ function walkAndPerformAction(action, targetObj = null) {
     executeSimAction(action, null);
     return;
   }
+  lastPlayerInputAt = performance.now();
+  const lookX = obj.x + obj.dx * 0.5;
+  const lookY = obj.y + obj.dy * 0.5;
   const dist = Math.hypot(simState.player.x - obj.ix, simState.player.y - obj.iy);
   if (dist < 0.35) {
+    simState.player.targetAngle = Math.atan2(lookY - simState.player.y, lookX - simState.player.x);
     executeSimAction(action, obj.id);
   } else {
     simState.player.targetX = obj.ix;
     simState.player.targetY = obj.iy;
+    simState.player.lookAtX = lookX;
+    simState.player.lookAtY = lookY;
     simState.player.pendingAction = { action, objId: obj.id };
-    showSimMessage(`🚶 ${simState.name} 正走向「${obj.label}」準備執行「${action.label}」…`);
+    showSimMessage(`🚶 ${simState.name} 正轉身走向「${obj.label}」準備執行「${action.label}」…`);
   }
 }
 
@@ -4675,7 +5612,18 @@ function renderSim() {
   document.getElementById('simMood').textContent = `${mood.label} ${mood.icon}`;
   document.getElementById('simPortrait').textContent = mood.face;
   document.getElementById('simStageLabel').textContent = `${stageInfo.label} · ${simState.profile.area} 坪 (${simState.profile.people}人)`;
-  document.getElementById('simRoomCaption').textContent = `${simState.profile.area} 坪 · ${stageInfo.label}`;
+  const shapeNames = { rect: '標準矩形', lshape: 'L型畸零格局', balcony: '陽台外推格局' };
+  const curShape = shapeNames[simState.hardscape?.shape || 'rect'] || '標準矩形';
+  document.getElementById('simRoomCaption').textContent = `${simState.profile.area} 坪 · ${curShape} · ${stageInfo.label}`;
+  const timeSlider = document.getElementById('simTimeSlider');
+  if (timeSlider) timeSlider.value = String(simState.minutes);
+  const periodLbl = document.getElementById('simTimePeriodLabel');
+  if (periodLbl) {
+    const isN = simState.minutes >= 1200 || simState.minutes < 360;
+    const isD = !isN && simState.minutes >= 1020 && simState.minutes < 1200;
+    periodLbl.textContent = isN ? '🌙 深夜發光' : isD ? '🌇 黃昏夕照' : '☀️ 白天自然光';
+  }
+  if (typeof renderV4Panels === 'function') renderV4Panels();
 
   // Stage buttons active state
   document.querySelectorAll('.sim-stage-btn').forEach(btn => {
@@ -4769,7 +5717,8 @@ function renderSim() {
           simState.furniture = simState.furniture.filter(id => id !== item.id);
         } else {
           simState.furniture.push(item.id);
-          triggerSnapEffect(item.id === 'sofa-set' ? 'sofa' : item.id === 'tv-wall' ? 'tv' : item.id === 'kitchen-cart' ? 'cart' : 'plant');
+          const snapMap = { 'bed-set': 'bed', 'shower-pod': 'shower', 'sofa-set': 'sofa', 'tv-wall': 'tv', 'kitchen-cart': 'cart', 'plant-deco': 'plant' };
+          triggerSnapEffect(snapMap[item.id] || item.id);
         }
         saveSimState();
         playSimSound('snap');
@@ -4805,8 +5754,10 @@ document.querySelectorAll('.sim-deck-tab').forEach(tab => {
     document.querySelectorAll('.sim-deck-tab').forEach(t => t.classList.remove('active'));
     tab.classList.add('active');
     const target = tab.dataset.deckTab;
-    document.getElementById('deckPanelLive').classList.toggle('active', target === 'live');
-    document.getElementById('deckPanelBuild').classList.toggle('active', target === 'build');
+    document.getElementById('deckPanelLive')?.classList.toggle('active', target === 'live');
+    document.getElementById('deckPanelHardscape')?.classList.toggle('active', target === 'hardscape');
+    document.getElementById('deckPanelShop')?.classList.toggle('active', target === 'shop');
+    document.getElementById('deckPanelBuild')?.classList.toggle('active', target === 'build');
     playSimSound('tap');
   });
 });
@@ -4837,8 +5788,9 @@ document.getElementById('simCamRotate').addEventListener('click', () => {
 });
 
 document.getElementById('simCamTime').addEventListener('click', () => {
-  const isNight = simState.minutes >= 1140 || simState.minutes < 360;
-  simState.minutes = isNight ? 540 : 1260; // Switch between 09:00 and 21:00
+  if (simState.minutes < 1020) simState.minutes = 1050; // Switch to Dusk 17:30
+  else if (simState.minutes < 1200) simState.minutes = 1320; // Switch to Night 22:00
+  else simState.minutes = 540; // Switch to Day 09:00
   saveSimState();
   playSimSound('tap');
   renderSim();
@@ -4874,9 +5826,24 @@ simSoundButton.addEventListener('click', () => {
 document.getElementById('simReset').addEventListener('click', () => {
   localStorage.removeItem(simStorageKey);
   simState = loadSimState();
+  simState.furniture = [];
+  simState.dlcs = { work: false, family: false, storage: false, safe: false };
+  simState.v4Items = [];
+  simState.v4Positions = {};
+  simState.lockedItems = [];
+  simState.flawedItems = [];
+  ensureV4State();
+  simState.hardscape.partition = false;
+  simState.hardscape.pillar = false;
+  simState.hardscape.cableRaceway = false;
+  simState.scenario = 'sandbox';
+  const scenSelect = document.getElementById('scenarioSelect');
+  if (scenSelect) scenSelect.value = 'sandbox';
+  saveSimState();
   renderSim();
   playSimSound('confirm');
-  showRoomBanner('↺ 已重置為新遊戲狀態！');
+  showRoomBanner('↺ 已重新開始！房間已清空為無家具空屋狀態，請從零開始自由佈置！');
+  showSimMessage('🏠 已重置為全新空屋狀態（無任何預設家具），請前往「🛋️ 家具商城」或「🛠️ 軌道工坊」開始裝潢！');
 });
 
 document.addEventListener('keydown', e => {
@@ -5174,6 +6141,1026 @@ document.querySelectorAll('.insight-to-game-btn').forEach(btn => {
     syncGameToLifecycleCalc(false);
     document.getElementById('game')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
   });
+});
+
+
+// ═══════════════════════════════════════════════════════════════════════════
+// V4 DEEP RENOVATION, THEMED CATALOG, HARDSCAPE, COMBOS, SCENARIOS & QUOTE
+// ═══════════════════════════════════════════════════════════════════════════
+
+// 1. Complete 5-Category Themed 3D Furniture & Prop Catalog
+const V4_SHOP_CATALOG = [
+  // 🎮 電競與科技 (tech)
+  { id: 'standing-desk', cat: 'tech', name: '電動雙馬達升降桌', icon: '🖥️', price: 140, powerReq: true, isSurface: true, surfaceZ: 0.82, x: 4.8, y: 0.32, dx: 1.75, dy: 0.9, dz: 0.82, desc: '記憶高度升降，可承載桌上電競設備' },
+  { id: 'rgb-pc-rig', cat: 'tech', name: '全透側水冷 RGB 主機＋三螢幕', icon: '🌈', price: 210, powerReq: true, isSubgrid: true, emitsLight: 'rgb', x: 5.2, y: 0.42, dx: 1.15, dy: 0.45, dz: 0.58, desc: '[桌上小物] 深夜發七彩流光，電競角核心' },
+  { id: 'ergo-chair', cat: 'tech', name: '旗艦人體工學電競椅', icon: '💺', price: 110, powerReq: false, x: 5.3, y: 1.35, dx: 0.65, dy: 0.65, dz: 1.15, desc: '全網布護腰頭枕，久坐工作精力不減' },
+  { id: 'pegboard', cat: 'tech', name: '極客洞洞板 (掛鍵盤/耳機/手把)', icon: '🎮', price: 65, powerReq: false, isWall: true, x: 5.0, y: 0.05, dx: 1.4, dy: 0.12, dz: 0.85, zBase: 1.15, desc: '牆面垂直收納電競周邊，觸發極致電競角' },
+  { id: 'monitor-bar', cat: 'tech', name: '非對稱光學螢幕掛燈', icon: '🔦', price: 48, powerReq: true, isSubgrid: true, emitsLight: 'warm', x: 5.4, y: 0.4, dx: 0.55, dy: 0.15, dz: 0.52, desc: '[桌上小物] 深夜護眼照明不反光' },
+
+  // 🏆 收藏與娛樂 (collect)
+  { id: 'figure-cab', cat: 'collect', name: '玻璃公仔展示櫃 (內建投射燈)', icon: '🏆', price: 165, powerReq: true, emitsLight: 'showcase', x: 3.85, y: 0.25, dx: 0.95, dy: 0.55, dz: 1.95, desc: '深夜自動點亮層板投射燈，收藏家必備' },
+  { id: 'vinyl-player', cat: 'collect', name: '復古黑膠唱片機＋專輯展示架', icon: 'レコード', iconText: '💿', price: 95, powerReq: true, isSubgrid: true, x: 2.6, y: 4.1, dx: 0.52, dy: 0.45, dz: 0.38, desc: '[桌上小物] 播放溫暖類比音樂提升心情' },
+  { id: 'mahjong-table', cat: 'collect', name: '靜音過山車電動麻將桌', icon: '🀄', price: 190, powerReq: true, x: 3.4, y: 3.8, dx: 1.15, dy: 1.15, dz: 0.78, desc: '親友聚會神器，社交與娛樂大幅飆升' },
+  { id: 'beanbag', cat: 'collect', name: '雲朵包覆懶骨頭沙發', icon: '🥟', price: 60, powerReq: false, x: 2.1, y: 5.1, dx: 0.82, dy: 0.82, dz: 0.62, desc: '隨處可窩的極致耍廢角落' },
+  { id: 'projector', cat: 'collect', name: '4K 雷射投影機＆120吋升降布幕', icon: '📽️', price: 185, powerReq: true, emitsLight: 'screen', x: 2.45, y: 3.7, dx: 0.22, dy: 1.65, dz: 1.45, desc: '搭配沙發立即組成【家庭劇院 Combo】' },
+
+  // ☕ 生活與家電 (appliance)
+  { id: 'fridge-2d', cat: 'appliance', name: '雙門變頻鏡面冰箱', icon: '🧊', price: 155, powerReq: true, x: 1.82, y: 0.25, dx: 0.85, dy: 0.78, dz: 1.82, desc: '小宅必備食材儲藏核心' },
+  { id: 'coffee-maker', cat: 'appliance', name: '義式膠囊咖啡機', icon: '☕', price: 68, powerReq: true, isSubgrid: true, x: 2.5, y: 0.55, dx: 0.36, dy: 0.35, dz: 0.36, desc: '[桌上小物] 隨時沖泡香醇濃縮咖啡' },
+  { id: 'air-fryer', cat: 'appliance', name: '智慧觸控氣炸鍋', icon: '🍟', price: 55, powerReq: true, isSubgrid: true, x: 3.1, y: 0.55, dx: 0.36, dy: 0.36, dz: 0.38, desc: '[桌上小物] 無油煙快速料理宵夜' },
+  { id: 'robot-vac', cat: 'appliance', name: 'AI 雷射導航掃地機器人', icon: '🤖', price: 115, powerReq: false, isAutonomous: true, x: 4.2, y: 3.2, dx: 0.42, dy: 0.42, dz: 0.14, desc: '會在 3D 地板上自動巡航移動清潔！' },
+  { id: 'garment-steamer', cat: 'appliance', name: '直立式蒸氣掛燙機', icon: '👔', price: 52, powerReq: true, x: 6.9, y: 1.35, dx: 0.42, dy: 0.42, dz: 1.38, desc: '快速撫平衣物皺褶，提升清潔感' },
+
+  // 💡 照明與氛圍 (lighting)
+  { id: 'floor-lamp', cat: 'lighting', name: '北歐極簡弧形落地氣氛燈', icon: '🏮', price: 75, powerReq: true, emitsLight: 'warm', x: 0.55, y: 5.55, dx: 0.45, dy: 0.45, dz: 1.65, desc: '深夜散發溫暖琥珀光暈' },
+  { id: 'neon-sign', cat: 'lighting', name: '賽博霓虹造型燈條 (Cyber Neon)', icon: '⚡', price: 80, powerReq: true, isWall: true, emitsLight: 'neon', x: 5.15, y: 0.04, dx: 1.35, dy: 0.08, dz: 0.45, zBase: 1.82, desc: '深夜綻放紫青雙色霓虹光暈，實況背景首選' },
+  { id: 'track-spot', cat: 'lighting', name: '磁吸軌道投射燈組', icon: '✨', price: 70, powerReq: false, isWall: true, emitsLight: 'warm', x: 2.3, y: 0.04, dx: 2.2, dy: 0.12, dz: 0.16, zBase: 2.35, desc: '直接扣入 TAYA 頂部軌道免拉線' },
+
+  // 🐾 寵物與植栽 (pet)
+  { id: 'cat-tree', cat: 'pet', name: '頂天立地透明太空艙貓跳台', icon: '🐱', price: 135, powerReq: false, x: 8.05, y: 1.35, dx: 0.78, dy: 0.78, dz: 2.18, desc: '含透明太空艙與立體黑貓，貓奴委託必備' },
+  { id: 'monstera-xl', cat: 'pet', name: '設計師大型龜背芋盆栽', icon: '🪴', price: 65, powerReq: false, x: 0.55, y: 2.65, dx: 0.68, dy: 0.68, dz: 1.42, desc: '熱帶寬葉綠意，大幅美化空間角落' },
+  { id: 'aqua-tank', cat: 'pet', name: 'ADA 超白玻璃水草造景缸', icon: '🐠', price: 125, powerReq: true, isSubgrid: true, emitsLight: 'aqua', x: 2.6, y: 4.5, dx: 0.68, dy: 0.42, dz: 0.48, desc: '[桌上小物] 深夜散發清澈水藍綠光暈' }
+];
+
+// Wall Power Outlets fixed positions (for MEP Power check)
+const WALL_OUTLETS = [
+  { x: 2.0, y: 0.08, z: 0.35, label: '廚房牆面插座 A' },
+  { x: 6.2, y: 0.08, z: 0.35, label: '書房牆面插座 B' },
+  { x: 0.08, y: 4.6, z: 0.35, label: '客廳牆面插座 C' }
+];
+
+// 4 Scenarios + Sandbox Definitions
+const V4_SCENARIOS = {
+  sandbox: {
+    title: '🏖️ 自由沙盒模式',
+    budget: 650,
+    area: 18,
+    shape: 'rect',
+    lockedItems: [],
+    goals: [
+      { text: '自由調整格局、材質與添購 3D 主題家具', check: () => true },
+      { text: '嘗試拖曳「🌅 光影時刻滑桿」至深夜欣賞發光家具', check: () => simState.minutes >= 1140 || simState.minutes < 360 }
+    ]
+  },
+  micro5: {
+    title: '📦 關卡1：極限 5 坪套房改造',
+    budget: 380,
+    area: 5,
+    shape: 'rect',
+    pillar: true,
+    lockedItems: [],
+    goals: [
+      { text: '維持 5 坪極限空間且預算不透支 (≥ §0)', check: () => simState.profile.area === 5 && simState.money >= 0 },
+      { text: '配置工作桌 (WORK DLC 或升降桌) 與收納櫃', check: () => (isDlcActive('work') || hasV4Item('standing-desk')) && isDlcActive('storage') },
+      { text: '添購雙門冰箱或料理區，且「🚶 動線檢查」暢通無阻', check: () => (hasV4Item('fridge-2d') || isDlcActive('family')) && !isPathBlocked() }
+    ]
+  },
+  streamer: {
+    title: '🎙️ 關卡2：委託人A（硬核實況主）',
+    budget: 850,
+    area: 18,
+    shape: 'lshape',
+    pillar: true,
+    lockedItems: [],
+    goals: [
+      { text: '牆面改為「🔇 六角吸音棉牆」解決實況回音', check: () => simState.hardscape?.wallMat === 'acoustic' },
+      { text: '觸發【🔥 極致電競角 Combo】(升降桌/WORK + RGB主機 + 電競椅/洞洞板)', check: () => getActiveCombos().some(c => c.id === 'gaming-corner') },
+      { text: '加裝「⚡ 賽博霓虹燈條」或「🏆 公仔展示櫃」美化鏡頭背景', check: () => hasV4Item('neon-sign') || hasV4Item('figure-cab') }
+    ]
+  },
+  catlover: {
+    title: '🐱 關卡3：委託人B（收藏家與貓奴）',
+    budget: 920,
+    area: 25,
+    shape: 'balcony',
+    pillar: false,
+    lockedItems: [],
+    goals: [
+      { text: '地板鋪設「🪵 全室超耐磨木地板」保護貓咪肉球', check: () => simState.hardscape?.floorMat === 'wood' },
+      { text: '配置「🏆 玻璃公仔展示櫃」與「🐱 透明太空艙貓跳台」', check: () => hasV4Item('figure-cab') && hasV4Item('cat-tree') },
+      { text: '觸發【🐾 貓奴收藏家 Combo】且動線暢通', check: () => getActiveCombos().some(c => c.id === 'cat-collector') && !isPathBlocked() }
+    ]
+  },
+  moving: {
+    title: '🚚 關卡4：無痛搬家挑戰（舊物融合）',
+    budget: 500,
+    area: 18,
+    shape: 'rect',
+    pillar: true,
+    lockedItems: ['mahjong-table', 'fridge-2d', 'beanbag'],
+    goals: [
+      { text: '保留 3 件舊家帶來的不可賣家具 (麻將桌/冰箱/懶骨頭)', check: () => ['mahjong-table', 'fridge-2d', 'beanbag'].every(id => hasV4Item(id)) },
+      { text: '不拆除承重柱、善用 TAYA 軌道模組將空間評分推上 88 分', check: () => getSpaceScore() >= 88 }
+    ]
+  }
+};
+
+// Initialize V4 state fields safely (default empty room)
+function ensureV4State() {
+  if (!simState.hardscape) {
+    simState.hardscape = {
+      shape: 'rect',       // 'rect' | 'lshape' | 'balcony'
+      partition: false,    // Light partition wall built
+      pillar: false,       // Structural load-bearing pillar & pipe shaft
+      walkup: false,       // Walk-up apartment (+15% moving fee for bulky items)
+      floorMat: 'wood',    // 'wood' | 'zoned' | 'tile'
+      wallMat: 'warm',     // 'warm' | 'stone' | 'acoustic'
+      cableRaceway: false, // Extension cord & raceway installed
+      blindsOpen: 80,      // 0..100%
+      blueprintMode: false // 2D Top-Down Blueprint camera mode
+    };
+  }
+  if (!Array.isArray(simState.v4Items)) {
+    simState.v4Items = [];
+  }
+  if (!simState.v4Positions) {
+    simState.v4Positions = {};
+  }
+  if (!Array.isArray(simState.lockedItems)) {
+    simState.lockedItems = [];
+  }
+  if (!Array.isArray(simState.flawedItems)) {
+    simState.flawedItems = [];
+  }
+  if (!simState.scenario) {
+    simState.scenario = 'sandbox';
+  }
+  if (!simState.hiddenCostsPaid) {
+    simState.hiddenCostsPaid = 0;
+  }
+}
+ensureV4State();
+
+let currentShopChannel = 'new'; // 'new' | 'used' | 'blindbox'
+let currentShopCat = 'all';
+let usedMarketPool = [];
+let robotVacState = { x: 4.2, y: 3.1, vx: 0.75, vy: 0.55 };
+let pathCheckAnim = null; // { startAt, waypoints, blocked, reason }
+let draggingSubgridItem = null; // { id }
+
+function hasV4Item(id) {
+  ensureV4State();
+  return simState.v4Items.includes(id);
+}
+
+function getV4ItemPos(item) {
+  ensureV4State();
+  const custom = simState.v4Positions[item.id];
+  const x = custom && Number.isFinite(custom.x) ? custom.x : item.x;
+  const y = custom && Number.isFinite(custom.y) ? custom.y : item.y;
+  // Auto-stacking check for sub-grid tabletop items!
+  let z = item.zBase || 0;
+  if (item.isSubgrid) {
+    // Check if placed over WORK DLC desk, Standing Desk, FAMILY Island, or TV console
+    const tp = simState.trackPos || { work: 5.1, family: 2.1 };
+    const workX = tp.work ?? 5.1;
+    const famX = tp.family ?? 2.1;
+    if (isDlcActive('work') && x >= workX - 0.2 && x <= workX + 2.0 && y <= 1.35) {
+      z = 0.84;
+    } else if (hasV4Item('standing-desk') && x >= 4.5 && x <= 6.7 && y <= 1.35) {
+      z = 0.84;
+    } else if (isDlcActive('family') && x >= famX - 0.2 && x <= famX + 2.3 && y <= 1.95) {
+      z = 0.95;
+    } else if (simState.furniture.includes('tv-wall') && x >= 2.2 && x <= 3.3 && y >= 3.6 && y <= 5.4) {
+      z = 0.44;
+    }
+  }
+  return { x, y, z };
+}
+
+// Check MEP Power Distance for high-power items
+function checkMepPowerStatus() {
+  ensureV4State();
+  if (simState.hardscape.cableRaceway) {
+    return { ok: true, msg: '✅ 已鋪設全室「隱藏式延長線與壓條」，所有跨區電器供電完美且零雜亂走線！', penalty: 0 };
+  }
+  const unpowered = [];
+  simState.v4Items.forEach(id => {
+    const meta = V4_SHOP_CATALOG.find(m => m.id === id);
+    if (!meta || !meta.powerReq) return;
+    const pos = getV4ItemPos(meta);
+    // TAYA back wall track (y <= 1.4) provides integrated 110V power bus when WORK or FAMILY DLC is active
+    if (pos.y <= 1.45 && (isDlcActive('work') || isDlcActive('family'))) return;
+    const nearOutlet = WALL_OUTLETS.some(o => Math.hypot(pos.x - o.x, pos.y - o.y) <= 2.35);
+    if (!nearOutlet) unpowered.push(meta.name);
+  });
+  if (unpowered.length === 0) {
+    return { ok: true, msg: '🔌 所有高耗電設備皆位於牆面插座或 TAYA 電力軌道供電範圍內。', penalty: 0 };
+  }
+  return {
+    ok: false,
+    msg: `⚠️ 跨區走線警告：「${unpowered.slice(0, 2).join('、')}」距離牆面插座過遠，裸露延長線扣減 -${unpowered.length * 4} 美觀分！`,
+    penalty: unpowered.length * 4
+  };
+}
+
+// Check Room Combos (空間加乘)
+function getActiveCombos() {
+  ensureV4State();
+  const combos = [];
+  // 1. 極致電競角 Combo
+  const hasDesk = isDlcActive('work') || hasV4Item('standing-desk');
+  const hasRig = hasV4Item('rgb-pc-rig');
+  const hasErgoOrPeg = hasV4Item('ergo-chair') || hasV4Item('pegboard');
+  if (hasDesk && hasRig && hasErgoOrPeg) {
+    combos.push({ id: 'gaming-corner', label: '🔥 極致電競角 Combo', bonus: 18 });
+  }
+  // 2. 家庭劇院 Combo
+  const hasSofa = simState.furniture.includes('sofa-set') || hasV4Item('beanbag');
+  const hasScreen = hasV4Item('projector') || simState.furniture.includes('tv-wall');
+  if (hasSofa && hasScreen) {
+    combos.push({ id: 'home-theater', label: '🎬 沉浸家庭劇院 Combo', bonus: 15 });
+  }
+  // 3. 貓奴收藏家 Combo
+  if (hasV4Item('figure-cab') && hasV4Item('cat-tree') && simState.hardscape.floorMat === 'wood') {
+    combos.push({ id: 'cat-collector', label: '🐾 貓奴收藏家 Combo', bonus: 15 });
+  }
+  // 4. 質感生活家 Combo
+  if ((hasV4Item('coffee-maker') || isDlcActive('family')) && hasV4Item('vinyl-player') && (hasV4Item('monstera-xl') || simState.furniture.includes('plant-deco'))) {
+    combos.push({ id: 'lifestyle-pro', label: '☕ 質感生活家 Combo', bonus: 12 });
+  }
+  return combos;
+}
+
+// Check if Circulation Path (動線) is blocked
+function isPathBlocked() {
+  ensureV4State();
+  // Partition wall + bulky mahjong table in center or extreme clutter in 5-ping room blocks circulation
+  if (simState.profile.area <= 5 && simState.hardscape.partition) {
+    return '5 坪微型空間加蓋輕隔間牆導致走道小於 60cm，動線卡死！';
+  }
+  if (!isDlcActive('storage') && simState.profile.area <= 12 && hasV4Item('mahjong-table')) {
+    return '地面未收納的紙箱雜物與電動麻將桌卡住臥床走道（建議安裝 STORAGE DLC）！';
+  }
+  return null;
+}
+
+// Refresh Used Auction Market (3~7折)
+function refreshUsedMarket() {
+  const shuffled = [...V4_SHOP_CATALOG].sort(() => Math.random() - 0.5);
+  usedMarketPool = shuffled.slice(0, 5).map(item => {
+    const discount = [0.35, 0.45, 0.55, 0.65][Math.floor(Math.random() * 4)];
+    return {
+      ...item,
+      usedPrice: Math.max(18, Math.round(item.price * discount)),
+      discountLabel: `${Math.round(discount * 10)}折`,
+      hasMinorFlaw: true
+    };
+  });
+}
+refreshUsedMarket();
+
+// 2. Render 3D Hardscape (L-Shape / Balcony / Partition Wall / Pillar / Wall Finish / Outlets / Blinds) & V4 3D Models
+function drawV4HardscapeAndProps(iso, now, isNight, isDusk) {
+  ensureV4State();
+  const hs = simState.hardscape;
+  const darkFactor = isNight ? 1 : isDusk ? 0.55 : 0;
+
+  // A. Zoned Floor Materials (玄關磁磚 + 電競地毯 + 陽台外推區)
+  if (hs.floorMat === 'zoned') {
+    // Entryway Tile Zone (front-left x:0..2.2, y:5.0..6.6)
+    iso.drawBox(0.05, 5.0, 0.008, 2.2, 1.55, 0.02, isNight ? '#64748b' : '#cbd5e1');
+    // Gaming Carpet Zone (under desk x:4.4..7.2, y:0.25..2.1)
+    iso.drawBox(4.4, 0.25, 0.008, 2.8, 1.85, 0.025, isNight ? '#1e1b4b' : '#312e81', { stroke: '#6366f1' });
+  } else if (hs.floorMat === 'tile') {
+    iso.drawBox(0.04, 0.04, 0.006, 8.9, 6.5, 0.015, isNight ? '#64748b' : '#e2e8f0');
+  }
+
+  // B. Room Shape Variations: L-Shape Cutout or Balcony Extension
+  if (hs.shape === 'lshape') {
+    // L-Shape corner cutout block (front-right corner x:6.8..9.0, y:4.8..6.6)
+    iso.drawBox(6.85, 4.85, 0, 2.15, 1.75, 2.65, isNight ? '#334155' : '#cfc6b8');
+  } else if (hs.shape === 'balcony') {
+    // Balcony sunlit deck extension along back-left (x:0.4..3.8, y:-0.95..0)
+    iso.drawBox(0.4, -0.95, -0.15, 3.4, 0.95, 0.16, isNight ? '#57534e' : '#a8a29e');
+    iso.drawBox(0.4, -0.95, 0.02, 3.4, 0.08, 0.95, '#38bdf8', { topColor: 'rgba(186,230,253,0.5)' });
+  }
+
+  // C. Wall Finishes: Culture Stone (北歐文化石) or Hex Acoustic Foam Panels (六角吸音棉牆)
+  if (!simState.xrayMode) {
+    if (hs.wallMat === 'stone') {
+      for (let sx = 2.4; sx < 8.4; sx += 0.95) {
+        for (let sz = 0.35; sz < 2.2; sz += 0.42) {
+          iso.drawBox(sx + ((sz * 10) % 2) * 0.2, 0.01, sz, 0.78, 0.05, 0.32, isNight ? '#94a3b8' : '#e5e0d5');
+        }
+      }
+    } else if (hs.wallMat === 'acoustic') {
+      const cols = ['#1e293b', '#334155', '#0f766e', '#b45309'];
+      let idx = 0;
+      for (let sx = 4.2; sx < 8.4; sx += 0.65) {
+        for (let sz = 1.05; sz < 2.35; sz += 0.48) {
+          iso.drawBox(sx, 0.02, sz, 0.52, 0.06, 0.38, cols[idx % cols.length]);
+          idx++;
+        }
+      }
+    }
+  }
+
+  // D. Fixed Entry Main Door (玄關大門 on Left Wall x=0, y:5.2..6.2) & Window Blinds (百葉窗)
+  iso.drawBox(-0.04, 5.25, 0, 0.12, 0.95, 2.05, '#5c4028'); // Door frame
+  iso.drawBox(0.02, 5.95, 0.95, 0.08, 0.12, 0.08, '#f59e0b'); // Smart electronic lock
+
+  // Window Blinds slats & Sunbeam stripes on floor (百葉窗開合角度改變進光量)
+  const blindPct = (hs.blindsOpen ?? 80) / 100;
+  const slatCount = 5;
+  for (let i = 0; i < slatCount; i++) {
+    const sz = 1.12 + i * 0.21;
+    const slatH = 0.04 + (1 - blindPct) * 0.15;
+    iso.drawBox(0.66, 0.02, sz, 1.32, 0.06, slatH, '#f8fafc');
+  }
+  if (!isNight && blindPct > 0.1) {
+    // Draw sunlit floor beams proportional to blinds opening!
+    roomCtx.save();
+    const sunAlpha = (isDusk ? 0.14 : 0.22) * blindPct;
+    const sunCol = isDusk ? `rgba(251, 146, 60, ${sunAlpha})` : `rgba(254, 249, 195, ${sunAlpha})`;
+    for (let s = 0; s < 3; s++) {
+      const sy = 0.4 + s * 0.55;
+      const pts = [
+        iso.project(0.7, sy, 0.015),
+        iso.project(2.1, sy, 0.015),
+        iso.project(2.4, sy + 0.32 * blindPct, 0.015),
+        iso.project(1.0, sy + 0.32 * blindPct, 0.015)
+      ];
+      iso.drawPoly(pts, sunCol, null);
+    }
+    roomCtx.restore();
+  }
+
+  // E. Structural Load-Bearing Pillar & Pipe Shaft (不可拆承重柱與管道間)
+  if (hs.pillar) {
+    iso.drawShadow(0.22, 1.92, 0.62, 0.62, 0.22);
+    iso.drawBox(0.22, 1.92, 0, 0.58, 0.58, 2.62, isNight ? '#64748b' : '#cbd5e1');
+  }
+
+  // F. Light Partition Wall (輕隔間牆：切出臥室與客廳分區)
+  if (hs.partition) {
+    iso.drawShadow(5.65, 2.75, 0.18, 2.45, 0.2);
+    iso.drawBox(5.65, 2.75, 0, 0.18, 2.45, 2.25, isNight ? '#94a3b8' : '#e7e0d3');
+    // Frosted glass upper window in partition wall
+    iso.drawBox(5.63, 3.05, 1.15, 0.22, 1.85, 0.85, '#bae6fd', {
+      topColor: 'rgba(186,230,253,0.55)',
+      rightColor: 'rgba(186,230,253,0.38)',
+      leftColor: 'rgba(125,211,252,0.35)'
+    });
+  }
+
+  // G. Wall Power Outlets & Cable Raceway (水電插座與壓條)
+  WALL_OUTLETS.forEach(o => {
+    iso.drawBox(o.x, o.y, o.z, 0.16, 0.06, 0.12, '#f8fafc', { stroke: '#64748b' });
+  });
+  if (hs.cableRaceway) {
+    iso.drawBox(0.15, 0.06, 0.04, 8.2, 0.08, 0.05, '#d97706');
+  }
+
+  // H. Autonomous Robot Vacuum (會在地上自動移動的掃地機器人)
+  if (hasV4Item('robot-vac')) {
+    const rv = robotVacState;
+    iso.drawShadow(rv.x - 0.2, rv.y - 0.2, 0.4, 0.4, 0.2);
+    iso.drawBox(rv.x - 0.18, rv.y - 0.18, 0.01, 0.36, 0.36, 0.1, '#f8fafc', { stroke: '#38bdf8' });
+    iso.drawBox(rv.x - 0.06, rv.y - 0.06, 0.11, 0.12, 0.12, 0.04, '#0284c7'); // LiDAR turret
+  }
+
+  // I. Render Placed V4 Themed 3D Props & Dynamic Night Glows
+  simState.v4Items.forEach(id => {
+    if (id === 'robot-vac') return; // Already drawn dynamically
+    const item = V4_SHOP_CATALOG.find(m => m.id === id);
+    if (!item) return;
+    const pos = getV4ItemPos(item);
+    const lift = getSnapLift(id, now);
+    const x = pos.x, y = pos.y, z0 = pos.z + lift;
+    const { dx, dy, dz } = item;
+
+    if (z0 < 0.1) iso.drawShadow(x, y, dx, dy, 0.16);
+
+    if (id === 'standing-desk') {
+      iso.drawBox(x + 0.12, y + 0.2, z0, 0.1, 0.5, 0.74, '#1e293b');
+      iso.drawBox(x + dx - 0.22, y + 0.2, z0, 0.1, 0.5, 0.74, '#1e293b');
+      iso.drawBox(x, y, z0 + 0.74, dx, dy, 0.08, '#334155');
+    } else if (id === 'rgb-pc-rig') {
+      // Full-tower tempered glass RGB PC + Triple Curved Monitors
+      iso.drawBox(x, y, z0, 0.78, 0.14, 0.42, '#0f172a'); // Triple monitor array
+      iso.drawBox(x + 0.03, y + 0.12, z0 + 0.04, 0.72, 0.04, 0.34, '#38bdf8');
+      // RGB Glass PC Tower on right
+      const hueCol = Math.floor(now / 350) % 2 === 0 ? '#ec4899' : '#8b5cf6';
+      iso.drawBox(x + 0.84, y, z0, 0.28, 0.38, 0.52, '#1e293b');
+      iso.drawBox(x + 0.86, y + 0.04, z0 + 0.06, 0.24, 0.3, 0.4, hueCol);
+    } else if (id === 'ergo-chair') {
+      iso.drawBox(x + 0.22, y + 0.22, z0, 0.14, 0.14, 0.42, '#1e293b');
+      iso.drawBox(x, y, z0 + 0.42, dx, dy, 0.1, '#dc2626');
+      iso.drawBox(x + 0.06, y + dy - 0.12, z0 + 0.52, dx - 0.12, 0.12, 0.62, '#1e293b');
+    } else if (id === 'pegboard') {
+      iso.drawBox(x, y, z0, dx, dy, dz, '#334155');
+      iso.drawBox(x + 0.18, y + 0.08, z0 + 0.22, 0.38, 0.08, 0.16, '#38bdf8'); // Mounted keyboard
+      iso.drawBox(x + 0.75, y + 0.08, z0 + 0.42, 0.24, 0.1, 0.24, '#f43f5e'); // Headset
+      iso.drawBox(x + 1.08, y + 0.08, z0 + 0.18, 0.2, 0.08, 0.16, '#facc15'); // Controller
+    } else if (id === 'figure-cab') {
+      iso.drawBox(x, y, z0, dx, dy, 0.12, '#1e293b');
+      iso.drawBox(x, y, z0 + 0.12, dx, dy, dz - 0.22, '#bae6fd', {
+        topColor: 'rgba(254,249,195,0.75)',
+        rightColor: 'rgba(186,230,253,0.38)',
+        leftColor: 'rgba(254,240,138,0.42)'
+      });
+      // Collectible figures inside showcase shelves
+      iso.drawBox(x + 0.2, y + 0.18, z0 + 0.55, 0.2, 0.2, 0.32, '#f43f5e');
+      iso.drawBox(x + 0.55, y + 0.18, z0 + 0.55, 0.2, 0.2, 0.35, '#3b82f6');
+      iso.drawBox(x + 0.35, y + 0.18, z0 + 1.15, 0.24, 0.22, 0.38, '#f59e0b');
+      iso.drawBox(x, y, z0 + dz - 0.1, dx, dy, 0.1, '#1e293b');
+    } else if (id === 'vinyl-player') {
+      iso.drawBox(x, y, z0, dx, dy, 0.16, '#92400e');
+      iso.drawBox(x + 0.08, y + 0.08, z0 + 0.16, 0.28, 0.28, 0.04, '#1e293b'); // Spinning vinyl record
+    } else if (id === 'mahjong-table') {
+      iso.drawBox(x + 0.38, y + 0.38, z0, 0.36, 0.36, 0.66, '#334155');
+      iso.drawBox(x, y, z0 + 0.66, dx, dy, 0.12, '#065f46', { topColor: '#10b981' }); // Green baize tabletop
+    } else if (id === 'beanbag') {
+      iso.drawBox(x, y, z0, dx, dy, 0.38, '#d97706');
+      iso.drawBox(x + 0.1, y + 0.1, z0 + 0.38, dx - 0.2, dy - 0.2, 0.24, '#f59e0b');
+    } else if (id === 'projector') {
+      iso.drawBox(x, y, z0 + 0.45, 0.08, dy, 1.05, '#f8fafc', { leftColor: '#38bdf8' });
+    } else if (id === 'fridge-2d') {
+      iso.drawBox(x, y, z0, dx, dy, dz, '#475569');
+      iso.drawBox(x + dx * 0.48, y + dy - 0.03, z0 + 0.2, 0.04, 0.05, dz - 0.35, '#cbd5e1');
+    } else if (id === 'coffee-maker' || id === 'air-fryer') {
+      iso.drawBox(x, y, z0, dx, dy, dz, id === 'coffee-maker' ? '#b91c1c' : '#1e293b');
+    } else if (id === 'cat-tree') {
+      iso.drawBox(x, y, z0, dx, dy, 0.1, '#d6c7b2');
+      iso.drawBox(x + 0.28, y + 0.28, z0 + 0.1, 0.18, 0.18, dz - 0.1, '#b08968'); // Sisal post
+      iso.drawBox(x + 0.08, y + 0.1, z0 + 0.95, 0.58, 0.55, 0.08, '#e6ccb2');
+      // Transparent Space Capsule + 3D Black Cat
+      iso.drawBox(x + 0.12, y + 0.12, z0 + 1.55, 0.52, 0.52, 0.28, '#bae6fd');
+      iso.drawBox(x + 0.24, y + 0.24, z0 + 1.68, 0.24, 0.24, 0.22, '#1e293b'); // 3D Cat sitting on capsule!
+    } else if (id === 'neon-sign') {
+      iso.drawBox(x, y, z0, dx, dy, dz, '#ec4899', { topColor: '#22d3ee', leftColor: '#f472b6' });
+    } else if (id === 'aqua-tank') {
+      iso.drawBox(x, y, z0, dx, dy, dz, '#06b6d4', { topColor: '#67e8f9', leftColor: '#10b981' });
+    } else {
+      iso.drawBox(x, y, z0, dx, dy, dz, '#648272');
+    }
+
+    // J. Real-time Glowing Radial Light Halos at Dusk / Night!
+    if ((isNight || isDusk) && item.emitsLight) {
+      const pt = iso.project(x + dx / 2, y + dy / 2, z0 + dz * 0.6);
+      roomCtx.save();
+      const radius = item.emitsLight === 'rgb' || item.emitsLight === 'neon' ? 78 : 65;
+      const grad = roomCtx.createRadialGradient(pt.x, pt.y, 4, pt.x, pt.y, radius);
+      if (item.emitsLight === 'rgb') {
+        grad.addColorStop(0, 'rgba(236, 72, 153, 0.55)');
+        grad.addColorStop(0.5, 'rgba(56, 189, 248, 0.28)');
+        grad.addColorStop(1, 'rgba(56, 189, 248, 0)');
+      } else if (item.emitsLight === 'neon') {
+        grad.addColorStop(0, 'rgba(34, 211, 238, 0.62)');
+        grad.addColorStop(0.5, 'rgba(236, 72, 153, 0.3)');
+        grad.addColorStop(1, 'rgba(236, 72, 153, 0)');
+      } else if (item.emitsLight === 'aqua') {
+        grad.addColorStop(0, 'rgba(52, 211, 153, 0.55)');
+        grad.addColorStop(1, 'rgba(6, 182, 212, 0)');
+      } else {
+        grad.addColorStop(0, 'rgba(254, 240, 138, 0.55)');
+        grad.addColorStop(1, 'rgba(251, 191, 36, 0)');
+      }
+      roomCtx.fillStyle = grad;
+      roomCtx.beginPath();
+      roomCtx.arc(pt.x, pt.y, radius, 0, Math.PI * 2);
+      roomCtx.fill();
+      roomCtx.restore();
+    }
+  });
+
+  // K. Render Circulation Pathfinding Inspector Overlay (🚶 動線測試軌跡與紅綠燈)
+  if (pathCheckAnim && now - pathCheckAnim.startAt < 4500) {
+    const pts = pathCheckAnim.waypoints.map(w => iso.project(w.x, w.y, 0.08));
+    roomCtx.save();
+    roomCtx.lineWidth = 4;
+    roomCtx.setLineDash([8, 5]);
+    roomCtx.strokeStyle = pathCheckAnim.blocked ? '#ef4444' : '#22c55e';
+    roomCtx.beginPath();
+    pts.forEach((p, idx) => {
+      if (idx === 0) roomCtx.moveTo(p.x, p.y);
+      else roomCtx.lineTo(p.x, p.y);
+    });
+    roomCtx.stroke();
+    pts.forEach((p, idx) => {
+      roomCtx.fillStyle = pathCheckAnim.blocked && idx >= 2 ? '#ef4444' : '#22c55e';
+      roomCtx.beginPath();
+      roomCtx.arc(p.x, p.y, 6, 0, Math.PI * 2);
+      roomCtx.fill();
+    });
+    roomCtx.restore();
+  }
+}
+
+// 3. Render Shop UI, Combo Tags, Scenario Checklist, Hardscape & Quote Exporter
+function renderV4Panels() {
+  ensureV4State();
+  const hs = simState.hardscape;
+
+  // A. Combo Tags
+  const combos = getActiveCombos();
+  const comboTotal = combos.reduce((s, c) => s + c.bonus, 0);
+  const comboSummaryEl = document.getElementById('comboBonusSummary');
+  if (comboTotal > 0 && comboSummaryEl) {
+    comboSummaryEl.textContent = `已觸發 ${combos.length} 項加成 (+${comboTotal} 分)`;
+  } else if (comboSummaryEl) {
+    comboSummaryEl.textContent = '尚未觸發組合加成';
+  }
+  const comboBox = document.getElementById('comboTagsBox');
+  if (comboBox) {
+    const allComboDefs = [
+      { id: 'gaming-corner', label: '🔥 極致電競角 (+18)' },
+      { id: 'home-theater', label: '🎬 沉浸家庭劇院 (+15)' },
+      { id: 'cat-collector', label: '🐾 貓奴收藏家 (+15)' },
+      { id: 'lifestyle-pro', label: '☕ 質感生活家 (+12)' }
+    ];
+    comboBox.innerHTML = allComboDefs.map(cd => {
+      const act = combos.some(c => c.id === cd.id);
+      return `<span class="combo-chip${act ? ' active' : ''}">${act ? '✓ ' : ''}${cd.label}</span>`;
+    }).join('');
+  }
+
+  // B. Scenario Goals Checklist
+  const scen = V4_SCENARIOS[simState.scenario] || V4_SCENARIOS.sandbox;
+  const scenSelect = document.getElementById('scenarioSelect');
+  if (scenSelect) scenSelect.value = simState.scenario;
+  const goalsEl = document.getElementById('scenarioGoalsList');
+  let allDone = true;
+  if (goalsEl) {
+    goalsEl.innerHTML = scen.goals.map(g => {
+      const ok = Boolean(g.check());
+      if (!ok) allDone = false;
+      return `<li class="${ok ? 'done' : ''}">${ok ? '✅' : '⬜'} ${g.text}</li>`;
+    }).join('');
+  }
+  const scenBadge = document.getElementById('scenarioStatusBadge');
+  if (scenBadge) {
+    scenBadge.textContent = allDone ? '🎉 委託達標！' : '進行中';
+    scenBadge.style.color = allDone ? '#15803d' : '#98633f';
+  }
+
+  // C. Hardscape & MEP Status
+  document.querySelectorAll('#layoutShapeBtns .hardscape-btn').forEach(b => {
+    b.classList.toggle('active', b.dataset.shape === hs.shape);
+  });
+  document.querySelectorAll('#floorMatBtns .hardscape-btn').forEach(b => {
+    b.classList.toggle('active', b.dataset.floor === hs.floorMat);
+  });
+  document.querySelectorAll('#wallMatBtns .hardscape-btn').forEach(b => {
+    b.classList.toggle('active', b.dataset.wall === hs.wallMat);
+  });
+  document.getElementById('btnTogglePartition')?.classList.toggle('active', Boolean(hs.partition));
+  document.getElementById('btnTogglePillar')?.classList.toggle('active', Boolean(hs.pillar));
+  document.getElementById('btnToggleWalkup')?.classList.toggle('active', Boolean(hs.walkup));
+
+  const mep = checkMepPowerStatus();
+  const mepBar = document.getElementById('mepStatusBar');
+  const mepBadge = document.getElementById('mepBadgeText');
+  if (mepBar) {
+    mepBar.textContent = mep.msg;
+    mepBar.classList.toggle('warn', !mep.ok);
+  }
+  if (mepBadge) {
+    mepBadge.textContent = mep.ok ? '⚡ 供電完美' : `⚠️ 扣減 ${mep.penalty} 分`;
+    mepBadge.style.color = mep.ok ? '#527464' : '#b45309';
+  }
+  const racewayBtn = document.getElementById('btnBuyCableRaceway');
+  if (racewayBtn) {
+    racewayBtn.classList.toggle('active', Boolean(hs.cableRaceway));
+    racewayBtn.textContent = hs.cableRaceway
+      ? '✅ 已鋪設全室「隱藏式延長線與地板壓條」'
+      : '🔌 鋪設「隱藏式延長線與地板壓條」(§25 · 消除跨區接電扣分)';
+  }
+
+  // D. Shop Channels (New / Used Auction / Blind Box)
+  const refreshBtn = document.getElementById('btnRefreshUsed');
+  const hintEl = document.getElementById('shopChannelHint');
+  if (refreshBtn) refreshBtn.style.display = currentShopChannel === 'used' ? 'inline-block' : 'none';
+  if (hintEl) {
+    hintEl.textContent = currentShopChannel === 'new'
+      ? '💡 標註 [桌上小物] 可在 3D 畫面拖曳微調座標並自動疊上桌面！'
+      : currentShopChannel === 'used'
+      ? '♻️ 二手拍賣網每日刷新 3~7 折單品（微瑕可花 §15 翻新）'
+      : '🎁 花費 §35 隨機抽出高價驚喜電競／收藏／寵物盲盒單品！';
+  }
+
+  const shopGrid = document.getElementById('shopItemsGrid');
+  if (!shopGrid) return;
+  shopGrid.innerHTML = '';
+
+  if (currentShopChannel === 'blindbox') {
+    const boxCard = document.createElement('div');
+    boxCard.className = 'shop-item-card';
+    boxCard.style.padding = '0.85rem';
+    boxCard.innerHTML = `
+      <div class="shop-item-info">
+        <strong>🎁 TAYA 驚喜特價盲盒／福利品福袋</strong>
+        <small>僅需 §35！隨機開出價值 §65~§210 的 RGB 主機、公仔展示櫃、黑膠機、太空艙貓跳台或霓虹燈條！</small>
+      </div>
+      <button type="button" class="shop-buy-btn" id="btnOpenBlindBox">🎲 花費 §35 立即開箱</button>
+    `;
+    boxCard.querySelector('#btnOpenBlindBox').addEventListener('click', () => {
+      if (simState.money < 35) {
+        playSimSound('error');
+        showSimMessage('⚠️ 預算不足 §35，先執行工作賺取資金吧！', true);
+        return;
+      }
+      const unowned = V4_SHOP_CATALOG.filter(m => !hasV4Item(m.id));
+      const pool = unowned.length > 0 ? unowned : V4_SHOP_CATALOG;
+      const prize = pool[Math.floor(Math.random() * pool.length)];
+      simState.money -= 35;
+      if (!hasV4Item(prize.id)) simState.v4Items.push(prize.id);
+      triggerSnapEffect(prize.id);
+      spawnFloatingText(`🎁 開出：${prize.name}！`, simState.player.x, simState.player.y, 1.85, '#fde047');
+      saveSimState();
+      playSimSound('buff');
+      renderSim();
+      showRoomBanner(`🎉 盲盒大獎！僅花 §35 抽中「${prize.name}」(原價 §${prize.price})！`, true);
+    });
+    shopGrid.appendChild(boxCard);
+    return;
+  }
+
+  const listSource = currentShopChannel === 'used' ? usedMarketPool : V4_SHOP_CATALOG;
+  const filtered = listSource.filter(item => currentShopCat === 'all' || item.cat === currentShopCat);
+
+  filtered.forEach(item => {
+    const owned = hasV4Item(item.id);
+    const isLocked = simState.lockedItems && simState.lockedItems.includes(item.id);
+    const isFlawed = simState.flawedItems && simState.flawedItems.includes(item.id);
+    const basePrice = currentShopChannel === 'used' ? item.usedPrice : item.price;
+    const walkupFee = (!owned && hs.walkup && !item.isSubgrid && !item.isWall) ? Math.round(basePrice * 0.15) : 0;
+    const totalCost = basePrice + walkupFee;
+
+    const card = document.createElement('div');
+    card.className = `shop-item-card${owned ? ' owned' : ''}`;
+    const iconDisp = item.iconText || item.icon;
+    const discountBadge = currentShopChannel === 'used' ? `<span style="color:#b45309; font-weight:800;">[${item.discountLabel}]</span> ` : '';
+    const walkupNote = walkupFee > 0 ? ` (含無電梯搬運費+§${walkupFee})` : '';
+
+    card.innerHTML = `
+      <div class="shop-item-info">
+        <strong>${iconDisp} ${discountBadge}${item.name} ${isFlawed ? '🔧(微瑕)' : ''}</strong>
+        <small>${item.desc}${walkupNote}</small>
+      </div>
+      <div class="shop-item-actions">
+        ${owned && isFlawed ? `<button type="button" class="shop-buy-btn" data-refurb="${item.id}">✨翻新§15</button>` : ''}
+        <button type="button" class="shop-buy-btn${owned ? ' owned' : ''}${isLocked ? ' locked' : ''}">
+          ${isLocked ? '🔒 舊家鎖定' : owned ? '售出 (+50%)' : `購買 §${totalCost}`}
+        </button>
+      </div>
+    `;
+
+    const refurbBtn = card.querySelector('[data-refurb]');
+    if (refurbBtn) {
+      refurbBtn.addEventListener('click', () => {
+        if (simState.money < 15) {
+          playSimSound('error');
+          showSimMessage('⚠️ 預算不足 §15！', true);
+          return;
+        }
+        simState.money -= 15;
+        simState.flawedItems = simState.flawedItems.filter(f => f !== item.id);
+        saveSimState();
+        playSimSound('buff');
+        renderSim();
+        showRoomBanner(`✨ 已清潔翻新「${item.name}」，恢復全新美觀度！`, true);
+      });
+    }
+
+    const mainBtn = card.querySelector('.shop-item-actions button:last-child');
+    mainBtn.addEventListener('click', () => {
+      if (isLocked) {
+        playSimSound('error');
+        showSimMessage('🔒 此為「無痛搬家挑戰」舊家帶來的既有家具，不可賣出，請搭配新配件融入格局！', true);
+        return;
+      }
+      if (owned) {
+        simState.v4Items = simState.v4Items.filter(i => i !== item.id);
+        simState.flawedItems = (simState.flawedItems || []).filter(i => i !== item.id);
+        const refund = Math.round(item.price * 0.5);
+        simState.money += refund;
+        playSimSound('tap');
+        showSimMessage(`已售出「${item.name}」，退回 §${refund}。`);
+      } else {
+        if (simState.money < totalCost) {
+          playSimSound('error');
+          showSimMessage(`⚠️ 預算不足 §${totalCost}！可先執行工作或至「二手拍賣／盲盒」尋寶。`, true);
+          return;
+        }
+        simState.money -= totalCost;
+        if (walkupFee > 0) simState.hiddenCostsPaid = (simState.hiddenCostsPaid || 0) + walkupFee;
+        simState.v4Items.push(item.id);
+        if (currentShopChannel === 'used' && item.hasMinorFlaw) {
+          simState.flawedItems.push(item.id);
+        }
+        triggerSnapEffect(item.id);
+        playSimSound('snap');
+        showRoomBanner(`🛋️ 已添購「${item.name}」${walkupFee > 0 ? `(含搬運費 §${walkupFee})` : ''}！`);
+      }
+      saveSimState();
+      renderSim();
+    });
+
+    shopGrid.appendChild(card);
+  });
+}
+
+// 4. Bind V4 Controls: Sliders, Hardscape, Shop, Scenarios, Path Check & Quote Export
+document.querySelectorAll('.shop-channel-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.shop-channel-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    currentShopChannel = btn.dataset.channel;
+    playSimSound('tap');
+    renderV4Panels();
+  });
+});
+
+document.querySelectorAll('.shop-cat-pill').forEach(pill => {
+  pill.addEventListener('click', () => {
+    document.querySelectorAll('.shop-cat-pill').forEach(p => p.classList.remove('active'));
+    pill.classList.add('active');
+    currentShopCat = pill.dataset.cat;
+    playSimSound('tap');
+    renderV4Panels();
+  });
+});
+
+document.getElementById('btnRefreshUsed')?.addEventListener('click', () => {
+  refreshUsedMarket();
+  playSimSound('confirm');
+  renderV4Panels();
+  showRoomBanner('♻️ 二手拍賣網已刷新今日 3~7 折精選單品！');
+});
+
+// Scenario Selector
+document.getElementById('scenarioSelect')?.addEventListener('change', e => {
+  const key = e.target.value;
+  const scen = V4_SCENARIOS[key];
+  if (!scen) return;
+  ensureV4State();
+  simState.scenario = key;
+  simState.money = scen.budget;
+  simState.profile.area = scen.area;
+  simState.hardscape.shape = scen.shape || 'rect';
+  if (scen.pillar !== undefined) simState.hardscape.pillar = scen.pillar;
+  simState.lockedItems = [...(scen.lockedItems || [])];
+  scen.lockedItems?.forEach(id => {
+    if (!simState.v4Items.includes(id)) simState.v4Items.push(id);
+  });
+  saveSimState();
+  playSimSound('buff');
+  renderSim();
+  showRoomBanner(`🎬 已載入劇本：${scen.title}（初始預算 §${scen.budget}）`, true);
+});
+
+// Hardscape Buttons
+document.querySelectorAll('#layoutShapeBtns .hardscape-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    ensureV4State();
+    simState.hardscape.shape = btn.dataset.shape;
+    saveSimState();
+    playSimSound('snap');
+    renderSim();
+    const names = { rect: '標準矩形格局', lshape: 'L型畸零格局', balcony: '陽台外推採光格局' };
+    showRoomBanner(`📐 已切換房型為：${names[btn.dataset.shape]}`);
+  });
+});
+
+document.querySelectorAll('#floorMatBtns .hardscape-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    ensureV4State();
+    simState.hardscape.floorMat = btn.dataset.floor;
+    saveSimState();
+    playSimSound('tap');
+    renderSim();
+  });
+});
+
+document.querySelectorAll('#wallMatBtns .hardscape-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    ensureV4State();
+    simState.hardscape.wallMat = btn.dataset.wall;
+    saveSimState();
+    playSimSound('tap');
+    renderSim();
+    const wNames = { warm: '溫潤跳色乳膠漆', stone: '北歐文化石牆', acoustic: '專業六角吸音棉牆' };
+    showRoomBanner(`🎨 牆面材質已更換為：${wNames[btn.dataset.wall]}`);
+  });
+});
+
+document.getElementById('btnTogglePartition')?.addEventListener('click', () => {
+  ensureV4State();
+  if (!simState.hardscape.partition) {
+    if (simState.money < 60) {
+      playSimSound('error');
+      showSimMessage('⚠️ 建造輕隔間牆需 §60 施工費！', true);
+      return;
+    }
+    simState.money -= 60;
+    simState.hardscape.partition = true;
+    showRoomBanner('🧱 已花費 §60 建造「輕隔間玻璃半牆」切分臥室與客廳！');
+  } else {
+    simState.money = Math.max(0, simState.money - 45);
+    simState.hiddenCostsPaid = (simState.hiddenCostsPaid || 0) + 45;
+    simState.hardscape.partition = false;
+    showRoomBanner('🗑️ 已拆除輕隔間牆（支付營建廢料清運費 -§45）！');
+  }
+  saveSimState();
+  playSimSound('snap');
+  renderSim();
+});
+
+document.getElementById('btnTogglePillar')?.addEventListener('click', () => {
+  ensureV4State();
+  simState.hardscape.pillar = !simState.hardscape.pillar;
+  saveSimState();
+  playSimSound('tap');
+  renderSim();
+});
+
+document.getElementById('btnToggleWalkup')?.addEventListener('click', () => {
+  ensureV4State();
+  simState.hardscape.walkup = !simState.hardscape.walkup;
+  saveSimState();
+  playSimSound('tap');
+  renderSim();
+  showSimMessage(simState.hardscape.walkup
+    ? '🪜 已設為「無電梯公寓」：購買大型傳統家具將加收 +15% 樓層搬運費（TAYA 軌道模組免收！）'
+    : '🏢 已設為「電梯大樓」：大型家具免收樓層搬運費。');
+});
+
+document.getElementById('btnBuyCableRaceway')?.addEventListener('click', () => {
+  ensureV4State();
+  if (simState.hardscape.cableRaceway) return;
+  if (simState.money < 25) {
+    playSimSound('error');
+    showSimMessage('⚠️ 預算不足 §25！', true);
+    return;
+  }
+  simState.money -= 25;
+  simState.hardscape.cableRaceway = true;
+  saveSimState();
+  playSimSound('buff');
+  renderSim();
+  showRoomBanner('🔌 已鋪設「隱藏式延長線與地板壓條」，消除跨區走線扣分！', true);
+});
+
+// Time Slider (白天 / 黃昏 / 深夜) & Window Blinds Slider
+document.getElementById('simTimeSlider')?.addEventListener('input', e => {
+  simState.minutes = parseInt(e.target.value, 10);
+  saveSimState();
+  renderSim();
+});
+
+document.getElementById('simBlindsSlider')?.addEventListener('input', e => {
+  ensureV4State();
+  simState.hardscape.blindsOpen = parseInt(e.target.value, 10);
+  const lbl = document.getElementById('simBlindsValLabel');
+  if (lbl) lbl.textContent = `${simState.hardscape.blindsOpen}%`;
+  saveSimState();
+});
+
+// 2D Top-Down Blueprint View Toggle
+document.getElementById('simCamBlueprint')?.addEventListener('click', () => {
+  ensureV4State();
+  simState.hardscape.blueprintMode = !simState.hardscape.blueprintMode;
+  document.getElementById('simCamBlueprint')?.classList.toggle('active', simState.hardscape.blueprintMode);
+  playSimSound('tap');
+  showRoomBanner(simState.hardscape.blueprintMode
+    ? '🗺️ 已切換至「2D 平面藍圖俯視角」：清楚檢視全室動線與格局比例'
+    : '📐 已切換回「3D 立體等距視角 (Isometric)」');
+});
+
+// Pathfinding Circulation Check (🚶 動線測試：大門 -> 床 -> 書桌 -> 衛浴)
+document.getElementById('btnPathCheck')?.addEventListener('click', () => {
+  const blockReason = isPathBlocked();
+  const tp = simState.trackPos || { work: 5.1 };
+  const waypoints = [
+    { x: 0.85, y: 5.7, label: '玄關大門' },
+    { x: 3.5, y: 4.5, label: '客廳走道' },
+    { x: 5.85, y: 4.65, label: '雙人臥床' },
+    { x: (tp.work ?? 5.1) + 0.8, y: 1.65, label: '工作書桌' },
+    { x: 1.95, y: 1.25, label: '乾濕分離衛浴' }
+  ];
+  pathCheckAnim = {
+    startAt: performance.now(),
+    waypoints,
+    blocked: Boolean(blockReason),
+    reason: blockReason
+  };
+  // Also walk character along the test target
+  simState.player.targetX = waypoints[3].x;
+  simState.player.targetY = waypoints[3].y;
+
+  if (blockReason) {
+    playSimSound('error');
+    showRoomBanner(`🚨 動線紅燈警告：${blockReason}`);
+    showSimMessage(`🚨 【動線檢測未通過】${blockReason}`, true);
+  } else {
+    playSimSound('buff');
+    showRoomBanner('✅ 動線綠燈暢通！從「玄關大門 → 臥床 → 書桌 → 衛浴」走道寬敞無阻礙！', true);
+    showSimMessage('✅ 【動線檢測 100% 暢通】全室走道均大於 90cm，衣櫃門與衛浴動線完全無阻礙！');
+  }
+});
+
+// Screenshot & Bill of Materials Quote Modal (🧾 裝潢估價單匯出)
+function openQuoteModal() {
+  ensureV4State();
+  renderGameRoom(performance.now());
+  const dataUrl = roomCanvas.toDataURL('image/png');
+  const previewImg = document.getElementById('simQuotePreviewImg');
+  const downloadLink = document.getElementById('btnDownloadQuoteImg');
+  if (previewImg) previewImg.src = dataUrl;
+  if (downloadLink) downloadLink.href = dataUrl;
+
+  const rows = [];
+  let totalSpent = 0;
+
+  // 1. TAYA DLCs
+  const dlcPrices = {
+    work: { name: 'TAYA WORK DLC 壁掛折疊工作桌', price: 180 },
+    family: { name: 'TAYA FAMILY DLC 變形延伸料理中島', price: 240 },
+    storage: { name: 'TAYA STORAGE DLC 頂天立地收納櫃', price: 210 },
+    safe: { name: 'TAYA SAFE DLC 樂齡感應扶手夜燈', price: 150 }
+  };
+  Object.entries(dlcPrices).forEach(([k, v]) => {
+    if (isDlcActive(k)) {
+      rows.push({ cat: '⚡ TAYA 軌道模組', name: v.name, note: '免打牆快拆 · 支援8折回購', cost: v.price });
+      totalSpent += v.price;
+    }
+  });
+
+  // 2. Hardscape
+  if (simState.hardscape.partition) {
+    rows.push({ cat: '🧱 硬裝隔間', name: '輕隔間磨砂玻璃半牆', note: '含結構固定', cost: 60 });
+    totalSpent += 60;
+  }
+  if (simState.hardscape.cableRaceway) {
+    rows.push({ cat: '🔌 水電工程', name: '全室隱藏式延長線與地板壓條', note: '消除跨區裸線', cost: 25 });
+    totalSpent += 25;
+  }
+
+  // 3. V4 Themed Items
+  simState.v4Items.forEach(id => {
+    const item = V4_SHOP_CATALOG.find(m => m.id === id);
+    if (!item) return;
+    const isLocked = simState.lockedItems?.includes(id);
+    const cost = isLocked ? 0 : item.price;
+    rows.push({
+      cat: '🛋️ 主題家具家電',
+      name: `${item.iconText || item.icon} ${item.name}`,
+      note: isLocked ? '舊家自備 (免購置費)' : '3D 空間配置單品',
+      cost
+    });
+    totalSpent += cost;
+  });
+
+  if (simState.hiddenCostsPaid > 0) {
+    rows.push({
+      cat: '🚚 隱藏工程開銷',
+      name: '拆牆清運費／無電梯樓層搬運費累計',
+      note: '傳統裝修額外支出',
+      cost: simState.hiddenCostsPaid
+    });
+    totalSpent += simState.hiddenCostsPaid;
+  }
+
+  const combos = getActiveCombos();
+  const comboStr = combos.length > 0 ? combos.map(c => c.label).join('、') : '尚未觸發';
+
+  const box = document.getElementById('simQuoteSummaryBox');
+  if (box) {
+    box.innerHTML = `
+      <div style="display:flex; justify-content:space-between; flex-wrap:wrap; gap:0.5rem; margin-bottom:0.65rem; font-size:0.8rem; color:#4b443b;">
+        <span>📐 <strong>格局規模：</strong>${simState.profile.area} 坪 (${simState.hardscape.shape === 'lshape' ? 'L型畸零格局' : simState.hardscape.shape === 'balcony' ? '陽台外推格局' : '標準矩形'})</span>
+        <span>🏆 <strong>空間綜合評分：</strong><strong style="color:#527464;">${getSpaceScore()} 分</strong></span>
+        <span>✨ <strong>觸發 Combo：</strong><strong style="color:#d97706;">${comboStr}</strong></span>
+      </div>
+      <table class="sim-quote-table">
+        <thead>
+          <tr><th>分類</th><th>項目名稱</th><th>備註說明</th><th>估值 (§)</th></tr>
+        </thead>
+        <tbody>
+          ${rows.map(r => `<tr><td>${r.cat}</td><td><strong>${r.name}</strong></td><td>${r.note}</td><td>§ ${r.cost}</td></tr>`).join('')}
+        </tbody>
+      </table>
+      <div style="display:flex; justify-content:space-between; align-items:center; padding:0.65rem 0.85rem; background:#f5f1e8; border-radius:10px; font-size:0.85rem;">
+        <span>🌱 <strong>ESG 循環減碳貢獻：</strong>累計減碳 ${simState.esgScore || 30} kg CO₂e</span>
+        <strong style="font-size:1.05rem; color:#98633f;">🧾 裝潢配置總估值：§ ${totalSpent}（剩餘可用預算 § ${simState.money}）</strong>
+      </div>
+    `;
+  }
+
+  document.getElementById('simQuoteModal')?.classList.add('open');
+  playSimSound('confirm');
+}
+
+document.getElementById('btnExportQuote')?.addEventListener('click', openQuoteModal);
+document.getElementById('btnCloseQuote')?.addEventListener('click', () => {
+  document.getElementById('simQuoteModal')?.classList.remove('open');
+});
+document.getElementById('btnQuoteSwitchBlueprint')?.addEventListener('click', () => {
+  ensureV4State();
+  simState.hardscape.blueprintMode = !simState.hardscape.blueprintMode;
+  openQuoteModal();
 });
 
 initSimActionsUI();
