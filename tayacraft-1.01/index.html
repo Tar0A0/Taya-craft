@@ -3449,6 +3449,52 @@ body::before {
   border-top: 1px solid #dcd4c6;
 }
 
+/* ─── MOTION POLISH (V7) ─── */
+/* Scroll progress drawn as the aluminium base track with an oak "module" riding it */
+.scroll-track {
+  position: fixed; left: 0; right: 0; top: var(--nav-height);
+  height: 3px; z-index: 999; pointer-events: none;
+  background: rgba(142, 91, 56, 0.08);
+}
+.scroll-track-fill {
+  height: 100%; width: 100%;
+  transform-origin: 0 50%; transform: scaleX(0);
+  background: linear-gradient(90deg, var(--teal), var(--amber));
+}
+.nav-links a.is-current { color: var(--amber); }
+.nav-links a.is-current::after { width: 100%; }
+
+/* Tactile press feedback on every game / page control */
+.sim-controls button, .sim-stage-btn, .sim-deck-tab, .sim-action, .hardscape-btn,
+.shop-channel-btn, .shop-cat-pill, .shop-buy-btn, .dlc-pill-btn, .sim-tool-pill,
+.sim-cmp-btn, .sim-cam-btn, .circular-btn, .sync-calc-btn, .calc-btn, .age-tab,
+.snap-sim-btn, .snap-view-btn, .hero-cta, .hero-cta-secondary, .hero-dock-pill,
+.insight-to-game-btn, .sim-interact-btn, .sim-dpad button {
+  transition: transform 0.18s cubic-bezier(0.2, 0.8, 0.3, 1), background-color 0.2s ease,
+    border-color 0.2s ease, color 0.2s ease, box-shadow 0.2s ease;
+}
+.sim-controls button:active, .sim-stage-btn:active, .sim-deck-tab:active, .sim-action:active:not(:disabled),
+.hardscape-btn:active, .shop-channel-btn:active, .shop-cat-pill:active, .shop-buy-btn:active,
+.dlc-pill-btn:active, .sim-tool-pill:active, .sim-cmp-btn:active, .sim-cam-btn:active,
+.circular-btn:active, .sync-calc-btn:active, .calc-btn:active, .age-tab:active, .snap-sim-btn:active,
+.snap-view-btn:active, .hero-cta:active, .hero-cta-secondary:active, .hero-dock-pill:active,
+.insight-to-game-btn:active, .sim-interact-btn:active, .sim-dpad button:active {
+  transform: scale(0.96);
+}
+:where(button, a, select, input):focus-visible {
+  outline: 2px solid var(--amber);
+  outline-offset: 2px;
+}
+.sim-meter-fill, .sim-quest-meter-fill { transition: width 0.6s cubic-bezier(0.2, 0.8, 0.3, 1); }
+.hero-showcase-card { transform-style: preserve-3d; will-change: transform; }
+.sim-room { transition: box-shadow 0.4s ease; }
+.sim-room:hover { box-shadow: var(--shadow-lg); }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { transition-duration: 0.01ms !important; animation-duration: 0.01ms !important; }
+  html { scroll-behavior: auto; }
+}
+
 </style>
 </head>
 <body>
@@ -3468,6 +3514,7 @@ body::before {
     <span></span><span></span><span></span>
   </button>
 </nav>
+<div class="scroll-track" aria-hidden="true"><div class="scroll-track-fill"></div></div>
 
 <!-- ═══════════════════ HERO (SPLIT ARCHITECTURAL SHOWCASE) ═══════════════════ -->
 <section class="hero" id="hero">
@@ -4861,8 +4908,15 @@ function showRoomBanner(text, isQuest = false) {
   el.textContent = text;
   el.className = isQuest ? 'sim-room-message quest-complete' : 'sim-room-message';
   clearTimeout(roomMessageTimer);
+  if (window.gsap) {
+    gsap.killTweensOf(el);
+    gsap.fromTo(el,
+      { x: 0, xPercent: -50, y: -10, scale: 0.94, autoAlpha: 0 },
+      { y: 0, scale: 1, autoAlpha: 1, duration: 0.42, ease: "back.out(1.6)" });
+  }
   roomMessageTimer = setTimeout(() => {
-    el.textContent = '';
+    if (!window.gsap) { el.textContent = ''; return; }
+    gsap.to(el, { y: -6, autoAlpha: 0, duration: 0.3, ease: "power2.in", onComplete: () => { el.textContent = ''; } });
   }, 2800);
 }
 
@@ -4946,12 +5000,30 @@ let cameraDragging = false;
 let cameraDragStartX = 0;
 let lastSlideTickVal = 0;
 
+// Animation polish state: frame-rate independent timing, period crossfade, snap ripples, ambient motes
+let lastRenderAt = performance.now();
+let lastPeriodKey = null;
+let periodFade = null; // { canvas, startAt }
+let snapRings = []; // { x, y, r, startAt }
+const charMoveBlend = new WeakMap(); // character object -> { v, t }
+const reduceMotionMQ = window.matchMedia('(prefers-reduced-motion: reduce)');
+const ambientMotes = Array.from({ length: 26 }, () => ({
+  x: Math.random(), y: Math.random(), z: Math.random(), seed: Math.random() * 1000
+}));
+const easeOutCubic = t => 1 - Math.pow(1 - t, 3);
+const easeOutBack = t => 1 + 2.2 * Math.pow(t - 1, 3) + 1.2 * Math.pow(t - 1, 2);
+
 function spawnFloatingText(text, x, y, z = 1.65, col = '#fef08a') {
   floatingTexts.push({ text, x, y, z, col, startAt: performance.now() });
 }
 
 function triggerSnapEffect(id) {
-  snapDropEffects.push({ id, startAt: performance.now() });
+  const now = performance.now();
+  snapDropEffects.push({ id, startAt: now });
+  const obj = typeof getSceneObjects === 'function' ? getSceneObjects().find(o => o.id === id) : null;
+  if (obj) {
+    snapRings.push({ x: obj.x + obj.dx / 2, y: obj.y + obj.dy / 2, r: Math.max(obj.dx, obj.dy) * 0.6, startAt: now });
+  }
 }
 
 function getSnapLift(id, now) {
@@ -5502,15 +5574,23 @@ function draw3DCharacter(iso, px, py, now, isMainPlayer = true, compAgent = null
   const angle = baseAngle + idleSway;
 
   const stridePhase = (now + (isMainPlayer ? 0 : 350)) / 92 * ageProfile.walkSpeedFactor;
-  const legSwing = isMoving ? Math.sin(stridePhase) * 0.14 : 0;
-  const armSwing = isMoving ? Math.sin(stridePhase) * 0.16 : Math.sin(now / 700) * 0.025;
-  const leftLift = isMoving ? Math.max(0, Math.sin(stridePhase)) * 0.065 : 0;
-  const rightLift = isMoving ? Math.max(0, -Math.sin(stridePhase)) * 0.065 : 0;
-  const bob = isMoving
-    ? Math.abs(Math.sin(stridePhase)) * 0.055
-    : isInteracting
-      ? Math.abs(Math.sin(now / 150)) * 0.035
-      : Math.sin(now / 520) * 0.02;
+  // Ease between idle and walking so limbs settle instead of snapping to rest
+  const blendKey = isMainPlayer ? simState.player : compAgent;
+  let mb = isMoving ? 1 : 0;
+  if (blendKey) {
+    const st = charMoveBlend.get(blendKey) || { v: mb, t: now };
+    const k = 1 - Math.exp(-Math.max(0, Math.min(0.1, (now - st.t) / 1000)) * 10);
+    st.v += (mb - st.v) * k;
+    st.t = now;
+    charMoveBlend.set(blendKey, st);
+    mb = st.v;
+  }
+  const legSwing = Math.sin(stridePhase) * 0.14 * mb;
+  const armSwing = Math.sin(stridePhase) * 0.16 * mb + Math.sin(now / 700) * 0.025 * (1 - mb);
+  const leftLift = Math.max(0, Math.sin(stridePhase)) * 0.065 * mb;
+  const rightLift = Math.max(0, -Math.sin(stridePhase)) * 0.065 * mb;
+  const idleBob = isInteracting ? Math.abs(Math.sin(now / 150)) * 0.035 : Math.sin(now / 520) * 0.02;
+  const bob = Math.abs(Math.sin(stridePhase)) * 0.055 * mb + idleBob * (1 - mb);
   const zBase = bob + (ageProfile.stoopOffsetZ || 0);
 
   // Ground shadow
@@ -5837,16 +5917,28 @@ function updateAutonomousCharacters(now, dt) {
 
 function renderGameRoom(now = performance.now()) {
   if (!roomCtx) return;
-  // Smooth camera yaw interpolation
-  currentYaw += (targetYaw - currentYaw) * 0.14;
+  const frameDt = Math.max(0, Math.min(0.1, (now - lastRenderAt) / 1000));
+  lastRenderAt = now;
+  // Frame-rate independent camera yaw easing (same feel at 60Hz and 144Hz)
+  currentYaw += (targetYaw - currentYaw) * (1 - Math.exp(-frameDt * 9));
 
   const W = roomCanvas.width;
   const H = roomCanvas.height;
-  roomCtx.clearRect(0, 0, W, H);
 
   const isNight = simState.minutes >= 1200 || simState.minutes < 360;
   const isDusk = !isNight && (simState.minutes >= 1020 && simState.minutes < 1200);
   const isBlueprint = Boolean(simState.hardscape?.blueprintMode);
+
+  // Crossfade lighting periods: snapshot the previous frame before it is cleared
+  const periodKey = isBlueprint ? 'bp' : isNight ? 'night' : isDusk ? 'dusk' : 'day';
+  if (lastPeriodKey && periodKey !== lastPeriodKey) {
+    const snap = periodFade?.canvas || document.createElement('canvas');
+    snap.width = W; snap.height = H;
+    snap.getContext('2d').drawImage(roomCanvas, 0, 0);
+    periodFade = { canvas: snap, startAt: now };
+  }
+  lastPeriodKey = periodKey;
+  roomCtx.clearRect(0, 0, W, H);
 
   // Ambient studio backdrop gradient (Supports Day / Dusk / Night / 2D Blueprint)
   const bgGrad = roomCtx.createLinearGradient(0, 0, 0, H);
@@ -5854,18 +5946,26 @@ function renderGameRoom(now = performance.now()) {
     bgGrad.addColorStop(0, '#0c4a6e');
     bgGrad.addColorStop(1, '#082f49');
   } else if (isNight) {
-    bgGrad.addColorStop(0, '#0f172a');
-    bgGrad.addColorStop(1, '#020617');
+    bgGrad.addColorStop(0, '#1b2233');
+    bgGrad.addColorStop(1, '#0b0f1a');
   } else if (isDusk) {
-    bgGrad.addColorStop(0, '#7c2d12');
-    bgGrad.addColorStop(0.5, '#9a3412');
-    bgGrad.addColorStop(1, '#431407');
+    bgGrad.addColorStop(0, '#d39a6a');
+    bgGrad.addColorStop(0.55, '#a8674a');
+    bgGrad.addColorStop(1, '#5c3a2c');
   } else {
-    bgGrad.addColorStop(0, '#efe9dd');
-    bgGrad.addColorStop(1, '#dfd5c3');
+    bgGrad.addColorStop(0, '#f4efe5');
+    bgGrad.addColorStop(1, '#e2d8c6');
   }
   roomCtx.fillStyle = bgGrad;
   roomCtx.fillRect(0, 0, W, H);
+  if (!isBlueprint) {
+    // Soft studio spotlight pooling behind the room model
+    const spot = roomCtx.createRadialGradient(W * 0.5, H * 0.55, 20, W * 0.5, H * 0.55, W * 0.62);
+    spot.addColorStop(0, isNight ? 'rgba(120,140,190,0.16)' : 'rgba(255,248,232,0.55)');
+    spot.addColorStop(1, 'rgba(255,248,232,0)');
+    roomCtx.fillStyle = spot;
+    roomCtx.fillRect(0, 0, W, H);
+  }
 
   // Dynamic Physical Room Dimensions & Grid System based on 坪數!
   const roomDim = getRoomDimensions(simState.profile.area || 18);
@@ -5931,6 +6031,23 @@ function renderGameRoom(now = performance.now()) {
   if (rugW > 0.8 && rugD > 0.8) {
     iso.drawBox(0.45, rugY, 0.006, rugW, rugD, 0.02, isNight ? '#8c7a65' : '#e6dcc8');
   }
+
+  // Snap-fit lock ripple: two expanding rings on the floor where a module just clicked in
+  snapRings = snapRings.filter(r => now - r.startAt < 900);
+  snapRings.forEach(r => {
+    [0, 160].forEach(delay => {
+      const t = (now - r.startAt - delay) / 740;
+      if (t <= 0 || t >= 1) return;
+      const rad = r.r * (0.35 + easeOutCubic(t) * 1.1);
+      const pts = [];
+      for (let i = 0; i < 28; i++) {
+        const a = (i / 28) * Math.PI * 2;
+        const p = iso.project(r.x + Math.cos(a) * rad, r.y + Math.sin(a) * rad, 0.03);
+        pts.push(p);
+      }
+      iso.drawPoly(pts, null, `rgba(196, 140, 82, ${(1 - t) * 0.85})`, 2.4 * (1 - t) + 0.6);
+    });
+  });
 
   // 2. 3D Cutaway Back Wall (y = 0) & Left Wall (x = 0) — Supports Idea A: X-Ray Track View!
   const xray = Boolean(simState.xrayMode);
@@ -6120,22 +6237,66 @@ function renderGameRoom(now = performance.now()) {
     roomCtx.restore();
   });
 
-  // 10. Idea C: 3D Floating Reward / Stat Texts
-  floatingTexts = floatingTexts.filter(ft => now - ft.startAt < 1500);
+  // 10. Idea C: 3D Floating Reward / Stat Texts (pop-in scale + ease-out rise)
+  floatingTexts = floatingTexts.filter(ft => now - ft.startAt < 1600);
   floatingTexts.forEach(ft => {
-    const t = (now - ft.startAt) / 1500;
-    const pt = iso.project(ft.x, ft.y, ft.z + t * 0.85);
+    const t = (now - ft.startAt) / 1600;
+    const pt = iso.project(ft.x, ft.y, ft.z + easeOutCubic(t) * 0.9);
+    const pop = t < 0.18 ? easeOutBack(t / 0.18) : 1;
     roomCtx.save();
-    roomCtx.globalAlpha = Math.max(0, 1 - t * t);
+    roomCtx.globalAlpha = t < 0.7 ? 1 : Math.max(0, 1 - (t - 0.7) / 0.3);
+    roomCtx.translate(pt.x, pt.y);
+    roomCtx.scale(pop, pop);
     roomCtx.font = '800 13px "Noto Sans TC", sans-serif';
     roomCtx.textAlign = 'center';
-    roomCtx.strokeStyle = 'rgba(28, 22, 16, 0.85)';
+    roomCtx.lineJoin = 'round';
+    roomCtx.strokeStyle = 'rgba(36, 28, 20, 0.85)';
     roomCtx.lineWidth = 3.5;
-    roomCtx.strokeText(ft.text, pt.x, pt.y);
+    roomCtx.strokeText(ft.text, 0, 0);
     roomCtx.fillStyle = ft.col;
-    roomCtx.fillText(ft.text, pt.x, pt.y);
+    roomCtx.fillText(ft.text, 0, 0);
     roomCtx.restore();
   });
+
+  // 11. Ambient light motes: sunlit dust by day, soft warm glow specks at night
+  if (!isBlueprint && !reduceMotionMQ.matches) {
+    roomCtx.save();
+    ambientMotes.forEach(m => {
+      const tt = now / 1000 + m.seed;
+      const mx = 0.5 + m.x * (roomW - 1) + Math.sin(tt * 0.35) * 0.25;
+      const my = 0.4 + m.y * (roomD - 0.8) + Math.cos(tt * 0.28) * 0.2;
+      const mz = 0.3 + ((m.z + tt * 0.025) % 1) * 2.1;
+      const p = iso.project(mx, my, mz);
+      const tw = 0.5 + 0.5 * Math.sin(tt * 1.7);
+      roomCtx.fillStyle = isNight
+        ? `rgba(255, 214, 150, ${0.18 + tw * 0.32})`
+        : `rgba(255, 250, 235, ${0.25 + tw * 0.4})`;
+      roomCtx.beginPath();
+      roomCtx.arc(p.x, p.y, isNight ? 1.6 : 1.2 + tw * 0.8, 0, Math.PI * 2);
+      roomCtx.fill();
+    });
+    roomCtx.restore();
+  }
+
+  // 12. Gentle vignette to focus the eye on the room model
+  const vig = roomCtx.createRadialGradient(W * 0.5, H * 0.55, H * 0.35, W * 0.5, H * 0.55, W * 0.72);
+  vig.addColorStop(0, 'rgba(30, 22, 14, 0)');
+  vig.addColorStop(1, isNight ? 'rgba(0, 0, 0, 0.38)' : 'rgba(60, 42, 26, 0.16)');
+  roomCtx.fillStyle = vig;
+  roomCtx.fillRect(0, 0, W, H);
+
+  // 13. Lighting-period crossfade (previous frame fades out over the new lighting)
+  if (periodFade) {
+    const ft = (now - periodFade.startAt) / 650;
+    if (ft >= 1) {
+      periodFade = null;
+    } else {
+      roomCtx.save();
+      roomCtx.globalAlpha = 1 - easeOutCubic(ft);
+      roomCtx.drawImage(periodFade.canvas, 0, 0);
+      roomCtx.restore();
+    }
+  }
 }
 
 // ─── 4. PLAYER MOVEMENT, PATHFINDING & INTERACTION LOOP ───
@@ -7167,7 +7328,7 @@ function syncGameToLifecycleCalc(scrollToCalc = false) {
 
 document.getElementById('btnSyncToCalc')?.addEventListener('click', () => syncGameToLifecycleCalc(true));
 
-document.querySelectorAll('.insight-to-game-btn').forEach(btn => {
+document.querySelectorAll('.insight-to-game-btn, .hero-dock-pill').forEach(btn => {
   btn.addEventListener('click', () => {
     const st = btn.dataset.gotoStage || 'starter';
     switchLifeStage(st);
@@ -8627,15 +8788,37 @@ mm.add(
       scrollTrigger: { trigger: '.hero', start: 'top top', end: 'bottom top', scrub: 1 }
     });
 
-    // 3. Section Headers
-    gsap.utils.toArray('.section-tag, .section-title, .section-subtitle').forEach(el => {
-      gsap.from(el, {
-        y: 28,
+    // 3. Section headers reveal as one unit (one calm motion per section, not per element)
+    gsap.utils.toArray('.section-header-split').forEach(el => {
+      gsap.from(el.children, {
+        y: 24,
         autoAlpha: 0,
-        duration: 0.65,
-        scrollTrigger: { trigger: el, start: 'top 88%', toggleActions: 'play none none none' }
+        duration: 0.7,
+        stagger: 0.12,
+        ease: "power3.out",
+        scrollTrigger: { trigger: el, start: 'top 85%', once: true }
       });
     });
+
+    // 3b. Game console settles into place once, like a module locking onto the track
+    gsap.from('.sim-game', {
+      y: 40, scale: 0.98, autoAlpha: 0, duration: 0.9, ease: "power3.out",
+      scrollTrigger: { trigger: '.sim-game', start: 'top 85%', once: true }
+    });
+
+    // 3c. Hero showcase gently tilts toward the pointer (user-driven motion, fine pointers only)
+    const showcase = document.querySelector('.hero-showcase-card');
+    if (showcase && window.matchMedia('(pointer: fine)').matches) {
+      gsap.set(showcase, { transformPerspective: 900 });
+      const rotX = gsap.quickTo(showcase, 'rotationX', { duration: 0.6, ease: "power3.out" });
+      const rotY = gsap.quickTo(showcase, 'rotationY', { duration: 0.6, ease: "power3.out" });
+      showcase.addEventListener('pointermove', e => {
+        const r = showcase.getBoundingClientRect();
+        rotY(gsap.utils.mapRange(0, r.width, -4, 4, e.clientX - r.left));
+        rotX(gsap.utils.mapRange(0, r.height, 3, -3, e.clientY - r.top));
+      });
+      showcase.addEventListener('pointerleave', () => { rotX(0); rotY(0); });
+    }
 
     // 4. ScrollTrigger.batch() for all grid cards (high performance, zero layout thrashing)
     ScrollTrigger.batch('.dlc-card, .pain-card, .arch-card, .benefit-card, .step-box', {
@@ -8656,7 +8839,19 @@ mm.add(
   }
 );
 
-// 5. DLC Progress Bars using GPU-friendly width/scaleX
+// 5. Top Aluminium Track Scroll Progress Bar (GPU-friendly scaleX)
+gsap.to('.scroll-track-fill', {
+  scaleX: 1,
+  ease: "none",
+  scrollTrigger: {
+    trigger: document.documentElement,
+    start: 'top top',
+    end: 'bottom bottom',
+    scrub: 0.15
+  }
+});
+
+// 6. DLC Progress Bars using GPU-friendly width/scaleX
 ScrollTrigger.create({
   trigger: '.dlc-grid',
   start: 'top 82%',
@@ -8668,7 +8863,7 @@ ScrollTrigger.create({
   }
 });
 
-// 6. Insight Age Tabs with GSAP transition
+// 7. Insight Age Tabs with GSAP transition
 const tabs = document.querySelectorAll('.age-tab');
 const panels = document.querySelectorAll('.age-panel');
 tabs.forEach(tab => {
@@ -8689,7 +8884,7 @@ tabs.forEach(tab => {
   });
 });
 
-// 7. Game Deck Tab Switching GSAP Micro-animations
+// 8. Game Deck Tab & Stage Switching GSAP Micro-animations
 document.querySelectorAll('.sim-deck-tab').forEach(tab => {
   tab.addEventListener('click', () => {
     const activePanel = document.querySelector('.sim-deck-panel.active');
@@ -8703,7 +8898,17 @@ document.querySelectorAll('.sim-deck-tab').forEach(tab => {
   });
 });
 
-// 8. Benefit Stat Counters with GSAP snap
+document.querySelectorAll('.sim-stage-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    gsap.fromTo(
+      '.sim-hud-item strong',
+      { y: -5, autoAlpha: 0.4 },
+      { y: 0, autoAlpha: 1, duration: 0.32, stagger: 0.03, ease: "power2.out", overwrite: "auto" }
+    );
+  });
+});
+
+// 9. Benefit Stat Counters with GSAP snap
 document.querySelectorAll('.counter').forEach(counter => {
   const target = parseInt(counter.dataset.target, 10);
   ScrollTrigger.create({
@@ -8723,14 +8928,14 @@ document.querySelectorAll('.counter').forEach(counter => {
 });
 
 const sections = document.querySelectorAll('section[id]');
-const navAnchors = document.querySelectorAll('.nav-links a');
+const navAnchors = document.querySelectorAll('.nav-links a:not(.nav-cta-pill)');
 window.addEventListener('scroll', () => {
   let current = '';
   sections.forEach(sec => {
-    if (window.scrollY >= sec.offsetTop - 120) current = sec.getAttribute('id');
+    if (window.scrollY >= sec.offsetTop - 140) current = sec.getAttribute('id');
   });
   navAnchors.forEach(a => {
-    a.style.color = a.getAttribute('href') === '#' + current ? 'var(--teal)' : '';
+    a.classList.toggle('is-current', a.getAttribute('href') === '#' + current);
   });
 });
 
