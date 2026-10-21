@@ -109,6 +109,12 @@
       "skillPath": "skills/gsap-utils/SKILL.md",
       "computedHash": "72af4a036d417d6eaef7478eca2f28e760631fb78db822ba34a9c706797aab62"
     },
+    "higgsfield-websites": {
+      "source": "higgsfield-ai/skills",
+      "sourceType": "github",
+      "skillPath": "higgsfield-websites/SKILL.md",
+      "computedHash": "08dc3a999f2c46de70d86356b80169bcf951014a1edc213641251d23a2ec5bc6"
+    },
     "internal-comms": {
       "source": "anthropics/skills",
       "sourceType": "github",
