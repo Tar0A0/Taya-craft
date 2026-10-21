@@ -2510,6 +2510,307 @@ body {
   border-color: rgba(217, 119, 6, 0.35);
 }
 
+/* ─── CUSTOMIZABLE PARTITION WALL WITH DOORWAY ─── */
+.partition-customizer-box {
+  margin-top: 0.65rem;
+  padding: 0.75rem 0.85rem;
+  background: #fdfbf7;
+  border: 1px solid #dfd6c7;
+  border-radius: 12px;
+  box-shadow: var(--shadow-sm);
+  display: flex;
+  flex-direction: column;
+  gap: 0.55rem;
+}
+.partition-cfg-row {
+  display: flex;
+  flex-direction: column;
+  gap: 0.28rem;
+}
+.partition-cfg-label {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: #4a3f35;
+}
+.partition-chip-btn {
+  padding: 0.32rem 0.55rem;
+  border-radius: 7px;
+  border: 1px solid #dcd3c2;
+  background: #fffefa;
+  color: #4b453c;
+  font: inherit;
+  font-size: 0.69rem;
+  font-weight: 700;
+  cursor: pointer;
+  text-align: center;
+  transition: all 0.16s ease;
+}
+.partition-chip-btn:hover {
+  border-color: #8e5b38;
+}
+.partition-chip-btn.active {
+  background: #8e5b38;
+  border-color: #8e5b38;
+  color: #fffefa;
+  box-shadow: 0 2px 6px rgba(142, 91, 56, 0.25);
+}
+
+/* ─── THE SIMS 4 BUILD/BUY MODE PANORAMIC LAYOUT ─── */
+.sim-layout.sims-panoramic {
+  grid-template-columns: 1fr !important;
+}
+.sim-layout.sims-panoramic .sim-deck {
+  display: none !important;
+}
+.sim-layout.sims-panoramic .sim-viewport-col {
+  border-right: none;
+  padding: 0.85rem;
+}
+
+/* Sims 4 Top Toolbar */
+.sim-sims-topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  padding: 0.45rem 0.85rem;
+  background: #fffefa;
+  border: 1px solid #e0d8cc;
+  border-radius: 12px;
+  box-shadow: var(--shadow-sm);
+  margin-bottom: 0.65rem;
+}
+.sim-topbar-modes {
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+  flex-wrap: wrap;
+}
+.sim-topbar-mode-btn {
+  padding: 0.32rem 0.72rem;
+  border-radius: 8px;
+  border: 1px solid #dcd4c6;
+  background: #fbf9f5;
+  color: #4b453c;
+  font: inherit;
+  font-size: 0.74rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.16s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.28rem;
+}
+.sim-topbar-mode-btn:hover {
+  background: #f3ece1;
+  border-color: #8e5b38;
+}
+.sim-topbar-mode-btn.active {
+  background: #8e5b38;
+  border-color: #8e5b38;
+  color: #fffefa;
+  box-shadow: 0 2px 6px rgba(142, 91, 56, 0.25);
+}
+.sim-topbar-tools {
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+  flex-wrap: wrap;
+}
+.sim-topbar-tool-btn {
+  padding: 0.28rem 0.6rem;
+  border-radius: 999px;
+  border: 1px solid #dcd4c6;
+  background: #ffffff;
+  color: #524b42;
+  font: inherit;
+  font-size: 0.71rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+.sim-topbar-tool-btn:hover {
+  border-color: #0284c7;
+  color: #0284c7;
+}
+.sim-topbar-tool-btn.active {
+  background: #e0f2fe;
+  border-color: #0284c7;
+  color: #0369a1;
+}
+
+/* Sims 4 Bottom Catalog Shelf Dock */
+.sim-bottom-dock {
+  background: #fffefa;
+  border: 2px solid #d5cab8;
+  border-radius: 16px;
+  box-shadow: 0 8px 24px rgba(65, 50, 35, 0.12);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  margin-top: 0.65rem;
+  transition: all 0.22s cubic-bezier(0.2, 0.8, 0.3, 1);
+}
+.sim-bottom-dock.collapsed .sim-dock-shelf,
+.sim-bottom-dock.collapsed .sim-dock-cats {
+  display: none !important;
+}
+.sim-dock-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.45rem 0.85rem;
+  background: #f7f3ec;
+  border-bottom: 1px solid #e5ded2;
+  gap: 0.5rem;
+}
+.sim-dock-funds {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-size: 0.86rem;
+  font-weight: 900;
+  color: #15803d;
+  background: #dcfce7;
+  border: 1px solid #86efac;
+  padding: 0.22rem 0.65rem;
+  border-radius: 999px;
+}
+.sim-dock-search {
+  padding: 0.25rem 0.6rem;
+  border-radius: 999px;
+  border: 1px solid #d5cab8;
+  font: inherit;
+  font-size: 0.72rem;
+  width: 140px;
+  background: #fffefa;
+}
+.sim-dock-toggle-btn {
+  padding: 0.24rem 0.65rem;
+  border-radius: 999px;
+  border: 1px solid #dfd6c8;
+  background: #fffefa;
+  color: #5a5349;
+  font: inherit;
+  font-size: 0.7rem;
+  font-weight: 800;
+  cursor: pointer;
+  margin-left: auto;
+  transition: all 0.15s ease;
+}
+.sim-dock-toggle-btn:hover {
+  background: #f0eae0;
+  border-color: #8e5b38;
+}
+.sim-dock-cats {
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+  padding: 0.4rem 0.85rem;
+  overflow-x: auto;
+  white-space: nowrap;
+  background: #faf7f0;
+  border-bottom: 1px solid #e8e1d5;
+}
+.sim-dock-cat-btn {
+  padding: 0.22rem 0.58rem;
+  border-radius: 999px;
+  border: 1px solid #dfd6c8;
+  background: #fffefa;
+  color: #4b453c;
+  font: inherit;
+  font-size: 0.7rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  flex-shrink: 0;
+}
+.sim-dock-cat-btn:hover {
+  border-color: #8e5b38;
+}
+.sim-dock-cat-btn.active {
+  background: #8e5b38;
+  border-color: #8e5b38;
+  color: #fffefa;
+}
+.sim-dock-shelf {
+  display: flex;
+  gap: 0.55rem;
+  padding: 0.65rem 0.85rem;
+  overflow-x: auto;
+  min-height: 108px;
+  align-items: center;
+  background: #fffefa;
+}
+.sim-dock-card {
+  flex: 0 0 106px;
+  height: 98px;
+  background: #fffefa;
+  border: 1.5px solid #dfd6c8;
+  border-radius: 12px;
+  padding: 0.35rem 0.3rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  cursor: pointer;
+  position: relative;
+  transition: all 0.16s ease;
+  user-select: none;
+}
+.sim-dock-card:hover {
+  border-color: #0284c7;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(2, 132, 199, 0.18);
+}
+.sim-dock-card.placed {
+  border-color: #527464;
+  background: #f2f7f4;
+}
+.sim-dock-card-star {
+  position: absolute;
+  top: 3px;
+  left: 6px;
+  font-size: 0.68rem;
+  color: #f59e0b;
+}
+.sim-dock-card-icon {
+  font-size: 1.65rem;
+  margin-top: 0.15rem;
+  line-height: 1;
+}
+.sim-dock-card-title {
+  font-size: 0.66rem;
+  font-weight: 700;
+  color: #332d26;
+  text-align: center;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  width: 100%;
+}
+.sim-dock-card-price {
+  font-size: 0.68rem;
+  font-weight: 800;
+  color: #8e5b38;
+  background: #fdf5ea;
+  padding: 1px 6px;
+  border-radius: 999px;
+  border: 1px solid #ebd9c2;
+}
+.sim-dock-card.placed .sim-dock-card-price {
+  color: #15803d;
+  background: #dcfce7;
+  border-color: #86efac;
+}
+
 /* Shop Channels & Categories */
 .shop-channel-tabs {
   display: grid;
@@ -3509,7 +3810,8 @@ body::before {
   box-shadow: 0 12px 28px rgba(24, 18, 12, 0.32);
   white-space: nowrap;
 }
-.sim-obj-inspector.open {
+.sim-obj-inspector.open,
+.sim-obj-inspector.visible {
   display: inline-flex;
 }
 .sim-obj-inspector-title {
@@ -3537,6 +3839,116 @@ body::before {
 .sim-obj-inspector button.danger:hover {
   background: #b91c1c;
   border-color: #b91c1c;
+}
+
+/* ─── 3D VIEWPORT DECK QUICK-JUMP DOCK ─── */
+.sim-deck-quickpills {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+  padding: 0.4rem 0.75rem;
+  background: #fffefa;
+  border: 1px solid #e3dcd0;
+  border-radius: 12px;
+  box-shadow: var(--shadow-sm);
+  margin-bottom: 0.65rem;
+}
+.quickpill-label {
+  font-size: 0.72rem;
+  font-weight: 800;
+  color: var(--smoked-oak);
+  margin-right: 0.2rem;
+}
+.quickpill-btn {
+  padding: 0.28rem 0.65rem;
+  border-radius: 999px;
+  border: 1px solid #dfd6c7;
+  background: #fbf9f4;
+  color: var(--text-primary);
+  font: inherit;
+  font-size: 0.72rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.18s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+.quickpill-btn:hover {
+  background: #f0eae1;
+  border-color: var(--smoked-oak);
+  color: var(--smoked-oak);
+}
+.quickpill-btn.active {
+  background: var(--smoked-oak);
+  border-color: var(--smoked-oak);
+  color: #fffefa;
+  box-shadow: 0 2px 6px rgba(142, 91, 56, 0.28);
+}
+.quickpill-btn.quote {
+  margin-left: auto;
+  background: rgba(212, 155, 59, 0.12);
+  border-color: var(--amber);
+  color: #92400e;
+}
+.quickpill-btn.quote:hover {
+  background: var(--amber);
+  color: #fffefa;
+}
+
+/* ─── SCENARIO GOAL JUMP CHIP ─── */
+.scenario-goals li {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.4rem;
+}
+.scenario-goal-jump {
+  padding: 0.2rem 0.52rem;
+  border-radius: 999px;
+  border: 1px solid var(--amber);
+  background: rgba(245, 196, 83, 0.18);
+  color: #92400e;
+  font: inherit;
+  font-size: 0.68rem;
+  font-weight: 800;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all 0.15s ease;
+  flex-shrink: 0;
+}
+.scenario-goal-jump:hover {
+  background: var(--amber);
+  color: #fffefa;
+  transform: translateY(-1px);
+}
+
+/* ─── CONCEPT DLC CARD JUMP BUTTON ─── */
+.concept-to-game-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.35rem;
+  margin-top: 0.85rem;
+  padding: 0.48rem 0.85rem;
+  border-radius: 8px;
+  border: 1px solid rgba(142, 91, 56, 0.25);
+  background: rgba(255, 254, 250, 0.95);
+  color: var(--text-primary);
+  font: inherit;
+  font-size: 0.76rem;
+  font-weight: 700;
+  cursor: pointer;
+  width: 100%;
+  transition: all 0.18s ease;
+}
+.concept-to-game-btn:hover {
+  background: var(--smoked-oak);
+  color: #fffefa;
+  border-color: var(--smoked-oak);
+  box-shadow: 0 4px 12px rgba(142, 91, 56, 0.25);
 }
 
 .sim-empty-guide {
@@ -3690,6 +4102,9 @@ body::before {
         <li>料理體驗模組</li>
       </ul>
       <div class="dlc-progress"><div class="bar" data-width="60"></div></div>
+      <button type="button" class="concept-to-game-btn" data-stage="starter" data-dlc="work">
+        ▶ 在 3D 模擬器體驗 (WORK DLC) →
+      </button>
     </div>
     <div class="dlc-card teal pixel-corner teal">
       <span class="dlc-label">DLC PACK 02</span>
@@ -3701,6 +4116,9 @@ body::before {
         <li>照護支持模組</li>
       </ul>
       <div class="dlc-progress"><div class="bar" data-width="75"></div></div>
+      <button type="button" class="concept-to-game-btn" data-stage="family" data-dlc="family">
+        ▶ 在 3D 模擬器體驗 (FAMILY DLC) →
+      </button>
     </div>
     <div class="dlc-card green pixel-corner green">
       <span class="dlc-label">DLC PACK 03</span>
@@ -3712,6 +4130,9 @@ body::before {
         <li>便利生活模組</li>
       </ul>
       <div class="dlc-progress"><div class="bar" data-width="90"></div></div>
+      <button type="button" class="concept-to-game-btn" data-stage="senior" data-dlc="safe">
+        ▶ 在 3D 模擬器體驗 (SAFE DLC) →
+      </button>
     </div>
   </div>
 
@@ -4146,6 +4567,30 @@ body::before {
           </div>
         </div>
 
+        <!-- 3D 視窗頂部快速分頁跳轉膠囊列 (不用滑動即可一鍵跳轉右側各大功能艙) -->
+        <div class="sim-deck-quickpills" aria-label="右側功能分頁快速切換">
+          <span class="quickpill-label">⚡ 快速分頁跳轉：</span>
+          <button type="button" class="quickpill-btn active" data-jump-deck="live">🕹️ 生活＆劇本</button>
+          <button type="button" class="quickpill-btn" data-jump-deck="hardscape">🧱 硬裝＆水電</button>
+          <button type="button" class="quickpill-btn" data-jump-deck="shop">🛋️ 商城＆盲盒</button>
+          <button type="button" class="quickpill-btn" data-jump-deck="build">⚡ 軌道＆循環</button>
+          <button type="button" class="quickpill-btn quote" id="btnQuickQuoteModal" title="開啟 3D 空間截圖與裝潢購物清單估價單">🧾 裝潢估價單</button>
+        </div>
+
+        <!-- Sims 4 頂部建造與視角工具列 (The Sims 4 Builder Toolbar) -->
+        <div class="sim-sims-topbar" id="simTopBar">
+          <div class="sim-topbar-modes">
+            <span style="font-size:0.74rem; font-weight:800; color:#8e5b38;">🏰 模擬市民模式：</span>
+            <button type="button" class="sim-topbar-mode-btn active" id="btnWallModeCutaway" title="切牆模式：自動剖切前方牆體與隔間，保留背牆與視野，家具不被遮擋">✂️ 剖面 (Cutaway)</button>
+            <button type="button" class="sim-topbar-mode-btn" id="btnWallModeFull" title="全牆模式：完整升起所有四面牆壁">🧱 全牆 (Full)</button>
+            <button type="button" class="sim-topbar-mode-btn" id="btnWallModeNone" title="去牆模式：降下所有牆壁至踢腳板高度">📐 去牆 (None)</button>
+          </div>
+          <div class="sim-topbar-tools">
+            <button type="button" class="sim-topbar-tool-btn active" id="btnToggleGrid" title="開關 0.5m 建築地面參考網格">📐 建築網格</button>
+            <button type="button" class="sim-topbar-tool-btn" id="btnTogglePanoramic" title="切換模擬市民全景沉浸大視野（隱藏右側深度控制艙，改以底部商品抽屜操作）">🖥️ 全景大視野</button>
+          </div>
+        </div>
+
         <div class="sim-room" id="simRoom" data-period="day" aria-label="3D 互動居家空間">
           <canvas class="sim-room-canvas" id="simRoomCanvas" width="880" height="550" tabindex="0" role="application" aria-label="3D 居家模擬地圖；點擊家具互動、按住牆上 DLC 沿軌道滑動、按住桌上小物可自由微調座標與堆疊"></canvas>
 
@@ -4180,11 +4625,12 @@ body::before {
             <button type="button" class="alt" id="btnQuickOpenShop">🛋️ 開啟商城從零自由擺設</button>
           </div>
 
-          <!-- 3D 物件選取浮動工具列 (點擊任一 3D 家具時顯示：互動 / 旋轉 90° / 回收) -->
+          <!-- 3D 物件選取浮動工具列 (點擊任一 3D 家具時顯示：互動 / 旋轉 90° / 跳轉分頁 / 回收) -->
           <div class="sim-obj-inspector" id="simObjInspector" role="toolbar" aria-label="3D 家具操作工具列">
             <span class="sim-obj-inspector-title" id="simInspectorTitle">已選取家具</span>
             <button type="button" id="btnInspectInteract" title="派角色走過去互動">⚡ 互動</button>
             <button type="button" id="btnInspectRotate" title="旋轉 90° (快捷鍵 R)">🔄 旋轉 90° (R)</button>
+            <button type="button" id="btnInspectJumpTab" title="在右側控制艙中跳轉至此物件所屬分頁與分類">📂 前往分頁</button>
             <button type="button" class="danger" id="btnInspectRemove" title="拆卸或回收變現">♻️ 拆卸／回收</button>
             <button type="button" id="btnInspectClose" aria-label="關閉選取">✕</button>
           </div>
@@ -4203,6 +4649,28 @@ body::before {
           </div>
           <span class="sim-controls-hint">🖱️ 點擊家具互動 · ↔️ 拖曳 DLC 滑軌移位 · 📦 拖曳桌上小物自由堆疊</span>
           <button class="sim-interact-btn" id="simInteract" type="button">⚡ E 互動</button>
+        </div>
+
+        <!-- Sims 4 底部橫向家具商品欄 / 建築抽屜 (The Sims 4 Bottom Catalog Shelf Dock) -->
+        <div class="sim-bottom-dock" id="simBottomDock">
+          <div class="sim-dock-header">
+            <div class="sim-dock-funds" id="simDockFunds">§ 650</div>
+            <span style="font-size:0.75rem; font-weight:800; color:#4a3f35;">🛋️ 建造與購買目錄 (點擊直接放置至房間)</span>
+            <input type="text" class="sim-dock-search" id="simDockSearch" placeholder="🔍 搜尋家具/隔間..." />
+            <button type="button" class="sim-dock-toggle-btn" id="btnToggleDockShelf">收合商品欄 ▼</button>
+          </div>
+          <div class="sim-dock-cats" id="simDockCats">
+            <button type="button" class="sim-dock-cat-btn active" data-cat="all">🌟 全部</button>
+            <button type="button" class="sim-dock-cat-btn" data-cat="structure">🧱 隔間＆結構</button>
+            <button type="button" class="sim-dock-cat-btn" data-cat="appliance">🍳 廚房＆家電</button>
+            <button type="button" class="sim-dock-cat-btn" data-cat="comfort">🛋️ 舒適＆起居</button>
+            <button type="button" class="sim-dock-cat-btn" data-cat="work">💻 工作＆電競</button>
+            <button type="button" class="sim-dock-cat-btn" data-cat="decor">🪴 裝飾＆綠化</button>
+            <button type="button" class="sim-dock-cat-btn" data-cat="track">⚡ TAYA 軌道DLC</button>
+          </div>
+          <div class="sim-dock-shelf" id="simDockShelf">
+            <!-- 由 renderSimDockShelf 動態生成卡片 -->
+          </div>
         </div>
 
         <div class="sim-message" id="simMessage" role="status" aria-live="polite">歡迎來到 TAYA LIFE 3D！可在右側切換「關卡劇本」、「硬裝材質與輕隔間」或至「主題商城＆二手盲盒」添購裝備。</div>
@@ -4318,6 +4786,72 @@ body::before {
               <button type="button" class="hardscape-btn active" id="btnTogglePillar">🏛️ 承重柱＆管道間</button>
               <button type="button" class="hardscape-btn" id="btnToggleWalkup">🪜 無電梯公寓(+15%搬運費)</button>
             </div>
+
+            <!-- 自訂隔間牆長度大小、方位與門扇設定面板 (建立隔間牆後自動展開) -->
+            <div class="partition-customizer-box" id="partitionCustomizerBox" style="display:none;">
+              <div style="display:flex; justify-content:space-between; align-items:center;">
+                <strong style="font-size:0.77rem; color:#4a3f35;">🚪 實體隔間牆規格與門扇設定</strong>
+                <span class="sim-badge" style="background:#e0edff; color:#1e40af; font-size:0.65rem;" id="partitionDimBadge">長度 2.6m · 縱向</span>
+              </div>
+              
+              <div style="font-size:0.69rem; color:#786f65; line-height:1.4;">
+                💡 <b>自選擺放位置</b>：可在 3D 畫面直接按住隔間牆任意拖曳到想要的位置，或按鍵盤 <kbd style="background:#eee; padding:1px 4px; border-radius:3px; font-weight:700;">R</kbd> 鍵旋轉方位！
+              </div>
+
+              <!-- 1. 長度大小選擇 -->
+              <div class="partition-cfg-row">
+                <div class="partition-cfg-label">
+                  <span>📏 隔間長度大小</span>
+                  <span id="partitionLenText" style="color:#8e5b38;">2.6 公尺</span>
+                </div>
+                <div style="display:grid; grid-template-columns:repeat(4, 1fr); gap:0.25rem;">
+                  <button type="button" class="partition-chip-btn partition-len-btn" data-len="1.8">1.8m 玄關</button>
+                  <button type="button" class="partition-chip-btn partition-len-btn active" data-len="2.6">2.6m 標準</button>
+                  <button type="button" class="partition-chip-btn partition-len-btn" data-len="3.4">3.4m 兩房</button>
+                  <button type="button" class="partition-chip-btn partition-len-btn" data-len="4.2">4.2m 大隔間</button>
+                </div>
+                <div style="display:flex; align-items:center; gap:0.4rem; margin-top:0.2rem;">
+                  <button type="button" class="partition-chip-btn" id="btnPartitionLenMinus" style="padding:0.2rem 0.5rem;" title="縮短 0.2m">➖</button>
+                  <input type="range" id="partitionLenSlider" min="1.4" max="4.8" step="0.2" value="2.6" style="flex:1; accent-color:#8e5b38; cursor:pointer;" />
+                  <button type="button" class="partition-chip-btn" id="btnPartitionLenPlus" style="padding:0.2rem 0.5rem;" title="加長 0.2m">➕</button>
+                </div>
+              </div>
+
+              <!-- 2. 方位與門洞位置 -->
+              <div style="display:grid; grid-template-columns:1fr 1.2fr; gap:0.4rem;">
+                <div class="partition-cfg-row">
+                  <span class="partition-cfg-label">🧭 牆面方向</span>
+                  <div style="display:flex; gap:0.25rem;">
+                    <button type="button" class="partition-chip-btn partition-orient-btn active" data-orient="y" style="flex:1;">↕️ 縱向(Y)</button>
+                    <button type="button" class="partition-chip-btn partition-orient-btn" data-orient="x" style="flex:1;">↔️ 橫向(X)</button>
+                  </div>
+                </div>
+                <div class="partition-cfg-row">
+                  <span class="partition-cfg-label">🚪 門洞位置</span>
+                  <div style="display:flex; gap:0.2rem;">
+                    <button type="button" class="partition-chip-btn partition-dpos-btn" data-dpos="start" style="flex:1;">靠左</button>
+                    <button type="button" class="partition-chip-btn partition-dpos-btn active" data-dpos="center" style="flex:1;">置中</button>
+                    <button type="button" class="partition-chip-btn partition-dpos-btn" data-dpos="end" style="flex:1;">靠右</button>
+                  </div>
+                </div>
+              </div>
+
+              <!-- 3. 門扇款式與開關狀態 -->
+              <div style="display:grid; grid-template-columns:1.5fr 1fr; gap:0.4rem;">
+                <div class="partition-cfg-row">
+                  <span class="partition-cfg-label">🚪 門扇款式</span>
+                  <div style="display:flex; gap:0.2rem;">
+                    <button type="button" class="partition-chip-btn partition-dstyle-btn active" data-style="glass-sliding" style="flex:1;">🪟 玻璃拉門</button>
+                    <button type="button" class="partition-chip-btn partition-dstyle-btn" data-style="wood-hinged" style="flex:1;">🚪 實木門</button>
+                    <button type="button" class="partition-chip-btn partition-dstyle-btn" data-style="open-arch" style="flex:1;">⛩️ 穿透洞</button>
+                  </div>
+                </div>
+                <div class="partition-cfg-row">
+                  <span class="partition-cfg-label">🔓 門扇狀態</span>
+                  <button type="button" class="partition-chip-btn" id="btnTogglePartitionDoor" style="width:100%;">🔒 闔上 (點擊開門)</button>
+                </div>
+              </div>
+            </div>
           </div>
 
           <div class="hardscape-section">
@@ -4363,6 +4897,7 @@ body::before {
             <button type="button" class="shop-cat-pill" data-cat="appliance">☕ 生活家電</button>
             <button type="button" class="shop-cat-pill" data-cat="lighting">💡 照明氛圍</button>
             <button type="button" class="shop-cat-pill" data-cat="pet">🐾 寵物植栽</button>
+            <button type="button" class="shop-cat-pill" data-cat="dlc" title="前往 TAYA 專利軌道滑動模組工坊">⚡ 軌道模組 →</button>
           </div>
 
           <div id="shopChannelHeader" style="display:flex; justify-content:space-between; align-items:center; font-size:0.71rem; color:#655e54;">
@@ -4430,10 +4965,22 @@ body::before {
 
           <div class="furn-catalog-box">
             <h4>
-              <span>🪑 經典客廳基礎配置</span>
+              <span>🛋️ 全室家具整體配置狀態</span>
               <span id="buildFitSummary" style="color:var(--teal); font-size:0.72rem;">空間適配良好</span>
             </h4>
-            <div class="plan-furniture" id="planFurniture"></div>
+            <div id="buildFurnSummaryText" style="font-size:0.75rem; color:#605a50; line-height:1.5; margin-bottom:0.6rem;">
+              已啟用 0 項 TAYA 軌道模組，並在 3D 空間擺放 0 件家具。所有家具均已整合至「商城＆盲盒」，可在 3D 地板自由拖曳與旋轉。
+            </div>
+            <div style="display:flex; flex-direction:column; gap:0.4rem;">
+              <button type="button" id="btnJumpToShopFromBuild" style="width:100%; text-align:center; padding:0.5rem; background:var(--amber); color:#fffefa; border:none; border-radius:8px; font-weight:800; cursor:pointer; font-size:0.74rem;">
+                🛋️ 前往「商城＆盲盒」瀏覽／購買全系列家具 (含基礎與 21 款主題單品) →
+              </button>
+              <div style="display:grid; grid-template-columns:1fr 1fr; gap:0.4rem;">
+                <button type="button" class="hardscape-btn" id="btnQuickKitFromBuild">⚡ 套用基礎生活組</button>
+                <button type="button" class="hardscape-btn" id="btnClearAllFurnFromBuild" style="color:#b91c1c;">🧹 一鍵清空家具</button>
+              </div>
+            </div>
+            <div class="plan-furniture" id="planFurniture" style="display:none;"></div>
           </div>
         </div>
       </aside>
@@ -4644,6 +5191,13 @@ body::before {
         </div>
       </div>
     </div>
+
+    <!-- 試算結果一鍵跳轉同步至 3D 模擬器驗證 -->
+    <div style="margin-top:1.4rem; text-align:center;">
+      <button type="button" class="hero-cta" id="btnSyncCalcToSimGame" style="padding:0.72rem 1.6rem; font-size:0.86rem; border:none; cursor:pointer;">
+        🎮 將此試算規格同步至上方 3D 空間遊戲驗證格局 ↑
+      </button>
+    </div>
   </div>
 
   <div class="circular-economy">
@@ -4820,7 +5374,10 @@ const simDefaultState = {
   trackPos: { work: 5.1, family: 2.1, storage: 7.35, safe: 2.05 },
   esgScore: 30,
   xrayMode: false,
-  actionCounter: 0
+  actionCounter: 0,
+  wallMode: 'cutaway', // 'cutaway' | 'full' | 'none'
+  showGrid: true,
+  panoramic: false
 };
 
 const simNeedData = [
@@ -4942,6 +5499,9 @@ function loadSimState() {
       esgScore: Number.isFinite(parsed.esgScore) ? parsed.esgScore : 30,
       xrayMode: Boolean(parsed.xrayMode),
       actionCounter: Number.isFinite(parsed.actionCounter) ? parsed.actionCounter : 0,
+      wallMode: ['cutaway', 'full', 'none'].includes(parsed.wallMode) ? parsed.wallMode : 'cutaway',
+      showGrid: typeof parsed.showGrid === 'boolean' ? parsed.showGrid : true,
+      panoramic: Boolean(parsed.panoramic),
       paused: true
     };
   } catch (e) {
@@ -5152,8 +5712,17 @@ function getSnapLift(id, now) {
 let selectedObjectId = null; // Currently selected 3D object ID for Inspector & Rotation
 let draggingFloorObj = null; // { id, storeKey, dx, dy, isWall, isSubgrid }
 
+// 4-Quadrant 90° Incremental Rotation Helpers (0: 0°, 1: 90°, 2: 180°, 3: 270°)
+function getObjRotation(key) {
+  if (!simState.rotatedItems) return 0;
+  const val = simState.rotatedItems[key];
+  if (val === true) return 1;
+  const num = parseInt(val, 10);
+  return Number.isFinite(num) ? ((num % 4) + 4) % 4 : 0;
+}
+
 function isObjRotated(key) {
-  return Boolean(simState.rotatedItems && simState.rotatedItems[key]);
+  return (getObjRotation(key) % 2) === 1;
 }
 
 // Returns interactive 3D furniture, DLC & V4 models in the room (all draggable, clickable & depth-sorted)
@@ -5231,18 +5800,20 @@ function getSceneObjects() {
     });
   }
 
-  // Helper for Base Furniture with free floor dragging & 90° rotation
+  // Helper for Base Furniture with free floor dragging & 4-way 90° rotation
   const addBaseFurn = (id, storeKey, label, action, defX, defY, baseDx, baseDy, dz) => {
     if (!simState.furniture.includes(storeKey)) return;
-    const rot = isObjRotated(storeKey);
-    const dx = rot ? baseDy : baseDx;
-    const dy = rot ? baseDx : baseDy;
+    const rot = getObjRotation(storeKey);
+    const swapped = (rot % 2) === 1;
+    const dx = swapped ? baseDy : baseDx;
+    const dy = swapped ? baseDx : baseDy;
     const cp = customPos[storeKey];
     const x = clampX(cp && Number.isFinite(cp.x) ? cp.x : defX, dx);
     const y = clampY(cp && Number.isFinite(cp.y) ? cp.y : defY, dy);
     list.push({
       id, storeKey, label, action,
       x, y, z: 0, dx, dy, dz,
+      rot,
       ix: clampIX(x + dx * 0.5),
       iy: clampIY(y + dy + 0.35 < roomD - 0.5 ? y + dy + 0.35 : y - 0.35),
       isBaseFurn: true, canRotate: true
@@ -5263,9 +5834,10 @@ function getSceneObjects() {
       if (id === 'robot-vac') return;
       const meta = V4_SHOP_CATALOG.find(m => m.id === id);
       if (!meta) return;
-      const pos = typeof getV4ItemPos === 'function' ? getV4ItemPos(meta) : { x: meta.x, y: meta.y, z: meta.zBase || 0, dx: meta.dx, dy: meta.dy };
+      const pos = typeof getV4ItemPos === 'function' ? getV4ItemPos(meta) : { x: meta.x, y: meta.y, z: meta.zBase || 0, dx: meta.dx, dy: meta.dy, rot: 0 };
       const dx = pos.dx || meta.dx;
       const dy = pos.dy || meta.dy;
+      const rot = pos.rot ?? getObjRotation(meta.id);
       list.push({
         id: meta.id,
         storeKey: meta.id,
@@ -5273,6 +5845,7 @@ function getSceneObjects() {
         action: catActionMap[meta.cat] || 'relax',
         x: pos.x, y: pos.y, z: pos.z,
         dx, dy, dz: meta.dz,
+        rot,
         ix: clampIX(pos.x + dx * 0.5),
         iy: clampIY(pos.y + dy + 0.4 < roomD - 0.5 ? pos.y + dy + 0.4 : pos.y + 0.5),
         isV4: true,
@@ -5280,6 +5853,53 @@ function getSceneObjects() {
         isWall: Boolean(meta.isWall),
         canRotate: !meta.isWall
       });
+    });
+  }
+
+  // Include Customizable 3D Partition Wall (含門) if enabled by player!
+  if (simState.hardscape?.partition) {
+    ensureV4State();
+    const cfg = simState.hardscape.partitionConfig || {
+      x: Number((roomW * 0.48).toFixed(2)),
+      y: Number((roomD * 0.32).toFixed(2)),
+      length: 2.6,
+      orient: 'y',
+      doorPos: 'center',
+      doorStyle: 'glass-sliding',
+      doorOpen: false
+    };
+    simState.hardscape.partitionConfig = cfg;
+    const rot = getObjRotation('partition-wall');
+    // If rot % 2 === 1, orientation is opposite of cfg.orient
+    const isHoriz = (rot % 2 === 1) ? (cfg.orient !== 'x') : (cfg.orient === 'x');
+    const wallLen = Math.max(1.4, Math.min(isHoriz ? roomW - 0.5 : roomD - 0.5, cfg.length || 2.6));
+    const wallThick = 0.16;
+    const dx = isHoriz ? wallLen : wallThick;
+    const dy = isHoriz ? wallThick : wallLen;
+    const cp = customPos['partition-wall'];
+    const defX = Number.isFinite(cfg.x) ? cfg.x : Number((roomW * 0.48).toFixed(2));
+    const defY = Number.isFinite(cfg.y) ? cfg.y : Number((roomD * 0.32).toFixed(2));
+    const x = clampX(cp && Number.isFinite(cp.x) ? cp.x : defX, dx);
+    const y = clampY(cp && Number.isFinite(cp.y) ? cp.y : defY, dy);
+    cfg.x = x;
+    cfg.y = y;
+    cfg.length = wallLen;
+    cfg.orient = isHoriz ? 'x' : 'y';
+
+    const dStyleName = cfg.doorStyle === 'wood-hinged' ? '實木門' : cfg.doorStyle === 'open-arch' ? '門洞' : '玻璃拉門';
+    list.push({
+      id: 'partition-wall',
+      storeKey: 'partition-wall',
+      label: `實體隔間牆 (長${wallLen.toFixed(1)}m · 含${dStyleName})`,
+      action: 'relax',
+      x, y, z: 0,
+      dx, dy, dz: 2.35,
+      rot,
+      ix: clampIX(x + dx * 0.5),
+      iy: clampIY(y + dy * 0.5 + 0.45 < roomD - 0.4 ? y + dy * 0.5 + 0.45 : y + dy * 0.5 - 0.45),
+      isHardscape: true,
+      canRotate: true,
+      cfg
     });
   }
 
@@ -5424,60 +6044,111 @@ function draw3DFurnitureObject(iso, obj, now, isNight) {
   }
 
   if (obj.id === 'sofa') {
-    // 3D Nordic Sofa (supports 90° rotation)
+    // 3D Nordic Sofa (supports 4-way 90° incremental rotation)
+    const rot = obj.rot ?? getObjRotation(obj.storeKey || obj.id);
     iso.drawBox(x, y, z0, dx, dy, 0.36, '#648272'); // Base seat
-    if (dx > dy) {
-      iso.drawBox(x, y, z0 + 0.36, dx, 0.28, 0.52, '#526d5e'); // Backrest along Y=0
-      iso.drawBox(x, y + 0.28, z0 + 0.36, 0.22, dy - 0.28, 0.32, '#526d5e');
-      iso.drawBox(x + dx - 0.22, y + 0.28, z0 + 0.36, 0.22, dy - 0.28, 0.32, '#526d5e');
-      iso.drawBox(x + 0.32, y + 0.3, z0 + 0.36, 0.42, 0.22, 0.28, '#e09f67');
-      iso.drawBox(x + dx - 0.75, y + 0.3, z0 + 0.36, 0.42, 0.22, 0.28, '#e9c46a');
-    } else {
+    if (rot === 0) {
+      // Facing +X (backrest on left edge x)
       iso.drawBox(x, y, z0 + 0.36, 0.28, dy, 0.52, '#526d5e'); // Backrest
       iso.drawBox(x + 0.28, y, z0 + 0.36, dx - 0.28, 0.22, 0.32, '#526d5e'); // Left armrest
       iso.drawBox(x + 0.28, y + dy - 0.22, z0 + 0.36, dx - 0.28, 0.22, 0.32, '#526d5e'); // Right armrest
       iso.drawBox(x + 0.3, y + 0.32, z0 + 0.36, 0.22, 0.42, 0.28, '#e09f67');
       iso.drawBox(x + 0.3, y + dy - 0.75, z0 + 0.36, 0.22, 0.42, 0.28, '#e9c46a');
+    } else if (rot === 1) {
+      // Facing +Y (backrest along back edge y)
+      iso.drawBox(x, y, z0 + 0.36, dx, 0.28, 0.52, '#526d5e'); // Backrest along Y=0
+      iso.drawBox(x, y + 0.28, z0 + 0.36, 0.22, dy - 0.28, 0.32, '#526d5e');
+      iso.drawBox(x + dx - 0.22, y + 0.28, z0 + 0.36, 0.22, dy - 0.28, 0.32, '#526d5e');
+      iso.drawBox(x + 0.32, y + 0.3, z0 + 0.36, 0.42, 0.22, 0.28, '#e09f67');
+      iso.drawBox(x + dx - 0.75, y + 0.3, z0 + 0.36, 0.42, 0.22, 0.28, '#e9c46a');
+    } else if (rot === 2) {
+      // Facing -X (backrest on right edge x + dx - 0.28)
+      iso.drawBox(x + dx - 0.28, y, z0 + 0.36, 0.28, dy, 0.52, '#526d5e'); // Backrest
+      iso.drawBox(x, y, z0 + 0.36, dx - 0.28, 0.22, 0.32, '#526d5e'); // Top armrest
+      iso.drawBox(x, y + dy - 0.22, z0 + 0.36, dx - 0.28, 0.22, 0.32, '#526d5e'); // Bottom armrest
+      iso.drawBox(x + dx - 0.52, y + 0.32, z0 + 0.36, 0.22, 0.42, 0.28, '#e09f67');
+      iso.drawBox(x + dx - 0.52, y + dy - 0.75, z0 + 0.36, 0.22, 0.42, 0.28, '#e9c46a');
+    } else {
+      // Facing -Y (backrest along front edge y + dy - 0.28)
+      iso.drawBox(x, y + dy - 0.28, z0 + 0.36, dx, 0.28, 0.52, '#526d5e'); // Backrest
+      iso.drawBox(x, y, z0 + 0.36, 0.22, dy - 0.28, 0.32, '#526d5e');
+      iso.drawBox(x + dx - 0.22, y, z0 + 0.36, 0.22, dy - 0.28, 0.32, '#526d5e');
+      iso.drawBox(x + 0.32, y + dy - 0.52, z0 + 0.36, 0.42, 0.22, 0.28, '#e09f67');
+      iso.drawBox(x + dx - 0.75, y + dy - 0.52, z0 + 0.36, 0.42, 0.22, 0.28, '#e9c46a');
     }
     return;
   }
 
   if (obj.id === 'tv') {
-    // 3D Media Console & Smart TV (supports 90° rotation)
+    // 3D Media Console & Smart TV (supports 4-way 90° incremental rotation)
+    const rot = obj.rot ?? getObjRotation(obj.storeKey || obj.id);
     iso.drawBox(x, y, z0, dx, dy, 0.42, '#8c5e3c');
-    if (dx > dy) {
+    if (rot === 0) {
+      iso.drawBox(x + 0.15, y + 0.18, z0 + 0.42, 0.12, dy - 0.36, 0.68, '#1e293b');
+      iso.drawBox(x + 0.24, y + 0.22, z0 + 0.46, 0.04, dy - 0.44, 0.58, '#38bdf8');
+    } else if (rot === 1) {
       iso.drawBox(x + 0.18, y + 0.15, z0 + 0.42, dx - 0.36, 0.12, 0.68, '#1e293b');
       iso.drawBox(x + 0.22, y + 0.24, z0 + 0.46, dx - 0.44, 0.04, 0.58, '#38bdf8');
+    } else if (rot === 2) {
+      iso.drawBox(x + dx - 0.27, y + 0.18, z0 + 0.42, 0.12, dy - 0.36, 0.68, '#1e293b');
+      iso.drawBox(x + dx - 0.28, y + 0.22, z0 + 0.46, 0.04, dy - 0.44, 0.58, '#38bdf8');
     } else {
-      iso.drawBox(x + 0.15, y + 0.18, z0 + 0.42, 0.12, dy - 0.36, 0.68, '#1e293b');
-      iso.drawBox(x + 0.12, y + 0.22, z0 + 0.46, 0.04, dy - 0.44, 0.58, '#38bdf8');
+      iso.drawBox(x + 0.18, y + dy - 0.27, z0 + 0.42, dx - 0.36, 0.12, 0.68, '#1e293b');
+      iso.drawBox(x + 0.22, y + dy - 0.28, z0 + 0.46, dx - 0.44, 0.04, 0.58, '#38bdf8');
     }
     return;
   }
 
   if (obj.id === 'bed') {
-    // 3D Double Bed with Headboard, Pillows & Duvet (supports 90° rotation)
+    // 3D Double Bed with Headboard, Pillows & Duvet (supports 4-way 90° incremental rotation)
+    const rot = obj.rot ?? getObjRotation(obj.storeKey || obj.id);
     const frameCol = isDlcActive('storage') ? '#7c5335' : '#9c6b46';
     iso.drawBox(x, y, z0, dx, dy, 0.34, frameCol); // Bed frame
-    if (dy > dx) {
-      iso.drawBox(x, y, z0 + 0.34, dx, 0.2, 0.72, '#6b442a'); // Headboard along back
+    if (rot === 0) {
+      // Headboard along back wall (y=0 side)
+      iso.drawBox(x, y, z0 + 0.34, dx, 0.2, 0.72, '#6b442a');
       iso.drawBox(x + 0.08, y + 0.2, z0 + 0.34, dx - 0.16, dy - 0.28, 0.22, '#faf6ee');
       iso.drawBox(x + 0.06, y + 0.2 + (dy - 0.28) * 0.35, z0 + 0.36, dx - 0.12, (dy - 0.28) * 0.65, 0.23, '#6b8e78');
-      iso.drawBox(x + 0.18, y + 0.28, z0 + 0.56, 0.56, 0.38, 0.12, '#ffffff');
-      iso.drawBox(x + dx - 0.74, y + 0.28, z0 + 0.56, 0.56, 0.38, 0.12, '#ffffff');
-    } else {
-      iso.drawBox(x + dx - 0.2, y, z0 + 0.34, 0.2, dy, 0.72, '#6b442a'); // Headboard
-      iso.drawBox(x + 0.08, y + 0.08, z0 + 0.34, dx - 0.28, dy - 0.16, 0.22, '#faf6ee'); // Mattress
+      iso.drawBox(x + 0.18, y + 0.28, z0 + 0.56, Math.min(0.56, (dx - 0.4) * 0.48), 0.38, 0.12, '#ffffff');
+      iso.drawBox(x + dx - Math.min(0.56, (dx - 0.4) * 0.48) - 0.18, y + 0.28, z0 + 0.56, Math.min(0.56, (dx - 0.4) * 0.48), 0.38, 0.12, '#ffffff');
+    } else if (rot === 1) {
+      // Headboard along right edge (x+dx side)
+      iso.drawBox(x + dx - 0.2, y, z0 + 0.34, 0.2, dy, 0.72, '#6b442a');
+      iso.drawBox(x + 0.08, y + 0.08, z0 + 0.34, dx - 0.28, dy - 0.16, 0.22, '#faf6ee');
       iso.drawBox(x + 0.06, y + 0.06, z0 + 0.36, (dx - 0.28) * 0.65, dy - 0.12, 0.23, '#6b8e78');
-      iso.drawBox(x + dx - 0.68, y + 0.22, z0 + 0.56, 0.4, 0.62, 0.12, '#ffffff');
-      iso.drawBox(x + dx - 0.68, y + dy - 0.84, z0 + 0.56, 0.4, 0.62, 0.12, '#ffffff');
+      iso.drawBox(x + dx - 0.68, y + 0.22, z0 + 0.56, 0.4, Math.min(0.62, (dy - 0.4) * 0.45), 0.12, '#ffffff');
+      iso.drawBox(x + dx - 0.68, y + dy - Math.min(0.62, (dy - 0.4) * 0.45) - 0.22, z0 + 0.56, 0.4, Math.min(0.62, (dy - 0.4) * 0.45), 0.12, '#ffffff');
+    } else if (rot === 2) {
+      // Headboard along front edge (y+dy side)
+      iso.drawBox(x, y + dy - 0.2, z0 + 0.34, dx, 0.2, 0.72, '#6b442a');
+      iso.drawBox(x + 0.08, y + 0.08, z0 + 0.34, dx - 0.16, dy - 0.28, 0.22, '#faf6ee');
+      iso.drawBox(x + 0.06, y + 0.06, z0 + 0.36, dx - 0.12, (dy - 0.28) * 0.65, 0.23, '#6b8e78');
+      iso.drawBox(x + 0.18, y + dy - 0.66, z0 + 0.56, Math.min(0.56, (dx - 0.4) * 0.48), 0.38, 0.12, '#ffffff');
+      iso.drawBox(x + dx - Math.min(0.56, (dx - 0.4) * 0.48) - 0.18, y + dy - 0.66, z0 + 0.56, Math.min(0.56, (dx - 0.4) * 0.48), 0.38, 0.12, '#ffffff');
+    } else {
+      // Headboard along left edge (x side)
+      iso.drawBox(x, y, z0 + 0.34, 0.2, dy, 0.72, '#6b442a');
+      iso.drawBox(x + 0.2, y + 0.08, z0 + 0.34, dx - 0.28, dy - 0.16, 0.22, '#faf6ee');
+      iso.drawBox(x + 0.2 + (dx - 0.28) * 0.35, y + 0.06, z0 + 0.36, (dx - 0.28) * 0.65, dy - 0.12, 0.23, '#6b8e78');
+      iso.drawBox(x + 0.28, y + 0.22, z0 + 0.56, 0.4, Math.min(0.62, (dy - 0.4) * 0.45), 0.12, '#ffffff');
+      iso.drawBox(x + 0.28, y + dy - Math.min(0.62, (dy - 0.4) * 0.45) - 0.22, z0 + 0.56, 0.4, Math.min(0.62, (dy - 0.4) * 0.45), 0.12, '#ffffff');
     }
     return;
   }
 
   if (obj.id === 'cart') {
+    const rot = obj.rot ?? getObjRotation(obj.storeKey || obj.id);
     iso.drawBox(x, y, z0 + 0.08, dx, dy, 0.72, '#b07d4f');
     iso.drawBox(x - 0.03, y - 0.03, z0 + 0.78, dx + 0.06, dy + 0.06, 0.07, '#f4efe6');
+    if (rot === 0) {
+      iso.drawBox(x + dx + 0.02, y + 0.08, z0 + 0.65, 0.05, dy - 0.16, 0.18, '#cbd5e1');
+    } else if (rot === 1) {
+      iso.drawBox(x + 0.08, y + dy + 0.02, z0 + 0.65, dx - 0.16, 0.05, 0.18, '#cbd5e1');
+    } else if (rot === 2) {
+      iso.drawBox(x - 0.07, y + 0.08, z0 + 0.65, 0.05, dy - 0.16, 0.18, '#cbd5e1');
+    } else {
+      iso.drawBox(x + 0.08, y - 0.07, z0 + 0.65, dx - 0.16, 0.05, 0.18, '#cbd5e1');
+    }
     return;
   }
 
@@ -5487,6 +6158,173 @@ function draw3DFurnitureObject(iso, obj, now, isNight) {
     iso.drawBox(x + 0.26, y + 0.26, z0 + 0.45, 0.14, 0.14, 0.55, '#4d7c4f');
     iso.drawBox(x + 0.04, y + 0.08, z0 + 0.75, 0.56, 0.48, 0.22, '#5c945e');
     iso.drawBox(x + 0.12, y + 0.14, z0 + 0.97, 0.4, 0.38, 0.25, '#74ad76');
+    return;
+  }
+
+  if (obj.id === 'partition-wall') {
+    // Custom Movable Partition Wall with Doorway & Door Leaf (要有門，而非單片)
+    const cfg = simState.hardscape?.partitionConfig || {};
+    const isHoriz = dx > dy;
+    const totalLen = isHoriz ? dx : dy;
+    const wallThick = isHoriz ? dy : dx;
+    const wallMode = simState.wallMode || 'cutaway';
+    let isCutaway = false;
+    let wallH = Math.min(obj.dz || 2.35, 2.4);
+    if (wallMode === 'none') {
+      wallH = 0.08;
+    } else if (wallMode === 'cutaway' && (y > (simState.profile?.area <= 12 ? 1.5 : 2.2) || (isHoriz && y > 1.4))) {
+      wallH = 0.88; // Sims 4 Cutaway Half-Wall Height
+      isCutaway = true;
+    }
+    const doorH = isCutaway ? Math.min(wallH, 0.85) : 2.05;
+    const doorW = Math.min(0.92, Math.max(0.75, totalLen * 0.35));
+    const dStyle = cfg.doorStyle || 'glass-sliding';
+    const dPos = cfg.doorPos || 'center';
+    const isOpen = Boolean(cfg.doorOpen);
+
+    // Compute Doorway Offset along the wall length
+    let doorOffset = (totalLen - doorW) * 0.5;
+    if (dPos === 'start') doorOffset = Math.max(0.18, (totalLen - doorW) * 0.18);
+    else if (dPos === 'end') doorOffset = Math.max(0.18, totalLen - doorW - 0.18);
+    const seg1Len = Math.max(0.12, doorOffset);
+    const seg2Len = Math.max(0.12, totalLen - doorOffset - doorW);
+
+    // Wall colors based on wallMat
+    const wallMat = simState.hardscape?.wallMat || 'warm';
+    let wallCol = '#f5eee6', wallSideCol = '#e7ded4', wallTopCol = '#fffdfa';
+    if (wallMat === 'stone') {
+      wallCol = '#cbd5e1'; wallSideCol = '#94a3b8'; wallTopCol = '#e2e8f0';
+    } else if (wallMat === 'acoustic') {
+      wallCol = '#334155'; wallSideCol = '#1e293b'; wallTopCol = '#475569';
+    }
+
+    if (isHoriz) {
+      // Horizontal Wall (extends along X-axis, width is dx, depth is wallThick)
+      iso.drawShadow(x, y, seg1Len, wallThick, 0.16);
+      iso.drawShadow(x + doorOffset + doorW, y, seg2Len, wallThick, 0.16);
+
+      // Wall Segment 1
+      iso.drawBox(x, y, z0, seg1Len, wallThick, wallH, wallCol, {
+        topColor: wallTopCol, rightColor: wallSideCol, leftColor: wallCol
+      });
+      iso.drawBox(x, y, z0, seg1Len, wallThick + 0.01, 0.08, '#7c5335');
+      if (isCutaway) {
+        iso.drawBox(x, y, z0 + wallH, seg1Len, wallThick, 0.025, '#994639', { topColor: '#b91c1c', stroke: '#7f1d1d' });
+      }
+
+      // Wall Segment 2
+      iso.drawBox(x + doorOffset + doorW, y, z0, seg2Len, wallThick, wallH, wallCol, {
+        topColor: wallTopCol, rightColor: wallSideCol, leftColor: wallCol
+      });
+      iso.drawBox(x + doorOffset + doorW, y, z0, seg2Len, wallThick + 0.01, 0.08, '#7c5335');
+      if (isCutaway) {
+        iso.drawBox(x + doorOffset + doorW, y, z0 + wallH, seg2Len, wallThick, 0.025, '#994639', { topColor: '#b91c1c', stroke: '#7f1d1d' });
+      }
+
+      // Doorway Frame
+      const frameCol = '#1e293b';
+      const frameThick = 0.04;
+      iso.drawBox(x + doorOffset, y, z0, frameThick, wallThick, doorH, frameCol);
+      iso.drawBox(x + doorOffset + doorW - frameThick, y, z0, frameThick, wallThick, doorH, frameCol);
+      iso.drawBox(x + doorOffset, y, z0 + doorH - frameThick, doorW, wallThick, frameThick, frameCol);
+
+      // Transom wall above door
+      iso.drawBox(x + doorOffset, y, z0 + doorH, doorW, wallThick, wallH - doorH, wallCol, {
+        topColor: wallTopCol, rightColor: wallSideCol, leftColor: wallCol
+      });
+
+      // Door Panel
+      if (dStyle === 'glass-sliding') {
+        iso.drawBox(x + doorOffset - 0.08, y - 0.02, z0 + doorH, doorW + 0.45, 0.04, 0.05, '#0f172a');
+        const slideShift = isOpen ? -Math.min(seg1Len - 0.08, doorW * 0.82) : 0;
+        const panelX = x + doorOffset + slideShift;
+        iso.drawBox(panelX, y - 0.015, z0 + 0.04, doorW, 0.03, doorH - 0.06, '#bae6fd', {
+          topColor: 'rgba(224,242,254,0.65)',
+          rightColor: 'rgba(186,230,253,0.45)',
+          leftColor: 'rgba(125,211,252,0.38)',
+          stroke: '#1e293b'
+        });
+        iso.drawBox(panelX + doorW * 0.5 - 0.015, y - 0.016, z0 + 0.04, 0.03, 0.032, doorH - 0.06, '#0f172a');
+        iso.drawBox(panelX + (isOpen ? 0.08 : doorW - 0.12), y - 0.03, z0 + 0.82, 0.03, 0.05, 0.45, '#e2e8f0');
+      } else if (dStyle === 'wood-hinged') {
+        if (isOpen) {
+          iso.drawBox(x + doorOffset + 0.04, y, z0 + 0.04, 0.04, doorW * 0.88, doorH - 0.06, '#9c6b46');
+          iso.drawBox(x + doorOffset + 0.02, y + doorW * 0.75, z0 + 0.95, 0.08, 0.08, 0.04, '#f59e0b');
+        } else {
+          iso.drawBox(x + doorOffset + frameThick, y + 0.03, z0 + 0.04, doorW - frameThick * 2, 0.05, doorH - 0.06, '#9c6b46', {
+            topColor: '#b07d4f', rightColor: '#7c5335', leftColor: '#b07d4f'
+          });
+          iso.drawBox(x + doorOffset + doorW - 0.14, y - 0.01, z0 + 0.95, 0.08, 0.09, 0.04, '#f59e0b');
+        }
+      } else {
+        iso.drawBox(x + doorOffset - 0.02, y - 0.01, z0, doorW + 0.04, wallThick + 0.02, 0.06, '#7c5335');
+        iso.drawBox(x + doorOffset + 0.04, y - 0.01, z0 + doorH - 0.12, 0.12, wallThick + 0.02, 0.12, '#cbd5e1');
+        iso.drawBox(x + doorOffset + doorW - 0.16, y - 0.01, z0 + doorH - 0.12, 0.12, wallThick + 0.02, 0.12, '#cbd5e1');
+      }
+    } else {
+      // Vertical Wall (extends along Y-axis, depth is dy, width is wallThick)
+      iso.drawShadow(x, y, wallThick, seg1Len, 0.16);
+      iso.drawShadow(x, y + doorOffset + doorW, wallThick, seg2Len, 0.16);
+
+      // Wall Segment 1
+      iso.drawBox(x, y, z0, wallThick, seg1Len, wallH, wallCol, {
+        topColor: wallTopCol, rightColor: wallSideCol, leftColor: wallCol
+      });
+      iso.drawBox(x, y, z0, wallThick + 0.01, seg1Len, 0.08, '#7c5335');
+      if (isCutaway) {
+        iso.drawBox(x, y, z0 + wallH, wallThick, seg1Len, 0.025, '#994639', { topColor: '#b91c1c', stroke: '#7f1d1d' });
+      }
+
+      // Wall Segment 2
+      iso.drawBox(x, y + doorOffset + doorW, z0, wallThick, seg2Len, wallH, wallCol, {
+        topColor: wallTopCol, rightColor: wallSideCol, leftColor: wallCol
+      });
+      iso.drawBox(x, y + doorOffset + doorW, z0, wallThick + 0.01, seg2Len, 0.08, '#7c5335');
+      if (isCutaway) {
+        iso.drawBox(x, y + doorOffset + doorW, z0 + wallH, wallThick, seg2Len, 0.025, '#994639', { topColor: '#b91c1c', stroke: '#7f1d1d' });
+      }
+
+      // Doorway Frame
+      const frameCol = '#1e293b';
+      const frameThick = 0.04;
+      iso.drawBox(x, y + doorOffset, z0, wallThick, frameThick, doorH, frameCol);
+      iso.drawBox(x, y + doorOffset + doorW - frameThick, z0, wallThick, frameThick, doorH, frameCol);
+      iso.drawBox(x, y + doorOffset, z0 + doorH - frameThick, wallThick, doorW, frameThick, frameCol);
+
+      // Transom wall above door
+      iso.drawBox(x, y + doorOffset, z0 + doorH, wallThick, doorW, wallH - doorH, wallCol, {
+        topColor: wallTopCol, rightColor: wallSideCol, leftColor: wallCol
+      });
+
+      // Door Panel
+      if (dStyle === 'glass-sliding') {
+        iso.drawBox(x - 0.02, y + doorOffset - 0.08, z0 + doorH, 0.04, doorW + 0.45, 0.05, '#0f172a');
+        const slideShift = isOpen ? -Math.min(seg1Len - 0.08, doorW * 0.82) : 0;
+        const panelY = y + doorOffset + slideShift;
+        iso.drawBox(x - 0.015, panelY, z0 + 0.04, 0.03, doorW, doorH - 0.06, '#bae6fd', {
+          topColor: 'rgba(224,242,254,0.65)',
+          rightColor: 'rgba(186,230,253,0.45)',
+          leftColor: 'rgba(125,211,252,0.38)',
+          stroke: '#1e293b'
+        });
+        iso.drawBox(x - 0.016, panelY + doorW * 0.5 - 0.015, z0 + 0.04, 0.032, 0.03, doorH - 0.06, '#0f172a');
+        iso.drawBox(x - 0.03, panelY + (isOpen ? 0.08 : doorW - 0.12), z0 + 0.82, 0.05, 0.03, 0.45, '#e2e8f0');
+      } else if (dStyle === 'wood-hinged') {
+        if (isOpen) {
+          iso.drawBox(x, y + doorOffset + 0.04, z0 + 0.04, doorW * 0.88, 0.04, doorH - 0.06, '#9c6b46');
+          iso.drawBox(x + doorW * 0.75, y + doorOffset + 0.02, z0 + 0.95, 0.08, 0.08, 0.04, '#f59e0b');
+        } else {
+          iso.drawBox(x + 0.03, y + doorOffset + frameThick, z0 + 0.04, 0.05, doorW - frameThick * 2, doorH - 0.06, '#9c6b46', {
+            topColor: '#b07d4f', rightColor: '#7c5335', leftColor: '#b07d4f'
+          });
+          iso.drawBox(x - 0.01, y + doorOffset + doorW - 0.14, z0 + 0.95, 0.09, 0.08, 0.04, '#f59e0b');
+        }
+      } else {
+        iso.drawBox(x - 0.01, y + doorOffset - 0.02, z0, wallThick + 0.02, doorW + 0.04, 0.06, '#7c5335');
+        iso.drawBox(x - 0.01, y + doorOffset + 0.04, z0 + doorH - 0.12, wallThick + 0.02, 0.12, 0.12, '#cbd5e1');
+        iso.drawBox(x - 0.01, y + doorOffset + doorW - 0.16, z0 + doorH - 0.12, wallThick + 0.02, 0.12, 0.12, '#cbd5e1');
+      }
+    }
     return;
   }
 }
@@ -6144,6 +6982,43 @@ function renderGameRoom(now = performance.now()) {
     }
   }
 
+  // 1b. The Sims 4 Architectural 0.5m Building Grid & Magnetic Feedback
+  if (simState.showGrid !== false) {
+    const isDragging = Boolean(draggingFloorObj || draggingModule);
+    const gridMajorStroke = isBlueprint ? 'rgba(56,189,248,0.45)' : (isDragging ? 'rgba(2,132,199,0.38)' : 'rgba(160,130,95,0.28)');
+    const gridMinorStroke = isBlueprint ? 'rgba(56,189,248,0.22)' : (isDragging ? 'rgba(2,132,199,0.20)' : 'rgba(160,130,95,0.14)');
+    const subStep = 0.5;
+
+    // Grid lines along X (0.5m intervals)
+    for (let x = 0; x <= roomW + 0.01; x += subStep) {
+      const isMajor = Math.abs(x - Math.round(x)) < 0.05;
+      const p1 = iso.project(x, 0, 0.003);
+      const p2 = iso.project(x, roomD, 0.003);
+      iso.drawPoly([p1, p2], null, isMajor ? gridMajorStroke : gridMinorStroke, isMajor ? 1.0 : 0.6);
+    }
+    // Grid lines along Y (0.5m intervals)
+    for (let y = 0; y <= roomD + 0.01; y += subStep) {
+      const isMajor = Math.abs(y - Math.round(y)) < 0.05;
+      const p1 = iso.project(0, y, 0.003);
+      const p2 = iso.project(roomW, y, 0.003);
+      iso.drawPoly([p1, p2], null, isMajor ? gridMajorStroke : gridMinorStroke, isMajor ? 1.0 : 0.6);
+    }
+
+    // When dragging an object, highlight the snapped 0.5m magnetic tile under it
+    if (draggingFloorObj) {
+      const activeObj = getSceneObjects().find(o => o.id === draggingFloorObj.id) || draggingFloorObj;
+      const snapX = Math.round(activeObj.x * 2) / 2;
+      const snapY = Math.round(activeObj.y * 2) / 2;
+      const snapPts = [
+        iso.project(snapX, snapY, 0.004),
+        iso.project(snapX + 0.5, snapY, 0.004),
+        iso.project(snapX + 0.5, snapY + 0.5, 0.004),
+        iso.project(snapX, snapY + 0.5, 0.004)
+      ];
+      iso.drawPoly(snapPts, 'rgba(2,132,199,0.22)', '#0284c7', 1.5);
+    }
+  }
+
   // Woven Living Area Rug (clamped to roomW & roomD so it never overflows small 5-ping rooms!)
   const rugY = Math.min(3.1, Math.max(1.6, roomD - 2.3));
   const rugW = Math.min(2.8, roomW - 0.9);
@@ -6169,9 +7044,12 @@ function renderGameRoom(now = performance.now()) {
     });
   });
 
-  // 2. 3D Cutaway Back Wall (y = 0) & Left Wall (x = 0) — Supports Idea A: X-Ray Track View!
+  // 2. 3D Cutaway Back Wall (y = 0) & Left Wall (x = 0) — Supports Sims 4 Wall Modes & X-Ray!
   const xray = Boolean(simState.xrayMode);
+  const wallMode = simState.wallMode || 'cutaway';
   const wallColor = isNight ? '#948b7e' : '#f3ede1';
+  const curWallH = (wallMode === 'none') ? 0.08 : wallH;
+
   if (xray) {
     const xOpts = {
       topColor: 'rgba(56, 189, 248, 0.18)',
@@ -6179,20 +7057,30 @@ function renderGameRoom(now = performance.now()) {
       leftColor: 'rgba(30, 58, 95, 0.25)',
       stroke: 'rgba(56, 189, 248, 0.55)'
     };
-    iso.drawBox(-0.2, -0.2, 0, roomW + 0.2, 0.2, wallH, '#0f172a', xOpts);
-    iso.drawBox(-0.2, 0, 0, 0.2, roomD, wallH, '#0f172a', xOpts);
+    iso.drawBox(-0.2, -0.2, 0, roomW + 0.2, 0.2, curWallH, '#0f172a', xOpts);
+    iso.drawBox(-0.2, 0, 0, 0.2, roomD, curWallH, '#0f172a', xOpts);
     for (let sx = 0.5; sx < roomW; sx += 1.2) {
-      iso.drawBox(sx, -0.16, 0, 0.1, 0.12, wallH - 0.05, '#475569');
+      iso.drawBox(sx, -0.16, 0, 0.1, 0.12, curWallH - 0.05, '#475569');
     }
     for (let sy = 0.8; sy < roomD; sy += 1.2) {
-      iso.drawBox(-0.16, sy, 0, 0.12, 0.1, wallH - 0.05, '#475569');
+      iso.drawBox(-0.16, sy, 0, 0.12, 0.1, curWallH - 0.05, '#475569');
     }
     const pipeLen = Math.min(4.5, roomW - 0.4);
     iso.drawBox(0.2, -0.12, 0.38, pipeLen, 0.06, 0.06, '#0ea5e9');
     iso.drawBox(0.2, -0.12, 0.52, pipeLen, 0.06, 0.06, '#f97316');
   } else {
-    iso.drawBox(-0.2, -0.2, 0, roomW + 0.2, 0.2, wallH, wallColor);
-    iso.drawBox(-0.2, 0, 0, 0.2, roomD, wallH, wallColor);
+    iso.drawBox(-0.2, -0.2, 0, roomW + 0.2, 0.2, curWallH, wallColor);
+    iso.drawBox(-0.2, 0, 0, 0.2, roomD, curWallH, wallColor);
+    if (wallMode === 'none') {
+      iso.drawBox(-0.2, -0.2, curWallH, roomW + 0.2, 0.2, 0.02, '#994639', { topColor: '#b91c1c' });
+      iso.drawBox(-0.2, 0, curWallH, 0.2, roomD, 0.02, '#994639', { topColor: '#b91c1c' });
+    }
+  }
+
+  // When wallMode is 'full': Also render foreground perimeter walls
+  if (wallMode === 'full') {
+    iso.drawBox(0, roomD - 0.08, 0, roomW, 0.16, wallH, wallColor);
+    iso.drawBox(roomW - 0.08, 0, 0, 0.16, roomD, wallH, wallColor);
   }
 
   // 3. 3D Panoramic Window on Back Wall
@@ -6566,13 +7454,19 @@ function getCanvasMouse3D(event) {
   let hit = null;
   let bestScreenDist = 56;
   objs.forEach(obj => {
-    const pt = window._currentRoomIso.project(
-      obj.x + obj.dx / 2,
-      obj.y + obj.dy / 2,
-      (obj.z || 0) + obj.dz * 0.45
-    );
+    const testSamples = [
+      { x: obj.x + obj.dx * 0.5, y: obj.y + obj.dy * 0.5 }
+    ];
+    if (obj.dx > 1.4 || obj.dy > 1.4) {
+      testSamples.push(
+        { x: obj.x + obj.dx * 0.2, y: obj.y + obj.dy * 0.2 },
+        { x: obj.x + obj.dx * 0.8, y: obj.y + obj.dy * 0.8 }
+      );
+    }
+    const samplePts = testSamples.map(s => window._currentRoomIso.project(s.x, s.y, (obj.z || 0) + obj.dz * 0.45));
+    const dist = Math.min(...samplePts.map(pt => Math.hypot(sx - pt.x, sy - pt.y)));
     // Prioritize subgrid items when cursor is close so tabletop items on desks are easy to pick
-    const weightDist = obj.isSubgrid ? Math.hypot(sx - pt.x, sy - pt.y) * 0.78 : Math.hypot(sx - pt.x, sy - pt.y);
+    const weightDist = obj.isSubgrid ? dist * 0.78 : dist;
     if (weightDist < bestScreenDist) {
       bestScreenDist = weightDist;
       hit = obj;
@@ -6586,21 +7480,67 @@ function updateObjInspectorUI() {
   if (!bar) return;
   const obj = selectedObjectId ? getSceneObjects().find(o => o.id === selectedObjectId) : null;
   if (!obj) {
-    bar.classList.remove('visible');
+    bar.classList.remove('visible', 'open');
     return;
   }
-  bar.classList.add('visible');
+  bar.classList.add('visible', 'open');
   const titleEl = document.getElementById('simInspectorTitle');
+  const curRot = getObjRotation(obj.storeKey || obj.id);
+  const rotDeg = curRot * 90;
   if (titleEl) {
-    titleEl.textContent = `${obj.label} (${obj.dx.toFixed(1)}×${obj.dy.toFixed(1)}m)`;
+    titleEl.textContent = `${obj.label} (${obj.dx.toFixed(1)}×${obj.dy.toFixed(1)}m · ${rotDeg}°)`;
+  }
+  const interactBtn = document.getElementById('btnInspectInteract');
+  if (interactBtn) {
+    if (obj.id === 'partition-wall') {
+      interactBtn.textContent = obj.cfg?.doorOpen ? '🔒 闔上房門' : '🚪 開啟房門';
+      interactBtn.title = '點擊切換隔間門開關狀態';
+    } else {
+      interactBtn.textContent = '⚡ 互動';
+      interactBtn.title = '派遣角色走過去互動';
+    }
   }
   const rotBtn = document.getElementById('btnInspectRotate');
   if (rotBtn) {
     rotBtn.style.display = obj.canRotate ? 'inline-flex' : 'none';
+    if (obj.canRotate) {
+      const nextDeg = ((curRot + 1) % 4) * 90;
+      rotBtn.innerHTML = `🔄 旋轉至 ${nextDeg}° (R)`;
+      rotBtn.title = `順時針旋轉 90° 至 ${nextDeg}° (鍵盤快捷鍵 R)`;
+    }
+  }
+  const jumpBtn = document.getElementById('btnInspectJumpTab');
+  if (jumpBtn) {
+    if (obj.id === 'partition-wall') {
+      jumpBtn.textContent = '🧱 隔間規格設定';
+      jumpBtn.dataset.targetTab = 'hardscape';
+      jumpBtn.dataset.targetCat = '';
+    } else if (obj.isDlc) {
+      jumpBtn.textContent = '⚡ 軌道模組';
+      jumpBtn.dataset.targetTab = 'build';
+      jumpBtn.dataset.targetCat = '';
+    } else if (obj.isBaseFurn) {
+      jumpBtn.textContent = '🏠 基礎家具';
+      jumpBtn.dataset.targetTab = 'shop';
+      jumpBtn.dataset.targetCat = 'basic';
+    } else if (obj.isV4) {
+      const meta = typeof V4_SHOP_CATALOG !== 'undefined' ? V4_SHOP_CATALOG.find(m => m.id === obj.id) : null;
+      jumpBtn.textContent = '🛋️ 前往商城';
+      jumpBtn.dataset.targetTab = 'shop';
+      jumpBtn.dataset.targetCat = meta?.cat || 'all';
+    } else {
+      jumpBtn.textContent = '🧱 硬裝設置';
+      jumpBtn.dataset.targetTab = 'hardscape';
+      jumpBtn.dataset.targetCat = '';
+    }
   }
   const remBtn = document.getElementById('btnInspectRemove');
   if (remBtn) {
-    remBtn.textContent = obj.isDlc ? '🔌 卸下模組' : '🗑️ 收起／售出';
+    if (obj.id === 'partition-wall') {
+      remBtn.textContent = '🔨 拆除隔間 (退-§45)';
+    } else {
+      remBtn.textContent = obj.isDlc ? '🔌 卸下模組' : '🗑️ 收起／售出';
+    }
   }
 }
 
@@ -6614,19 +7554,61 @@ function rotateSelectedObject() {
   ensureV4State();
   if (!simState.rotatedItems) simState.rotatedItems = {};
   const key = obj.storeKey || obj.id;
-  simState.rotatedItems[key] = !simState.rotatedItems[key];
+  const curRot = getObjRotation(key);
+  const nextRot = (curRot + 1) % 4;
+  simState.rotatedItems[key] = nextRot;
+
+  // Preserve floor center point so object stays in place instead of jumping/resetting
+  const oldCx = obj.x + obj.dx * 0.5;
+  const oldCy = obj.y + obj.dy * 0.5;
+  const newDx = obj.dy; // 90-degree step always swaps width and depth footprint
+  const newDy = obj.dx;
+  const { w: roomW, d: roomD } = getRoomDimensions(simState.profile?.area || 18);
+  const snapStep = obj.isSubgrid ? 0.05 : 0.25;
+  const rawX = Math.round((oldCx - newDx * 0.5) / snapStep) * snapStep;
+  const rawY = Math.round((oldCy - newDy * 0.5) / snapStep) * snapStep;
+  const clampedX = Math.max(0.15, Math.min(roomW - newDx - 0.15, rawX));
+  const clampedY = Math.max(0.15, Math.min(roomD - newDy - 0.15, rawY));
+
+  if (!simState.v4Positions) simState.v4Positions = {};
+  simState.v4Positions[key] = {
+    x: Number(clampedX.toFixed(2)),
+    y: Number(clampedY.toFixed(2))
+  };
+
+  // Synchronize partition wall orientation with its dimensions
+  if (obj.id === 'partition-wall') {
+    if (!simState.hardscape.partitionConfig) simState.hardscape.partitionConfig = {};
+    simState.hardscape.partitionConfig.orient = (newDx >= newDy) ? 'x' : 'y';
+    renderV4Panels();
+  }
+
   triggerSnapEffect(obj.id);
   playSimSound('snap');
   saveSimState();
   renderSim();
   updateObjInspectorUI();
-  showRoomBanner(`🔄 已將「${obj.label}」旋轉 90°！`);
+  const degNames = ['0° (預設朝向)', '90° (順時針)', '180° (反向朝向)', '270° (逆時針)'];
+  showRoomBanner(`🔄 已將「${obj.label}」旋轉 90° 至 ${degNames[nextRot]}！`);
 }
 
 function removeSelectedObject() {
   if (!selectedObjectId) return;
   const obj = getSceneObjects().find(o => o.id === selectedObjectId);
   if (!obj) return;
+  if (obj.id === 'partition-wall') {
+    simState.money = Math.max(0, simState.money - 45);
+    simState.hiddenCostsPaid = (simState.hiddenCostsPaid || 0) + 45;
+    simState.hardscape.partition = false;
+    selectedObjectId = null;
+    saveSimState();
+    playSimSound('snap');
+    renderSim();
+    renderV4Panels();
+    updateObjInspectorUI();
+    showRoomBanner('🔨 已拆除實體隔間牆（產生裝建廢料清理費 -§45）！');
+    return;
+  }
   if (obj.isDlc) {
     simState.dlcs[obj.id] = false;
     selectedObjectId = null;
@@ -6669,6 +7651,18 @@ function removeSelectedObject() {
 document.getElementById('btnInspectInteract')?.addEventListener('click', () => {
   const obj = selectedObjectId ? getSceneObjects().find(o => o.id === selectedObjectId) : null;
   if (!obj) return;
+  if (obj.id === 'partition-wall') {
+    ensureV4State();
+    if (!simState.hardscape.partitionConfig) simState.hardscape.partitionConfig = {};
+    simState.hardscape.partitionConfig.doorOpen = !simState.hardscape.partitionConfig.doorOpen;
+    saveSimState();
+    playSimSound('tap');
+    renderSim();
+    renderV4Panels();
+    updateObjInspectorUI();
+    showRoomBanner(`🚪 已${simState.hardscape.partitionConfig.doorOpen ? '敞開隔間房門（便於走動）' : '闔上隔間房門（保留獨立隱私）'}！`);
+    return;
+  }
   const act = simActions.find(a => a.id === obj.action) || simActions[0];
   walkAndPerformAction(act, obj);
 });
@@ -6677,6 +7671,13 @@ document.getElementById('btnInspectRemove')?.addEventListener('click', removeSel
 document.getElementById('btnInspectClose')?.addEventListener('click', () => {
   selectedObjectId = null;
   updateObjInspectorUI();
+});
+document.getElementById('btnInspectJumpTab')?.addEventListener('click', () => {
+  const jumpBtn = document.getElementById('btnInspectJumpTab');
+  if (jumpBtn && jumpBtn.dataset.targetTab) {
+    switchDeckTab(jumpBtn.dataset.targetTab, jumpBtn.dataset.targetCat || null);
+    showRoomBanner(`📂 已跳轉至「${jumpBtn.textContent.trim()}」控制面板！`);
+  }
 });
 
 // Empty Room Quick-Start Studio Overlay Buttons
@@ -6696,8 +7697,7 @@ document.getElementById('btnQuickStarterKit')?.addEventListener('click', () => {
 });
 
 document.getElementById('btnQuickOpenShop')?.addEventListener('click', () => {
-  const shopTab = document.querySelector('.sim-deck-tab[data-deck-tab="shop"]');
-  if (shopTab) shopTab.click();
+  switchDeckTab('shop');
   showRoomBanner('🛋️ 請在右側「商城＆盲盒」自由選購基礎家具或主題單品！');
 });
 
@@ -6807,6 +7807,11 @@ function finishCanvasPointer(event) {
   if (draggingFloorObj) {
     if (didDragOnCanvas) {
       const updated = getSceneObjects().find(o => o.id === draggingFloorObj.id) || draggingFloorObj;
+      if (draggingFloorObj.id === 'partition-wall') {
+        if (!simState.hardscape.partitionConfig) simState.hardscape.partitionConfig = {};
+        simState.hardscape.partitionConfig.x = updated.x;
+        simState.hardscape.partitionConfig.y = updated.y;
+      }
       triggerSnapEffect(draggingFloorObj.id);
       playSimSound('snap');
       saveSimState();
@@ -7090,6 +8095,8 @@ function renderSim() {
     const isD = !isN && simState.minutes >= 1020 && simState.minutes < 1200;
     periodLbl.textContent = isN ? '🌙 深夜發光' : isD ? '🌇 黃昏夕照' : '☀️ 白天自然光';
   }
+  if (typeof syncSimTopBarUI === 'function') syncSimTopBarUI();
+  if (typeof renderSimDockShelf === 'function') renderSimDockShelf();
   if (typeof renderV4Panels === 'function') renderV4Panels();
 
   // Stage buttons active state
@@ -7160,39 +8167,16 @@ function renderSim() {
     if (isDlcActive('safe')) buffTagsEl.innerHTML += '<span class="sim-buff-badge green">🛡️ SAFE 3D夜燈扶手</span>';
   }
 
-  // Build Tab selects & Extra Furniture
+  // Build Tab selects & Live Furniture Status Summary
   document.getElementById('plannerArea').value = String(simState.profile.area);
   document.getElementById('plannerPeople').value = String(simState.profile.people);
   document.getElementById('buildFitSummary').textContent = `適配度 ${score} 分`;
 
-  const furnContainer = document.getElementById('planFurniture');
-  if (furnContainer) {
-    furnContainer.innerHTML = '';
-    extraFurnitureCatalog.forEach(item => {
-      const placed = simState.furniture.includes(item.id);
-      const div = document.createElement('div');
-      div.className = `plan-item${placed ? ' placed' : ''}`;
-      div.innerHTML = `
-        <div>
-          <strong>${item.icon} ${item.name}</strong>
-          <small>${item.desc}</small>
-        </div>
-        <button type="button">${placed ? '已擺放 ✓' : '+ 擺放'}</button>
-      `;
-      div.querySelector('button').addEventListener('click', () => {
-        if (placed) {
-          simState.furniture = simState.furniture.filter(id => id !== item.id);
-        } else {
-          simState.furniture.push(item.id);
-          const snapMap = { 'bed-set': 'bed', 'shower-pod': 'shower', 'sofa-set': 'sofa', 'tv-wall': 'tv', 'kitchen-cart': 'cart', 'plant-deco': 'plant' };
-          triggerSnapEffect(snapMap[item.id] || item.id);
-        }
-        saveSimState();
-        playSimSound('snap');
-        renderSim();
-      });
-      furnContainer.appendChild(div);
-    });
+  const bSummaryEl = document.getElementById('buildFurnSummaryText');
+  if (bSummaryEl) {
+    const fCount = (simState.furniture?.length || 0) + (simState.v4Items?.length || 0);
+    const dlcCount = Object.values(simState.dlcs || {}).filter(Boolean).length;
+    bSummaryEl.innerHTML = `已啟用 <strong>${dlcCount}</strong> 項 TAYA 軌道模組，並在 3D 空間擺放 <strong>${fCount}</strong> 件家具與單品。所有家具均已整合至「商城＆盲盒」，可在 3D 地板自由拖曳與旋轉。`;
   }
 
   // Toggle Empty Room Quick-Start Studio Guide & Object Inspector
@@ -7203,6 +8187,35 @@ function renderSim() {
     emptyGuideEl.classList.toggle('hidden', anyDlc || hasAnyFurn);
   }
   if (typeof updateObjInspectorUI === 'function') updateObjInspectorUI();
+}
+
+// ─── UNIFIED DECK TAB SWITCHER & DEEP LINK JUMPING ───
+function switchDeckTab(target, category = null) {
+  const tabs = document.querySelectorAll('.sim-deck-tab');
+  const targetTab = Array.from(tabs).find(t => t.dataset.deckTab === target) || tabs[0];
+  tabs.forEach(t => t.classList.remove('active'));
+  targetTab?.classList.add('active');
+
+  document.getElementById('deckPanelLive')?.classList.toggle('active', target === 'live');
+  document.getElementById('deckPanelHardscape')?.classList.toggle('active', target === 'hardscape');
+  document.getElementById('deckPanelShop')?.classList.toggle('active', target === 'shop');
+  document.getElementById('deckPanelBuild')?.classList.toggle('active', target === 'build');
+
+  // Sync quickpills state in 3D viewport
+  document.querySelectorAll('.quickpill-btn[data-jump-deck]').forEach(btn => {
+    btn.classList.toggle('active', btn.dataset.jumpDeck === target);
+  });
+
+  // If a category is requested for shop
+  if (target === 'shop' && category) {
+    currentShopCat = category;
+    document.querySelectorAll('.shop-cat-pill').forEach(p => {
+      p.classList.toggle('active', p.dataset.cat === category);
+    });
+    renderV4Panels();
+  }
+
+  playSimSound('tap');
 }
 
 // Render Quick Actions
@@ -7226,16 +8239,64 @@ document.querySelectorAll('.sim-stage-btn').forEach(btn => {
 });
 
 document.querySelectorAll('.sim-deck-tab').forEach(tab => {
-  tab.addEventListener('click', () => {
-    document.querySelectorAll('.sim-deck-tab').forEach(t => t.classList.remove('active'));
-    tab.classList.add('active');
-    const target = tab.dataset.deckTab;
-    document.getElementById('deckPanelLive')?.classList.toggle('active', target === 'live');
-    document.getElementById('deckPanelHardscape')?.classList.toggle('active', target === 'hardscape');
-    document.getElementById('deckPanelShop')?.classList.toggle('active', target === 'shop');
-    document.getElementById('deckPanelBuild')?.classList.toggle('active', target === 'build');
-    playSimSound('tap');
+  tab.addEventListener('click', () => switchDeckTab(tab.dataset.deckTab));
+});
+
+document.querySelectorAll('.quickpill-btn[data-jump-deck]').forEach(btn => {
+  btn.addEventListener('click', () => switchDeckTab(btn.dataset.jumpDeck));
+});
+
+document.getElementById('btnQuickQuoteModal')?.addEventListener('click', () => {
+  document.getElementById('btnExportQuote')?.click();
+});
+
+document.getElementById('btnJumpToShopFromBuild')?.addEventListener('click', () => {
+  switchDeckTab('shop');
+});
+
+document.getElementById('btnQuickKitFromBuild')?.addEventListener('click', () => {
+  document.getElementById('btnQuickStarterKit')?.click();
+});
+
+document.getElementById('btnClearAllFurnFromBuild')?.addEventListener('click', () => {
+  simState.furniture = [];
+  simState.v4Items = [];
+  selectedObjectId = null;
+  saveSimState();
+  playSimSound('tap');
+  renderSim();
+  showRoomBanner('🧹 已清空房間內所有地面與桌上家具！');
+});
+
+// Concept to Game Jump Buttons
+document.querySelectorAll('.concept-to-game-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    const stage = btn.dataset.stage;
+    const dlc = btn.dataset.dlc;
+    switchLifeStage(stage);
+    if (dlc) {
+      simState.dlcs[dlc] = true;
+      triggerSnapEffect(dlc);
+      saveSimState();
+      renderSim();
+    }
+    switchDeckTab('build');
+    document.getElementById('game')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    showRoomBanner(`🚀 已跳轉至 3D 模擬器並載入「${stage === 'starter' ? 'STARTER' : stage === 'family' ? 'FAMILY' : 'LIFE+'}」階段！`, true);
   });
+});
+
+// Lifecycle Calculator to Game Sync Button
+document.getElementById('btnSyncCalcToSimGame')?.addEventListener('click', () => {
+  const targetStage = calcYears <= 15 ? 'starter' : calcYears <= 25 ? 'family' : 'senior';
+  switchLifeStage(targetStage);
+  simState.profile.area = calcArea;
+  clampEntitiesToRoomBounds();
+  saveSimState();
+  renderSim();
+  switchDeckTab('build');
+  document.getElementById('game')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  showRoomBanner(`🎮 已將試算規格（${calcYears}年 · ${calcArea}坪 · ${targetStage.toUpperCase()}）同步至 3D 空間遊戲！`, true);
 });
 
 ['work', 'family', 'storage', 'safe'].forEach(type => {
@@ -7627,6 +8688,7 @@ document.querySelectorAll('.insight-to-game-btn, .hero-dock-pill').forEach(btn =
   btn.addEventListener('click', () => {
     const st = btn.dataset.gotoStage || 'starter';
     switchLifeStage(st);
+    switchDeckTab('build');
     syncGameToLifecycleCalc(false);
     document.getElementById('game')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
   });
@@ -7654,6 +8716,7 @@ const V4_SHOP_CATALOG = [
   { id: 'projector', cat: 'collect', name: '4K 雷射投影機＆120吋升降布幕', icon: '📽️', price: 185, powerReq: true, emitsLight: 'screen', x: 2.45, y: 3.7, dx: 0.22, dy: 1.65, dz: 1.45, desc: '搭配沙發立即組成【家庭劇院 Combo】' },
 
   // ☕ 生活與家電 (appliance)
+  { id: 'kitchen-island-suite', cat: 'appliance', name: '北歐現代 U 型廚房中島組 (含水槽/爐台/雙門冰箱)', icon: '🍳', price: 230, powerReq: true, x: 1.6, y: 0.22, dx: 2.35, dy: 1.85, dz: 1.95, desc: '【Sims 經典款】雙門大冰箱＋下嵌水槽中島＋黑晶烤箱爐台與吧台' },
   { id: 'fridge-2d', cat: 'appliance', name: '雙門變頻鏡面冰箱', icon: '🧊', price: 155, powerReq: true, x: 1.82, y: 0.25, dx: 0.85, dy: 0.78, dz: 1.82, desc: '小宅必備食材儲藏核心' },
   { id: 'coffee-maker', cat: 'appliance', name: '義式膠囊咖啡機', icon: '☕', price: 68, powerReq: true, isSubgrid: true, x: 2.5, y: 0.55, dx: 0.36, dy: 0.35, dz: 0.36, desc: '[桌上小物] 隨時沖泡香醇濃縮咖啡' },
   { id: 'air-fryer', cat: 'appliance', name: '智慧觸控氣炸鍋', icon: '🍟', price: 55, powerReq: true, isSubgrid: true, x: 3.1, y: 0.55, dx: 0.36, dy: 0.36, dz: 0.38, desc: '[桌上小物] 無油煙快速料理宵夜' },
@@ -7687,8 +8750,8 @@ const V4_SCENARIOS = {
     shape: 'rect',
     lockedItems: [],
     goals: [
-      { text: '自由調整格局、材質與添購 3D 主題家具', check: () => true },
-      { text: '嘗試拖曳「🌅 光影時刻滑桿」至深夜欣賞發光家具', check: () => simState.minutes >= 1140 || simState.minutes < 360 }
+      { text: '自由調整格局、材質與添購 3D 主題家具', check: () => true, jumpTab: 'shop', jumpText: '前往商城' },
+      { text: '嘗試拖曳「🌅 光影時刻滑桿」至深夜欣賞發光家具', check: () => simState.minutes >= 1140 || simState.minutes < 360, jumpTab: 'live', jumpText: '生活劇本' }
     ]
   },
   micro5: {
@@ -7699,9 +8762,9 @@ const V4_SCENARIOS = {
     pillar: true,
     lockedItems: [],
     goals: [
-      { text: '維持 5 坪極限空間且預算不透支 (≥ §0)', check: () => simState.profile.area === 5 && simState.money >= 0 },
-      { text: '配置工作桌 (WORK DLC 或升降桌) 與收納櫃', check: () => (isDlcActive('work') || hasV4Item('standing-desk')) && isDlcActive('storage') },
-      { text: '添購雙門冰箱或料理區，且「🚶 動線檢查」暢通無阻', check: () => (hasV4Item('fridge-2d') || isDlcActive('family')) && !isPathBlocked() }
+      { text: '維持 5 坪極限空間且預算不透支 (≥ §0)', check: () => simState.profile.area === 5 && simState.money >= 0, jumpTab: 'hardscape', jumpText: '📐 調整坪數' },
+      { text: '配置工作桌 (WORK DLC 或升降桌) 與收納櫃', check: () => (isDlcActive('work') || hasV4Item('standing-desk')) && isDlcActive('storage'), jumpTab: 'build', jumpText: '⚡ 配置軌道' },
+      { text: '添購雙門冰箱或料理區，且「🚶 動線檢查」暢通無阻', check: () => (hasV4Item('fridge-2d') || isDlcActive('family')) && !isPathBlocked(), jumpTab: 'shop', jumpCat: 'appliance', jumpText: '🛋️ 選購冰箱' }
     ]
   },
   streamer: {
@@ -7712,9 +8775,9 @@ const V4_SCENARIOS = {
     pillar: true,
     lockedItems: [],
     goals: [
-      { text: '牆面改為「🔇 六角吸音棉牆」解決實況回音', check: () => simState.hardscape?.wallMat === 'acoustic' },
-      { text: '觸發【🔥 極致電競角 Combo】(升降桌/WORK + RGB主機 + 電競椅/洞洞板)', check: () => getActiveCombos().some(c => c.id === 'gaming-corner') },
-      { text: '加裝「⚡ 賽博霓虹燈條」或「🏆 公仔展示櫃」美化鏡頭背景', check: () => hasV4Item('neon-sign') || hasV4Item('figure-cab') }
+      { text: '牆面改為「🔇 六角吸音棉牆」解決實況回音', check: () => simState.hardscape?.wallMat === 'acoustic', jumpTab: 'hardscape', jumpText: '🎨 更換牆面' },
+      { text: '觸發【🔥 極致電競角 Combo】(升降桌/WORK + RGB主機 + 電競椅/洞洞板)', check: () => getActiveCombos().some(c => c.id === 'gaming-corner'), jumpTab: 'shop', jumpCat: 'tech', jumpText: '🎮 選購電競' },
+      { text: '加裝「⚡ 賽博霓虹燈條」或「🏆 公仔展示櫃」美化鏡頭背景', check: () => hasV4Item('neon-sign') || hasV4Item('figure-cab'), jumpTab: 'shop', jumpCat: 'lighting', jumpText: '💡 選購燈飾' }
     ]
   },
   catlover: {
@@ -7725,9 +8788,9 @@ const V4_SCENARIOS = {
     pillar: false,
     lockedItems: [],
     goals: [
-      { text: '地板鋪設「🪵 全室超耐磨木地板」保護貓咪肉球', check: () => simState.hardscape?.floorMat === 'wood' },
-      { text: '配置「🏆 玻璃公仔展示櫃」與「🐱 透明太空艙貓跳台」', check: () => hasV4Item('figure-cab') && hasV4Item('cat-tree') },
-      { text: '觸發【🐾 貓奴收藏家 Combo】且動線暢通', check: () => getActiveCombos().some(c => c.id === 'cat-collector') && !isPathBlocked() }
+      { text: '地板鋪設「🪵 全室超耐磨木地板」保護貓咪肉球', check: () => simState.hardscape?.floorMat === 'wood', jumpTab: 'hardscape', jumpText: '🪵 鋪設木地板' },
+      { text: '配置「🏆 玻璃公仔展示櫃」與「🐱 透明太空艙貓跳台」', check: () => hasV4Item('figure-cab') && hasV4Item('cat-tree'), jumpTab: 'shop', jumpCat: 'pet', jumpText: '🐾 選購貓跳台' },
+      { text: '觸發【🐾 貓奴收藏家 Combo】且動線暢通', check: () => getActiveCombos().some(c => c.id === 'cat-collector') && !isPathBlocked(), jumpTab: 'shop', jumpText: '✨ 達成加成' }
     ]
   },
   moving: {
@@ -7738,8 +8801,8 @@ const V4_SCENARIOS = {
     pillar: true,
     lockedItems: ['mahjong-table', 'fridge-2d', 'beanbag'],
     goals: [
-      { text: '保留 3 件舊家帶來的不可賣家具 (麻將桌/冰箱/懶骨頭)', check: () => ['mahjong-table', 'fridge-2d', 'beanbag'].every(id => hasV4Item(id)) },
-      { text: '不拆除承重柱、善用 TAYA 軌道模組將空間評分推上 88 分', check: () => getSpaceScore() >= 88 }
+      { text: '保留 3 件舊家帶來的不可賣家具 (麻將桌/冰箱/懶骨頭)', check: () => ['mahjong-table', 'fridge-2d', 'beanbag'].every(id => hasV4Item(id)), jumpTab: 'shop', jumpText: '🛋️ 查看家具' },
+      { text: '不拆除承重柱、善用 TAYA 軌道模組將空間評分推上 88 分', check: () => getSpaceScore() >= 88, jumpTab: 'build', jumpText: '⚡ 啟用軌道' }
     ]
   }
 };
@@ -7798,9 +8861,10 @@ function hasV4Item(id) {
 function getV4ItemPos(item) {
   ensureV4State();
   const { w: roomW, d: roomD } = getRoomDimensions(simState.profile?.area || 18);
-  const rot = isObjRotated(item.id);
-  const dx = rot ? (item.dy || 0.4) : (item.dx || 0.4);
-  const dy = rot ? (item.dx || 0.4) : (item.dy || 0.4);
+  const rot = getObjRotation(item.id);
+  const swapped = (rot % 2) === 1;
+  const dx = swapped ? (item.dy || 0.4) : (item.dx || 0.4);
+  const dy = swapped ? (item.dx || 0.4) : (item.dy || 0.4);
   const custom = simState.v4Positions[item.id];
   const rawX = custom && Number.isFinite(custom.x) ? custom.x : item.x;
   const rawY = custom && Number.isFinite(custom.y) ? custom.y : item.y;
@@ -7830,7 +8894,7 @@ function getV4ItemPos(item) {
       z = 0.44;
     }
   }
-  return { x, y, z, dx, dy };
+  return { x, y, z, dx, dy, rot };
 }
 
 // Check MEP Power Distance for high-power items
@@ -7890,9 +8954,11 @@ function getActiveCombos() {
 // Check if Circulation Path (動線) is blocked
 function isPathBlocked() {
   ensureV4State();
-  // Partition wall + bulky mahjong table in center or extreme clutter in 5-ping room blocks circulation
   if (simState.profile.area <= 5 && simState.hardscape.partition) {
-    return '5 坪微型空間加蓋輕隔間牆導致走道小於 60cm，動線卡死！';
+    const cfg = simState.hardscape.partitionConfig;
+    if ((cfg?.length || 2.6) > 2.2 && !cfg?.doorOpen && cfg?.doorStyle !== 'open-arch') {
+      return '5 坪微型空間隔間長度過長且門扇緊閉，走道動線卡死！建議縮短長度或敞開門扇。';
+    }
   }
   if (!isDlcActive('storage') && simState.profile.area <= 12 && hasV4Item('mahjong-table')) {
     return '地面未收納的紙箱雜物與電動麻將桌卡住臥床走道（建議安裝 STORAGE DLC）！';
@@ -8023,26 +9089,6 @@ function drawV4HardscapeAndProps(iso, now, isNight, isDusk, renderables = [], ro
     });
   }
 
-  if (hs.partition) {
-    const px = Math.min(5.65, roomW * 0.62);
-    const py = Math.min(2.75, roomD * 0.42);
-    const pd = Math.min(2.45, roomD - py - 0.2);
-    renderables.push({
-      depth: iso.project(px + 0.09, py + pd * 0.5, 1.1).depth,
-      draw: () => {
-        iso.drawShadow(px, py, 0.18, pd, 0.2);
-        iso.drawBox(px, py, 0, 0.18, pd, 2.25, isNight ? '#94a3b8' : '#e7e0d3');
-        if (pd > 0.8) {
-          iso.drawBox(px - 0.02, py + 0.25, 1.15, 0.22, Math.max(0.4, pd - 0.5), 0.85, '#bae6fd', {
-            topColor: 'rgba(186,230,253,0.55)',
-            rightColor: 'rgba(186,230,253,0.38)',
-            leftColor: 'rgba(125,211,252,0.35)'
-          });
-        }
-      }
-    });
-  }
-
   if (hasV4Item('robot-vac')) {
     const rv = robotVacState;
     rv.x = Math.max(0.9, Math.min(roomW - 0.9, rv.x));
@@ -8090,19 +9136,42 @@ function drawV4HardscapeAndProps(iso, now, isNight, isDusk, renderables = [], ro
           );
         }
         if (id === 'standing-desk') {
-          iso.drawBox(x + 0.12, y + 0.15, z0, 0.1, Math.max(0.2, dy - 0.3), 0.74, '#1e293b');
-          iso.drawBox(x + dx - 0.22, y + 0.15, z0, 0.1, Math.max(0.2, dy - 0.3), 0.74, '#1e293b');
+          const rot = getObjRotation(id);
+          if (rot % 2 === 0) {
+            iso.drawBox(x + 0.12, y + 0.15, z0, 0.1, Math.max(0.2, dy - 0.3), 0.74, '#1e293b');
+            iso.drawBox(x + dx - 0.22, y + 0.15, z0, 0.1, Math.max(0.2, dy - 0.3), 0.74, '#1e293b');
+          } else {
+            iso.drawBox(x + 0.15, y + 0.12, z0, Math.max(0.2, dx - 0.3), 0.1, 0.74, '#1e293b');
+            iso.drawBox(x + 0.15, y + dy - 0.22, z0, Math.max(0.2, dx - 0.3), 0.1, 0.74, '#1e293b');
+          }
           iso.drawBox(x, y, z0 + 0.74, dx, dy, 0.08, '#334155');
         } else if (id === 'rgb-pc-rig') {
-          iso.drawBox(x, y, z0, Math.min(dx * 0.68, 0.78), Math.min(dy, 0.16), 0.42, '#0f172a');
-          iso.drawBox(x + 0.03, y + 0.12, z0 + 0.04, Math.min(dx * 0.62, 0.72), 0.04, 0.34, '#38bdf8');
+          const rot = getObjRotation(id);
           const hueCol = Math.floor(now / 350) % 2 === 0 ? '#ec4899' : '#8b5cf6';
-          iso.drawBox(x + dx - 0.3, y, z0, 0.28, Math.min(dy, 0.38), 0.52, '#1e293b');
-          iso.drawBox(x + dx - 0.28, y + 0.04, z0 + 0.06, 0.24, Math.min(dy - 0.06, 0.3), 0.4, hueCol);
+          if (rot % 2 === 0) {
+            iso.drawBox(x, y, z0, Math.min(dx * 0.68, 0.78), Math.min(dy, 0.16), 0.42, '#0f172a');
+            iso.drawBox(x + 0.03, y + (rot === 0 ? 0.12 : 0), z0 + 0.04, Math.min(dx * 0.62, 0.72), 0.04, 0.34, '#38bdf8');
+            iso.drawBox(x + dx - 0.3, y, z0, 0.28, Math.min(dy, 0.38), 0.52, '#1e293b');
+            iso.drawBox(x + dx - 0.28, y + 0.04, z0 + 0.06, 0.24, Math.min(dy - 0.06, 0.3), 0.4, hueCol);
+          } else {
+            iso.drawBox(x, y, z0, Math.min(dx, 0.16), Math.min(dy * 0.68, 0.78), 0.42, '#0f172a');
+            iso.drawBox(x + (rot === 1 ? 0.12 : 0), y + 0.03, z0 + 0.04, 0.04, Math.min(dy * 0.62, 0.72), 0.34, '#38bdf8');
+            iso.drawBox(x, y + dy - 0.3, z0, Math.min(dx, 0.38), 0.28, 0.52, '#1e293b');
+            iso.drawBox(x + 0.04, y + dy - 0.28, z0 + 0.06, Math.min(dx - 0.06, 0.3), 0.24, 0.4, hueCol);
+          }
         } else if (id === 'ergo-chair') {
-          iso.drawBox(x + 0.22, y + 0.22, z0, 0.14, 0.14, 0.42, '#1e293b');
+          const rot = getObjRotation(id);
+          iso.drawBox(x + dx * 0.5 - 0.07, y + dy * 0.5 - 0.07, z0, 0.14, 0.14, 0.42, '#1e293b');
           iso.drawBox(x, y, z0 + 0.42, dx, dy, 0.1, '#dc2626');
-          iso.drawBox(x + 0.06, y + dy - 0.12, z0 + 0.52, dx - 0.12, 0.12, 0.62, '#1e293b');
+          if (rot === 0) {
+            iso.drawBox(x + 0.06, y + dy - 0.12, z0 + 0.52, dx - 0.12, 0.12, 0.62, '#1e293b');
+          } else if (rot === 1) {
+            iso.drawBox(x, y + 0.06, z0 + 0.52, 0.12, dy - 0.12, 0.62, '#1e293b');
+          } else if (rot === 2) {
+            iso.drawBox(x + 0.06, y, z0 + 0.52, dx - 0.12, 0.12, 0.62, '#1e293b');
+          } else {
+            iso.drawBox(x + dx - 0.12, y + 0.06, z0 + 0.52, 0.12, dy - 0.12, 0.62, '#1e293b');
+          }
         } else if (id === 'pegboard') {
           iso.drawBox(x, y, z0, dx, dy, dz, '#334155');
           iso.drawBox(x + 0.18, y + 0.08, z0 + 0.22, 0.38, 0.08, 0.16, '#38bdf8');
@@ -8130,9 +9199,56 @@ function drawV4HardscapeAndProps(iso, now, isNight, isDusk, renderables = [], ro
           iso.drawBox(x + 0.1, y + 0.1, z0 + 0.38, dx - 0.2, dy - 0.2, 0.24, '#f59e0b');
         } else if (id === 'projector') {
           iso.drawBox(x, y, z0 + 0.45, dx, dy, 1.05, '#f8fafc', { leftColor: '#38bdf8', topColor: '#38bdf8' });
+        } else if (id === 'kitchen-island-suite') {
+          // The Sims 4 Style Modular U-Shaped Kitchen & Breakfast Island Suite
+          const topCol = '#3d2b1f'; // Dark walnut countertop
+          const cabCol = '#ffffff'; // White modern shaker cabinets
+          // 1. Backsplash subway tiles on back wall behind the counters
+          for (let tx = x + 0.1; tx < x + dx - 0.15; tx += 0.35) {
+            for (let tz = z0 + 0.9; tz < z0 + 1.85; tz += 0.28) {
+              iso.drawBox(tx, y + 0.01, tz, 0.32, 0.04, 0.25, '#f8fafc', {
+                topColor: '#ffffff', stroke: 'rgba(148,163,184,0.45)'
+              });
+            }
+          }
+          // 2. Double-Door Tall Refrigerator
+          iso.drawBox(x + 0.08, y + 0.05, z0, 0.72, 0.75, 1.88, '#f1f5f9');
+          iso.drawBox(x + 0.43, y + 0.78, z0 + 0.55, 0.03, 0.05, 1.25, '#1e293b');
+          iso.drawBox(x + 0.4, y + 0.81, z0 + 0.75, 0.04, 0.03, 0.65, '#cbd5e1');
+          iso.drawBox(x + 0.46, y + 0.81, z0 + 0.75, 0.04, 0.03, 0.65, '#cbd5e1');
+          iso.drawBox(x + 0.12, y + 0.81, z0 + 0.25, 0.64, 0.03, 0.05, '#cbd5e1');
+
+          // 3. Central Cooktop & Built-in Oven Counter
+          iso.drawBox(x + 0.82, y + 0.05, z0, 0.85, 0.68, 0.84, cabCol);
+          iso.drawBox(x + 0.8, y + 0.03, z0 + 0.84, 0.88, 0.72, 0.06, topCol);
+          iso.drawBox(x + 0.92, y + 0.15, z0 + 0.9, 0.62, 0.48, 0.02, '#0f172a');
+          iso.drawBox(x + 0.86, y + 0.71, z0 + 0.15, 0.76, 0.04, 0.62, '#1e293b');
+          iso.drawBox(x + 0.94, y + 0.73, z0 + 0.22, 0.6, 0.03, 0.45, '#38bdf8', { topColor: 'rgba(56,189,248,0.45)' });
+          iso.drawBox(x + 0.95, y + 0.76, z0 + 0.72, 0.58, 0.03, 0.04, '#cbd5e1');
+
+          // 4. Right Return Counter & Undermount Sink
+          iso.drawBox(x + dx - 0.7, y + 0.05, z0, 0.65, dy - 0.1, 0.84, cabCol);
+          iso.drawBox(x + dx - 0.72, y + 0.03, z0 + 0.84, 0.68, dy - 0.06, 0.06, topCol);
+          iso.drawBox(x + dx - 0.62, y + 0.45, z0 + 0.82, 0.48, 0.55, 0.1, '#94a3b8');
+          iso.drawBox(x + dx - 0.58, y + 0.72, z0 + 0.9, 0.06, 0.06, 0.25, '#e2e8f0');
+          iso.drawBox(x + dx - 0.58, y + 0.62, z0 + 1.12, 0.06, 0.14, 0.05, '#f8fafc');
+
+          // 5. Front Breakfast Island Bar Peninsula
+          iso.drawBox(x + 0.75, y + dy - 0.65, z0, dx - 1.45, 0.62, 0.84, cabCol);
+          iso.drawBox(x + 0.7, y + dy - 0.68, z0 + 0.84, dx - 1.35, 0.68, 0.06, topCol);
+          iso.drawBox(x + 0.75, y + dy - 0.04, z0 + 0.18, dx - 1.45, 0.04, 0.04, '#cbd5e1');
         } else if (id === 'fridge-2d') {
+          const rot = getObjRotation(id);
           iso.drawBox(x, y, z0, dx, dy, dz, '#475569');
-          iso.drawBox(x + dx * 0.48, y + dy - 0.03, z0 + 0.2, 0.04, 0.05, dz - 0.35, '#cbd5e1');
+          if (rot === 0) {
+            iso.drawBox(x + dx * 0.48, y + dy - 0.03, z0 + 0.2, 0.04, 0.05, dz - 0.35, '#cbd5e1');
+          } else if (rot === 1) {
+            iso.drawBox(x + 0.02, y + dy * 0.48, z0 + 0.2, 0.05, 0.04, dz - 0.35, '#cbd5e1');
+          } else if (rot === 2) {
+            iso.drawBox(x + dx * 0.48, y + 0.02, z0 + 0.2, 0.04, 0.05, dz - 0.35, '#cbd5e1');
+          } else {
+            iso.drawBox(x + dx - 0.04, y + dy * 0.48, z0 + 0.2, 0.05, 0.04, dz - 0.35, '#cbd5e1');
+          }
         } else if (id === 'coffee-maker' || id === 'air-fryer') {
           iso.drawBox(x, y, z0, dx, dy, dz, id === 'coffee-maker' ? '#b91c1c' : '#1e293b');
         } else if (id === 'cat-tree') {
@@ -8250,8 +9366,24 @@ function renderV4Panels() {
     goalsEl.innerHTML = scen.goals.map(g => {
       const ok = Boolean(g.check());
       if (!ok) allDone = false;
-      return `<li class="${ok ? 'done' : ''}">${ok ? '✅' : '⬜'} ${g.text}</li>`;
+      const jumpBtn = (!ok && g.jumpTab)
+        ? `<button type="button" class="scenario-goal-jump" data-target-tab="${g.jumpTab}" data-target-cat="${g.jumpCat || ''}">👉 ${g.jumpText || '前往配置'}</button>`
+        : '';
+      return `<li class="${ok ? 'done' : ''}">
+        <span class="goal-text">${ok ? '✅' : '⬜'} ${g.text}</span>
+        ${jumpBtn}
+      </li>`;
     }).join('');
+
+    goalsEl.querySelectorAll('.scenario-goal-jump').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const tabKey = btn.dataset.targetTab;
+        const catKey = btn.dataset.targetCat;
+        switchDeckTab(tabKey, catKey || null);
+        showRoomBanner(`🎯 已為您跳轉至「${tabKey === 'hardscape' ? '硬裝＆水電' : tabKey === 'shop' ? '商城＆盲盒' : '軌道＆循環'}」！`);
+      });
+    });
   }
   const scenBadge = document.getElementById('scenarioStatusBadge');
   if (scenBadge) {
@@ -8272,6 +9404,40 @@ function renderV4Panels() {
   document.getElementById('btnTogglePartition')?.classList.toggle('active', Boolean(hs.partition));
   document.getElementById('btnTogglePillar')?.classList.toggle('active', Boolean(hs.pillar));
   document.getElementById('btnToggleWalkup')?.classList.toggle('active', Boolean(hs.walkup));
+
+  // Sync Partition Customizer Box (規格、長度、門扇)
+  const partBox = document.getElementById('partitionCustomizerBox');
+  if (partBox) {
+    partBox.style.display = hs.partition ? 'flex' : 'none';
+    if (hs.partition) {
+      const cfg = hs.partitionConfig || {
+        length: 2.6, orient: 'y', doorPos: 'center', doorStyle: 'glass-sliding', doorOpen: false
+      };
+      const lenEl = document.getElementById('partitionLenText');
+      const badgeEl = document.getElementById('partitionDimBadge');
+      const sliderEl = document.getElementById('partitionLenSlider');
+      if (lenEl) lenEl.textContent = `${cfg.length.toFixed(1)} 公尺`;
+      if (badgeEl) badgeEl.textContent = `長度 ${cfg.length.toFixed(1)}m · ${cfg.orient === 'x' ? '橫向' : '縱向'}`;
+      if (sliderEl) sliderEl.value = cfg.length;
+      document.querySelectorAll('.partition-len-btn').forEach(btn => {
+        btn.classList.toggle('active', Math.abs(parseFloat(btn.dataset.len) - cfg.length) < 0.15);
+      });
+      document.querySelectorAll('.partition-orient-btn').forEach(btn => {
+        btn.classList.toggle('active', btn.dataset.orient === cfg.orient);
+      });
+      document.querySelectorAll('.partition-dpos-btn').forEach(btn => {
+        btn.classList.toggle('active', btn.dataset.dpos === cfg.doorPos);
+      });
+      document.querySelectorAll('.partition-dstyle-btn').forEach(btn => {
+        btn.classList.toggle('active', btn.dataset.style === cfg.doorStyle);
+      });
+      const doorBtn = document.getElementById('btnTogglePartitionDoor');
+      if (doorBtn) {
+        doorBtn.textContent = cfg.doorOpen ? '🚪 敞開通行中 (點擊關門)' : '🔒 闔上隱私中 (點擊開門)';
+        doorBtn.classList.toggle('active', Boolean(cfg.doorOpen));
+      }
+    }
+  }
 
   const mep = checkMepPowerStatus();
   const mepBar = document.getElementById('mepStatusBar');
@@ -8474,6 +9640,11 @@ document.querySelectorAll('.shop-channel-btn').forEach(btn => {
 
 document.querySelectorAll('.shop-cat-pill').forEach(pill => {
   pill.addEventListener('click', () => {
+    if (pill.dataset.cat === 'dlc') {
+      switchDeckTab('build');
+      showRoomBanner('⚡ 已為您跳轉至「TAYA 軌道核心 DLC 模組」工坊！');
+      return;
+    }
     document.querySelectorAll('.shop-cat-pill').forEach(p => p.classList.remove('active'));
     pill.classList.add('active');
     currentShopCat = pill.dataset.cat;
@@ -8555,16 +9726,135 @@ document.getElementById('btnTogglePartition')?.addEventListener('click', () => {
     }
     simState.money -= 60;
     simState.hardscape.partition = true;
-    showRoomBanner('🧱 已花費 §60 建造「輕隔間玻璃半牆」切分臥室與客廳！');
+    const { w: roomW, d: roomD } = getRoomDimensions(simState.profile?.area || 18);
+    if (!simState.hardscape.partitionConfig) {
+      simState.hardscape.partitionConfig = {
+        x: Number((roomW * 0.48).toFixed(2)),
+        y: Number((roomD * 0.32).toFixed(2)),
+        length: 2.6,
+        orient: 'y',
+        doorPos: 'center',
+        doorStyle: 'glass-sliding',
+        doorOpen: false
+      };
+    }
+    selectedObjectId = 'partition-wall';
+    showRoomBanner('🧱 已建造「實體隔間牆 (含門)」！可在 3D 畫面自由拖曳位置，或自訂長度大小與門扇。');
   } else {
     simState.money = Math.max(0, simState.money - 45);
     simState.hiddenCostsPaid = (simState.hiddenCostsPaid || 0) + 45;
     simState.hardscape.partition = false;
-    showRoomBanner('🗑️ 已拆除輕隔間牆（支付營建廢料清運費 -§45）！');
+    if (selectedObjectId === 'partition-wall') selectedObjectId = null;
+    showRoomBanner('🗑️ 已拆除實體隔間牆（支付營建廢料清運費 -§45）！');
   }
   saveSimState();
   playSimSound('snap');
   renderSim();
+  renderV4Panels();
+  updateObjInspectorUI();
+});
+
+// ─── PARTITION CUSTOMIZER CONTROLS ───
+function setPartitionLength(newLen) {
+  ensureV4State();
+  if (!simState.hardscape.partitionConfig) simState.hardscape.partitionConfig = {};
+  const { w: roomW, d: roomD } = getRoomDimensions(simState.profile?.area || 18);
+  const cfg = simState.hardscape.partitionConfig;
+  const isHoriz = cfg.orient === 'x';
+  const maxL = Math.max(1.8, (isHoriz ? roomW : roomD) - 0.5);
+  const clampedLen = Math.round(Math.max(1.4, Math.min(maxL, newLen)) * 10) / 10;
+  cfg.length = clampedLen;
+  saveSimState();
+  playSimSound('tap');
+  renderSim();
+  renderV4Panels();
+  updateObjInspectorUI();
+  showRoomBanner(`📏 隔間牆長度已設定為 ${clampedLen} 公尺！`);
+}
+
+document.querySelectorAll('.partition-len-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    setPartitionLength(parseFloat(btn.dataset.len));
+  });
+});
+
+document.getElementById('partitionLenSlider')?.addEventListener('input', e => {
+  setPartitionLength(parseFloat(e.target.value));
+});
+
+document.getElementById('btnPartitionLenMinus')?.addEventListener('click', () => {
+  ensureV4State();
+  const cur = simState.hardscape.partitionConfig?.length || 2.6;
+  setPartitionLength(cur - 0.2);
+});
+
+document.getElementById('btnPartitionLenPlus')?.addEventListener('click', () => {
+  ensureV4State();
+  const cur = simState.hardscape.partitionConfig?.length || 2.6;
+  setPartitionLength(cur + 0.2);
+});
+
+document.querySelectorAll('.partition-orient-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    ensureV4State();
+    if (!simState.hardscape.partitionConfig) simState.hardscape.partitionConfig = {};
+    const orient = btn.dataset.orient;
+    simState.hardscape.partitionConfig.orient = orient;
+    const rot = getObjRotation('partition-wall');
+    if (orient === 'x' && rot % 2 === 0) {
+      simState.rotatedItems['partition-wall'] = 1;
+    } else if (orient === 'y' && rot % 2 === 1) {
+      simState.rotatedItems['partition-wall'] = 0;
+    }
+    saveSimState();
+    playSimSound('snap');
+    renderSim();
+    renderV4Panels();
+    updateObjInspectorUI();
+    showRoomBanner(`🧭 隔間牆方位已設定為「${orient === 'x' ? '橫向 (X軸)' : '縱向 (Y軸)'}」！可在 3D 畫面直接按 R 鍵旋轉。`);
+  });
+});
+
+document.querySelectorAll('.partition-dpos-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    ensureV4State();
+    if (!simState.hardscape.partitionConfig) simState.hardscape.partitionConfig = {};
+    simState.hardscape.partitionConfig.doorPos = btn.dataset.dpos;
+    saveSimState();
+    playSimSound('tap');
+    renderSim();
+    renderV4Panels();
+    updateObjInspectorUI();
+    const pNames = { start: '靠左/前側', center: '置中', end: '靠右/後側' };
+    showRoomBanner(`🚪 門洞位置已調整為「${pNames[btn.dataset.dpos] || btn.dataset.dpos}」！`);
+  });
+});
+
+document.querySelectorAll('.partition-dstyle-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    ensureV4State();
+    if (!simState.hardscape.partitionConfig) simState.hardscape.partitionConfig = {};
+    simState.hardscape.partitionConfig.doorStyle = btn.dataset.style;
+    saveSimState();
+    playSimSound('tap');
+    renderSim();
+    renderV4Panels();
+    updateObjInspectorUI();
+    const sNames = { 'glass-sliding': '黑框磨砂玻璃拉門', 'wood-hinged': '北歐溫潤實木門', 'open-arch': '穿透式拱門門洞' };
+    showRoomBanner(`🪟 隔間門已變更為「${sNames[btn.dataset.style] || btn.dataset.style}」！`);
+  });
+});
+
+document.getElementById('btnTogglePartitionDoor')?.addEventListener('click', () => {
+  ensureV4State();
+  if (!simState.hardscape.partitionConfig) simState.hardscape.partitionConfig = {};
+  simState.hardscape.partitionConfig.doorOpen = !simState.hardscape.partitionConfig.doorOpen;
+  saveSimState();
+  playSimSound('tap');
+  renderSim();
+  renderV4Panels();
+  updateObjInspectorUI();
+  showRoomBanner(`🚪 已${simState.hardscape.partitionConfig.doorOpen ? '敞開隔間房門（便於走動）' : '闔上隔間房門（保留獨立隱私）'}！`);
 });
 
 document.getElementById('btnTogglePillar')?.addEventListener('click', () => {
@@ -8689,7 +9979,10 @@ function openQuoteModal() {
 
   // 2. Hardscape
   if (simState.hardscape.partition) {
-    rows.push({ cat: '🧱 硬裝隔間', name: '輕隔間磨砂玻璃半牆', note: '含結構固定', cost: 60 });
+    const cfg = simState.hardscape.partitionConfig || {};
+    const len = cfg.length || 2.6;
+    const dName = cfg.doorStyle === 'wood-hinged' ? '實木門' : cfg.doorStyle === 'open-arch' ? '穿透拱門' : '黑框玻璃拉門';
+    rows.push({ cat: '🧱 硬裝隔間', name: `自訂實體隔間牆 (${len.toFixed(1)}m · 含${dName})`, note: '含門框與施工', cost: 60 });
     totalSpent += 60;
   }
   if (simState.hardscape.cableRaceway) {
@@ -8760,6 +10053,337 @@ document.getElementById('btnQuoteSwitchBlueprint')?.addEventListener('click', ()
   ensureV4State();
   simState.hardscape.blueprintMode = !simState.hardscape.blueprintMode;
   openQuoteModal();
+});
+
+// ─── THE SIMS 4 BUILD/BUY MODE & TOOLBAR CONTROLS ───
+let currentDockCat = 'all';
+let currentDockSearch = '';
+
+function syncSimTopBarUI() {
+  const mode = simState.wallMode || 'cutaway';
+  document.getElementById('btnWallModeCutaway')?.classList.toggle('active', mode === 'cutaway');
+  document.getElementById('btnWallModeFull')?.classList.toggle('active', mode === 'full');
+  document.getElementById('btnWallModeNone')?.classList.toggle('active', mode === 'none');
+
+  document.getElementById('btnToggleGrid')?.classList.toggle('active', simState.showGrid !== false);
+  document.getElementById('btnTogglePanoramic')?.classList.toggle('active', Boolean(simState.panoramic));
+
+  const layoutEl = document.querySelector('.sim-layout');
+  if (layoutEl) {
+    layoutEl.classList.toggle('sims-panoramic', Boolean(simState.panoramic));
+  }
+}
+
+function renderSimDockShelf(cat = currentDockCat, query = currentDockSearch) {
+  const shelf = document.getElementById('simDockShelf');
+  if (!shelf) return;
+  const fundsEl = document.getElementById('simDockFunds');
+  if (fundsEl) fundsEl.textContent = `§ ${simState.money}`;
+
+  const dockItems = [
+    // 🧱 隔間＆結構 (structure)
+    {
+      id: 'partition-wall',
+      cat: 'structure',
+      name: '自選模組輕隔間 (含門)',
+      icon: '🚪',
+      price: 60,
+      desc: '可自由移位、長度 1.4m~4.8m，支援玻璃滑門/實木門/穿透拱門',
+      isPlaced: () => Boolean(simState.hardscape?.partition),
+      onPlace: () => {
+        ensureV4State();
+        simState.hardscape.partition = true;
+        if (!simState.customFurniturePos['partition-wall']) {
+          simState.customFurniturePos['partition-wall'] = { x: 3.2, y: 2.2 };
+        }
+        selectedObjectId = 'partition-wall';
+      }
+    },
+    {
+      id: 'cable-raceway',
+      cat: 'structure',
+      name: '全室隱藏式延長線與地板壓條',
+      icon: '🔌',
+      price: 25,
+      desc: '全室無死角供電，消除跨區接電扣分',
+      isPlaced: () => Boolean(simState.hardscape?.cableRaceway),
+      onPlace: () => {
+        ensureV4State();
+        simState.hardscape.cableRaceway = true;
+      }
+    },
+    // ⚡ TAYA 軌道DLC (track)
+    {
+      id: 'dlc-work',
+      targetId: 'work',
+      cat: 'track',
+      name: 'WORK DLC 折疊工作桌',
+      icon: '💻',
+      price: 80,
+      desc: '沿 6063 鋁軌道快拆滑動，工作效率加成',
+      isPlaced: () => isDlcActive('work'),
+      onPlace: () => {
+        simState.dlcs.work = true;
+        selectedObjectId = 'work';
+      }
+    },
+    {
+      id: 'dlc-family',
+      targetId: 'family',
+      cat: 'track',
+      name: 'FAMILY DLC 料理中島',
+      icon: '🍳',
+      price: 120,
+      desc: '隱蔽式水電整合槽，支援親友共煮與社交',
+      isPlaced: () => isDlcActive('family'),
+      onPlace: () => {
+        simState.dlcs.family = true;
+        selectedObjectId = 'family';
+      }
+    },
+    {
+      id: 'dlc-storage',
+      targetId: 'storage',
+      cat: 'track',
+      name: 'STORAGE DLC 頂天立地收納牆',
+      icon: '📦',
+      price: 90,
+      desc: '原廠模組垂直收納，大容量不佔地面坪數',
+      isPlaced: () => isDlcActive('storage'),
+      onPlace: () => {
+        simState.dlcs.storage = true;
+        selectedObjectId = 'storage';
+      }
+    },
+    {
+      id: 'dlc-safe',
+      targetId: 'safe',
+      cat: 'track',
+      name: 'SAFE DLC 樂齡防撞扶手與感應地燈',
+      icon: '🌿',
+      price: 70,
+      desc: '全圓角防撞安全扶手，深夜引導地燈',
+      isPlaced: () => isDlcActive('safe'),
+      onPlace: () => {
+        simState.dlcs.safe = true;
+        selectedObjectId = 'safe';
+      }
+    },
+    // 🛋️ 舒適＆起居 (comfort) - 包含基礎家具
+    {
+      id: 'bed',
+      targetId: 'bed',
+      cat: 'comfort',
+      name: '舒適雙人臥床',
+      icon: '🛏️',
+      price: 120,
+      desc: '安穩睡眠恢復精力核心',
+      isPlaced: () => simState.furniture.includes('bed'),
+      onPlace: () => {
+        if (!simState.furniture.includes('bed')) simState.furniture.push('bed');
+        selectedObjectId = 'bed';
+      }
+    },
+    {
+      id: 'sofa',
+      targetId: 'sofa',
+      cat: 'comfort',
+      name: '北歐雙人沙發組',
+      icon: '🛋️',
+      price: 110,
+      desc: '舒適客廳休憩核心',
+      isPlaced: () => simState.furniture.includes('sofa'),
+      onPlace: () => {
+        if (!simState.furniture.includes('sofa')) simState.furniture.push('sofa');
+        selectedObjectId = 'sofa';
+      }
+    },
+    {
+      id: 'shower',
+      targetId: 'shower',
+      cat: 'comfort',
+      name: '乾濕分離衛浴艙',
+      icon: '🚿',
+      price: 95,
+      desc: '清爽沖澡恢復潔淨感',
+      isPlaced: () => simState.furniture.includes('shower'),
+      onPlace: () => {
+        if (!simState.furniture.includes('shower')) simState.furniture.push('shower');
+        selectedObjectId = 'shower';
+      }
+    },
+    {
+      id: 'tv',
+      targetId: 'tv',
+      cat: 'comfort',
+      name: '智慧影音電視牆',
+      icon: '📺',
+      price: 90,
+      desc: '娛樂與家庭劇院加成',
+      isPlaced: () => simState.furniture.includes('tv'),
+      onPlace: () => {
+        if (!simState.furniture.includes('tv')) simState.furniture.push('tv');
+        selectedObjectId = 'tv';
+      }
+    }
+  ];
+
+  // Also include items from V4_SHOP_CATALOG
+  if (typeof V4_SHOP_CATALOG !== 'undefined') {
+    V4_SHOP_CATALOG.forEach(v => {
+      let dCat = 'decor';
+      if (v.cat === 'appliance') dCat = 'appliance';
+      else if (v.cat === 'tech') dCat = 'work';
+      else if (v.id === 'beanbag' || v.id === 'ergo-chair') dCat = 'comfort';
+      else if (v.cat === 'collect' || v.cat === 'lighting' || v.cat === 'pet') dCat = 'decor';
+
+      dockItems.push({
+        id: v.id,
+        targetId: v.id,
+        cat: dCat,
+        name: v.name,
+        icon: v.iconText || v.icon,
+        price: v.price,
+        desc: v.desc,
+        isPlaced: () => hasV4Item(v.id),
+        onPlace: () => {
+          ensureV4State();
+          if (!hasV4Item(v.id)) simState.v4Items.push(v.id);
+          selectedObjectId = v.id;
+        }
+      });
+    });
+  }
+
+  // Filter
+  const q = (query || '').trim().toLowerCase();
+  const filtered = dockItems.filter(item => {
+    const matchCat = (cat === 'all' || item.cat === cat);
+    if (!matchCat) return false;
+    if (q) {
+      return item.name.toLowerCase().includes(q) || (item.desc && item.desc.toLowerCase().includes(q));
+    }
+    return true;
+  });
+
+  shelf.innerHTML = '';
+  if (filtered.length === 0) {
+    shelf.innerHTML = '<div style="font-size:0.75rem; color:#8c8274; padding:1.2rem; text-align:center; width:100%;">未找到相符的家具或模組</div>';
+    return;
+  }
+
+  filtered.forEach(item => {
+    const placed = item.isPlaced();
+    const card = document.createElement('div');
+    card.className = `sim-dock-card${placed ? ' placed' : ''}`;
+    card.title = `${item.name}\n${item.desc}\n${placed ? '（已放置於房間，點擊選取）' : `（點擊購買 §${item.price} 並放置）`}`;
+
+    card.innerHTML = `
+      <div class="sim-dock-card-icon">${item.icon}</div>
+      <div class="sim-dock-card-title">${item.name}</div>
+      <div class="sim-dock-card-price">${placed ? '✓ 已放置' : `§ ${item.price}`}</div>
+    `;
+
+    card.addEventListener('click', () => {
+      const targetId = item.targetId || item.id;
+      if (placed) {
+        selectedObjectId = targetId;
+        if (typeof updateObjInspectorUI === 'function') updateObjInspectorUI();
+        playSimSound('tap');
+        showRoomBanner(`🎯 已選取「${item.name}」！可拖曳移位或按 R 鍵 90° 旋轉`);
+        renderSim();
+      } else {
+        if (simState.money < item.price) {
+          playSimSound('error');
+          showSimMessage(`⚠️ 預算不足 §${item.price}！可先派小人工作或至二手拍賣。`, true);
+          return;
+        }
+        simState.money -= item.price;
+        item.onPlace();
+        triggerSnapEffect(selectedObjectId || targetId);
+        playSimSound('snap');
+        showRoomBanner(`✨ 已添購並放置「${item.name}」！按住可直接拖曳移位 · 按 R 鍵 90° 旋轉`);
+        saveSimState();
+        renderSim();
+      }
+    });
+
+    shelf.appendChild(card);
+  });
+}
+
+// Bind Top Builder Toolbar
+document.getElementById('btnWallModeCutaway')?.addEventListener('click', () => {
+  simState.wallMode = 'cutaway';
+  saveSimState();
+  syncSimTopBarUI();
+  playSimSound('tap');
+  showRoomBanner('✂️ 已切換為「切牆剖面模式」：前方阻擋牆面降為半牆，家具完全通透！');
+  renderSim();
+});
+
+document.getElementById('btnWallModeFull')?.addEventListener('click', () => {
+  simState.wallMode = 'full';
+  saveSimState();
+  syncSimTopBarUI();
+  playSimSound('tap');
+  showRoomBanner('🧱 已切換為「全牆模式」：升起全室四面實體牆與隔間！');
+  renderSim();
+});
+
+document.getElementById('btnWallModeNone')?.addEventListener('click', () => {
+  simState.wallMode = 'none';
+  saveSimState();
+  syncSimTopBarUI();
+  playSimSound('tap');
+  showRoomBanner('📐 已切換為「去牆模式」：降下全室牆面至踢腳板，方便全觀地面陳設！');
+  renderSim();
+});
+
+document.getElementById('btnToggleGrid')?.addEventListener('click', () => {
+  simState.showGrid = (simState.showGrid === false) ? true : false;
+  saveSimState();
+  syncSimTopBarUI();
+  playSimSound('tap');
+  showRoomBanner(simState.showGrid ? '📐 已開啟 0.5m 建築地面參考網格！' : '📐 已隱藏地面網格');
+  renderSim();
+});
+
+document.getElementById('btnTogglePanoramic')?.addEventListener('click', () => {
+  simState.panoramic = !simState.panoramic;
+  saveSimState();
+  syncSimTopBarUI();
+  playSimSound('tap');
+  showRoomBanner(simState.panoramic ? '🖥️ 已開啟「模擬市民全景大視野」！可由底部商品抽屜自由添購' : '🖥️ 已切回標準控制艙視角');
+  renderSim();
+});
+
+// Bind Bottom Shelf Dock Categories
+document.querySelectorAll('#simDockCats .sim-dock-cat-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('#simDockCats .sim-dock-cat-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    currentDockCat = btn.dataset.cat || 'all';
+    playSimSound('tap');
+    renderSimDockShelf(currentDockCat, currentDockSearch);
+  });
+});
+
+// Bind Bottom Shelf Dock Search
+document.getElementById('simDockSearch')?.addEventListener('input', (e) => {
+  currentDockSearch = e.target.value;
+  renderSimDockShelf(currentDockCat, currentDockSearch);
+});
+
+// Bind Bottom Shelf Dock Toggle
+document.getElementById('btnToggleDockShelf')?.addEventListener('click', () => {
+  const dock = document.getElementById('simBottomDock');
+  const btn = document.getElementById('btnToggleDockShelf');
+  if (dock) {
+    const isCollapsed = dock.classList.toggle('collapsed');
+    if (btn) btn.textContent = isCollapsed ? '展開商品欄 ▲' : '收合商品欄 ▼';
+    playSimSound('tap');
+  }
 });
 
 initSimActionsUI();
