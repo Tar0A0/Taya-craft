@@ -1204,6 +1204,7 @@ body::before { content: ''; position: fixed; inset: 0; pointer-events: none; z-i
           </div>
           <div class="sim-topbar-tools">
             <button type="button" class="sim-topbar-tool-btn active" id="btnToggleGrid" title="開關 0.5m 建築地面參考網格">📐 建築網格</button>
+            <button type="button" class="sim-topbar-tool-btn" id="btnToggleHitbox" title="切換顯示牆壁與結構 3D 碰撞箱 (Hitbox)">📦 牆壁碰撞箱</button>
             <button type="button" class="sim-topbar-tool-btn" id="btnTogglePanoramic" title="切換模擬市民全景沉浸大視野（隱藏右側深度控制艙，改以底部商品抽屜操作）">🖥️ 全景大視野</button>
           </div>
         </div>
@@ -1397,22 +1398,43 @@ body::before { content: ''; position: fixed; inset: 0; pointer-events: none; z-i
           </div>
 
           <div class="hardscape-section">
-            <h4><span>🧱 輕隔間牆與結構限制</span><small style="color:#994639;">拆牆需付清運費§45</small></h4>
-            <div class="hardscape-grid">
-              <button type="button" class="hardscape-btn" id="btnTogglePartition">🧱 輕隔間牆 (建§60/拆§45)</button>
+            <h4><span>🧱 輕隔間牆與結構限制</span><small style="color:#994639;">可自由複數建造 · 拆牆付清運費</small></h4>
+            <div class="hardscape-grid" style="grid-template-columns:1fr 1fr;">
+              <button type="button" class="hardscape-btn" id="btnAddSolidPartition" style="font-size:0.72rem;">🧱 + 新增純隔間牆 (§40)</button>
+              <button type="button" class="hardscape-btn" id="btnAddDoorPartition" style="font-size:0.72rem;">🚪 + 新增房門隔間牆 (§60)</button>
+            </div>
+            <div class="hardscape-grid" style="margin-top:0.35rem; grid-template-columns:1fr 1fr;">
               <button type="button" class="hardscape-btn active" id="btnTogglePillar">🏛️ 承重柱＆管道間</button>
               <button type="button" class="hardscape-btn" id="btnToggleWalkup">🪜 無電梯公寓(+15%搬運費)</button>
             </div>
 
-            <!-- 自訂隔間牆長度大小、方位與門扇設定面板 (建立隔間牆後自動展開) -->
+            <!-- 自訂隔間牆長度大小、方位與門扇設定面板 (建立隔間牆後自動展開，支援複數切換) -->
             <div class="partition-customizer-box" id="partitionCustomizerBox" style="display:none;">
               <div style="display:flex; justify-content:space-between; align-items:center;">
-                <strong style="font-size:0.77rem; color:#4a3f35;">🚪 實體隔間牆規格與門扇設定</strong>
-                <span class="sim-badge" style="background:#e0edff; color:#1e40af; font-size:0.65rem;" id="partitionDimBadge">長度 2.6m · 縱向</span>
+                <strong style="font-size:0.77rem; color:#4a3f35;">🧱 實體隔間牆規格與門扇設定</strong>
+                <span class="sim-badge" style="background:#e0edff; color:#1e40af; font-size:0.65rem;" id="partitionDimBadge">隔間 #1 · 縱向</span>
               </div>
               
+              <!-- 複數隔間牆切換標籤列 -->
+              <div class="partition-cfg-row" style="margin-top:0.25rem;">
+                <div class="partition-cfg-label">
+                  <span>📑 目前編輯之隔間牆段</span>
+                  <small style="color:#8c8274;">點擊切換選取／新增</small>
+                </div>
+                <div style="display:flex; flex-wrap:wrap; gap:0.25rem;" id="partitionWallSelectorBar"></div>
+              </div>
+
+              <!-- 牆面種類切換：純實心牆 vs 房門牆面 -->
+              <div class="partition-cfg-row">
+                <span class="partition-cfg-label">🧱 隔間牆面型態</span>
+                <div style="display:flex; gap:0.25rem;">
+                  <button type="button" class="partition-chip-btn partition-type-btn active" data-type="solid" style="flex:1;">🧱 純實心牆 (無門)</button>
+                  <button type="button" class="partition-chip-btn partition-type-btn" data-type="door" style="flex:1;">🚪 房門隔間牆 (含門)</button>
+                </div>
+              </div>
+
               <div style="font-size:0.69rem; color:#786f65; line-height:1.4;">
-                💡 <b>自選擺放位置</b>：可在 3D 畫面直接按住隔間牆任意拖曳到想要的位置，或按鍵盤 <kbd style="background:#eee; padding:1px 4px; border-radius:3px; font-weight:700;">R</kbd> 鍵旋轉方位！
+                💡 <b>自選擺放位置</b>：可在 3D 畫面直接按住隔間牆拖曳到任意位置，或按鍵盤 <kbd style="background:#eee; padding:1px 4px; border-radius:3px; font-weight:700;">R</kbd> 鍵旋轉方位！
               </div>
 
               <!-- 1. 長度大小選擇 -->
@@ -1434,15 +1456,18 @@ body::before { content: ''; position: fixed; inset: 0; pointer-events: none; z-i
                 </div>
               </div>
 
-              <!-- 2. 方位與門洞位置 -->
-              <div style="display:grid; grid-template-columns:1fr 1.2fr; gap:0.4rem;">
-                <div class="partition-cfg-row">
-                  <span class="partition-cfg-label">🧭 牆面方向</span>
-                  <div style="display:flex; gap:0.25rem;">
-                    <button type="button" class="partition-chip-btn partition-orient-btn active" data-orient="y" style="flex:1;">↕️ 縱向(Y)</button>
-                    <button type="button" class="partition-chip-btn partition-orient-btn" data-orient="x" style="flex:1;">↔️ 橫向(X)</button>
-                  </div>
+              <!-- 2. 方位 -->
+              <div class="partition-cfg-row">
+                <span class="partition-cfg-label">🧭 牆面方向</span>
+                <div style="display:flex; gap:0.25rem;">
+                  <button type="button" class="partition-chip-btn partition-orient-btn active" data-orient="y" style="flex:1;">↕️ 縱向(Y)</button>
+                  <button type="button" class="partition-chip-btn partition-orient-btn" data-orient="x" style="flex:1;">↔️ 橫向(X)</button>
                 </div>
+              </div>
+
+              <!-- 3. 房門專屬設定區塊 (僅在房門隔間牆時顯示) -->
+              <div id="partitionDoorSettingsRow" style="display:flex; flex-direction:column; gap:0.45rem;">
+                <!-- 門洞位置 -->
                 <div class="partition-cfg-row">
                   <span class="partition-cfg-label">🚪 門洞位置</span>
                   <div style="display:flex; gap:0.2rem;">
@@ -1451,22 +1476,29 @@ body::before { content: ''; position: fixed; inset: 0; pointer-events: none; z-i
                     <button type="button" class="partition-chip-btn partition-dpos-btn" data-dpos="end" style="flex:1;">靠右</button>
                   </div>
                 </div>
-              </div>
 
-              <!-- 3. 門扇款式與開關狀態 -->
-              <div style="display:grid; grid-template-columns:1.5fr 1fr; gap:0.4rem;">
-                <div class="partition-cfg-row">
-                  <span class="partition-cfg-label">🚪 門扇款式</span>
-                  <div style="display:flex; gap:0.2rem;">
-                    <button type="button" class="partition-chip-btn partition-dstyle-btn active" data-style="glass-sliding" style="flex:1;">🪟 玻璃拉門</button>
-                    <button type="button" class="partition-chip-btn partition-dstyle-btn" data-style="wood-hinged" style="flex:1;">🚪 實木門</button>
-                    <button type="button" class="partition-chip-btn partition-dstyle-btn" data-style="open-arch" style="flex:1;">⛩️ 穿透洞</button>
+                <!-- 門扇款式與開關狀態 -->
+                <div style="display:grid; grid-template-columns:1.5fr 1fr; gap:0.4rem;">
+                  <div class="partition-cfg-row">
+                    <span class="partition-cfg-label">🚪 門扇款式</span>
+                    <div style="display:flex; gap:0.2rem;">
+                      <button type="button" class="partition-chip-btn partition-dstyle-btn active" data-style="glass-sliding" style="flex:1;">🪟 玻璃拉門</button>
+                      <button type="button" class="partition-chip-btn partition-dstyle-btn" data-style="wood-hinged" style="flex:1;">🚪 實木門</button>
+                      <button type="button" class="partition-chip-btn partition-dstyle-btn" data-style="open-arch" style="flex:1;">⛩️ 穿透洞</button>
+                    </div>
+                  </div>
+                  <div class="partition-cfg-row">
+                    <span class="partition-cfg-label">🔓 門扇狀態</span>
+                    <button type="button" class="partition-chip-btn" id="btnTogglePartitionDoor" style="width:100%;">🔒 闔上 (點擊開門)</button>
                   </div>
                 </div>
-                <div class="partition-cfg-row">
-                  <span class="partition-cfg-label">🔓 門扇狀態</span>
-                  <button type="button" class="partition-chip-btn" id="btnTogglePartitionDoor" style="width:100%;">🔒 闔上 (點擊開門)</button>
-                </div>
+              </div>
+
+              <!-- 4. 拆除按鈕 -->
+              <div style="margin-top:0.35rem; pt:0.35rem; border-top:1px dashed #e2d9c8;">
+                <button type="button" class="hardscape-btn" id="btnDeleteCurrentPartition" style="width:100%; color:#b91c1c; font-size:0.72rem; padding:0.38rem;">
+                  🗑️ 拆除此段隔間牆
+                </button>
               </div>
             </div>
           </div>
@@ -1994,6 +2026,7 @@ const simDefaultState = {
   actionCounter: 0,
   wallMode: 'cutaway', // 'cutaway' | 'full' | 'none'
   showGrid: true,
+  showHitbox: false,
   panoramic: false
 };
 
@@ -2067,40 +2100,81 @@ function createRandomSimQuest(prevId = '') {
 }
 
 function loadSimState() {
+  const makeCleanDefault = () => ({
+    ...simDefaultState,
+    needs: { ...simDefaultState.needs },
+    player: { ...simDefaultState.player },
+    quest: createRandomSimQuest(),
+    profile: { ...simDefaultState.profile },
+    furniture: [...simDefaultState.furniture],
+    dlcs: { ...simDefaultState.dlcs },
+    trackPos: { ...simDefaultState.trackPos }
+  });
   try {
     const raw = localStorage.getItem(simStorageKey);
-    if (!raw) {
-      return {
-        ...simDefaultState,
-        needs: { ...simDefaultState.needs },
-        player: { ...simDefaultState.player },
-        quest: createRandomSimQuest(),
-        profile: { ...simDefaultState.profile },
-        furniture: [...simDefaultState.furniture],
-        dlcs: { ...simDefaultState.dlcs }
-      };
-    }
+    if (!raw) return makeCleanDefault();
     const parsed = JSON.parse(raw);
+    if (!parsed || typeof parsed !== 'object' || Array.isArray(parsed)) return makeCleanDefault();
+
+    const safeNeeds = { ...simDefaultState.needs };
+    if (parsed.needs && typeof parsed.needs === 'object') {
+      Object.keys(safeNeeds).forEach(k => {
+        const v = Number(parsed.needs[k]);
+        safeNeeds[k] = clampNeed(Number.isFinite(v) ? v : safeNeeds[k]);
+      });
+    }
+
+    const legacyFurnMap = {
+      bed: 'bed-set',
+      shower: 'shower-pod',
+      sofa: 'sofa-set',
+      tv: 'tv-wall',
+      cart: 'kitchen-cart',
+      plant: 'plant-deco'
+    };
+    const validBaseIds = new Set(extraFurnitureCatalog.map(b => b.id));
+    const safeFurniture = Array.isArray(parsed.furniture)
+      ? Array.from(new Set(
+          parsed.furniture
+            .map(id => (typeof id === 'string' ? (legacyFurnMap[id] || id) : ''))
+            .filter(id => validBaseIds.has(id))
+        ))
+      : [];
+
+    const areaVal = Number(parsed.profile?.area);
+    const peopleVal = Number(parsed.profile?.people);
+    const moneyVal = Number(parsed.money);
+    const dayVal = Number(parsed.day);
+    const minVal = Number(parsed.minutes);
+    const spdVal = Number(parsed.speed);
+
     return {
       ...simDefaultState,
       ...parsed,
+      name: typeof parsed.name === 'string' && parsed.name.trim() ? parsed.name.trim().slice(0, 18) : simDefaultState.name,
       stage: ['starter', 'family', 'senior'].includes(parsed.stage) ? parsed.stage : 'starter',
-      needs: { ...simDefaultState.needs, ...(parsed.needs || {}) },
+      day: Number.isFinite(dayVal) && dayVal >= 1 ? Math.floor(dayVal) : 1,
+      minutes: Number.isFinite(minVal) ? ((Math.floor(minVal) % 1440) + 1440) % 1440 : 510,
+      money: Number.isFinite(moneyVal) ? Math.max(0, Math.round(moneyVal)) : simDefaultState.money,
+      speed: [1, 2, 3].includes(spdVal) ? spdVal : 1,
+      needs: safeNeeds,
       player: {
-        x: Number.isFinite(parsed.player?.x) ? Math.max(1.2, Math.min(8.2, parsed.player.x)) : 4.8,
-        y: Number.isFinite(parsed.player?.y) ? Math.max(1.2, Math.min(6.4, parsed.player.y)) : 4.5,
-        angle: Number.isFinite(parsed.player?.angle) ? parsed.player.angle : 0.85,
-        targetAngle: Number.isFinite(parsed.player?.targetAngle) ? parsed.player.targetAngle : 0.85,
+        x: Number.isFinite(Number(parsed.player?.x)) ? Math.max(0.75, Math.min(12.5, Number(parsed.player.x))) : 4.8,
+        y: Number.isFinite(Number(parsed.player?.y)) ? Math.max(1.15, Math.min(8.0, Number(parsed.player.y))) : 4.5,
+        angle: Number.isFinite(Number(parsed.player?.angle)) ? Number(parsed.player.angle) : 0.85,
+        targetAngle: Number.isFinite(Number(parsed.player?.targetAngle)) ? Number(parsed.player.targetAngle) : 0.85,
         targetX: null,
         targetY: null,
         pendingAction: null
       },
-      quest: parsed.quest?.id ? parsed.quest : createRandomSimQuest(),
+      quest: (parsed.quest && typeof parsed.quest.id === 'string' && simQuestCatalog.some(q => q.id === parsed.quest.id))
+        ? { id: parsed.quest.id, progress: Number.isFinite(Number(parsed.quest.progress)) ? Math.max(0, Math.floor(Number(parsed.quest.progress))) : 0 }
+        : createRandomSimQuest(),
       profile: {
-        area: [12, 18, 25, 32].includes(Number(parsed.profile?.area)) ? Number(parsed.profile.area) : 18,
-        people: [1, 2, 3, 4].includes(Number(parsed.profile?.people)) ? Number(parsed.profile.people) : 2
+        area: [5, 12, 18, 25, 32].includes(areaVal) ? areaVal : 18,
+        people: [1, 2, 3, 4].includes(peopleVal) ? peopleVal : 2
       },
-      furniture: Array.isArray(parsed.furniture) ? parsed.furniture : [],
+      furniture: safeFurniture,
       dlcs: {
         work: Boolean(parsed.dlcs?.work),
         family: Boolean(parsed.dlcs?.family),
@@ -2108,29 +2182,22 @@ function loadSimState() {
         safe: Boolean(parsed.dlcs?.safe)
       },
       trackPos: {
-        work: Number.isFinite(parsed.trackPos?.work) ? Math.max(4.4, Math.min(6.4, parsed.trackPos.work)) : 5.1,
-        family: Number.isFinite(parsed.trackPos?.family) ? Math.max(1.8, Math.min(3.8, parsed.trackPos.family)) : 2.1,
-        storage: Number.isFinite(parsed.trackPos?.storage) ? Math.max(6.8, Math.min(7.5, parsed.trackPos.storage)) : 7.35,
-        safe: Number.isFinite(parsed.trackPos?.safe) ? Math.max(1.9, Math.min(3.4, parsed.trackPos.safe)) : 2.05
+        work: Number.isFinite(Number(parsed.trackPos?.work)) ? Math.max(1.8, Math.min(11.0, Number(parsed.trackPos.work))) : 5.1,
+        family: Number.isFinite(Number(parsed.trackPos?.family)) ? Math.max(1.75, Math.min(9.0, Number(parsed.trackPos.family))) : 2.1,
+        storage: Number.isFinite(Number(parsed.trackPos?.storage)) ? Math.max(1.8, Math.min(11.6, Number(parsed.trackPos.storage))) : 7.35,
+        safe: Number.isFinite(Number(parsed.trackPos?.safe)) ? Math.max(1.85, Math.min(7.0, Number(parsed.trackPos.safe))) : 2.05
       },
-      esgScore: Number.isFinite(parsed.esgScore) ? parsed.esgScore : 30,
+      esgScore: Number.isFinite(Number(parsed.esgScore)) ? Math.max(0, Math.round(Number(parsed.esgScore))) : 30,
       xrayMode: Boolean(parsed.xrayMode),
-      actionCounter: Number.isFinite(parsed.actionCounter) ? parsed.actionCounter : 0,
+      actionCounter: Number.isFinite(Number(parsed.actionCounter)) ? Math.max(0, Math.floor(Number(parsed.actionCounter))) : 0,
       wallMode: ['cutaway', 'full', 'none'].includes(parsed.wallMode) ? parsed.wallMode : 'cutaway',
       showGrid: typeof parsed.showGrid === 'boolean' ? parsed.showGrid : true,
+      showHitbox: Boolean(parsed.showHitbox),
       panoramic: Boolean(parsed.panoramic),
       paused: true
     };
   } catch (e) {
-    return {
-      ...simDefaultState,
-      needs: { ...simDefaultState.needs },
-      player: { ...simDefaultState.player },
-      quest: createRandomSimQuest(),
-      profile: { ...simDefaultState.profile },
-      furniture: [...simDefaultState.furniture],
-      dlcs: { ...simDefaultState.dlcs }
-    };
+    return makeCleanDefault();
   }
 }
 
@@ -2281,6 +2348,7 @@ let targetYaw = camAngles[0];
 let snapDropEffects = []; // { id, startAt }
 let activeInteraction = null; // { objId, actionId, startAt, duration }
 let hoveredObject = null;
+let hoveredSubpart = null; // 'partition-door' | null
 let floatingTexts = []; // { text, x, y, z, col, startAt }
 let dustParticles = []; // { x, y, z, vx, vy, vz, size, startAt, duration }
 let renovShakeUntil = 0;
@@ -2343,9 +2411,14 @@ function isObjRotated(key) {
   return (getObjRotation(key) % 2) === 1;
 }
 
+function isPartitionWall(id) {
+  return typeof id === 'string' && (id === 'partition-wall' || id.startsWith('partition-'));
+}
+
 // shortcut: painter's algorithm depth sort on 2D canvas (<60 AABB boxes), switch to Three.js WebGL z-buffer if object count >200
 // Returns interactive 3D furniture, DLC & V4 models in the room (all draggable, clickable & depth-sorted)
 function getSceneObjects() {
+  ensureV4State();
   const list = [];
   const { w: roomW, d: roomD } = getRoomDimensions(simState.profile?.area || 18);
   const clampX = (x, dx) => Math.max(0.22, Math.min(roomW - dx - 0.18, x));
@@ -2475,54 +2548,123 @@ function getSceneObjects() {
     });
   }
 
-  // Include Customizable 3D Partition Wall (含門) if enabled by player!
-  if (simState.hardscape?.partition) {
-    ensureV4State();
-    const cfg = simState.hardscape.partitionConfig || {
-      x: Number((roomW * 0.48).toFixed(2)),
-      y: Number((roomD * 0.32).toFixed(2)),
-      length: 2.6,
-      orient: 'y',
-      doorPos: 'center',
-      doorStyle: 'glass-sliding',
-      doorOpen: false
-    };
-    simState.hardscape.partitionConfig = cfg;
-    const rot = getObjRotation('partition-wall');
-    // If rot % 2 === 1, orientation is opposite of cfg.orient
-    const isHoriz = (rot % 2 === 1) ? (cfg.orient !== 'x') : (cfg.orient === 'x');
-    const wallLen = Math.max(1.4, Math.min(isHoriz ? roomW - 0.5 : roomD - 0.5, cfg.length || 2.6));
-    const wallThick = 0.16;
-    const dx = isHoriz ? wallLen : wallThick;
-    const dy = isHoriz ? wallThick : wallLen;
-    const cp = customPos['partition-wall'];
-    const defX = Number.isFinite(cfg.x) ? cfg.x : Number((roomW * 0.48).toFixed(2));
-    const defY = Number.isFinite(cfg.y) ? cfg.y : Number((roomD * 0.32).toFixed(2));
-    const x = clampX(cp && Number.isFinite(cp.x) ? cp.x : defX, dx);
-    const y = clampY(cp && Number.isFinite(cp.y) ? cp.y : defY, dy);
-    cfg.x = x;
-    cfg.y = y;
-    cfg.length = wallLen;
-    cfg.orient = isHoriz ? 'x' : 'y';
+  // Include Customizable 3D Partition Walls (支援複數：純牆面 或 房門牆面)
+  if (Array.isArray(simState.hardscape?.partitions) && simState.hardscape.partitions.length > 0) {
+    simState.hardscape.partitions.forEach((cfg, idx) => {
+      const isHoriz = cfg.orient === 'x';
+      let rot = getObjRotation(cfg.id);
+      if (isHoriz && rot % 2 === 0) {
+        rot = 1;
+        simState.rotatedItems[cfg.id] = 1;
+      } else if (!isHoriz && rot % 2 === 1) {
+        rot = 0;
+        simState.rotatedItems[cfg.id] = 0;
+      }
+      const wallLen = Math.max(1.4, Math.min(isHoriz ? roomW - 0.5 : roomD - 0.5, cfg.length || 2.6));
+      const wallThick = 0.16;
+      const dx = isHoriz ? wallLen : wallThick;
+      const dy = isHoriz ? wallThick : wallLen;
+      const cp = customPos[cfg.id];
+      const defX = Number.isFinite(cfg.x) ? cfg.x : Number((roomW * (0.35 + (idx % 3) * 0.18)).toFixed(2));
+      const defY = Number.isFinite(cfg.y) ? cfg.y : Number((roomD * (0.28 + (idx % 3) * 0.15)).toFixed(2));
+      const x = clampX(cp && Number.isFinite(cp.x) ? cp.x : defX, dx);
+      const y = clampY(cp && Number.isFinite(cp.y) ? cp.y : defY, dy);
+      cfg.x = x;
+      cfg.y = y;
 
-    const dStyleName = cfg.doorStyle === 'wood-hinged' ? '實木門' : cfg.doorStyle === 'open-arch' ? '門洞' : '玻璃拉門';
-    list.push({
-      id: 'partition-wall',
-      storeKey: 'partition-wall',
-      label: `實體隔間牆 (長${wallLen.toFixed(1)}m · 含${dStyleName})`,
-      action: 'relax',
-      x, y, z: 0,
-      dx, dy, dz: 2.35,
-      rot,
-      ix: clampIX(x + dx * 0.5),
-      iy: clampIY(y + dy * 0.5 + 0.45 < roomD - 0.4 ? y + dy * 0.5 + 0.45 : y + dy * 0.5 - 0.45),
-      isHardscape: true,
-      canRotate: true,
-      cfg
+      const isSolid = cfg.type === 'solid';
+      const dStyleName = isSolid ? '純實心' : (cfg.doorStyle === 'wood-hinged' ? '實木門' : cfg.doorStyle === 'open-arch' ? '穿透拱門' : '玻璃拉門');
+      list.push({
+        id: cfg.id,
+        storeKey: cfg.id,
+        label: `${isSolid ? '純隔間牆' : '房門隔間牆'} #${idx + 1} (長${wallLen.toFixed(1)}m · ${dStyleName})`,
+        action: 'relax',
+        x, y, z: 0,
+        dx, dy, dz: 2.40,
+        rot,
+        ix: clampIX(x + dx * 0.5),
+        iy: clampIY(y + dy * 0.5 + 0.45 < roomD - 0.4 ? y + dy * 0.5 + 0.45 : y + dy * 0.5 - 0.45),
+        isHardscape: true,
+        canRotate: true,
+        isPartition: true,
+        cfg
+      });
     });
   }
 
   return list;
+}
+
+// Compute independent 3D sub-component geometry for Partition Wall Doorway & Door Leaf
+function getPartitionDoorSubbox(obj) {
+  if (!obj || !isPartitionWall(obj.id)) return null;
+  const cfg = obj.cfg || simState.hardscape?.partitions?.find(p => p.id === obj.id) || simState.hardscape?.partitionConfig || {};
+  if (cfg.type === 'solid') return null; // 純牆面無門扇！
+  const isHoriz = obj.dx > obj.dy;
+  const totalLen = isHoriz ? obj.dx : obj.dy;
+  const wallThick = isHoriz ? obj.dy : obj.dx;
+  const wallMode = simState.wallMode || 'cutaway';
+  const wallH = (wallMode === 'none') ? 0.08 : 2.40;
+  const doorH = (wallMode === 'none') ? 0.08 : 2.05;
+  const doorW = Math.min(0.92, Math.max(0.75, totalLen * 0.35));
+  const dStyle = cfg.doorStyle || 'glass-sliding';
+  const dPos = cfg.doorPos || 'center';
+  const isOpen = Boolean(cfg.doorOpen);
+  const rot = obj.rot ?? getObjRotation(obj.id);
+  const swingNeg = rot >= 2;
+
+  let doorOffset = (totalLen - doorW) * 0.5;
+  if (dPos === 'start') doorOffset = Math.max(0.18, (totalLen - doorW) * 0.18);
+  else if (dPos === 'end') doorOffset = Math.max(0.18, totalLen - doorW - 0.18);
+  const seg1Len = Math.max(0.12, doorOffset);
+  const seg2Len = Math.max(0.12, totalLen - doorOffset - doorW);
+
+  // Doorway frame 3D box
+  const frameBox = isHoriz
+    ? { x: obj.x + doorOffset, y: obj.y - 0.05, z: obj.z || 0, dx: doorW, dy: wallThick + 0.1, dz: doorH }
+    : { x: obj.x - 0.05, y: obj.y + doorOffset, z: obj.z || 0, dx: wallThick + 0.1, dy: doorW, dz: doorH };
+
+  // Active Door Leaf 3D box (shifts or swings when open)
+  let leafBox = { ...frameBox };
+  if (dStyle === 'glass-sliding') {
+    const slideShift = isOpen ? -Math.min(seg1Len - 0.08, doorW * 0.82) : 0;
+    leafBox = isHoriz
+      ? { x: obj.x + doorOffset + slideShift, y: obj.y - 0.06, z: obj.z || 0, dx: doorW, dy: wallThick + 0.12, dz: doorH }
+      : { x: obj.x - 0.06, y: obj.y + doorOffset + slideShift, z: obj.z || 0, dx: wallThick + 0.12, dy: doorW, dz: doorH };
+  } else if (dStyle === 'wood-hinged' && isOpen) {
+    leafBox = isHoriz
+      ? {
+          x: obj.x + doorOffset - 0.04,
+          y: swingNeg ? (obj.y - doorW * 0.88 + wallThick) : obj.y,
+          z: obj.z || 0,
+          dx: 0.28,
+          dy: doorW * 0.88,
+          dz: doorH
+        }
+      : {
+          x: swingNeg ? (obj.x - doorW * 0.88 + wallThick) : obj.x,
+          y: obj.y + doorOffset - 0.04,
+          z: obj.z || 0,
+          dx: doorW * 0.88,
+          dy: 0.28,
+          dz: doorH
+        };
+  }
+
+  // Solid Wall Segments 1 & 2 (excluding doorway so wall AABB never intercepts door clicks)
+  const seg1Box = isHoriz
+    ? { x: obj.x, y: obj.y, z: obj.z || 0, dx: seg1Len, dy: wallThick, dz: wallH }
+    : { x: obj.x, y: obj.y, z: obj.z || 0, dx: wallThick, dy: seg1Len, dz: wallH };
+  const seg2Box = isHoriz
+    ? { x: obj.x + doorOffset + doorW, y: obj.y, z: obj.z || 0, dx: seg2Len, dy: wallThick, dz: wallH }
+    : { x: obj.x, y: obj.y + doorOffset + doorW, z: obj.z || 0, dx: wallThick, dy: seg2Len, dz: wallH };
+
+  return {
+    isHoriz, totalLen, wallThick, wallH,
+    doorH, doorW, doorOffset, seg1Len, seg2Len,
+    dStyle, dPos, isOpen,
+    frameBox, leafBox, seg1Box, seg2Box
+  };
 }
 
 function draw3DFurnitureObject(iso, obj, now, isNight) {
@@ -2780,22 +2922,48 @@ function draw3DFurnitureObject(iso, obj, now, isNight) {
     return;
   }
 
-  if (obj.id === 'partition-wall') {
-    // Custom Movable Partition Wall with Doorway & Door Leaf (要有門，而非單片)
-    const cfg = simState.hardscape?.partitionConfig || {};
+  if (obj.isPartition || isPartitionWall(obj.id)) {
+    // Custom Movable Partition Wall (Solid or Doorway with Plural Instances)
+    const cfg = obj.cfg || simState.hardscape?.partitions?.find(p => p.id === obj.id) || simState.hardscape?.partitionConfig || {};
+    const isSolid = cfg.type === 'solid';
     const isHoriz = dx > dy;
     const totalLen = isHoriz ? dx : dy;
     const wallThick = isHoriz ? dy : dx;
     const wallMode = simState.wallMode || 'cutaway';
-    let isCutaway = false;
-    let wallH = Math.min(obj.dz || 2.35, 2.4);
-    if (wallMode === 'none') {
-      wallH = 0.08;
-    } else if (wallMode === 'cutaway' && (y > (simState.profile?.area <= 12 ? 1.5 : 2.2) || (isHoriz && y > 1.4))) {
-      wallH = 0.88; // Sims 4 Cutaway Half-Wall Height
-      isCutaway = true;
+    const wallH = (wallMode === 'none') ? 0.08 : 2.40;
+
+    // Wall colors based on wallMat
+    const wallMat = simState.hardscape?.wallMat || 'warm';
+    let wallCol = '#f5eee6', wallSideCol = '#e7ded4', wallTopCol = '#fffdfa';
+    if (wallMat === 'stone') {
+      wallCol = '#cbd5e1'; wallSideCol = '#94a3b8'; wallTopCol = '#e2e8f0';
+    } else if (wallMat === 'acoustic') {
+      wallCol = '#334155'; wallSideCol = '#1e293b'; wallTopCol = '#475569';
     }
-    const doorH = isCutaway ? Math.min(wallH, 0.85) : 2.05;
+
+    // Branch A: Pure Solid Partition Wall (純隔間牆 - 無門洞、無門扇)
+    if (isSolid) {
+      iso.drawShadow(x, y, dx, dy, 0.16);
+      iso.drawBox(x, y, z0, dx, dy, wallH, wallCol, {
+        topColor: wallTopCol, rightColor: wallSideCol, leftColor: wallCol
+      });
+      iso.drawBox(x, y, z0, dx + (isHoriz ? 0 : 0.01), dy + (isHoriz ? 0.01 : 0), 0.08, '#7c5335');
+      // Architectural vertical panel seams
+      const seamDist = 0.8;
+      if (isHoriz) {
+        for (let sx = x + seamDist; sx < x + dx - 0.25; sx += seamDist) {
+          iso.drawBox(sx, y - 0.005, z0 + 0.08, 0.015, wallThick + 0.01, wallH - 0.08, wallSideCol);
+        }
+      } else {
+        for (let sy = y + seamDist; sy < y + dy - 0.25; sy += seamDist) {
+          iso.drawBox(x - 0.005, sy, z0 + 0.08, wallThick + 0.01, 0.015, wallH - 0.08, wallSideCol);
+        }
+      }
+      return;
+    }
+
+    // Branch B: Doorway Partition Wall (含門隔間牆)
+    const doorH = (wallMode === 'none') ? 0.08 : 2.05;
     const doorW = Math.min(0.92, Math.max(0.75, totalLen * 0.35));
     const dStyle = cfg.doorStyle || 'glass-sliding';
     const dPos = cfg.doorPos || 'center';
@@ -2808,15 +2976,6 @@ function draw3DFurnitureObject(iso, obj, now, isNight) {
     const seg1Len = Math.max(0.12, doorOffset);
     const seg2Len = Math.max(0.12, totalLen - doorOffset - doorW);
 
-    // Wall colors based on wallMat
-    const wallMat = simState.hardscape?.wallMat || 'warm';
-    let wallCol = '#f5eee6', wallSideCol = '#e7ded4', wallTopCol = '#fffdfa';
-    if (wallMat === 'stone') {
-      wallCol = '#cbd5e1'; wallSideCol = '#94a3b8'; wallTopCol = '#e2e8f0';
-    } else if (wallMat === 'acoustic') {
-      wallCol = '#334155'; wallSideCol = '#1e293b'; wallTopCol = '#475569';
-    }
-
     if (isHoriz) {
       // Horizontal Wall (extends along X-axis, width is dx, depth is wallThick)
       iso.drawShadow(x, y, seg1Len, wallThick, 0.16);
@@ -2827,18 +2986,12 @@ function draw3DFurnitureObject(iso, obj, now, isNight) {
         topColor: wallTopCol, rightColor: wallSideCol, leftColor: wallCol
       });
       iso.drawBox(x, y, z0, seg1Len, wallThick + 0.01, 0.08, '#7c5335');
-      if (isCutaway) {
-        iso.drawBox(x, y, z0 + wallH, seg1Len, wallThick, 0.025, '#994639', { topColor: '#b91c1c', stroke: '#7f1d1d' });
-      }
 
       // Wall Segment 2
       iso.drawBox(x + doorOffset + doorW, y, z0, seg2Len, wallThick, wallH, wallCol, {
         topColor: wallTopCol, rightColor: wallSideCol, leftColor: wallCol
       });
       iso.drawBox(x + doorOffset + doorW, y, z0, seg2Len, wallThick + 0.01, 0.08, '#7c5335');
-      if (isCutaway) {
-        iso.drawBox(x + doorOffset + doorW, y, z0 + wallH, seg2Len, wallThick, 0.025, '#994639', { topColor: '#b91c1c', stroke: '#7f1d1d' });
-      }
 
       // Doorway Frame
       const frameCol = '#1e293b';
@@ -2866,9 +3019,12 @@ function draw3DFurnitureObject(iso, obj, now, isNight) {
         iso.drawBox(panelX + doorW * 0.5 - 0.015, y - 0.016, z0 + 0.04, 0.03, 0.032, doorH - 0.06, '#0f172a');
         iso.drawBox(panelX + (isOpen ? 0.08 : doorW - 0.12), y - 0.03, z0 + 0.82, 0.03, 0.05, 0.45, '#e2e8f0');
       } else if (dStyle === 'wood-hinged') {
+        const swingNeg = (obj.rot ?? getObjRotation(obj.id)) >= 2;
         if (isOpen) {
-          iso.drawBox(x + doorOffset + 0.04, y, z0 + 0.04, 0.04, doorW * 0.88, doorH - 0.06, '#9c6b46');
-          iso.drawBox(x + doorOffset + 0.02, y + doorW * 0.75, z0 + 0.95, 0.08, 0.08, 0.04, '#f59e0b');
+          const swingY = swingNeg ? (y - doorW * 0.88 + wallThick) : y;
+          const handleY = swingNeg ? (y - doorW * 0.75 + wallThick) : (y + doorW * 0.75);
+          iso.drawBox(x + doorOffset + 0.04, swingY, z0 + 0.04, 0.04, doorW * 0.88, doorH - 0.06, '#9c6b46');
+          iso.drawBox(x + doorOffset + 0.02, handleY, z0 + 0.95, 0.08, 0.08, 0.04, '#f59e0b');
         } else {
           iso.drawBox(x + doorOffset + frameThick, y + 0.03, z0 + 0.04, doorW - frameThick * 2, 0.05, doorH - 0.06, '#9c6b46', {
             topColor: '#b07d4f', rightColor: '#7c5335', leftColor: '#b07d4f'
@@ -2890,18 +3046,12 @@ function draw3DFurnitureObject(iso, obj, now, isNight) {
         topColor: wallTopCol, rightColor: wallSideCol, leftColor: wallCol
       });
       iso.drawBox(x, y, z0, wallThick + 0.01, seg1Len, 0.08, '#7c5335');
-      if (isCutaway) {
-        iso.drawBox(x, y, z0 + wallH, wallThick, seg1Len, 0.025, '#994639', { topColor: '#b91c1c', stroke: '#7f1d1d' });
-      }
 
       // Wall Segment 2
       iso.drawBox(x, y + doorOffset + doorW, z0, wallThick, seg2Len, wallH, wallCol, {
         topColor: wallTopCol, rightColor: wallSideCol, leftColor: wallCol
       });
       iso.drawBox(x, y + doorOffset + doorW, z0, wallThick + 0.01, seg2Len, 0.08, '#7c5335');
-      if (isCutaway) {
-        iso.drawBox(x, y + doorOffset + doorW, z0 + wallH, wallThick, seg2Len, 0.025, '#994639', { topColor: '#b91c1c', stroke: '#7f1d1d' });
-      }
 
       // Doorway Frame
       const frameCol = '#1e293b';
@@ -2929,9 +3079,12 @@ function draw3DFurnitureObject(iso, obj, now, isNight) {
         iso.drawBox(x - 0.016, panelY + doorW * 0.5 - 0.015, z0 + 0.04, 0.032, 0.03, doorH - 0.06, '#0f172a');
         iso.drawBox(x - 0.03, panelY + (isOpen ? 0.08 : doorW - 0.12), z0 + 0.82, 0.05, 0.03, 0.45, '#e2e8f0');
       } else if (dStyle === 'wood-hinged') {
+        const swingNeg = (obj.rot ?? getObjRotation(obj.id)) >= 2;
         if (isOpen) {
-          iso.drawBox(x, y + doorOffset + 0.04, z0 + 0.04, doorW * 0.88, 0.04, doorH - 0.06, '#9c6b46');
-          iso.drawBox(x + doorW * 0.75, y + doorOffset + 0.02, z0 + 0.95, 0.08, 0.08, 0.04, '#f59e0b');
+          const swingX = swingNeg ? (x - doorW * 0.88 + wallThick) : x;
+          const handleX = swingNeg ? (x - doorW * 0.75 + wallThick) : (x + doorW * 0.75);
+          iso.drawBox(swingX, y + doorOffset + 0.04, z0 + 0.04, doorW * 0.88, 0.04, doorH - 0.06, '#9c6b46');
+          iso.drawBox(handleX, y + doorOffset + 0.02, z0 + 0.95, 0.08, 0.08, 0.04, '#f59e0b');
         } else {
           iso.drawBox(x + 0.03, y + doorOffset + frameThick, z0 + 0.04, 0.05, doorW - frameThick * 2, doorH - 0.06, '#9c6b46', {
             topColor: '#b07d4f', rightColor: '#7c5335', leftColor: '#b07d4f'
@@ -2943,6 +3096,53 @@ function draw3DFurnitureObject(iso, obj, now, isNight) {
         iso.drawBox(x - 0.01, y + doorOffset + 0.04, z0 + doorH - 0.12, wallThick + 0.02, 0.12, 0.12, '#cbd5e1');
         iso.drawBox(x - 0.01, y + doorOffset + doorW - 0.16, z0 + doorH - 0.12, wallThick + 0.02, 0.12, 0.12, '#cbd5e1');
       }
+    }
+
+    // Highlight Door Sub-component & floating interactive pill when door is hovered or wall is selected
+    const doorGeo = getPartitionDoorSubbox(obj);
+    const isDoorHovered = Boolean(hoveredObject && hoveredObject.id === obj.id && hoveredSubpart === 'partition-door');
+    if (doorGeo && (isDoorHovered || isSelected)) {
+      const lb = doorGeo.leafBox;
+      const pad = 0.04;
+      const doorFloorPts = [
+        iso.project(lb.x - pad, lb.y - pad, z0 + 0.03),
+        iso.project(lb.x + lb.dx + pad, lb.y - pad, z0 + 0.03),
+        iso.project(lb.x + lb.dx + pad, lb.y + lb.dy + pad, z0 + 0.03),
+        iso.project(lb.x - pad, lb.y + lb.dy + pad, z0 + 0.03)
+      ];
+      iso.drawPoly(
+        doorFloorPts,
+        isDoorHovered ? 'rgba(52, 211, 153, 0.36)' : 'rgba(56, 189, 248, 0.20)',
+        isDoorHovered ? '#10b981' : '#38bdf8',
+        isDoorHovered ? 2.5 : 1.6
+      );
+
+      // Floating pill above the doorway opening / door leaf so user knows clicking the door toggles it directly
+      const anchorBox = (isOpen && dStyle !== 'open-arch') ? doorGeo.frameBox : lb;
+      const badgeAnchor = iso.project(
+        anchorBox.x + anchorBox.dx * 0.5,
+        anchorBox.y + anchorBox.dy * 0.5,
+        z0 + doorH + 0.24
+      );
+      const badgeText = dStyle === 'open-arch'
+        ? '✨ 穿透拱門'
+        : (isOpen ? '🚪 點擊門扇：關門' : '🚪 點擊門扇：開門');
+      roomCtx.save();
+      roomCtx.font = '700 11px "Noto Sans TC", sans-serif';
+      const tw = roomCtx.measureText(badgeText).width;
+      const bw = tw + 16, bh = 22;
+      roomCtx.fillStyle = isDoorHovered ? 'rgba(6, 95, 70, 0.94)' : 'rgba(15, 23, 42, 0.86)';
+      roomCtx.strokeStyle = isDoorHovered ? '#34d399' : '#38bdf8';
+      roomCtx.lineWidth = 1.5;
+      roomCtx.beginPath();
+      roomCtx.roundRect(badgeAnchor.x - bw * 0.5, badgeAnchor.y - bh * 0.5, bw, bh, 11);
+      roomCtx.fill();
+      roomCtx.stroke();
+      roomCtx.fillStyle = '#f8fafc';
+      roomCtx.textAlign = 'center';
+      roomCtx.textBaseline = 'middle';
+      roomCtx.fillText(badgeText, badgeAnchor.x, badgeAnchor.y + 0.5);
+      roomCtx.restore();
     }
     return;
   }
@@ -3371,35 +3571,62 @@ function updateAutonomousCharacters(now, dt) {
       comp.nextDecisionAt = now + 1100 + Math.random() * 1400;
     }
 
-    // Move toward target if walking
+    // Move toward target if walking (with Doorway Waypoint Navigation & Auto-Door Opening)
     if (comp.targetX !== null && comp.targetY !== null) {
       const dx = comp.targetX - comp.x;
       const dy = comp.targetY - comp.y;
       const dist = Math.hypot(dx, dy);
-      if (dist < 0.14) {
-        comp.x = comp.targetX;
-        comp.y = comp.targetY;
-        comp.targetX = null;
-        comp.targetY = null;
-        comp.isMoving = false;
-        if (comp.pendingAct) {
-          comp.activeAct = {
-            ...comp.pendingAct,
-            startAt: now
-          };
-          if (Number.isFinite(comp.pendingAct.lookX) && Number.isFinite(comp.pendingAct.lookY)) {
-            comp.targetAngle = Math.atan2(comp.pendingAct.lookY - comp.y, comp.pendingAct.lookX - comp.x);
-          }
-          comp.pendingAct = null;
+      if (dist < 0.18) {
+        if (comp.waypoints && comp.waypoints.length > 0) {
+          const nextWp = comp.waypoints.shift();
+          comp.x = comp.targetX;
+          comp.y = comp.targetY;
+          comp.targetX = nextWp.x;
+          comp.targetY = nextWp.y;
+          checkAndAutoOpenDoorways(comp.x, comp.y, comp.name, 0.52);
         } else {
-          comp.nextDecisionAt = now + 1200 + Math.random() * 1500;
+          comp.x = comp.targetX;
+          comp.y = comp.targetY;
+          comp.targetX = null;
+          comp.targetY = null;
+          comp.waypoints = [];
+          comp.isMoving = false;
+          if (comp.pendingAct) {
+            comp.activeAct = {
+              ...comp.pendingAct,
+              startAt: now
+            };
+            if (Number.isFinite(comp.pendingAct.lookX) && Number.isFinite(comp.pendingAct.lookY)) {
+              comp.targetAngle = Math.atan2(comp.pendingAct.lookY - comp.y, comp.pendingAct.lookX - comp.x);
+            }
+            comp.pendingAct = null;
+          } else {
+            comp.nextDecisionAt = now + 1200 + Math.random() * 1500;
+          }
         }
       } else {
         comp.isMoving = true;
         const moveSpd = 2.15;
-        comp.x = Math.max(0.8, Math.min(roomW - 0.8, comp.x + (dx / dist) * moveSpd * dt));
-        comp.y = Math.max(1.15, Math.min(roomD - 0.65, comp.y + (dy / dist) * moveSpd * dt));
-        comp.targetAngle = Math.atan2(dy, dx);
+        const targetX = comp.x + (dx / dist) * moveSpd * dt;
+        const targetY = comp.y + (dy / dist) * moveSpd * dt;
+        const moved = resolveWallCollisions(comp.x, comp.y, targetX, targetY, 0.22, roomW, roomD);
+        if (moved.collided && Math.hypot(moved.x - comp.x, moved.y - comp.y) < 0.005) {
+          checkAndAutoOpenDoorways(comp.x, comp.y, comp.name, 0.52);
+          if (comp.waypoints && comp.waypoints.length > 0) {
+            const nextWp = comp.waypoints.shift();
+            comp.targetX = nextWp.x;
+            comp.targetY = nextWp.y;
+          } else {
+            comp.targetX = null;
+            comp.targetY = null;
+            comp.waypoints = [];
+            comp.nextDecisionAt = now + 800;
+          }
+        } else {
+          comp.x = moved.x;
+          comp.y = moved.y;
+          comp.targetAngle = Math.atan2(dy, dx);
+        }
       }
     } else {
       comp.isMoving = false;
@@ -3480,8 +3707,10 @@ function updateAutonomousCharacters(now, dt) {
 
         const picked = candidates[Math.floor(Math.random() * candidates.length)];
         if (picked) {
-          comp.targetX = picked.tx;
-          comp.targetY = picked.ty;
+          const path = findRoomPath(comp.x, comp.y, picked.tx, picked.ty);
+          comp.waypoints = path.slice(1);
+          comp.targetX = path[0].x;
+          comp.targetY = path[0].y;
           comp.pendingAct = picked;
         }
       }
@@ -3800,6 +4029,47 @@ function renderGameRoom(now = performance.now()) {
     drawV4PostOverlays(iso, now, isNight, isDusk, roomW, roomD);
   }
 
+  // 5B. Volumetric Wall Hitbox Rendering (CAD / High-tech Engine Wireframe)
+  const allWallBoxes = getWallHitboxes();
+  const isHitboxGloballyOn = Boolean(simState.showHitbox);
+  const selWallId = selectedObjectId;
+  const hovWallId = hoveredObject?.id;
+
+  allWallBoxes.forEach(box => {
+    const isTargeted = (box.id === selWallId || box.id === hovWallId);
+    if (!isHitboxGloballyOn && !isTargeted) return;
+
+    const isDoorLeaf = Boolean(box.isDoorLeaf);
+    const isOpen = Boolean(box.isOpen);
+    let color = '#38bdf8';
+    let fillColor = 'rgba(56, 189, 248, 0.12)';
+    let strokeColor = '#0284c7';
+
+    if (box.isRoomWall) {
+      color = isTargeted ? '#f59e0b' : '#38bdf8';
+      fillColor = isTargeted ? 'rgba(245, 158, 11, 0.22)' : 'rgba(56, 189, 248, 0.10)';
+      strokeColor = isTargeted ? '#d97706' : '#0284c7';
+    } else if (isDoorLeaf) {
+      color = isOpen ? '#34d399' : '#f43f5e';
+      fillColor = isOpen ? 'rgba(52, 211, 153, 0.20)' : 'rgba(244, 63, 94, 0.20)';
+      strokeColor = isOpen ? '#059669' : '#e11d48';
+    } else if (box.isPartition) {
+      color = isTargeted ? '#a855f7' : '#6366f1';
+      fillColor = isTargeted ? 'rgba(168, 85, 247, 0.24)' : 'rgba(99, 102, 241, 0.12)';
+      strokeColor = isTargeted ? '#9333ea' : '#4f46e5';
+    }
+
+    draw3DHitbox(iso, box, {
+      color,
+      fillColor,
+      strokeColor,
+      isSolid: box.isSolid,
+      showBadge: isTargeted || isHitboxGloballyOn,
+      label: box.label,
+      dashed: !isTargeted
+    });
+  });
+
   // 6. Draw 3D Floating Label over Hovered Furniture
   if (hoveredObject) {
     const pt = iso.project(
@@ -3968,6 +4238,478 @@ function getNearestSceneObject() {
   return best;
 }
 
+// ─── 3C. VOLUMETRIC WALL HITBOX & PHYSICAL COLLISION SYSTEM ───
+function getWallHitboxes() {
+  ensureV4State();
+  const { w: roomW, d: roomD } = getRoomDimensions(simState.profile?.area || 18);
+  const hs = simState.hardscape || {};
+  const wallMode = simState.wallMode || 'cutaway';
+  const perimeterWallH = (wallMode === 'none') ? 0.08 : 2.65;
+  const partWallH = (wallMode === 'none') ? 0.08 : 2.40;
+  const doorH = (wallMode === 'none') ? 0.08 : 2.05;
+  const boxes = [];
+
+  // 1. Back Wall (建築後主牆 y=0)
+  boxes.push({
+    id: 'room-wall-back',
+    storeKey: 'room-wall-back',
+    label: '建築後主牆 (TAYA 專利軌道系統)',
+    isRoomWall: true,
+    wallType: 'back',
+    x: -0.2,
+    y: -0.2,
+    z: 0,
+    dx: roomW + 0.2,
+    dy: 0.28,
+    dz: perimeterWallH,
+    isSolid: true
+  });
+
+  // 2. Left Wall (建築左側牆 x=0)
+  boxes.push({
+    id: 'room-wall-left',
+    storeKey: 'room-wall-left',
+    label: '建築左側牆 (樂齡採光窗牆面)',
+    isRoomWall: true,
+    wallType: 'left',
+    x: -0.2,
+    y: 0,
+    z: 0,
+    dx: 0.28,
+    dy: roomD,
+    dz: perimeterWallH,
+    isSolid: true
+  });
+
+  // 3. Foreground Walls (When full wall mode is enabled)
+  if (wallMode === 'full') {
+    boxes.push({
+      id: 'room-wall-front',
+      storeKey: 'room-wall-front',
+      label: '建築前側外牆',
+      isRoomWall: true,
+      wallType: 'front',
+      x: 0,
+      y: roomD - 0.22,
+      z: 0,
+      dx: roomW,
+      dy: 0.22,
+      dz: perimeterWallH,
+      isSolid: true
+    });
+    boxes.push({
+      id: 'room-wall-right',
+      storeKey: 'room-wall-right',
+      label: '建築右側外牆',
+      isRoomWall: true,
+      wallType: 'right',
+      x: roomW - 0.22,
+      y: 0,
+      z: 0,
+      dx: 0.22,
+      dy: roomD,
+      dz: perimeterWallH,
+      isSolid: true
+    });
+  }
+
+  // 4. Structural Pillar (結構承重柱)
+  if (hs.pillar) {
+    boxes.push({
+      id: 'room-pillar',
+      storeKey: 'room-pillar',
+      label: '結構承重柱＆管道間',
+      isRoomWall: true,
+      isPillar: true,
+      x: 0.22,
+      y: 1.92,
+      z: 0,
+      dx: 0.58,
+      dy: 0.58,
+      dz: 2.62,
+      isSolid: true
+    });
+  }
+
+  // 5. L-shape Corner Wall (L型建築轉角牆)
+  if (hs.shape === 'lshape') {
+    const lw = Math.min(2.15, roomW * 0.28);
+    const ld = Math.min(1.75, roomD * 0.28);
+    boxes.push({
+      id: 'room-wall-lshape',
+      storeKey: 'room-wall-lshape',
+      label: 'L型建築轉角結構牆',
+      isRoomWall: true,
+      x: roomW - lw,
+      y: roomD - ld,
+      z: 0,
+      dx: lw,
+      dy: ld,
+      dz: 2.65,
+      isSolid: true
+    });
+  }
+
+  // 6. Plural Partition Walls (實體隔間牆與房門牆 Hitboxes)
+  if (Array.isArray(hs.partitions)) {
+    hs.partitions.forEach((p, idx) => {
+      const isHoriz = p.orient === 'x';
+      const wallLen = Math.max(1.4, Math.min(isHoriz ? roomW - 0.5 : roomD - 0.5, p.length || 2.6));
+      const wallThick = 0.16;
+      const dx = isHoriz ? wallLen : wallThick;
+      const dy = isHoriz ? wallThick : wallLen;
+      const x = p.x;
+      const y = p.y;
+      const isSolid = p.type === 'solid';
+
+      if (isSolid) {
+        boxes.push({
+          id: p.id,
+          storeKey: p.id,
+          label: `純隔間牆 #${idx + 1}`,
+          isPartition: true,
+          isSolid: true,
+          x, y, z: 0, dx, dy, dz: partWallH,
+          subpart: 'solid-wall'
+        });
+      } else {
+        const doorGeo = getPartitionDoorSubbox({ id: p.id, x, y, dx, dy, dz: partWallH, cfg: p });
+        if (doorGeo) {
+          boxes.push({
+            id: p.id,
+            storeKey: p.id,
+            label: `隔間牆 #${idx + 1} 側段1`,
+            isPartition: true,
+            isSolid: true,
+            x: doorGeo.seg1Box.x,
+            y: doorGeo.seg1Box.y,
+            z: doorGeo.seg1Box.z || 0,
+            dx: doorGeo.seg1Box.dx,
+            dy: doorGeo.seg1Box.dy,
+            dz: doorGeo.seg1Box.dz || partWallH,
+            subpart: 'seg1'
+          });
+          boxes.push({
+            id: p.id,
+            storeKey: p.id,
+            label: `隔間牆 #${idx + 1} 側段2`,
+            isPartition: true,
+            isSolid: true,
+            x: doorGeo.seg2Box.x,
+            y: doorGeo.seg2Box.y,
+            z: doorGeo.seg2Box.z || 0,
+            dx: doorGeo.seg2Box.dx,
+            dy: doorGeo.seg2Box.dy,
+            dz: doorGeo.seg2Box.dz || partWallH,
+            subpart: 'seg2'
+          });
+          const isOpen = Boolean(p.doorOpen) || p.doorStyle === 'open-arch';
+          boxes.push({
+            id: p.id,
+            storeKey: p.id,
+            label: `隔間牆 #${idx + 1} 門扇 (${isOpen ? '敞開通行' : '閉合阻擋'})`,
+            isPartition: true,
+            isDoorLeaf: true,
+            isSolid: !isOpen,
+            isOpen,
+            x: doorGeo.leafBox.x,
+            y: doorGeo.leafBox.y,
+            z: doorGeo.leafBox.z || 0,
+            dx: doorGeo.leafBox.dx,
+            dy: doorGeo.leafBox.dy,
+            dz: doorGeo.leafBox.dz || doorH,
+            subpart: 'partition-door'
+          });
+        } else {
+          boxes.push({
+            id: p.id,
+            storeKey: p.id,
+            label: `房門隔間牆 #${idx + 1}`,
+            isPartition: true,
+            isSolid: true,
+            x, y, z: 0, dx, dy, dz: partWallH
+          });
+        }
+      }
+    });
+  }
+
+  return boxes;
+}
+
+// ─── 3D. INTELLIGENT DOORWAY WAYPOINT ROUTER & AUTO-DOOR SENSOR ───
+// Check if a line segment crosses a partition wall
+function lineIntersectsWall(x1, y1, x2, y2, wall) {
+  const isHoriz = wall.orient === 'x';
+  const len = wall.length || 2.6;
+  const thick = 0.16;
+  const wx1 = wall.x, wy1 = wall.y;
+  const wx2 = isHoriz ? wall.x + len : wall.x + thick;
+  const wy2 = isHoriz ? wall.y + thick : wall.y + len;
+
+  if (isHoriz) {
+    const wallY = wy1 + thick * 0.5;
+    if ((y1 - wallY) * (y2 - wallY) > 0) return false;
+    if (Math.abs(y2 - y1) < 0.0001) return false;
+    const t = (wallY - y1) / (y2 - y1);
+    if (t < 0 || t > 1) return false;
+    const crossX = x1 + t * (x2 - x1);
+    return crossX >= wx1 - 0.15 && crossX <= wx2 + 0.15;
+  } else {
+    const wallX = wx1 + thick * 0.5;
+    if ((x1 - wallX) * (x2 - wallX) > 0) return false;
+    if (Math.abs(x2 - x1) < 0.0001) return false;
+    const t = (wallX - x1) / (x2 - x1);
+    if (t < 0 || t > 1) return false;
+    const crossY = y1 + t * (y2 - y1);
+    return crossY >= wy1 - 0.15 && crossY <= wy2 + 0.15;
+  }
+}
+
+// Computes doorway center and dimensions for pathfinding
+function getDoorwayGeom(wall) {
+  const isHoriz = wall.orient === 'x';
+  const len = wall.length || 2.6;
+  const doorW = Math.min(0.92, Math.max(0.75, len * 0.35));
+  let doorOffset = (len - doorW) * 0.5;
+  if (wall.doorPos === 'start') doorOffset = Math.max(0.18, (len - doorW) * 0.18);
+  else if (wall.doorPos === 'end') doorOffset = Math.max(0.18, len - doorW - 0.18);
+
+  const cx = isHoriz ? wall.x + doorOffset + doorW * 0.5 : wall.x + 0.08;
+  const cy = isHoriz ? wall.y + 0.08 : wall.y + doorOffset + doorW * 0.5;
+
+  return { isHoriz, len, doorW, doorOffset, cx, cy };
+}
+
+// Multi-segment Waypoint Pathfinding across rooms and doorways
+function findRoomPath(startX, startY, destX, destY) {
+  ensureV4State();
+  const partitions = Array.isArray(simState.hardscape?.partitions) ? simState.hardscape.partitions : [];
+  const { w: roomW, d: roomD } = getRoomDimensions(simState.profile?.area || 18);
+
+  // Check if direct straight line intersects any partition wall
+  const hitWalls = partitions.filter(p => lineIntersectsWall(startX, startY, destX, destY, p));
+  if (hitWalls.length === 0) {
+    return [{ x: destX, y: destY }];
+  }
+
+  // Sort intersecting walls by distance from start position
+  hitWalls.sort((a, b) => {
+    const da = Math.hypot(startX - a.x, startY - a.y);
+    const db = Math.hypot(startX - b.x, startY - b.y);
+    return da - db;
+  });
+
+  const waypoints = [];
+  let curX = startX, curY = startY;
+
+  hitWalls.forEach(wall => {
+    const isHoriz = wall.orient === 'x';
+    const len = wall.length || 2.6;
+
+    if (wall.type === 'door') {
+      const dg = getDoorwayGeom(wall);
+      if (isHoriz) {
+        const approach1 = { x: dg.cx, y: curY < wall.y ? wall.y - 0.5 : wall.y + 0.16 + 0.5 };
+        const approach2 = { x: dg.cx, y: curY < wall.y ? wall.y + 0.16 + 0.5 : wall.y - 0.5 };
+        waypoints.push(approach1, approach2);
+        curX = approach2.x;
+        curY = approach2.y;
+      } else {
+        const approach1 = { x: curX < wall.x ? wall.x - 0.5 : wall.x + 0.16 + 0.5, y: dg.cy };
+        const approach2 = { x: curX < wall.x ? wall.x + 0.16 + 0.5 : wall.x - 0.5, y: dg.cy };
+        waypoints.push(approach1, approach2);
+        curX = approach2.x;
+        curY = approach2.y;
+      }
+    } else {
+      // Solid wall: route around closest available end with clear room margin
+      if (isHoriz) {
+        const end1 = { x: Math.max(0.65, wall.x - 0.5), y: wall.y + 0.08 };
+        const end2 = { x: Math.min(roomW - 0.65, wall.x + len + 0.5), y: wall.y + 0.08 };
+        const d1 = Math.hypot(curX - end1.x, curY - end1.y) + Math.hypot(destX - end1.x, destY - end1.y);
+        const d2 = Math.hypot(curX - end2.x, curY - end2.y) + Math.hypot(destX - end2.x, destY - end2.y);
+        const bestEnd = d1 < d2 ? end1 : end2;
+        waypoints.push(bestEnd);
+        curX = bestEnd.x;
+        curY = bestEnd.y;
+      } else {
+        const end1 = { x: wall.x + 0.08, y: Math.max(0.65, wall.y - 0.5) };
+        const end2 = { x: wall.x + 0.08, y: Math.min(roomD - 0.65, wall.y + len + 0.5) };
+        const d1 = Math.hypot(curX - end1.x, curY - end1.y) + Math.hypot(destX - end1.x, destY - end1.y);
+        const d2 = Math.hypot(curX - end2.x, curY - end2.y) + Math.hypot(destX - end2.x, destY - end2.y);
+        const bestEnd = d1 < d2 ? end1 : end2;
+        waypoints.push(bestEnd);
+        curX = bestEnd.x;
+        curY = bestEnd.y;
+      }
+    }
+  });
+
+  waypoints.push({ x: destX, y: destY });
+  return waypoints;
+}
+
+// Proximity Doorway Auto-Open Sensor: opens door automatically ONLY when character actively approaches to pass through
+let lastDoorAutoOpenAt = 0;
+function checkAndAutoOpenDoorways(charX, charY, agentName = '角色', radius = 0.52) {
+  ensureV4State();
+  const partitions = Array.isArray(simState.hardscape?.partitions) ? simState.hardscape.partitions : [];
+  let openedAny = false;
+  const now = performance.now();
+
+  partitions.forEach(p => {
+    if (p.type === 'solid' || p.doorOpen || p.doorStyle === 'open-arch') return;
+    // If door was manually closed by the user, respect user's intention and keep it closed!
+    if (p.manualClosedUntil && now < p.manualClosedUntil) return;
+
+    const dg = getDoorwayGeom(p);
+    const dist = Math.hypot(charX - dg.cx, charY - dg.cy);
+    // Only open when character is in close physical contact with doorway (< 0.52m)
+    if (dist < radius) {
+      p.doorOpen = true;
+      openedAny = true;
+      triggerSnapEffect(p.id);
+      if (now - lastDoorAutoOpenAt > 600) {
+        lastDoorAutoOpenAt = now;
+        playSimSound('snap');
+        showRoomBanner(`🚪 ${agentName} 已順勢推開隔間房門通行！`);
+      }
+    }
+  });
+
+  if (openedAny) {
+    saveSimState();
+    renderSim();
+    renderV4Panels();
+    updateObjInspectorUI();
+  }
+}
+
+// Physical sliding collision resolver against solid wall hitboxes
+function resolveWallCollisions(curX, curY, nextX, nextY, radius = 0.22, roomW, roomD) {
+  const wallBoxes = getWallHitboxes().filter(b => b.isSolid);
+  const minX = 0.35 + radius;
+  const maxX = roomW - 0.35 - radius;
+  const minY = 0.35 + radius;
+  const maxY = roomD - 0.45 - radius;
+
+  let resX = Math.max(minX, Math.min(maxX, nextX));
+  let resY = Math.max(minY, Math.min(maxY, nextY));
+
+  const collidesWithAny = (cx, cy) => {
+    for (let i = 0; i < wallBoxes.length; i++) {
+      const b = wallBoxes[i];
+      if (b.id === 'room-wall-back' || b.id === 'room-wall-left') continue;
+      const nx = Math.max(b.x, Math.min(b.x + b.dx, cx));
+      const ny = Math.max(b.y, Math.min(b.y + b.dy, cy));
+      const dist = Math.hypot(cx - nx, cy - ny);
+      if (dist < radius) return b;
+    }
+    return null;
+  };
+
+  const colFull = collidesWithAny(resX, resY);
+  if (!colFull) {
+    return { x: resX, y: resY, collided: false };
+  }
+
+  // Slide along X-axis
+  const colX = collidesWithAny(resX, curY);
+  if (!colX) {
+    return { x: resX, y: curY, collided: true, slideAxis: 'x' };
+  }
+
+  // Slide along Y-axis
+  const colY = collidesWithAny(curX, resY);
+  if (!colY) {
+    return { x: curX, y: resY, collided: true, slideAxis: 'y' };
+  }
+
+  return { x: curX, y: curY, collided: true };
+}
+
+// 3D Volumetric Hitbox Visualizer (Isometric Wireframe, Semi-transparent faces & L-brackets)
+function draw3DHitbox(iso, box, opts = {}) {
+  const color = opts.color || (opts.isSolid ? '#38bdf8' : '#34d399');
+  const fillColor = opts.fillColor || (opts.isSolid ? 'rgba(56, 189, 248, 0.12)' : 'rgba(52, 211, 153, 0.14)');
+  const strokeColor = opts.strokeColor || (opts.isSolid ? '#0284c7' : '#10b981');
+  const z = box.z || 0;
+  const dz = box.dz || 2.4;
+
+  const corners = [
+    iso.project(box.x, box.y, z),
+    iso.project(box.x + box.dx, box.y, z),
+    iso.project(box.x + box.dx, box.y + box.dy, z),
+    iso.project(box.x, box.y + box.dy, z),
+    iso.project(box.x, box.y, z + dz),
+    iso.project(box.x + box.dx, box.y, z + dz),
+    iso.project(box.x + box.dx, box.y + box.dy, z + dz),
+    iso.project(box.x, box.y + box.dy, z + dz)
+  ];
+
+  // Draw semi-transparent isometric bounding faces
+  iso.drawPoly([corners[4], corners[5], corners[6], corners[7]], fillColor, strokeColor, 1.2);
+  iso.drawPoly([corners[0], corners[3], corners[7], corners[4]], fillColor, strokeColor, 1.2);
+  iso.drawPoly([corners[3], corners[2], corners[6], corners[7]], fillColor, strokeColor, 1.2);
+
+  roomCtx.save();
+  roomCtx.strokeStyle = strokeColor;
+  roomCtx.lineWidth = opts.lineWidth || 1.4;
+  roomCtx.setLineDash(opts.dashed !== false ? [4, 3] : []);
+
+  const edges = [
+    [0, 1], [1, 2], [2, 3], [3, 0],
+    [4, 5], [5, 6], [6, 7], [7, 4],
+    [0, 4], [1, 5], [2, 6], [3, 7]
+  ];
+  edges.forEach(([i, j]) => {
+    roomCtx.beginPath();
+    roomCtx.moveTo(corners[i].x, corners[i].y);
+    roomCtx.lineTo(corners[j].x, corners[j].y);
+    roomCtx.stroke();
+  });
+  roomCtx.setLineDash([]);
+
+  // Corner brackets (L-shapes) for CAD / high-tech game engine look
+  const drawCornerL = (pt, vx, vy) => {
+    const len = 7;
+    roomCtx.beginPath();
+    roomCtx.moveTo(pt.x + vx * len, pt.y);
+    roomCtx.lineTo(pt.x, pt.y);
+    roomCtx.lineTo(pt.x, pt.y + vy * len);
+    roomCtx.stroke();
+  };
+  roomCtx.lineWidth = 2.2;
+  roomCtx.strokeStyle = color;
+  drawCornerL(corners[4], 1, 1);
+  drawCornerL(corners[5], -1, 1);
+  drawCornerL(corners[6], -1, -1);
+  drawCornerL(corners[7], 1, -1);
+
+  // Label badge
+  if (opts.showBadge && opts.label) {
+    const topCenter = iso.project(box.x + box.dx * 0.5, box.y + box.dy * 0.5, z + dz + 0.16);
+    roomCtx.font = '700 10.5px "Inter", "Noto Sans TC", sans-serif';
+    const text = opts.label;
+    const tw = roomCtx.measureText(text).width;
+    const bw = tw + 14, bh = 20;
+    roomCtx.fillStyle = 'rgba(15, 23, 42, 0.90)';
+    roomCtx.strokeStyle = color;
+    roomCtx.lineWidth = 1.3;
+    roomCtx.beginPath();
+    roomCtx.roundRect(topCenter.x - bw * 0.5, topCenter.y - bh * 0.5, bw, bh, 6);
+    roomCtx.fill();
+    roomCtx.stroke();
+    roomCtx.fillStyle = '#f8fafc';
+    roomCtx.textAlign = 'center';
+    roomCtx.textBaseline = 'middle';
+    roomCtx.fillText(text, topCenter.x, topCenter.y + 0.5);
+  }
+
+  roomCtx.restore();
+}
+
 let lastLoopTime = performance.now();
 function gameFrameLoop(now) {
   const dt = Math.min(0.05, (now - lastLoopTime) / 1000);
@@ -3982,36 +4724,73 @@ function gameFrameLoop(now) {
     lastPlayerInputAt = now;
     simState.player.targetX = null;
     simState.player.targetY = null;
+    simState.player.waypoints = [];
     simState.player.pendingAction = null;
     const len = Math.hypot(vx, vy);
     const curRDim = getRoomDimensions(simState.profile?.area || 18);
-    simState.player.x = Math.max(0.75, Math.min(curRDim.w - 0.75, simState.player.x + (vx / len) * speed * dt));
-    simState.player.y = Math.max(1.15, Math.min(curRDim.d - 0.65, simState.player.y + (vy / len) * speed * dt));
+    const targetX = simState.player.x + (vx / len) * speed * dt;
+    const targetY = simState.player.y + (vy / len) * speed * dt;
+    const moved = resolveWallCollisions(simState.player.x, simState.player.y, targetX, targetY, 0.22, curRDim.w, curRDim.d);
+    simState.player.x = moved.x;
+    simState.player.y = moved.y;
     simState.player.targetAngle = Math.atan2(vy, vx);
+    if (moved.collided) {
+      checkAndAutoOpenDoorways(simState.player.x, simState.player.y, simState.name || '主角', 0.52);
+    }
   } else if (simState.player.targetX !== null && simState.player.targetY !== null) {
     // Auto-walk pathfinding toward clicked 3D furniture or action target
     const dx = simState.player.targetX - simState.player.x;
     const dy = simState.player.targetY - simState.player.y;
     const dist = Math.hypot(dx, dy);
-    if (dist < 0.15) {
-      simState.player.x = simState.player.targetX;
-      simState.player.y = simState.player.targetY;
-      simState.player.targetX = null;
-      simState.player.targetY = null;
-      if (Number.isFinite(simState.player.lookAtX) && Number.isFinite(simState.player.lookAtY)) {
-        simState.player.targetAngle = Math.atan2(simState.player.lookAtY - simState.player.y, simState.player.lookAtX - simState.player.x);
-        simState.player.lookAtX = null;
-        simState.player.lookAtY = null;
-      }
-      if (simState.player.pendingAction) {
-        const act = simState.player.pendingAction;
-        simState.player.pendingAction = null;
-        executeSimAction(act.action, act.objId);
+    if (dist < 0.18) {
+      if (simState.player.waypoints && simState.player.waypoints.length > 0) {
+        const nextWp = simState.player.waypoints.shift();
+        simState.player.x = simState.player.targetX;
+        simState.player.y = simState.player.targetY;
+        simState.player.targetX = nextWp.x;
+        simState.player.targetY = nextWp.y;
+        checkAndAutoOpenDoorways(simState.player.x, simState.player.y, simState.name || '主角', 0.52);
+      } else {
+        simState.player.x = simState.player.targetX;
+        simState.player.y = simState.player.targetY;
+        simState.player.targetX = null;
+        simState.player.targetY = null;
+        simState.player.waypoints = [];
+        if (Number.isFinite(simState.player.lookAtX) && Number.isFinite(simState.player.lookAtY)) {
+          simState.player.targetAngle = Math.atan2(simState.player.lookAtY - simState.player.y, simState.player.lookAtX - simState.player.x);
+          simState.player.lookAtX = null;
+          simState.player.lookAtY = null;
+        }
+        if (simState.player.pendingAction) {
+          const act = simState.player.pendingAction;
+          simState.player.pendingAction = null;
+          executeSimAction(act.action, act.objId);
+        }
       }
     } else {
-      simState.player.x += (dx / dist) * speed * 1.15 * dt;
-      simState.player.y += (dy / dist) * speed * 1.15 * dt;
-      simState.player.targetAngle = Math.atan2(dy, dx);
+      const curRDim = getRoomDimensions(simState.profile?.area || 18);
+      const stepDist = speed * 1.15 * dt;
+      const targetX = simState.player.x + (dx / dist) * stepDist;
+      const targetY = simState.player.y + (dy / dist) * stepDist;
+      const moved = resolveWallCollisions(simState.player.x, simState.player.y, targetX, targetY, 0.22, curRDim.w, curRDim.d);
+      if (moved.collided && Math.hypot(moved.x - simState.player.x, moved.y - simState.player.y) < 0.005) {
+        checkAndAutoOpenDoorways(simState.player.x, simState.player.y, simState.name || '主角', 0.52);
+        if (simState.player.waypoints && simState.player.waypoints.length > 0) {
+          const nextWp = simState.player.waypoints.shift();
+          simState.player.targetX = nextWp.x;
+          simState.player.targetY = nextWp.y;
+        } else {
+          simState.player.targetX = null;
+          simState.player.targetY = null;
+          simState.player.waypoints = [];
+          playSimSound('tap');
+          showRoomBanner('🛑 前方遇牆壁阻擋！如為隔間房門，請先點擊門扇開門。');
+        }
+      } else {
+        simState.player.x = moved.x;
+        simState.player.y = moved.y;
+        simState.player.targetAngle = Math.atan2(dy, dx);
+      }
     }
   } else if (!simState.paused && !activeInteraction && now - lastPlayerInputAt > 5500) {
     // Autonomous stroll for main player when game is running and player is idle
@@ -4019,13 +4798,19 @@ function gameFrameLoop(now) {
     const objs = getSceneObjects();
     if (objs.length > 0 && Math.random() < 0.65) {
       const pick = objs[Math.floor(Math.random() * objs.length)];
-      simState.player.targetX = pick.ix;
-      simState.player.targetY = pick.iy;
+      const path = findRoomPath(simState.player.x, simState.player.y, pick.ix, pick.iy);
+      simState.player.waypoints = path.slice(1);
+      simState.player.targetX = path[0].x;
+      simState.player.targetY = path[0].y;
       simState.player.lookAtX = pick.x + pick.dx * 0.5;
       simState.player.lookAtY = pick.y + pick.dy * 0.5;
     } else {
-      simState.player.targetX = 1.4 + Math.random() * 6.0;
-      simState.player.targetY = 1.5 + Math.random() * 4.0;
+      const destX = 1.4 + Math.random() * 6.0;
+      const destY = 1.5 + Math.random() * 4.0;
+      const path = findRoomPath(simState.player.x, simState.player.y, destX, destY);
+      simState.player.waypoints = path.slice(1);
+      simState.player.targetX = path[0].x;
+      simState.player.targetY = path[0].y;
     }
   }
 
@@ -4043,12 +4828,25 @@ function gameFrameLoop(now) {
     activeInteraction = null;
   }
 
-  // Autonomous Robot Vacuum patrolling floor (會在地上自動移動的掃地機器人)
+  // Autonomous Robot Vacuum patrolling floor (會在地上自動移動的掃地機器人，遇牆壁碰撞箱自動彈跳轉向)
   if (typeof hasV4Item === 'function' && hasV4Item('robot-vac') && typeof robotVacState === 'object') {
-    robotVacState.x += robotVacState.vx * dt;
-    robotVacState.y += robotVacState.vy * dt;
-    if (robotVacState.x < 1.1 || robotVacState.x > 7.6) robotVacState.vx *= -1;
-    if (robotVacState.y < 1.5 || robotVacState.y > 5.7) robotVacState.vy *= -1;
+    const rv = robotVacState;
+    const curRDim = getRoomDimensions(simState.profile?.area || 18);
+    const nX = rv.x + rv.vx * dt;
+    const nY = rv.y + rv.vy * dt;
+    const moved = resolveWallCollisions(rv.x, rv.y, nX, nY, 0.18, curRDim.w, curRDim.d);
+    if (moved.collided) {
+      if (moved.slideAxis === 'x') {
+        rv.vy *= -1;
+      } else if (moved.slideAxis === 'y') {
+        rv.vx *= -1;
+      } else {
+        rv.vx *= -1;
+        rv.vy *= -1;
+      }
+    }
+    rv.x = moved.x;
+    rv.y = moved.y;
   }
 
   const nearObj = getNearestSceneObject();
@@ -4063,16 +4861,100 @@ function gameFrameLoop(now) {
   requestAnimationFrame(gameFrameLoop);
 }
 
-// Click, Drag, Rotate & Inspect on 3D Room Canvas
+// Helper: project a 3D box's 8 vertices to 2D screen bounds and compute distance to cursor (sx, sy)
+function getProjectedBoxHitDist(iso, sx, sy, box, padPx = 8) {
+  const corners = [
+    iso.project(box.x, box.y, box.z),
+    iso.project(box.x + box.dx, box.y, box.z),
+    iso.project(box.x, box.y + box.dy, box.z),
+    iso.project(box.x + box.dx, box.y + box.dy, box.z),
+    iso.project(box.x, box.y, box.z + box.dz),
+    iso.project(box.x + box.dx, box.y, box.z + box.dz),
+    iso.project(box.x, box.y + box.dy, box.z + box.dz),
+    iso.project(box.x + box.dx, box.y + box.dy, box.z + box.dz)
+  ];
+  let minX = Infinity, maxX = -Infinity, minY = Infinity, maxY = -Infinity;
+  corners.forEach(p => {
+    if (p.x < minX) minX = p.x;
+    if (p.x > maxX) maxX = p.x;
+    if (p.y < minY) minY = p.y;
+    if (p.y > maxY) maxY = p.y;
+  });
+  const insideBounds = sx >= minX - padPx && sx <= maxX + padPx && sy >= minY - padPx && sy <= maxY + padPx;
+  const samples = [0.22, 0.5, 0.78].flatMap(u =>
+    [0.25, 0.55, 0.82].map(w =>
+      iso.project(box.x + box.dx * u, box.y + box.dy * u, box.z + box.dz * w)
+    )
+  );
+  const minSampleDist = Math.min(...samples.map(pt => Math.hypot(sx - pt.x, sy - pt.y)));
+  return { insideBounds, dist: minSampleDist };
+}
+
+// Click, Drag, Rotate & Inspect on 3D Room Canvas (with Sub-component Hit-Test for Partition Door)
 function getCanvasMouse3D(event) {
   const rect = roomCanvas.getBoundingClientRect();
   const sx = (event.clientX - rect.left) * (roomCanvas.width / rect.width);
   const sy = (event.clientY - rect.top) * (roomCanvas.height / rect.height);
   if (!window._currentRoomIso) return null;
+  const iso = window._currentRoomIso;
   const objs = getSceneObjects();
   let hit = null;
+  let hitSubpart = null;
   let bestScreenDist = 56;
+
   objs.forEach(obj => {
+    if (obj.isPartition || isPartitionWall(obj.id)) {
+      const doorGeo = getPartitionDoorSubbox(obj);
+      if (doorGeo) {
+        // 0. Check floating pill badge directly above doorway opening OR door leaf
+        const bBox = (doorGeo.isOpen && doorGeo.dStyle !== 'open-arch') ? doorGeo.frameBox : doorGeo.leafBox;
+        const badgeAnchor = iso.project(bBox.x + bBox.dx * 0.5, bBox.y + bBox.dy * 0.5, (bBox.z || 0) + doorGeo.doorH + 0.24);
+        if (Math.hypot(sx - badgeAnchor.x, sy - badgeAnchor.y) < 36) {
+          bestScreenDist = 5;
+          hit = obj;
+          hitSubpart = 'partition-door';
+          return;
+        }
+
+        // 1. Test Door Leaf & Doorway Frame as high-priority independent sub-component hit-area
+        const leafHit = getProjectedBoxHitDist(iso, sx, sy, doorGeo.leafBox, 16);
+        const frameHit = getProjectedBoxHitDist(iso, sx, sy, doorGeo.frameBox, 16);
+        const doorDist = Math.min(leafHit.dist, frameHit.dist);
+        const doorInBounds = leafHit.insideBounds || frameHit.insideBounds;
+        // Prioritize door sub-component when cursor is inside projected door bounds or close to door samples
+        const effectiveDoorDist = doorInBounds ? Math.min(doorDist * 0.45, 18) : doorDist * 0.72;
+        if (effectiveDoorDist < bestScreenDist && (doorInBounds || doorDist < 60)) {
+          bestScreenDist = effectiveDoorDist;
+          hit = obj;
+          hitSubpart = 'partition-door';
+        }
+
+        // 2. Test Solid Wall Segments 1 & 2 separately ONLY if door subpart was not already matched
+        if (hitSubpart !== 'partition-door') {
+          const s1Hit = getProjectedBoxHitDist(iso, sx, sy, doorGeo.seg1Box, 6);
+          const s2Hit = getProjectedBoxHitDist(iso, sx, sy, doorGeo.seg2Box, 6);
+          const wallSegDist = Math.min(s1Hit.dist, s2Hit.dist);
+          if (wallSegDist < bestScreenDist) {
+            bestScreenDist = wallSegDist;
+            hit = obj;
+            hitSubpart = null;
+          }
+        }
+        return;
+      } else {
+        // Pure Solid Partition Wall: test full bounding box with high precision
+        const wallBox = { x: obj.x, y: obj.y, z: obj.z || 0, dx: obj.dx, dy: obj.dy, dz: obj.dz || 2.35 };
+        const wallHit = getProjectedBoxHitDist(iso, sx, sy, wallBox, 8);
+        const effectiveWallDist = wallHit.insideBounds ? Math.min(wallHit.dist * 0.7, 24) : wallHit.dist;
+        if (effectiveWallDist < bestScreenDist) {
+          bestScreenDist = effectiveWallDist;
+          hit = obj;
+          hitSubpart = null;
+        }
+        return;
+      }
+    }
+
     const testSamples = [
       { x: obj.x + obj.dx * 0.5, y: obj.y + obj.dy * 0.5 }
     ];
@@ -4082,22 +4964,63 @@ function getCanvasMouse3D(event) {
         { x: obj.x + obj.dx * 0.8, y: obj.y + obj.dy * 0.8 }
       );
     }
-    const samplePts = testSamples.map(s => window._currentRoomIso.project(s.x, s.y, (obj.z || 0) + obj.dz * 0.45));
+    const samplePts = testSamples.map(s => iso.project(s.x, s.y, (obj.z || 0) + obj.dz * 0.45));
     const dist = Math.min(...samplePts.map(pt => Math.hypot(sx - pt.x, sy - pt.y)));
     // Prioritize subgrid items when cursor is close so tabletop items on desks are easy to pick
     const weightDist = obj.isSubgrid ? dist * 0.78 : dist;
     if (weightDist < bestScreenDist) {
       bestScreenDist = weightDist;
       hit = obj;
+      hitSubpart = null;
     }
   });
-  return { sx, sy, hit, floor: window._currentRoomIso.unprojectFloor(sx, sy) };
+
+  // If no foreground furniture/partition hit with high confidence, test Room Perimeter Walls & Pillar Hitboxes
+  if (!hit || bestScreenDist > 22) {
+    const roomWallBoxes = getWallHitboxes().filter(b => b.isRoomWall);
+    roomWallBoxes.forEach(w => {
+      const wHit = getProjectedBoxHitDist(iso, sx, sy, w, 6);
+      if (wHit.insideBounds && wHit.dist < bestScreenDist) {
+        bestScreenDist = wHit.dist;
+        hit = w;
+        hitSubpart = null;
+      }
+    });
+  }
+
+  return { sx, sy, hit, hitSubpart, floor: iso.unprojectFloor(sx, sy) };
 }
 
 function updateObjInspectorUI() {
   const bar = document.getElementById('simObjInspector');
   if (!bar) return;
-  const obj = selectedObjectId ? getSceneObjects().find(o => o.id === selectedObjectId) : null;
+  const allObjects = [...getSceneObjects(), ...getWallHitboxes().filter(b => b.isRoomWall)];
+  let obj = selectedObjectId ? allObjects.find(o => o.id === selectedObjectId) : null;
+  if (!obj && selectedObjectId && isPartitionWall(selectedObjectId)) {
+    ensureV4State();
+    const liveWall = (simState.hardscape?.partitions || []).find(p => p.id === selectedObjectId);
+    if (liveWall) {
+      const isSolid = liveWall.type === 'solid';
+      const dStyleName = isSolid ? '純實心' : (liveWall.doorStyle === 'wood-hinged' ? '實木門' : liveWall.doorStyle === 'open-arch' ? '穿透拱門' : '玻璃拉門');
+      obj = {
+        id: liveWall.id,
+        storeKey: liveWall.id,
+        label: `${isSolid ? '純隔間牆' : '房門隔間牆'} (長${(liveWall.length || 2.6).toFixed(1)}m · ${dStyleName})`,
+        action: 'relax',
+        x: liveWall.x || 2,
+        y: liveWall.y || 2,
+        z: 0,
+        dx: liveWall.orient === 'x' ? liveWall.length : 0.16,
+        dy: liveWall.orient === 'x' ? 0.16 : liveWall.length,
+        dz: 2.4,
+        rot: liveWall.orient === 'x' ? 1 : 0,
+        isHardscape: true,
+        canRotate: true,
+        isPartition: true,
+        cfg: liveWall
+      };
+    }
+  }
   if (!obj) {
     bar.classList.remove('visible', 'open');
     return;
@@ -4107,13 +5030,40 @@ function updateObjInspectorUI() {
   const curRot = getObjRotation(obj.storeKey || obj.id);
   const rotDeg = curRot * 90;
   if (titleEl) {
-    titleEl.textContent = `${obj.label} (${obj.dx.toFixed(1)}×${obj.dy.toFixed(1)}m · ${rotDeg}°)`;
+    if (obj.isRoomWall) {
+      titleEl.textContent = `🧱 ${obj.label} (${obj.dx.toFixed(1)}×${obj.dy.toFixed(1)}m · H:${(obj.dz || 2.4).toFixed(1)}m)`;
+    } else {
+      titleEl.textContent = `${obj.label} (${obj.dx.toFixed(1)}×${obj.dy.toFixed(1)}m · ${rotDeg}°)`;
+    }
   }
   const interactBtn = document.getElementById('btnInspectInteract');
   if (interactBtn) {
-    if (obj.id === 'partition-wall') {
-      interactBtn.textContent = obj.cfg?.doorOpen ? '🔒 闔上房門' : '🚪 開啟房門';
-      interactBtn.title = '點擊切換隔間門開關狀態';
+    if (obj.isRoomWall) {
+      if (obj.isPillar) {
+        interactBtn.textContent = '🧱 結構承重柱';
+        interactBtn.title = '建築承重柱（無法拆除）';
+      } else {
+        const curFinish = simState.hardscape?.wallFinish || 'accent';
+        const finishName = curFinish === 'brick' ? '文化石' : curFinish === 'acoustic' ? '吸音木質' : '北歐跳色漆';
+        interactBtn.textContent = `🎨 切換飾面 (${finishName})`;
+        interactBtn.title = '點擊循環切換牆面材質飾面 (跳色漆 / 文化石 / 吸音棉木格柵)';
+      }
+    } else if (isPartitionWall(obj.id)) {
+      ensureV4State();
+      const pCfg = (simState.hardscape?.partitions || []).find(p => p.id === obj.id)
+        || (simState.hardscape?.partitionConfig && simState.hardscape.partitionConfig.id === obj.id ? simState.hardscape.partitionConfig : null)
+        || obj.cfg
+        || {};
+      if (pCfg.type === 'solid') {
+        interactBtn.textContent = '🧱 純隔間牆';
+        interactBtn.title = '純實心隔間牆（實心無門）';
+      } else if (pCfg.doorStyle === 'open-arch') {
+        interactBtn.textContent = '⛩️ 穿透拱門';
+        interactBtn.title = '目前為開放式穿透拱門（無門扇阻擋）';
+      } else {
+        interactBtn.textContent = pCfg.doorOpen ? '🔒 闔上房門' : '🚪 開啟房門';
+        interactBtn.title = '點擊切換隔間門開關狀態';
+      }
     } else {
       interactBtn.textContent = '⚡ 互動';
       interactBtn.title = '派遣角色走過去互動';
@@ -4121,7 +5071,7 @@ function updateObjInspectorUI() {
   }
   const rotBtn = document.getElementById('btnInspectRotate');
   if (rotBtn) {
-    rotBtn.style.display = obj.canRotate ? 'inline-flex' : 'none';
+    rotBtn.style.display = (!obj.isRoomWall && obj.canRotate) ? 'inline-flex' : 'none';
     if (obj.canRotate) {
       const nextDeg = ((curRot + 1) % 4) * 90;
       rotBtn.innerHTML = `🔄 旋轉至 ${nextDeg}° (R)`;
@@ -4130,7 +5080,11 @@ function updateObjInspectorUI() {
   }
   const jumpBtn = document.getElementById('btnInspectJumpTab');
   if (jumpBtn) {
-    if (obj.id === 'partition-wall') {
+    if (obj.isRoomWall) {
+      jumpBtn.textContent = '🧱 前往硬裝設置';
+      jumpBtn.dataset.targetTab = 'hardscape';
+      jumpBtn.dataset.targetCat = '';
+    } else if (isPartitionWall(obj.id)) {
       jumpBtn.textContent = '🧱 隔間規格設定';
       jumpBtn.dataset.targetTab = 'hardscape';
       jumpBtn.dataset.targetCat = '';
@@ -4155,19 +5109,40 @@ function updateObjInspectorUI() {
   }
   const remBtn = document.getElementById('btnInspectRemove');
   if (remBtn) {
-    if (obj.id === 'partition-wall') {
-      remBtn.textContent = '🔨 拆除隔間 (退-§45)';
+    if (obj.isRoomWall) {
+      if (obj.isPillar) {
+        remBtn.textContent = '🔒 結構管道柱';
+        remBtn.disabled = true;
+      } else {
+        remBtn.disabled = false;
+        const curMode = simState.wallMode || 'cutaway';
+        const modeLabel = curMode === 'cutaway' ? '剖面模式 (切換全牆)' : curMode === 'full' ? '全牆模式 (切換隱藏)' : '隱藏模式 (切換剖面)';
+        remBtn.textContent = `👁️ ${modeLabel}`;
+        remBtn.title = '點擊切換牆面顯示模式 (剖面半高 / 完整高牆 / 隱藏)';
+      }
     } else {
-      remBtn.textContent = obj.isDlc ? '🔌 卸下模組' : '🗑️ 收起／售出';
+      remBtn.disabled = false;
+      if (isPartitionWall(obj.id)) {
+        const pCfg = obj.cfg || simState.hardscape?.partitions?.find(p => p.id === obj.id) || simState.hardscape?.partitionConfig || {};
+        const refund = pCfg.type === 'solid' ? 30 : 45;
+        remBtn.textContent = `🔨 拆除此牆 (退+§${refund})`;
+      } else {
+        remBtn.textContent = obj.isDlc ? '🔌 卸下模組' : '🗑️ 收起／售出';
+      }
     }
   }
 }
 
 function rotateSelectedObject() {
   if (!selectedObjectId) return;
-  const obj = getSceneObjects().find(o => o.id === selectedObjectId);
+  const allObjects = [...getSceneObjects(), ...getWallHitboxes().filter(b => b.isRoomWall)];
+  const obj = allObjects.find(o => o.id === selectedObjectId);
   if (!obj || !obj.canRotate) {
-    showRoomBanner('💡 壁掛軌道模組固定於牆面滑軌，可左右拖曳滑移位置！');
+    if (obj?.isRoomWall) {
+      showRoomBanner('🧱 建築實體外牆與承重柱固定於房屋邊界，不可旋轉！');
+    } else {
+      showRoomBanner('💡 壁掛軌道模組固定於牆面滑軌，可左右拖曳滑移位置！');
+    }
     return;
   }
   ensureV4State();
@@ -4195,10 +5170,15 @@ function rotateSelectedObject() {
     y: Number(clampedY.toFixed(2))
   };
 
-  // Synchronize partition wall orientation with its dimensions
-  if (obj.id === 'partition-wall') {
-    if (!simState.hardscape.partitionConfig) simState.hardscape.partitionConfig = {};
-    simState.hardscape.partitionConfig.orient = (newDx >= newDy) ? 'x' : 'y';
+  // Synchronize partition wall orientation and coordinates with its rotated dimensions
+  if (isPartitionWall(obj.id)) {
+    ensureV4State();
+    const pCfg = simState.hardscape?.partitions?.find(p => p.id === obj.id) || simState.hardscape?.partitionConfig;
+    if (pCfg) {
+      pCfg.orient = (newDx >= newDy) ? 'x' : 'y';
+      pCfg.x = Number(clampedX.toFixed(2));
+      pCfg.y = Number(clampedY.toFixed(2));
+    }
     renderV4Panels();
   }
 
@@ -4213,19 +5193,29 @@ function rotateSelectedObject() {
 
 function removeSelectedObject() {
   if (!selectedObjectId) return;
-  const obj = getSceneObjects().find(o => o.id === selectedObjectId);
+  const allObjects = [...getSceneObjects(), ...getWallHitboxes().filter(b => b.isRoomWall)];
+  const obj = allObjects.find(o => o.id === selectedObjectId);
   if (!obj) return;
-  if (obj.id === 'partition-wall') {
-    simState.money = Math.max(0, simState.money - 45);
-    simState.hiddenCostsPaid = (simState.hiddenCostsPaid || 0) + 45;
-    simState.hardscape.partition = false;
-    selectedObjectId = null;
+  if (obj.isRoomWall) {
+    if (obj.isPillar) {
+      playSimSound('error');
+      showRoomBanner('⚠️ 結構管道柱屬於承重結構，無法拆除！');
+      return;
+    }
+    const modes = ['cutaway', 'full', 'none'];
+    const curIdx = modes.indexOf(simState.wallMode || 'cutaway');
+    simState.wallMode = modes[(curIdx + 1) % modes.length];
     saveSimState();
-    playSimSound('snap');
+    syncSimTopBarUI();
+    playSimSound('tap');
     renderSim();
-    renderV4Panels();
     updateObjInspectorUI();
-    showRoomBanner('🔨 已拆除實體隔間牆（產生裝建廢料清理費 -§45）！');
+    const modeNames = { cutaway: '剖面半高模式', full: '完整全牆模式', none: '牆面完全隱藏模式' };
+    showRoomBanner(`👁️ 已切換牆面顯示模式為「${modeNames[simState.wallMode]}」！`);
+    return;
+  }
+  if (isPartitionWall(obj.id)) {
+    deletePartitionWall(obj.id);
     return;
   }
   if (obj.isDlc) {
@@ -4268,18 +5258,69 @@ function removeSelectedObject() {
 }
 
 document.getElementById('btnInspectInteract')?.addEventListener('click', () => {
-  const obj = selectedObjectId ? getSceneObjects().find(o => o.id === selectedObjectId) : null;
-  if (!obj) return;
-  if (obj.id === 'partition-wall') {
+  const allObjects = [...getSceneObjects(), ...getWallHitboxes().filter(b => b.isRoomWall)];
+  let obj = selectedObjectId ? allObjects.find(o => o.id === selectedObjectId) : null;
+  if (!obj && selectedObjectId && isPartitionWall(selectedObjectId)) {
     ensureV4State();
-    if (!simState.hardscape.partitionConfig) simState.hardscape.partitionConfig = {};
-    simState.hardscape.partitionConfig.doorOpen = !simState.hardscape.partitionConfig.doorOpen;
+    const liveWall = (simState.hardscape?.partitions || []).find(p => p.id === selectedObjectId);
+    if (liveWall) {
+      obj = { id: liveWall.id, isPartition: true, cfg: liveWall };
+    }
+  }
+  if (!obj) return;
+  if (obj.isRoomWall) {
+    if (obj.isPillar) {
+      playSimSound('tap');
+      showRoomBanner('🧱 結構承重柱：穩固支撐房屋樑柱與管道間');
+      return;
+    }
+    ensureV4State();
+    if (!simState.hardscape) simState.hardscape = {};
+    const finishes = ['accent', 'brick', 'acoustic'];
+    const curIdx = finishes.indexOf(simState.hardscape.wallFinish || 'accent');
+    simState.hardscape.wallFinish = finishes[(curIdx + 1) % finishes.length];
     saveSimState();
-    playSimSound('tap');
+    playSimSound('snap');
     renderSim();
     renderV4Panels();
     updateObjInspectorUI();
-    showRoomBanner(`🚪 已${simState.hardscape.partitionConfig.doorOpen ? '敞開隔間房門（便於走動）' : '闔上隔間房門（保留獨立隱私）'}！`);
+    const finishNames = { accent: '北歐跳色漆 (鼠尾草綠)', brick: '文化石造型壁貼 (英倫白磚)', acoustic: '木質吸音格柵板 (溫潤柚木)' };
+    showRoomBanner(`🎨 已變更建築主牆飾面為「${finishNames[simState.hardscape.wallFinish]}」！`);
+    return;
+  }
+  if (isPartitionWall(obj.id)) {
+    ensureV4State();
+    const pCfg = (simState.hardscape?.partitions || []).find(p => p.id === obj.id)
+      || (simState.hardscape?.partitionConfig && simState.hardscape.partitionConfig.id === obj.id ? simState.hardscape.partitionConfig : null)
+      || obj.cfg;
+    if (!pCfg) return;
+    if (pCfg.type === 'solid') {
+      playSimSound('tap');
+      showRoomBanner('🧱 此為「純實心隔間牆」（無門扇），可拖曳調整位置或自訂長度！');
+      return;
+    }
+    if (pCfg.doorStyle === 'open-arch') {
+      playSimSound('tap');
+      showRoomBanner('⛩️ 目前為「穿透式拱門門洞」（無門扇阻擋，恆常暢通）！');
+      return;
+    }
+    pCfg.doorOpen = !pCfg.doorOpen;
+    pCfg.manualClosedUntil = pCfg.doorOpen ? 0 : performance.now() + 15000;
+    if (obj.cfg) {
+      obj.cfg.doorOpen = pCfg.doorOpen;
+      obj.cfg.manualClosedUntil = pCfg.manualClosedUntil;
+    }
+    if (simState.hardscape?.partitionConfig && simState.hardscape.partitionConfig.id === pCfg.id) {
+      simState.hardscape.partitionConfig.doorOpen = pCfg.doorOpen;
+      simState.hardscape.partitionConfig.manualClosedUntil = pCfg.manualClosedUntil;
+    }
+    triggerSnapEffect(obj.id);
+    saveSimState();
+    playSimSound('snap');
+    renderSim();
+    renderV4Panels();
+    updateObjInspectorUI();
+    showRoomBanner(`🚪 已${pCfg.doorOpen ? '敞開隔間房門（便於走動）' : '闔上隔間房門（保留獨立隱私）'}！`);
     return;
   }
   const act = simActions.find(a => a.id === obj.action) || simActions[0];
@@ -4327,7 +5368,8 @@ roomCanvas.addEventListener('pointerdown', event => {
   roomCanvas.focus();
   const res = getCanvasMouse3D(event);
   didDragOnCanvas = false;
-  pointerDownInfo = { x: event.clientX, y: event.clientY, res };
+  const wasAlreadySelected = Boolean(res?.hit && selectedObjectId === res.hit.id);
+  pointerDownInfo = { x: event.clientX, y: event.clientY, res, wasAlreadySelected };
 
   if (res && res.hit) {
     selectedObjectId = res.hit.id;
@@ -4342,6 +5384,11 @@ roomCanvas.addEventListener('pointerdown', event => {
       };
       lastSlideTickVal = simState.trackPos[res.hit.id] || 0;
       roomCanvas.setPointerCapture(event.pointerId);
+      return;
+    }
+
+    if (res.hit.isRoomWall) {
+      // Room perimeter walls & pillar are structural boundaries, not draggable furniture
       return;
     }
 
@@ -4360,7 +5407,7 @@ roomCanvas.addEventListener('pointerdown', event => {
 
 roomCanvas.addEventListener('pointermove', event => {
   if (draggingFloorObj && window._currentRoomIso) {
-    if (Math.hypot(event.clientX - (pointerDownInfo?.x || 0), event.clientY - (pointerDownInfo?.y || 0)) > 5) {
+    if (Math.hypot(event.clientX - (pointerDownInfo?.x || 0), event.clientY - (pointerDownInfo?.y || 0)) > 10) {
       didDragOnCanvas = true;
       const rect = roomCanvas.getBoundingClientRect();
       const sx = (event.clientX - rect.left) * (roomCanvas.width / rect.width);
@@ -4377,10 +5424,20 @@ roomCanvas.addEventListener('pointermove', event => {
       const clampedY = draggingFloorObj.isWall
         ? 0.05
         : Math.max(0.15, Math.min(roomD - draggingFloorObj.dy - 0.15, rawY));
+      const finalX = Number(clampedX.toFixed(2));
+      const finalY = Number(clampedY.toFixed(2));
+      if (!simState.v4Positions) simState.v4Positions = {};
       simState.v4Positions[draggingFloorObj.storeKey] = {
-        x: Number(clampedX.toFixed(2)),
-        y: Number(clampedY.toFixed(2))
+        x: finalX,
+        y: finalY
       };
+      if (isPartitionWall(draggingFloorObj.id)) {
+        const pCfg = simState.hardscape?.partitions?.find(p => p.id === draggingFloorObj.id) || simState.hardscape?.partitionConfig;
+        if (pCfg) {
+          pCfg.x = finalX;
+          pCfg.y = finalY;
+        }
+      }
       if (Math.abs(clampedX + clampedY - lastSlideTickVal) >= 0.25) {
         lastSlideTickVal = clampedX + clampedY;
         playSimSound('tap');
@@ -4420,21 +5477,26 @@ roomCanvas.addEventListener('pointermove', event => {
 
   const res = getCanvasMouse3D(event);
   hoveredObject = res ? res.hit : null;
+  hoveredSubpart = res ? res.hitSubpart : null;
 });
 
 function finishCanvasPointer(event) {
   if (draggingFloorObj) {
     if (didDragOnCanvas) {
       const updated = getSceneObjects().find(o => o.id === draggingFloorObj.id) || draggingFloorObj;
-      if (draggingFloorObj.id === 'partition-wall') {
-        if (!simState.hardscape.partitionConfig) simState.hardscape.partitionConfig = {};
-        simState.hardscape.partitionConfig.x = updated.x;
-        simState.hardscape.partitionConfig.y = updated.y;
+      if (isPartitionWall(draggingFloorObj.id)) {
+        ensureV4State();
+        const pCfg = simState.hardscape?.partitions?.find(p => p.id === draggingFloorObj.id) || simState.hardscape?.partitionConfig;
+        if (pCfg) {
+          pCfg.x = updated.x;
+          pCfg.y = updated.y;
+        }
       }
       triggerSnapEffect(draggingFloorObj.id);
       playSimSound('snap');
       saveSimState();
       renderSim();
+      renderV4Panels();
       updateObjInspectorUI();
       showRoomBanner(`📐 「${updated.label}」已擺放至 (${updated.x.toFixed(1)}m, ${updated.y.toFixed(1)}m)${updated.z > 0.2 ? ' 並自動疊上桌面！' : '（按 R 可旋轉 90°）'}`);
     }
@@ -4465,14 +5527,65 @@ roomCanvas.addEventListener('click', event => {
   if (res.hit) {
     selectedObjectId = res.hit.id;
     updateObjInspectorUI();
+    if (res.hit.isRoomWall) {
+      playSimSound('tap');
+      if (res.hit.isPillar) {
+        showRoomBanner('🧱 已選取「結構承重柱」：建築管道與承重結構，提供安全支撐');
+      } else {
+        showRoomBanner(`🧱 已選取「${res.hit.label}」：點擊下方檢查列可切換飾面材質或切換切牆模式！`);
+      }
+      return;
+    }
+    if (isPartitionWall(res.hit.id)) {
+      ensureV4State();
+      const pCfg = (simState.hardscape?.partitions || []).find(p => p.id === res.hit.id)
+        || (simState.hardscape?.partitionConfig && simState.hardscape.partitionConfig.id === res.hit.id ? simState.hardscape.partitionConfig : null)
+        || res.hit.cfg;
+      const wasAlreadySelected = Boolean(pointerDownInfo?.wasAlreadySelected);
+      const isDoorClick = (res.hitSubpart === 'partition-door') || (wasAlreadySelected && pCfg?.type !== 'solid');
+      if (isDoorClick && pCfg && pCfg.type !== 'solid') {
+        if (pCfg.doorStyle === 'open-arch') {
+          playSimSound('tap');
+          showRoomBanner('✨ 目前隔間為「開放式穿透拱門」，無門扇阻擋可直接通行！');
+          return;
+        }
+        pCfg.doorOpen = !pCfg.doorOpen;
+        pCfg.manualClosedUntil = pCfg.doorOpen ? 0 : performance.now() + 15000;
+        if (res.hit.cfg) {
+          res.hit.cfg.doorOpen = pCfg.doorOpen;
+          res.hit.cfg.manualClosedUntil = pCfg.manualClosedUntil;
+        }
+        if (simState.hardscape?.partitionConfig && simState.hardscape.partitionConfig.id === pCfg.id) {
+          simState.hardscape.partitionConfig.doorOpen = pCfg.doorOpen;
+          simState.hardscape.partitionConfig.manualClosedUntil = pCfg.manualClosedUntil;
+        }
+        triggerSnapEffect(res.hit.id);
+        saveSimState();
+        playSimSound('snap');
+        renderSim();
+        renderV4Panels();
+        updateObjInspectorUI();
+        showRoomBanner(`🚪 已${pCfg.doorOpen ? '敞開隔間房門（動線暢通）' : '闔上隔間房門（保留獨立隱私）'}！`);
+        return;
+      }
+      playSimSound('tap');
+      const isSolid = pCfg?.type === 'solid';
+      showRoomBanner(`🧱 已選取「${res.hit.label}」：可在 3D 畫面拖曳移位、按 R 旋轉 90°${isSolid ? '' : '，或再次點擊開關房門'}！`);
+      renderV4Panels();
+      return;
+    }
     const act = simActions.find(a => a.id === res.hit.action) || simActions[0];
     walkAndPerformAction(act, res.hit);
   } else if (res.floor) {
     selectedObjectId = null;
     updateObjInspectorUI();
     const clickRDim = getRoomDimensions(simState.profile?.area || 18);
-    simState.player.targetX = Math.max(0.75, Math.min(clickRDim.w - 0.75, res.floor.x));
-    simState.player.targetY = Math.max(1.15, Math.min(clickRDim.d - 0.65, res.floor.y));
+    const destX = Math.max(0.75, Math.min(clickRDim.w - 0.75, res.floor.x));
+    const destY = Math.max(1.15, Math.min(clickRDim.d - 0.65, res.floor.y));
+    const path = findRoomPath(simState.player.x, simState.player.y, destX, destY);
+    simState.player.waypoints = path.slice(1);
+    simState.player.targetX = path[0].x;
+    simState.player.targetY = path[0].y;
     simState.player.pendingAction = null;
     playSimSound('tap');
   }
@@ -4493,12 +5606,14 @@ function walkAndPerformAction(action, targetObj = null) {
     simState.player.targetAngle = Math.atan2(lookY - simState.player.y, lookX - simState.player.x);
     executeSimAction(action, obj.id);
   } else {
-    simState.player.targetX = obj.ix;
-    simState.player.targetY = obj.iy;
+    const path = findRoomPath(simState.player.x, simState.player.y, obj.ix, obj.iy);
+    simState.player.waypoints = path.slice(1);
+    simState.player.targetX = path[0].x;
+    simState.player.targetY = path[0].y;
     simState.player.lookAtX = lookX;
     simState.player.lookAtY = lookY;
     simState.player.pendingAction = { action, objId: obj.id };
-    showSimMessage(`🚶 ${simState.name} 正轉身走向「${obj.label}」準備執行「${action.label}」…`);
+    showSimMessage(`🚶 ${simState.name} 正前往「${obj.label}」準備執行「${action.label}」…`);
   }
 }
 
@@ -5426,41 +6541,170 @@ const V4_SCENARIOS = {
   }
 };
 
-// Initialize V4 state fields safely (default empty room)
+// Initialize & sanitize V4 state fields defensively (handles legacy localStorage snapshots without NaN)
 function ensureV4State() {
-  if (!simState.hardscape) {
-    simState.hardscape = {
-      shape: 'rect',       // 'rect' | 'lshape' | 'balcony'
-      partition: false,    // Light partition wall built
-      pillar: false,       // Structural load-bearing pillar & pipe shaft
-      walkup: false,       // Walk-up apartment (+15% moving fee for bulky items)
-      floorMat: 'wood',    // 'wood' | 'zoned' | 'tile'
-      wallMat: 'warm',     // 'warm' | 'stone' | 'acoustic'
-      cableRaceway: false, // Extension cord & raceway installed
-      blindsOpen: 80,      // 0..100%
-      blueprintMode: false // 2D Top-Down Blueprint camera mode
-    };
+  if (!simState.profile || typeof simState.profile !== 'object') {
+    simState.profile = { area: 18, people: 2 };
   }
-  if (!Array.isArray(simState.v4Items)) {
-    simState.v4Items = [];
+  const areaNum = Number(simState.profile.area);
+  simState.profile.area = [5, 12, 18, 25, 32].includes(areaNum) ? areaNum : 18;
+  const peopleNum = Number(simState.profile.people);
+  simState.profile.people = [1, 2, 3, 4].includes(peopleNum) ? peopleNum : 2;
+
+  const { w: roomW, d: roomD } = getRoomDimensions(simState.profile.area);
+  const rawHs = (simState.hardscape && typeof simState.hardscape === 'object' && !Array.isArray(simState.hardscape))
+    ? simState.hardscape
+    : {};
+  const rawCfg = (rawHs.partitionConfig && typeof rawHs.partitionConfig === 'object' && !Array.isArray(rawHs.partitionConfig))
+    ? rawHs.partitionConfig
+    : {};
+  const blindsVal = Number(rawHs.blindsOpen);
+  const cfgX = Number(rawCfg.x);
+  const cfgY = Number(rawCfg.y);
+  const cfgLen = Number(rawCfg.length);
+
+  // Parse & sanitize plural partition walls (with full backward-compatibility for legacy single partition)
+  let cleanPartitions = [];
+  if (Array.isArray(rawHs.partitions)) {
+    cleanPartitions = rawHs.partitions.map((p, idx) => {
+      const pid = (typeof p.id === 'string' && p.id.trim()) ? p.id.trim() : `partition-${idx + 1}`;
+      const px = Number(p.x);
+      const py = Number(p.y);
+      const pLen = Number(p.length);
+      return {
+        id: pid,
+        type: p.type === 'solid' ? 'solid' : 'door',
+        x: Number.isFinite(px) ? Math.max(0.15, Math.min(roomW - 0.35, Number(px.toFixed(2)))) : Number((roomW * (0.35 + (idx % 3) * 0.18)).toFixed(2)),
+        y: Number.isFinite(py) ? Math.max(0.15, Math.min(roomD - 0.35, Number(py.toFixed(2)))) : Number((roomD * (0.28 + (idx % 3) * 0.15)).toFixed(2)),
+        length: Number.isFinite(pLen) ? Math.max(1.4, Math.min(4.8, Number(pLen.toFixed(2)))) : 2.6,
+        orient: ['x', 'y'].includes(p.orient) ? p.orient : 'y',
+        doorPos: ['center', 'start', 'end'].includes(p.doorPos) ? p.doorPos : 'center',
+        doorStyle: ['glass-sliding', 'wood-hinged', 'open-arch'].includes(p.doorStyle) ? p.doorStyle : 'glass-sliding',
+        doorOpen: Boolean(p.doorOpen),
+        manualClosedUntil: Number.isFinite(p.manualClosedUntil) ? Number(p.manualClosedUntil) : 0
+      };
+    });
+  } else if (rawHs.partition) {
+    cleanPartitions = [{
+      id: 'partition-1',
+      type: rawCfg.type === 'solid' ? 'solid' : 'door',
+      x: Number.isFinite(cfgX) ? Math.max(0.15, Math.min(roomW - 0.35, Number(cfgX.toFixed(2)))) : Number((roomW * 0.48).toFixed(2)),
+      y: Number.isFinite(cfgY) ? Math.max(0.15, Math.min(roomD - 0.35, Number(cfgY.toFixed(2)))) : Number((roomD * 0.32).toFixed(2)),
+      length: Number.isFinite(cfgLen) ? Math.max(1.4, Math.min(4.8, Number(cfgLen.toFixed(2)))) : 2.6,
+      orient: ['x', 'y'].includes(rawCfg.orient) ? rawCfg.orient : 'y',
+      doorPos: ['center', 'start', 'end'].includes(rawCfg.doorPos) ? rawCfg.doorPos : 'center',
+      doorStyle: ['glass-sliding', 'wood-hinged', 'open-arch'].includes(rawCfg.doorStyle) ? rawCfg.doorStyle : 'glass-sliding',
+      doorOpen: Boolean(rawCfg.doorOpen),
+      manualClosedUntil: Number.isFinite(rawCfg.manualClosedUntil) ? Number(rawCfg.manualClosedUntil) : 0
+    }];
   }
-  if (!simState.v4Positions) {
-    simState.v4Positions = {};
+
+  const primaryCfg = cleanPartitions[0] || {
+    id: 'partition-1',
+    type: 'door',
+    x: Number.isFinite(cfgX) ? Math.max(0.15, Math.min(roomW - 0.35, Number(cfgX.toFixed(2)))) : Number((roomW * 0.48).toFixed(2)),
+    y: Number.isFinite(cfgY) ? Math.max(0.15, Math.min(roomD - 0.35, Number(cfgY.toFixed(2)))) : Number((roomD * 0.32).toFixed(2)),
+    length: Number.isFinite(cfgLen) ? Math.max(1.4, Math.min(4.8, Number(cfgLen.toFixed(2)))) : 2.6,
+    orient: ['x', 'y'].includes(rawCfg.orient) ? rawCfg.orient : 'y',
+    doorPos: ['center', 'start', 'end'].includes(rawCfg.doorPos) ? rawCfg.doorPos : 'center',
+    doorStyle: ['glass-sliding', 'wood-hinged', 'open-arch'].includes(rawCfg.doorStyle) ? rawCfg.doorStyle : 'glass-sliding',
+    doorOpen: Boolean(rawCfg.doorOpen),
+    manualClosedUntil: Number.isFinite(rawCfg.manualClosedUntil) ? Number(rawCfg.manualClosedUntil) : 0
+  };
+
+  simState.hardscape = {
+    shape: ['rect', 'lshape', 'balcony'].includes(rawHs.shape) ? rawHs.shape : 'rect',
+    partition: cleanPartitions.length > 0,
+    partitions: cleanPartitions,
+    pillar: Boolean(rawHs.pillar),
+    walkup: Boolean(rawHs.walkup),
+    floorMat: ['wood', 'zoned', 'tile'].includes(rawHs.floorMat) ? rawHs.floorMat : 'wood',
+    wallMat: ['warm', 'stone', 'acoustic'].includes(rawHs.wallMat) ? rawHs.wallMat : 'warm',
+    cableRaceway: Boolean(rawHs.cableRaceway),
+    blindsOpen: Number.isFinite(blindsVal) ? Math.max(0, Math.min(100, Math.round(blindsVal))) : 80,
+    blueprintMode: Boolean(rawHs.blueprintMode),
+    partitionConfig: primaryCfg
+  };
+
+  // Normalize base furniture array (migrate legacy short IDs like 'bed' -> 'bed-set')
+  const legacyFurnMap = {
+    bed: 'bed-set',
+    shower: 'shower-pod',
+    sofa: 'sofa-set',
+    tv: 'tv-wall',
+    cart: 'kitchen-cart',
+    plant: 'plant-deco'
+  };
+  const validBaseIds = new Set(extraFurnitureCatalog.map(b => b.id));
+  simState.furniture = Array.isArray(simState.furniture)
+    ? Array.from(new Set(
+        simState.furniture
+          .map(id => (typeof id === 'string' ? (legacyFurnMap[id] || id) : ''))
+          .filter(id => validBaseIds.has(id))
+      ))
+    : [];
+
+  // Normalize V4 catalog items array
+  const validV4Ids = new Set(V4_SHOP_CATALOG.map(m => m.id));
+  simState.v4Items = Array.isArray(simState.v4Items)
+    ? Array.from(new Set(simState.v4Items.filter(id => typeof id === 'string' && validV4Ids.has(id))))
+    : [];
+
+  // Normalize v4Positions and migrate legacy customFurniturePos if present
+  const mergedPos = {};
+  const ingestPositions = src => {
+    if (!src || typeof src !== 'object' || Array.isArray(src)) return;
+    Object.entries(src).forEach(([k, v]) => {
+      if (!v || typeof v !== 'object') return;
+      const px = Number(v.x);
+      const py = Number(v.y);
+      if (Number.isFinite(px) && Number.isFinite(py)) {
+        const normKey = legacyFurnMap[k] || k;
+        mergedPos[normKey] = {
+          x: Number(Math.max(0.04, Math.min(13.5, px)).toFixed(2)),
+          y: Number(Math.max(0.04, Math.min(9.0, py)).toFixed(2))
+        };
+      }
+    });
+  };
+  ingestPositions(simState.customFurniturePos);
+  ingestPositions(simState.v4Positions);
+  simState.v4Positions = mergedPos;
+  delete simState.customFurniturePos;
+
+  // Normalize rotatedItems (convert legacy boolean true/false or string/NaN into 0..3 quadrant integers)
+  const cleanRot = {};
+  if (simState.rotatedItems && typeof simState.rotatedItems === 'object' && !Array.isArray(simState.rotatedItems)) {
+    Object.entries(simState.rotatedItems).forEach(([k, val]) => {
+      const normKey = legacyFurnMap[k] || k;
+      if (val === true || val === 'true') {
+        cleanRot[normKey] = 1;
+      } else if (val === false || val === 'false' || val === null || val === undefined) {
+        cleanRot[normKey] = 0;
+      } else {
+        const num = parseInt(val, 10);
+        cleanRot[normKey] = Number.isFinite(num) ? ((num % 4) + 4) % 4 : 0;
+      }
+    });
   }
-  if (!simState.rotatedItems) {
-    simState.rotatedItems = {};
-  }
-  if (!Array.isArray(simState.lockedItems)) {
-    simState.lockedItems = [];
-  }
-  if (!Array.isArray(simState.flawedItems)) {
-    simState.flawedItems = [];
-  }
-  if (!simState.scenario) {
-    simState.scenario = 'sandbox';
-  }
-  if (!simState.hiddenCostsPaid) {
-    simState.hiddenCostsPaid = 0;
+  simState.rotatedItems = cleanRot;
+
+  simState.lockedItems = Array.isArray(simState.lockedItems)
+    ? simState.lockedItems.filter(id => typeof id === 'string')
+    : [];
+  simState.flawedItems = Array.isArray(simState.flawedItems)
+    ? simState.flawedItems.filter(id => typeof id === 'string')
+    : [];
+  simState.scenario = (typeof simState.scenario === 'string' && V4_SCENARIOS[simState.scenario])
+    ? simState.scenario
+    : 'sandbox';
+  const hcVal = Number(simState.hiddenCostsPaid);
+  simState.hiddenCostsPaid = Number.isFinite(hcVal) && hcVal >= 0 ? Math.round(hcVal) : 0;
+  simState.showHitbox = Boolean(simState.showHitbox);
+  if (!simState.player || typeof simState.player !== 'object') {
+    simState.player = { x: 4.8, y: 4.5, angle: 0.85, targetAngle: 0.85, targetX: null, targetY: null, waypoints: [], pendingAction: null };
+  } else if (!Array.isArray(simState.player.waypoints)) {
+    simState.player.waypoints = [];
   }
 }
 ensureV4State();
@@ -5573,10 +6817,16 @@ function getActiveCombos() {
 // Check if Circulation Path (動線) is blocked
 function isPathBlocked() {
   ensureV4State();
-  if (simState.profile.area <= 5 && simState.hardscape.partition) {
-    const cfg = simState.hardscape.partitionConfig;
-    if ((cfg?.length || 2.6) > 2.2 && !cfg?.doorOpen && cfg?.doorStyle !== 'open-arch') {
-      return '5 坪微型空間隔間長度過長且門扇緊閉，走道動線卡死！建議縮短長度或敞開門扇。';
+  const partitions = Array.isArray(simState.hardscape?.partitions) ? simState.hardscape.partitions : [];
+  const { w: roomW, d: roomD } = getRoomDimensions(simState.profile?.area || 18);
+  for (let i = 0; i < partitions.length; i++) {
+    const p = partitions[i];
+    if (simState.profile.area <= 5 && (p.length || 2.6) > 2.2 && !p.doorOpen && p.doorStyle !== 'open-arch') {
+      return `5 坪微型空間的隔間牆 #${i + 1} 長度過長且門扇緊閉，走道動線卡死！建議縮短長度或敞開門扇。`;
+    }
+    const spanLimit = p.orient === 'x' ? roomW - 0.7 : roomD - 0.7;
+    if (p.type === 'solid' && (p.length || 2.6) >= spanLimit) {
+      return `實心隔間牆 #${i + 1} 貫穿全室無任何開口通道，動線完全阻隔！建議切換為房門牆或縮短長度。`;
     }
   }
   if (!isDlcActive('storage') && simState.profile.area <= 12 && hasV4Item('mahjong-table')) {
@@ -6024,36 +7274,102 @@ function renderV4Panels() {
   document.getElementById('btnTogglePillar')?.classList.toggle('active', Boolean(hs.pillar));
   document.getElementById('btnToggleWalkup')?.classList.toggle('active', Boolean(hs.walkup));
 
-  // Sync Partition Customizer Box (規格、長度、門扇)
+  // Sync Partition Customizer Box (規格、長度、門扇、複數隔間牆)
   const partBox = document.getElementById('partitionCustomizerBox');
   if (partBox) {
-    partBox.style.display = hs.partition ? 'flex' : 'none';
-    if (hs.partition) {
-      const cfg = hs.partitionConfig || {
-        length: 2.6, orient: 'y', doorPos: 'center', doorStyle: 'glass-sliding', doorOpen: false
-      };
-      const lenEl = document.getElementById('partitionLenText');
+    const hasPartitions = Boolean(hs.partition && Array.isArray(hs.partitions) && hs.partitions.length > 0);
+    partBox.style.display = hasPartitions ? 'flex' : 'none';
+    if (hasPartitions) {
+      const activeWall = getActivePartitionWall() || hs.partitions[0];
+      const isSolid = activeWall.type === 'solid';
+      const activeIdx = hs.partitions.findIndex(p => p.id === activeWall.id);
+      const isHoriz = activeWall.orient === 'x';
+      const { w: roomW, d: roomD } = getRoomDimensions(simState.profile?.area || 18);
+      const maxL = Math.min(4.8, Math.max(1.8, Number(((isHoriz ? roomW : roomD) - 0.5).toFixed(1))));
+      const curLen = Math.max(1.4, Math.min(maxL, activeWall.length || 2.6));
+
+      // Wall Selector Chips
+      const selectorBar = document.getElementById('partitionWallSelectorBar');
+      if (selectorBar) {
+        selectorBar.innerHTML = hs.partitions.map((p, idx) => {
+          const isAct = p.id === activeWall.id;
+          const icon = p.type === 'solid' ? '🧱' : '🚪';
+          return `<button type="button" class="partition-chip-btn partition-wall-chip${isAct ? ' active' : ''}" data-wall-id="${p.id}" style="font-size:0.7rem; padding:0.2rem 0.45rem;">
+            ${icon} 隔間 #${idx + 1} (${p.length.toFixed(1)}m)
+          </button>`;
+        }).join('') + `
+          <button type="button" class="partition-chip-btn" id="btnQuickAddSolid" style="background:#f1f5f9; color:#475569; font-size:0.68rem; padding:0.2rem 0.4rem;" title="新增純實心隔間牆">+ 純牆</button>
+          <button type="button" class="partition-chip-btn" id="btnQuickAddDoor" style="background:#f1f5f9; color:#475569; font-size:0.68rem; padding:0.2rem 0.4rem;" title="新增房門隔間牆">+ 房門</button>
+        `;
+
+        selectorBar.querySelectorAll('.partition-wall-chip').forEach(btn => {
+          btn.addEventListener('click', () => {
+            selectedObjectId = btn.dataset.wallId;
+            renderV4Panels();
+            renderSim();
+            updateObjInspectorUI();
+          });
+        });
+        selectorBar.querySelector('#btnQuickAddSolid')?.addEventListener('click', () => addPartitionWall('solid'));
+        selectorBar.querySelector('#btnQuickAddDoor')?.addEventListener('click', () => addPartitionWall('door'));
+      }
+
+      // Dim Badge
       const badgeEl = document.getElementById('partitionDimBadge');
+      if (badgeEl) {
+        badgeEl.textContent = `隔間 #${activeIdx + 1} · ${isSolid ? '純實心' : '含門'} · ${isHoriz ? '橫向(X)' : '縱向(Y)'}`;
+      }
+
+      // Wall Type Buttons
+      document.querySelectorAll('.partition-type-btn').forEach(btn => {
+        btn.classList.toggle('active', btn.dataset.type === activeWall.type);
+      });
+
+      // Door settings row visibility
+      const doorSettingsRow = document.getElementById('partitionDoorSettingsRow');
+      if (doorSettingsRow) {
+        doorSettingsRow.style.display = isSolid ? 'none' : 'flex';
+      }
+
+      // Length Slider & Buttons
+      const lenEl = document.getElementById('partitionLenText');
       const sliderEl = document.getElementById('partitionLenSlider');
-      if (lenEl) lenEl.textContent = `${cfg.length.toFixed(1)} 公尺`;
-      if (badgeEl) badgeEl.textContent = `長度 ${cfg.length.toFixed(1)}m · ${cfg.orient === 'x' ? '橫向' : '縱向'}`;
-      if (sliderEl) sliderEl.value = cfg.length;
+      if (lenEl) lenEl.textContent = `${curLen.toFixed(1)} 公尺`;
+      if (sliderEl) {
+        sliderEl.max = String(maxL);
+        sliderEl.value = String(curLen);
+      }
       document.querySelectorAll('.partition-len-btn').forEach(btn => {
-        btn.classList.toggle('active', Math.abs(parseFloat(btn.dataset.len) - cfg.length) < 0.15);
+        const bLen = parseFloat(btn.dataset.len);
+        btn.classList.toggle('active', Math.abs(bLen - curLen) < 0.15);
+        btn.style.opacity = bLen > maxL + 0.05 ? '0.55' : '1';
       });
+
+      // Orient Buttons
       document.querySelectorAll('.partition-orient-btn').forEach(btn => {
-        btn.classList.toggle('active', btn.dataset.orient === cfg.orient);
+        btn.classList.toggle('active', btn.dataset.orient === activeWall.orient);
       });
-      document.querySelectorAll('.partition-dpos-btn').forEach(btn => {
-        btn.classList.toggle('active', btn.dataset.dpos === cfg.doorPos);
-      });
-      document.querySelectorAll('.partition-dstyle-btn').forEach(btn => {
-        btn.classList.toggle('active', btn.dataset.style === cfg.doorStyle);
-      });
-      const doorBtn = document.getElementById('btnTogglePartitionDoor');
-      if (doorBtn) {
-        doorBtn.textContent = cfg.doorOpen ? '🚪 敞開通行中 (點擊關門)' : '🔒 闔上隱私中 (點擊開門)';
-        doorBtn.classList.toggle('active', Boolean(cfg.doorOpen));
+
+      // Door Controls (if door wall)
+      if (!isSolid) {
+        document.querySelectorAll('.partition-dpos-btn').forEach(btn => {
+          btn.classList.toggle('active', btn.dataset.dpos === activeWall.doorPos);
+        });
+        document.querySelectorAll('.partition-dstyle-btn').forEach(btn => {
+          btn.classList.toggle('active', btn.dataset.style === activeWall.doorStyle);
+        });
+        const doorBtn = document.getElementById('btnTogglePartitionDoor');
+        if (doorBtn) {
+          if (activeWall.doorStyle === 'open-arch') {
+            doorBtn.textContent = '⛩️ 穿透拱門 (恆常暢通)';
+            doorBtn.classList.add('active');
+            doorBtn.style.opacity = '0.78';
+          } else {
+            doorBtn.textContent = activeWall.doorOpen ? '🚪 敞開通行中 (點擊關門)' : '🔒 闔上隱私中 (點擊開門)';
+            doorBtn.classList.toggle('active', Boolean(activeWall.doorOpen));
+            doorBtn.style.opacity = '1';
+          }
+        }
       }
     }
   }
@@ -6334,60 +7650,163 @@ document.querySelectorAll('#wallMatBtns .hardscape-btn').forEach(btn => {
   });
 });
 
-document.getElementById('btnTogglePartition')?.addEventListener('click', () => {
+// ─── PLURAL MOVABLE PARTITION WALLS (SOLID & DOORWAY WALLS) ───
+function getActivePartitionWall() {
   ensureV4State();
-  if (!simState.hardscape.partition) {
-    if (simState.money < 60) {
-      playSimSound('error');
-      showSimMessage('⚠️ 建造輕隔間牆需 §60 施工費！', true);
-      return;
-    }
-    simState.money -= 60;
-    simState.hardscape.partition = true;
-    const { w: roomW, d: roomD } = getRoomDimensions(simState.profile?.area || 18);
-    if (!simState.hardscape.partitionConfig) {
-      simState.hardscape.partitionConfig = {
-        x: Number((roomW * 0.48).toFixed(2)),
-        y: Number((roomD * 0.32).toFixed(2)),
-        length: 2.6,
-        orient: 'y',
-        doorPos: 'center',
-        doorStyle: 'glass-sliding',
-        doorOpen: false
-      };
-    }
-    selectedObjectId = 'partition-wall';
-    showRoomBanner('🧱 已建造「實體隔間牆 (含門)」！可在 3D 畫面自由拖曳位置，或自訂長度大小與門扇。');
-  } else {
-    simState.money = Math.max(0, simState.money - 45);
-    simState.hiddenCostsPaid = (simState.hiddenCostsPaid || 0) + 45;
-    simState.hardscape.partition = false;
-    if (selectedObjectId === 'partition-wall') selectedObjectId = null;
-    showRoomBanner('🗑️ 已拆除實體隔間牆（支付營建廢料清運費 -§45）！');
+  const partitions = simState.hardscape?.partitions;
+  if (!Array.isArray(partitions) || partitions.length === 0) return null;
+  if (selectedObjectId && isPartitionWall(selectedObjectId)) {
+    const found = partitions.find(p => p.id === selectedObjectId);
+    if (found) return found;
   }
+  return partitions[0];
+}
+
+function addPartitionWall(type = 'door') {
+  ensureV4State();
+  const isSolid = type === 'solid';
+  const cost = isSolid ? 40 : 60;
+  if (simState.money < cost) {
+    playSimSound('error');
+    showSimMessage(`⚠️ 預算不足 §${cost}！建造${isSolid ? '純隔間牆' : '房門隔間牆'}需要 §${cost}。`, true);
+    return;
+  }
+  simState.money -= cost;
+  if (!Array.isArray(simState.hardscape.partitions)) {
+    simState.hardscape.partitions = [];
+  }
+  const { w: roomW, d: roomD } = getRoomDimensions(simState.profile?.area || 18);
+  const idx = simState.hardscape.partitions.length;
+  const newId = `partition-${Date.now().toString(36)}-${Math.floor(Math.random() * 1000)}`;
+  const isHoriz = (idx % 2) === 1;
+  const newWall = {
+    id: newId,
+    type: isSolid ? 'solid' : 'door',
+    x: Number(Math.max(0.2, Math.min(roomW - 0.5, roomW * (0.3 + (idx % 3) * 0.18))).toFixed(2)),
+    y: Number(Math.max(0.2, Math.min(roomD - 0.5, roomD * (0.26 + (idx % 3) * 0.16))).toFixed(2)),
+    length: 2.6,
+    orient: isHoriz ? 'x' : 'y',
+    doorPos: 'center',
+    doorStyle: 'glass-sliding',
+    doorOpen: false
+  };
+  simState.hardscape.partitions.push(newWall);
+  simState.hardscape.partition = true;
+  simState.hardscape.partitionConfig = newWall;
+  selectedObjectId = newId;
+
+  triggerSnapEffect(newId);
   saveSimState();
   playSimSound('snap');
   renderSim();
   renderV4Panels();
   updateObjInspectorUI();
+  showRoomBanner(`🧱 已新增「${isSolid ? '純隔間牆' : '房門隔間牆'} #${idx + 1}」(長2.6m)！可在 3D 畫面自由拖曳位置、按 R 鍵 90° 旋轉。`);
+}
+
+function deletePartitionWall(id) {
+  ensureV4State();
+  const partitions = simState.hardscape?.partitions;
+  if (!Array.isArray(partitions) || partitions.length === 0) return;
+  const targetId = id || getActivePartitionWall()?.id;
+  const targetIdx = partitions.findIndex(p => p.id === targetId);
+  if (targetIdx === -1) return;
+
+  const wall = partitions[targetIdx];
+  const isSolid = wall.type === 'solid';
+  const refund = isSolid ? 30 : 45;
+  simState.money += refund;
+  partitions.splice(targetIdx, 1);
+  simState.hardscape.partition = partitions.length > 0;
+  simState.hardscape.partitionConfig = partitions[0] || null;
+
+  if (selectedObjectId === targetId) {
+    selectedObjectId = partitions[0]?.id || null;
+  }
+
+  saveSimState();
+  playSimSound('snap');
+  renderSim();
+  renderV4Panels();
+  updateObjInspectorUI();
+  showRoomBanner(`🔨 已拆除隔間牆 #${targetIdx + 1}，退還建材折讓金 +§${refund}！`);
+}
+
+document.getElementById('btnAddSolidPartition')?.addEventListener('click', () => addPartitionWall('solid'));
+document.getElementById('btnAddDoorPartition')?.addEventListener('click', () => addPartitionWall('door'));
+document.getElementById('btnDeleteCurrentPartition')?.addEventListener('click', () => {
+  const activeWall = getActivePartitionWall();
+  if (activeWall) deletePartitionWall(activeWall.id);
+});
+
+document.getElementById('btnTogglePartition')?.addEventListener('click', () => {
+  ensureV4State();
+  if (!simState.hardscape.partition) {
+    addPartitionWall('door');
+  } else {
+    deletePartitionWall();
+  }
+});
+
+// Wall type toggle (純實心牆 vs 房門牆)
+document.querySelectorAll('.partition-type-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    ensureV4State();
+    const cfg = getActivePartitionWall();
+    if (!cfg) return;
+    const newType = btn.dataset.type === 'solid' ? 'solid' : 'door';
+    if (cfg.type !== newType) {
+      cfg.type = newType;
+      selectedObjectId = cfg.id;
+      triggerSnapEffect(cfg.id);
+      saveSimState();
+      playSimSound('tap');
+      renderSim();
+      renderV4Panels();
+      updateObjInspectorUI();
+      showRoomBanner(`🧱 隔間牆已變更為「${newType === 'solid' ? '純實心牆 (無門)' : '房門隔間牆 (含門)'}」！`);
+    }
+  });
 });
 
 // ─── PARTITION CUSTOMIZER CONTROLS ───
 function setPartitionLength(newLen) {
   ensureV4State();
-  if (!simState.hardscape.partitionConfig) simState.hardscape.partitionConfig = {};
+  const cfg = getActivePartitionWall();
+  if (!cfg) return;
   const { w: roomW, d: roomD } = getRoomDimensions(simState.profile?.area || 18);
-  const cfg = simState.hardscape.partitionConfig;
   const isHoriz = cfg.orient === 'x';
-  const maxL = Math.max(1.8, (isHoriz ? roomW : roomD) - 0.5);
+  const maxL = Math.min(4.8, Math.max(1.8, (isHoriz ? roomW : roomD) - 0.5));
+  const oldLen = cfg.length || 2.6;
   const clampedLen = Math.round(Math.max(1.4, Math.min(maxL, newLen)) * 10) / 10;
+
+  // Preserve the center point of the partition wall when resizing its length
+  const cp = simState.v4Positions?.[cfg.id];
+  const curX = cp && Number.isFinite(cp.x) ? cp.x : (Number.isFinite(cfg.x) ? cfg.x : roomW * 0.48);
+  const curY = cp && Number.isFinite(cp.y) ? cp.y : (Number.isFinite(cfg.y) ? cfg.y : roomD * 0.32);
+  const wallThick = 0.16;
+  const oldDx = isHoriz ? oldLen : wallThick;
+  const oldDy = isHoriz ? wallThick : oldLen;
+  const newDx = isHoriz ? clampedLen : wallThick;
+  const newDy = isHoriz ? wallThick : clampedLen;
+  const cx = curX + oldDx * 0.5;
+  const cy = curY + oldDy * 0.5;
+  const nextX = Number(Math.max(0.18, Math.min(roomW - newDx - 0.15, cx - newDx * 0.5)).toFixed(2));
+  const nextY = Number(Math.max(0.18, Math.min(roomD - newDy - 0.15, cy - newDy * 0.5)).toFixed(2));
+
   cfg.length = clampedLen;
+  cfg.x = nextX;
+  cfg.y = nextY;
+  if (!simState.v4Positions) simState.v4Positions = {};
+  simState.v4Positions[cfg.id] = { x: nextX, y: nextY };
+  selectedObjectId = cfg.id;
+
   saveSimState();
   playSimSound('tap');
   renderSim();
   renderV4Panels();
   updateObjInspectorUI();
-  showRoomBanner(`📏 隔間牆長度已設定為 ${clampedLen} 公尺！`);
+  showRoomBanner(`📏 隔間牆長度已設定為 ${clampedLen.toFixed(1)} 公尺！`);
 }
 
 document.querySelectorAll('.partition-len-btn').forEach(btn => {
@@ -6402,42 +7821,74 @@ document.getElementById('partitionLenSlider')?.addEventListener('input', e => {
 
 document.getElementById('btnPartitionLenMinus')?.addEventListener('click', () => {
   ensureV4State();
-  const cur = simState.hardscape.partitionConfig?.length || 2.6;
+  const cur = getActivePartitionWall()?.length || 2.6;
   setPartitionLength(cur - 0.2);
 });
 
 document.getElementById('btnPartitionLenPlus')?.addEventListener('click', () => {
   ensureV4State();
-  const cur = simState.hardscape.partitionConfig?.length || 2.6;
+  const cur = getActivePartitionWall()?.length || 2.6;
   setPartitionLength(cur + 0.2);
 });
 
 document.querySelectorAll('.partition-orient-btn').forEach(btn => {
   btn.addEventListener('click', () => {
     ensureV4State();
-    if (!simState.hardscape.partitionConfig) simState.hardscape.partitionConfig = {};
-    const orient = btn.dataset.orient;
-    simState.hardscape.partitionConfig.orient = orient;
-    const rot = getObjRotation('partition-wall');
-    if (orient === 'x' && rot % 2 === 0) {
-      simState.rotatedItems['partition-wall'] = 1;
-    } else if (orient === 'y' && rot % 2 === 1) {
-      simState.rotatedItems['partition-wall'] = 0;
+    const cfg = getActivePartitionWall();
+    if (!cfg) return;
+    const nextOrient = btn.dataset.orient === 'x' ? 'x' : 'y';
+    if (cfg.orient === nextOrient) {
+      // Flip 180° along same axis
+      const curRot = getObjRotation(cfg.id);
+      simState.rotatedItems[cfg.id] = (curRot + 2) % 4;
+    } else {
+      // Rotate around wall center point
+      const { w: roomW, d: roomD } = getRoomDimensions(simState.profile?.area || 18);
+      const wasHoriz = cfg.orient === 'x';
+      const nowHoriz = nextOrient === 'x';
+      const wallThick = 0.16;
+      const maxL = Math.min(4.8, Math.max(1.8, (nowHoriz ? roomW : roomD) - 0.5));
+      const newLen = Math.round(Math.max(1.4, Math.min(maxL, cfg.length || 2.6)) * 10) / 10;
+      const oldLen = cfg.length || 2.6;
+      const oldDx = wasHoriz ? oldLen : wallThick;
+      const oldDy = wasHoriz ? wallThick : oldLen;
+      const newDx = nowHoriz ? newLen : wallThick;
+      const newDy = nowHoriz ? wallThick : newLen;
+      const cp = simState.v4Positions?.[cfg.id];
+      const curX = cp && Number.isFinite(cp.x) ? cp.x : (Number.isFinite(cfg.x) ? cfg.x : roomW * 0.48);
+      const curY = cp && Number.isFinite(cp.y) ? cp.y : (Number.isFinite(cfg.y) ? cfg.y : roomD * 0.32);
+      const cx = curX + oldDx * 0.5;
+      const cy = curY + oldDy * 0.5;
+      const nextX = Number(Math.max(0.18, Math.min(roomW - newDx - 0.15, cx - newDx * 0.5)).toFixed(2));
+      const nextY = Number(Math.max(0.18, Math.min(roomD - newDy - 0.15, cy - newDy * 0.5)).toFixed(2));
+
+      cfg.orient = nextOrient;
+      cfg.length = newLen;
+      cfg.x = nextX;
+      cfg.y = nextY;
+      if (!simState.v4Positions) simState.v4Positions = {};
+      simState.v4Positions[cfg.id] = { x: nextX, y: nextY };
+      simState.rotatedItems[cfg.id] = nowHoriz ? 1 : 0;
     }
+    selectedObjectId = cfg.id;
+    triggerSnapEffect(cfg.id);
     saveSimState();
     playSimSound('snap');
     renderSim();
     renderV4Panels();
     updateObjInspectorUI();
-    showRoomBanner(`🧭 隔間牆方位已設定為「${orient === 'x' ? '橫向 (X軸)' : '縱向 (Y軸)'}」！可在 3D 畫面直接按 R 鍵旋轉。`);
+    showRoomBanner(`🧭 隔間牆方位已設定為「${nextOrient === 'x' ? '橫向 (X軸)' : '縱向 (Y軸)'}」！可在 3D 畫面直接按 R 鍵 90° 旋轉。`);
   });
 });
 
 document.querySelectorAll('.partition-dpos-btn').forEach(btn => {
   btn.addEventListener('click', () => {
     ensureV4State();
-    if (!simState.hardscape.partitionConfig) simState.hardscape.partitionConfig = {};
-    simState.hardscape.partitionConfig.doorPos = btn.dataset.dpos;
+    const cfg = getActivePartitionWall();
+    if (!cfg) return;
+    cfg.doorPos = btn.dataset.dpos;
+    selectedObjectId = cfg.id;
+    triggerSnapEffect(cfg.id);
     saveSimState();
     playSimSound('tap');
     renderSim();
@@ -6451,8 +7902,14 @@ document.querySelectorAll('.partition-dpos-btn').forEach(btn => {
 document.querySelectorAll('.partition-dstyle-btn').forEach(btn => {
   btn.addEventListener('click', () => {
     ensureV4State();
-    if (!simState.hardscape.partitionConfig) simState.hardscape.partitionConfig = {};
-    simState.hardscape.partitionConfig.doorStyle = btn.dataset.style;
+    const cfg = getActivePartitionWall();
+    if (!cfg) return;
+    cfg.doorStyle = btn.dataset.style;
+    if (btn.dataset.style === 'open-arch') {
+      cfg.doorOpen = true;
+    }
+    selectedObjectId = cfg.id;
+    triggerSnapEffect(cfg.id);
     saveSimState();
     playSimSound('tap');
     renderSim();
@@ -6465,14 +7922,23 @@ document.querySelectorAll('.partition-dstyle-btn').forEach(btn => {
 
 document.getElementById('btnTogglePartitionDoor')?.addEventListener('click', () => {
   ensureV4State();
-  if (!simState.hardscape.partitionConfig) simState.hardscape.partitionConfig = {};
-  simState.hardscape.partitionConfig.doorOpen = !simState.hardscape.partitionConfig.doorOpen;
+  const cfg = getActivePartitionWall();
+  if (!cfg) return;
+  if (cfg.doorStyle === 'open-arch') {
+    playSimSound('tap');
+    showRoomBanner('⛩️ 目前為「穿透式拱門門洞」（無門扇阻擋，恆常暢通）！如需開關門扇請選擇玻璃拉門或實木門。');
+    return;
+  }
+  cfg.doorOpen = !cfg.doorOpen;
+  cfg.manualClosedUntil = cfg.doorOpen ? 0 : performance.now() + 15000;
+  selectedObjectId = cfg.id;
+  triggerSnapEffect(cfg.id);
   saveSimState();
-  playSimSound('tap');
+  playSimSound('snap');
   renderSim();
   renderV4Panels();
   updateObjInspectorUI();
-  showRoomBanner(`🚪 已${simState.hardscape.partitionConfig.doorOpen ? '敞開隔間房門（便於走動）' : '闔上隔間房門（保留獨立隱私）'}！`);
+  showRoomBanner(`🚪 已${cfg.doorOpen ? '敞開隔間房門（便於走動）' : '闔上隔間房門（保留獨立隱私）'}！`);
 });
 
 document.getElementById('btnTogglePillar')?.addEventListener('click', () => {
@@ -6595,13 +8061,29 @@ function openQuoteModal() {
     }
   });
 
-  // 2. Hardscape
-  if (simState.hardscape.partition) {
+  // 2. Hardscape (Plural Partitions Support)
+  if (Array.isArray(simState.hardscape?.partitions) && simState.hardscape.partitions.length > 0) {
+    simState.hardscape.partitions.forEach((cfg, idx) => {
+      const isSolid = cfg.type === 'solid';
+      const len = cfg.length || 2.6;
+      const dName = isSolid ? '純實心牆' : (cfg.doorStyle === 'wood-hinged' ? '實木門' : cfg.doorStyle === 'open-arch' ? '穿透拱門' : '黑框玻璃拉門');
+      const cost = isSolid ? 40 : 60;
+      rows.push({
+        cat: '🧱 硬裝隔間',
+        name: `${isSolid ? '純隔間牆' : '房門隔間牆'} #${idx + 1} (${len.toFixed(1)}m · ${dName})`,
+        note: isSolid ? '純實心無門扇' : '含門框與施工',
+        cost
+      });
+      totalSpent += cost;
+    });
+  } else if (simState.hardscape?.partition) {
     const cfg = simState.hardscape.partitionConfig || {};
+    const isSolid = cfg.type === 'solid';
     const len = cfg.length || 2.6;
-    const dName = cfg.doorStyle === 'wood-hinged' ? '實木門' : cfg.doorStyle === 'open-arch' ? '穿透拱門' : '黑框玻璃拉門';
-    rows.push({ cat: '🧱 硬裝隔間', name: `自訂實體隔間牆 (${len.toFixed(1)}m · 含${dName})`, note: '含門框與施工', cost: 60 });
-    totalSpent += 60;
+    const dName = isSolid ? '純實心牆' : (cfg.doorStyle === 'wood-hinged' ? '實木門' : cfg.doorStyle === 'open-arch' ? '穿透拱門' : '黑框玻璃拉門');
+    const cost = isSolid ? 40 : 60;
+    rows.push({ cat: '🧱 硬裝隔間', name: `自訂實體隔間牆 (${len.toFixed(1)}m · 含${dName})`, note: '含施工', cost });
+    totalSpent += cost;
   }
   if (simState.hardscape.cableRaceway) {
     rows.push({ cat: '🔌 水電工程', name: '全室隱藏式延長線與地板壓條', note: '消除跨區裸線', cost: 25 });
@@ -6684,6 +8166,7 @@ function syncSimTopBarUI() {
   document.getElementById('btnWallModeNone')?.classList.toggle('active', mode === 'none');
 
   document.getElementById('btnToggleGrid')?.classList.toggle('active', simState.showGrid !== false);
+  document.getElementById('btnToggleHitbox')?.classList.toggle('active', Boolean(simState.showHitbox));
   document.getElementById('btnTogglePanoramic')?.classList.toggle('active', Boolean(simState.panoramic));
 
   const layoutEl = document.querySelector('.sim-layout');
@@ -6705,39 +8188,56 @@ function renderSimDockShelf(cat = currentDockCat, query = currentDockSearch) {
     { key: 'safe', name: 'SAFE DLC 樂齡防撞扶手與感應地燈', icon: '🌿', price: 70, desc: '全圓角防撞安全扶手，深夜引導地燈' }
   ];
 
-  const dockItems = [
-    // 🧱 隔間＆結構 (structure)
-    {
-      id: 'partition-wall',
+  const placedPartitions = (simState.hardscape?.partitions || []).map((p, idx) => {
+    const isSolid = p.type === 'solid';
+    const isArch = p.doorStyle === 'open-arch';
+    let doorDescSuffix = '';
+    if (isSolid) {
+      doorDescSuffix = ' (實心無門)';
+    } else if (isArch) {
+      doorDescSuffix = ' (開放式穿透拱門)';
+    } else {
+      doorDescSuffix = p.doorOpen ? ' (門已敞開 · 點擊立即闔上)' : ' (門已闔上 · 點擊立即敞開)';
+    }
+    return {
+      id: p.id,
+      targetId: p.id,
       cat: 'structure',
-      name: '自選模組輕隔間 (含門)',
+      name: `${isSolid ? '🧱 純隔間牆' : '🚪 房門隔間牆'} #${idx + 1}`,
+      icon: isSolid ? '🧱' : (isArch ? '⛩️' : '🚪'),
+      price: isSolid ? 40 : 60,
+      desc: `長度 ${p.length.toFixed(1)}m · ${p.orient === 'x' ? '橫向' : '縱向'}${doorDescSuffix}`,
+      isPlaced: () => true,
+      onPlace: () => {},
+      isPartition: true,
+      partitionCfg: p
+    };
+  });
+
+  const dockItems = [
+    // 🧱 隔間＆結構 (structure - 支援複數純牆面與房門牆面)
+    ...placedPartitions,
+    {
+      id: 'add-partition-solid',
+      targetId: 'add-partition-solid',
+      cat: 'structure',
+      name: '+ 新增純隔間牆',
+      icon: '🧱',
+      price: 40,
+      desc: '自選位置與長度，純實心隔間牆面（無門扇），可複數建造與旋轉',
+      isPlaced: () => false,
+      onPlace: () => addPartitionWall('solid')
+    },
+    {
+      id: 'add-partition-door',
+      targetId: 'add-partition-door',
+      cat: 'structure',
+      name: '+ 新增房門隔間牆',
       icon: '🚪',
       price: 60,
-      desc: '可自由移位、長度 1.4m~4.8m，支援玻璃滑門/實木門/穿透拱門',
-      isPlaced: () => Boolean(simState.hardscape?.partition),
-      onPlace: () => {
-        ensureV4State();
-        simState.hardscape.partition = true;
-        const { w: roomW, d: roomD } = getRoomDimensions(simState.profile?.area || 18);
-        if (!simState.hardscape.partitionConfig) {
-          simState.hardscape.partitionConfig = {
-            x: Number((roomW * 0.48).toFixed(2)),
-            y: Number((roomD * 0.32).toFixed(2)),
-            length: 2.6,
-            orient: 'y',
-            doorPos: 'center',
-            doorStyle: 'glass-sliding',
-            doorOpen: false
-          };
-        }
-        if (!simState.v4Positions['partition-wall']) {
-          simState.v4Positions['partition-wall'] = {
-            x: simState.hardscape.partitionConfig.x,
-            y: simState.hardscape.partitionConfig.y
-          };
-        }
-        selectedObjectId = 'partition-wall';
-      }
+      desc: '自選位置與長度，含房門隔間牆，支援玻璃滑門/實木門/拱門獨立開關',
+      isPlaced: () => false,
+      onPlace: () => addPartitionWall('door')
     },
     {
       id: 'cable-raceway',
@@ -6830,19 +8330,53 @@ function renderSimDockShelf(cat = currentDockCat, query = currentDockSearch) {
 
   filtered.forEach(item => {
     const placed = item.isPlaced();
+    const pCfg = item.partitionCfg;
+    const isDoorPartition = pCfg && pCfg.type !== 'solid' && pCfg.doorStyle !== 'open-arch';
+
     const card = document.createElement('div');
-    card.className = `sim-dock-card${placed ? ' placed' : ''}`;
-    card.title = `${item.name}\n${item.desc}\n${placed ? '（已放置於房間，點擊選取）' : `（點擊購買 §${item.price} 並放置）`}`;
+    card.className = `sim-dock-card${placed ? ' placed' : ''}${isDoorPartition ? ' partition-door-card' : ''}`;
+
+    let priceBadgeText = placed ? '✓ 已放置' : `§ ${item.price}`;
+    let priceBadgeStyle = '';
+    if (isDoorPartition) {
+      priceBadgeText = pCfg.doorOpen ? '🚪 門已開 (點擊關門)' : '🔒 門已關 (點擊開門)';
+      priceBadgeStyle = pCfg.doorOpen
+        ? 'color:#15803d; background:#dcfce7; border-color:#86efac; font-size:0.62rem; font-weight:800;'
+        : 'color:#b45309; background:#fef3c7; border-color:#fde68a; font-size:0.62rem; font-weight:800;';
+    }
+
+    card.title = `${item.name}\n${item.desc}\n${placed ? (isDoorPartition ? '（點擊直接切換開門／關門，並可拖曳移位或按 R 旋轉）' : '（已放置於房間，點擊選取）') : `（點擊購買 §${item.price} 並放置）`}`;
 
     card.innerHTML = `
       <div class="sim-dock-card-icon">${item.icon}</div>
       <div class="sim-dock-card-title">${item.name}</div>
-      <div class="sim-dock-card-price">${placed ? '✓ 已放置' : `§ ${item.price}`}</div>
+      <div class="sim-dock-card-price" style="${priceBadgeStyle}">${priceBadgeText}</div>
     `;
 
     card.addEventListener('click', () => {
       const targetId = item.targetId || item.id;
       if (placed) {
+        ensureV4State();
+        if (isDoorPartition) {
+          const liveCfg = (simState.hardscape?.partitions || []).find(p => p.id === targetId);
+          if (liveCfg) {
+            liveCfg.doorOpen = !liveCfg.doorOpen;
+            liveCfg.manualClosedUntil = liveCfg.doorOpen ? 0 : performance.now() + 15000;
+            if (simState.hardscape?.partitionConfig && simState.hardscape.partitionConfig.id === targetId) {
+              simState.hardscape.partitionConfig.doorOpen = liveCfg.doorOpen;
+              simState.hardscape.partitionConfig.manualClosedUntil = liveCfg.manualClosedUntil;
+            }
+            selectedObjectId = targetId;
+            triggerSnapEffect(targetId);
+            saveSimState();
+            playSimSound('snap');
+            renderSim();
+            renderV4Panels();
+            updateObjInspectorUI();
+            showRoomBanner(`🚪 已${liveCfg.doorOpen ? '敞開隔間房門（便於走動）' : '闔上隔間房門（保留獨立隱私）'}！可在 3D 畫面拖曳或按 R 旋轉`);
+            return;
+          }
+        }
         selectedObjectId = targetId;
         if (typeof updateObjInspectorUI === 'function') updateObjInspectorUI();
         playSimSound('tap');
@@ -6902,6 +8436,15 @@ document.getElementById('btnToggleGrid')?.addEventListener('click', () => {
   syncSimTopBarUI();
   playSimSound('tap');
   showRoomBanner(simState.showGrid ? '📐 已開啟 0.5m 建築地面參考網格！' : '📐 已隱藏地面網格');
+  renderSim();
+});
+
+document.getElementById('btnToggleHitbox')?.addEventListener('click', () => {
+  simState.showHitbox = !simState.showHitbox;
+  saveSimState();
+  syncSimTopBarUI();
+  playSimSound('tap');
+  showRoomBanner(simState.showHitbox ? '📦 已開啟「牆壁與隔間 3D 碰撞箱 (Hitbox)」顯示！' : '📦 已隱藏牆壁碰撞箱');
   renderSim();
 });
 
@@ -7511,6 +9054,47 @@ function runSelfCheck() {
   // 3. Dynamic Room Dimensions Monotonicity Invariant
   const d12 = getRoomDimensions(12), d25 = getRoomDimensions(25);
   console.assert(d25.w > d12.w && d25.d > d12.d, 'SelfCheck: Room dimensions must scale monotonically with area');
+
+  // 4. Legacy localStorage Rotation & Position Normalization Invariant
+  simState.rotatedItems['__test_legacy_bool'] = true;
+  simState.rotatedItems['__test_legacy_nan'] = 'invalid-nan';
+  ensureV4State();
+  console.assert(
+    simState.rotatedItems['__test_legacy_bool'] === 1 && simState.rotatedItems['__test_legacy_nan'] === 0,
+    'SelfCheck: ensureV4State failed to sanitize legacy rotatedItems'
+  );
+  delete simState.rotatedItems['__test_legacy_bool'];
+  delete simState.rotatedItems['__test_legacy_nan'];
+
+  // 5. Partition Door Independent Sub-component Hit-Box Invariant
+  const mockWall = { id: 'partition-wall', x: 3.2, y: 2.2, z: 0, dx: 0.16, dy: 2.6, dz: 2.35 };
+  const doorSub = getPartitionDoorSubbox(mockWall);
+  console.assert(
+    doorSub && doorSub.leafBox.dy > 0.7 && doorSub.seg1Box.dy + doorSub.doorW + doorSub.seg2Box.dy <= mockWall.dy + 0.05,
+    'SelfCheck: Partition door sub-component geometry invalid'
+  );
+
+  // 6. Volumetric Wall Hitbox Structure & Room Wall Retrieval Invariant
+  const wallHitboxes = getWallHitboxes();
+  console.assert(
+    wallHitboxes.some(b => b.id === 'room-wall-back') && wallHitboxes.some(b => b.id === 'room-wall-left'),
+    'SelfCheck: getWallHitboxes must return back and left perimeter walls'
+  );
+
+  // 7. Physical Sliding Collision Resolver Obstacle Invariant
+  const rDim = getRoomDimensions(18);
+  const colRes = resolveWallCollisions(2.0, 2.0, 0.1, 2.0, 0.22, rDim.w, rDim.d);
+  console.assert(
+    colRes.x >= 0.35 + 0.22,
+    'SelfCheck: resolveWallCollisions must clamp characters within room boundaries'
+  );
+
+  // 8. Doorway Waypoint Navigation Invariant
+  const roomPath = findRoomPath(2.0, 3.0, 6.0, 3.0);
+  console.assert(
+    Array.isArray(roomPath) && roomPath.length >= 1,
+    'SelfCheck: findRoomPath must return valid waypoints array'
+  );
   return true;
 }
 runSelfCheck();
