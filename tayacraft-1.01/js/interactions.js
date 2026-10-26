@@ -3105,20 +3105,24 @@ mm.add(
       showcase.addEventListener('pointerleave', () => { rotX(0); rotY(0); });
     }
 
-    // 4. ScrollTrigger.batch() for all grid cards (high performance, zero layout thrashing)
+    // 4. ScrollTrigger.batch() for all grid cards (high performance, zero layout thrashing, safe fromTo with clearProps)
     ScrollTrigger.batch('.dlc-card, .pain-card, .arch-card, .benefit-card, .step-box', {
       interval: 0.08,
       batchMax: 4,
       start: 'top 88%',
+      once: true,
       onEnter: batch => {
-        gsap.from(batch, {
-          y: 34,
-          autoAlpha: 0,
-          stagger: 0.1,
-          duration: 0.6,
-          ease: "power2.out",
-          overwrite: "auto"
-        });
+        gsap.fromTo(batch,
+          { y: 32, autoAlpha: 0 },
+          {
+            y: 0,
+            autoAlpha: 1,
+            stagger: 0.08,
+            duration: 0.55,
+            ease: "power2.out",
+            clearProps: "all"
+          }
+        );
       }
     });
   }
