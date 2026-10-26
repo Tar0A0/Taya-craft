@@ -24,6 +24,7 @@
     <li><a href="#prototype">結構原型</a></li>
     <li><a href="#benefits">循環效益</a></li>
     <li><a href="#game" class="nav-cta-pill">▶ 3D 模擬空間</a></li>
+    <li><button type="button" class="nav-tour-pill" id="btnNavGuidedTour" title="啟動 3 分鐘人生旅程導覽（評審推薦）">🎬 3分鐘導覽</button></li>
   </ul>
   <button class="hamburger" id="hamburger" aria-label="Toggle menu">
     <span></span><span></span><span></span>
@@ -43,6 +44,11 @@
       </p>
       <p class="hero-sub">依託<strong>大雅廚具全台頂尖的鋁合金擠型與高精密木工製造能量</strong>，開創「模組化空間長效訂閱服務 (Space-as-a-Service)」。將實體製造優勢延伸至數位 3D 模擬與快拆工藝，免除傳統敲牆動工與粉塵廢料，讓居住空間隨人生歷程自由擴充升級。</p>
       <div class="hero-cta-group">
+        <button type="button" class="hero-cta-tour" id="btnHeroGuidedTour">
+          <span class="tour-icon">🎬</span>
+          <span>3 分鐘人生旅程導覽</span>
+          <span class="tour-badge-pill">評審推薦</span>
+        </button>
         <a href="#game" class="hero-cta">▶ 立即遊玩 3D 模擬器</a>
         <a href="#prototype" class="hero-cta-secondary">🔩 檢視軌道結構原型</a>
       </div>
@@ -68,6 +74,10 @@
         <span class="hero-showcase-tag">MODULAR TRACK ARCHITECTURE · 跨世代空間演進</span>
       </div>
       <div class="hero-stage-dock" aria-label="快速切換體驗三大階段">
+        <button type="button" class="hero-dock-pill hero-dock-tour" id="btnDockGuidedTour">
+          <small>一鍵全自動巡弋</small>
+          <strong>🎬 3分鐘旅程導覽 (25歲首購 ➜ 40歲中島 ➜ 65歲樂齡 ➜ ESG 74%)</strong>
+        </button>
         <button type="button" class="hero-dock-pill" data-goto-stage="starter">
           <small>STAGE 01 · 25~40歲</small>
           <strong>🌱 建立生活 · WORK DLC</strong>
@@ -586,6 +596,7 @@
         </div>
       </div>
       <div class="sim-controls">
+        <button class="sim-guided-tour-btn" id="btnSimGuidedTour" type="button" title="一鍵啟動 3 分鐘人生旅程導覽（評審推薦）">🎬 3分鐘人生導覽</button>
         <button class="sim-play" id="simToggle" type="button" aria-pressed="false" aria-label="開始生活">▶ 開始生活</button>
         <button id="simSpeed" type="button" aria-label="切換遊戲速度">速度 1×</button>
         <button id="simTriggerEvent" type="button" title="立即體驗人生轉折突發事件" aria-label="觸發人生突發事件">🎲 人生突發事件</button>
@@ -1368,6 +1379,94 @@
     <p>© 2026 TAYACRAFT Team. Made with ♥ for InnoConnect+ Competition.</p>
   </div>
 </footer>
+
+<!-- ═══════════════════ GUIDED WALKTHROUGH OVERLAY (3-MINUTE LIFE JOURNEY) ═══════════════════ -->
+<div class="guided-tour-overlay" id="guidedTourOverlay" role="region" aria-label="3 分鐘人生旅程導覽控制艙" style="display:none;">
+  <!-- 頂部浮動控制與進度條面板 -->
+  <div class="tour-dock">
+    <div class="tour-dock-left">
+      <div class="tour-brand">
+        <span class="tour-brand-icon">🎬</span>
+        <div class="tour-brand-info">
+          <span class="tour-title-text">3 分鐘人生旅程導覽</span>
+          <span class="tour-badge-tag">評審展示模式 · GUIDED WALKTHROUGH</span>
+        </div>
+      </div>
+      <!-- 章節膠囊導覽列 -->
+      <div class="tour-steps-nav" id="tourStepsNav" role="tablist" aria-label="導覽章節切換">
+        <button type="button" class="tour-step-pill" data-step-index="0">
+          <span class="step-num">00</span><span class="step-txt">概念前導</span>
+        </button>
+        <button type="button" class="tour-step-pill" data-step-index="1">
+          <span class="step-num">01</span><span class="step-txt">25歲首購客廳</span>
+        </button>
+        <button type="button" class="tour-step-pill" data-step-index="2">
+          <span class="step-num">02</span><span class="step-txt">40歲料理中島</span>
+        </button>
+        <button type="button" class="tour-step-pill" data-step-index="3">
+          <span class="step-num">03</span><span class="step-txt">65歲樂齡軌道</span>
+        </button>
+        <button type="button" class="tour-step-pill" data-step-index="4">
+          <span class="step-num">04</span><span class="step-txt">財務 &amp; ESG 74%</span>
+        </button>
+        <button type="button" class="tour-step-pill" data-step-index="5">
+          <span class="step-num">05</span><span class="step-txt">評審總結</span>
+        </button>
+      </div>
+    </div>
+
+    <div class="tour-dock-right">
+      <div class="tour-timer-box" title="導覽計時器 (3 分鐘全覽)">
+        <span class="tour-timer-icon">⏱️</span>
+        <span class="tour-timer-display" id="tourTimerDisplay">00:00 / 03:00</span>
+      </div>
+      <div class="tour-player-btns">
+        <button type="button" class="tour-ctrl-btn" id="btnTourPrev" title="上一章 (快捷鍵 ←)" aria-label="上一章">⏮</button>
+        <button type="button" class="tour-ctrl-btn primary" id="btnTourPlayPause" title="播放 / 暫停 (快捷鍵 空白鍵)" aria-label="播放或暫停">⏸</button>
+        <button type="button" class="tour-ctrl-btn" id="btnTourNext" title="下一章 (快捷鍵 →)" aria-label="下一章">⏭</button>
+        <button type="button" class="tour-ctrl-btn speed" id="btnTourSpeed" title="切換巡航速度 (1x 標準 / 2x 快速 / 4x 極速)" aria-label="導覽速度">1×</button>
+        <button type="button" class="tour-ctrl-btn audio" id="btnTourSound" title="導覽提示音效" aria-label="切換音效">🔊</button>
+        <button type="button" class="tour-ctrl-btn close" id="btnTourClose" title="結束導覽 (快捷鍵 Esc)" aria-label="關閉導覽">✕</button>
+      </div>
+    </div>
+    <!-- 頂部進度條 -->
+    <div class="tour-progress-track">
+      <div class="tour-progress-fill" id="tourProgressFill" style="transform: scaleX(0);"></div>
+    </div>
+  </div>
+
+  <!-- 浮動解說字幕與評審資訊卡 (Floating Presenter Card) -->
+  <div class="tour-presenter-card" id="tourPresenterCard">
+    <div class="tour-card-header">
+      <div class="tour-card-badge-wrap">
+        <span class="tour-stage-indicator" id="tourStageBadge">🌱 STAGE 01 · 25~40 歲</span>
+        <span class="tour-card-age" id="tourStageAge">25 歲</span>
+      </div>
+      <div class="tour-speaking-indicator" title="導覽講解進行中">
+        <span class="wave-bar"></span><span class="wave-bar"></span><span class="wave-bar"></span>
+        <span style="font-size:0.75rem; font-weight:700; color:var(--teal);">GUIDED TOUR</span>
+      </div>
+    </div>
+    <h3 class="tour-card-title" id="tourCardTitle">25 歲首購客廳 ── WORK DLC 彈性職住混和中樞</h3>
+    <p class="tour-card-subtitle" id="tourCardSubtitle">18 坪都會小宅首購族：白天專注辦公室，晚間收合還原開闊客廳與社交吧台</p>
+    
+    <div class="tour-card-bullets" id="tourCardBullets">
+      <!-- 動態填入 -->
+    </div>
+
+    <div class="tour-card-metrics" id="tourCardMetrics">
+      <div class="metric-item"><small>可用預算</small><strong id="tourMetricBudget">§ 800</strong></div>
+      <div class="metric-item"><small>空間坪效</small><strong id="tourMetricSpace">82 分</strong></div>
+      <div class="metric-item"><small>ESG 減碳</small><strong id="tourMetricEsg">🌱 30 kg</strong></div>
+      <div class="metric-item highlight"><small>核心效益</small><strong id="tourMetricBenefit">0 泥作破壞</strong></div>
+    </div>
+
+    <div class="tour-card-footer">
+      <span class="tour-hint-text" id="tourCardHint">💡 提示：可隨時按空白鍵暫停，或切換「2×」快速巡弋</span>
+      <button type="button" class="tour-card-next-btn" id="btnTourCardNext">下一階段 →</button>
+    </div>
+  </div>
+</div>
 
 <!-- ═══════════════════ SCRIPTS ═══════════════════ -->
 <script src="js/room-canvas.js"></script>

@@ -272,6 +272,103 @@ async function runE2ETests() {
     await page.click('#snapBtnLocked');
     await page.waitForTimeout(200);
 
+    // ─────────────────────────────────────────────────────────────
+    // 測試 E：一鍵式「3 分鐘人生旅程導覽（Guided Walkthrough）」全流程驗證
+    // ─────────────────────────────────────────────────────────────
+    console.log('\n--- 測試 E：一鍵式「3 分鐘人生旅程導覽（Guided Walkthrough）」全流程驗證 ---');
+
+    console.log('  👉 點擊 Hero 導覽按鈕「🎬 3 分鐘人生旅程導覽」...');
+    await page.click('#btnHeroGuidedTour');
+    await page.waitForTimeout(300);
+
+    const tourVisible = await page.evaluate(() => {
+      const el = document.getElementById('guidedTourOverlay');
+      return el && window.getComputedStyle(el).display !== 'none';
+    });
+    assert(tourVisible, '點擊一鍵導覽按鈕後，導覽控制艙 (#guidedTourOverlay) 成功啟動顯現');
+
+    // 驗證 25 歲首購客廳
+    console.log('  👉 驗證導覽第 1 站：25 歲首購客廳 (WORK DLC)...');
+    await page.click('#tourStepsNav button[data-step-index="1"]');
+    await page.waitForTimeout(300);
+
+    const step1State = await page.evaluate(() => {
+      const title = document.getElementById('tourCardTitle')?.textContent || '';
+      const stage = typeof simState !== 'undefined' ? simState.stage : '';
+      const workActive = typeof simState !== 'undefined' ? simState.dlcs?.work : false;
+      return { title, stage, workActive };
+    });
+    assert(
+      step1State.stage === 'starter' && step1State.workActive && step1State.title.includes('25 歲首購客廳'),
+      '第 1 站正確切換為 25 歲首購客廳 (simState.stage === starter，WORK DLC 自動掛載)'
+    );
+
+    // 驗證 40 歲家庭料理中島
+    console.log('  👉 驗證導覽第 2 站：40 歲家庭料理中島 (FAMILY DLC)...');
+    await page.click('#tourStepsNav button[data-step-index="2"]');
+    await page.waitForTimeout(300);
+
+    const step2State = await page.evaluate(() => {
+      const title = document.getElementById('tourCardTitle')?.textContent || '';
+      const stage = typeof simState !== 'undefined' ? simState.stage : '';
+      const famActive = typeof simState !== 'undefined' ? simState.dlcs?.family : false;
+      return { title, stage, famActive };
+    });
+    assert(
+      step2State.stage === 'family' && step2State.famActive && step2State.title.includes('40 歲家庭料理中島'),
+      '第 2 站正確切換為 40 歲家庭料理中島 (simState.stage === family，FAMILY 中島與收納牆扣入)'
+    );
+
+    // 驗證 65 歲樂齡防跌安全軌道
+    console.log('  👉 驗證導覽第 3 站：65 歲樂齡防跌安全軌道 (SAFE DLC)...');
+    await page.click('#tourStepsNav button[data-step-index="3"]');
+    await page.waitForTimeout(300);
+
+    const step3State = await page.evaluate(() => {
+      const title = document.getElementById('tourCardTitle')?.textContent || '';
+      const stage = typeof simState !== 'undefined' ? simState.stage : '';
+      const safeActive = typeof simState !== 'undefined' ? simState.dlcs?.safe : false;
+      return { title, stage, safeActive };
+    });
+    assert(
+      step3State.stage === 'senior' && step3State.safeActive && step3State.title.includes('65 歲樂齡防跌安全軌道'),
+      '第 3 站正確切換為 65 歲樂齡防跌安全軌道 (simState.stage === senior，SAFE DLC 感應扶手與夜間導引)'
+    );
+
+    // 驗證 30年財務效益與 ESG 減廢 74% 動態圖表
+    console.log('  👉 驗證導覽第 4 站：30 年財務效益與 ESG 減廢 74% 動態圖表...');
+    await page.click('#tourStepsNav button[data-step-index="4"]');
+    await page.waitForTimeout(850);
+
+    const step4State = await page.evaluate(() => {
+      const title = document.getElementById('tourCardTitle')?.textContent || '';
+      const tayaCost = document.getElementById('calcTayaCost')?.textContent || '';
+      const wasteRed = document.getElementById('calcTayaWasteReduction')?.textContent || '';
+      const isSpotlight = document.getElementById('lifecycleCalculator')?.classList.contains('tour-spotlight-active');
+      const isChartPulse = document.getElementById('barTayaCost')?.classList.contains('tour-chart-pulse');
+      return { title, tayaCost, wasteRed, isSpotlight, isChartPulse };
+    });
+    assert(
+      step4State.tayaCost.includes('1,045,000') && step4State.wasteRed.includes('74%') && step4State.isSpotlight && step4State.isChartPulse,
+      '第 4 站成功串接財務效益（NT$ 1,045,000 / 省 71%）與 ESG 減廢 74% 動態圖表聚焦脈衝',
+      JSON.stringify(step4State)
+    );
+
+    // 驗證導覽控制列互動 (速度切換與關閉)
+    console.log('  👉 驗證導覽控制列互動 (巡弋速度切換 2× / 播放暫停 / 關閉)...');
+    await page.click('#btnTourSpeed');
+    await page.waitForTimeout(150);
+    const speedText = await page.evaluate(() => document.getElementById('btnTourSpeed')?.textContent);
+    assert(speedText === '2×', '導覽速度切換按鈕成功切換至 2× 快轉模式');
+
+    await page.click('#btnTourClose');
+    await page.waitForTimeout(200);
+    const tourClosed = await page.evaluate(() => {
+      const el = document.getElementById('guidedTourOverlay');
+      return !el || window.getComputedStyle(el).display === 'none';
+    });
+    assert(tourClosed, '點擊關閉按鈕 (✕) 後，導覽控制艙已正確退出並還原正常瀏覽狀態');
+
     assert(
       pageErrors.length === 0,
       `頁面 JavaScript 執行階段無任何未捕捉錯誤 (Page Errors: ${pageErrors.length})`,

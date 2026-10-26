@@ -3244,8 +3244,459 @@ function runSelfCheck() {
     Array.isArray(roomPath) && roomPath.length >= 1,
     'SelfCheck: findRoomPath must return valid waypoints array'
   );
+
+  // 9. Guided Walkthrough 180s Total Duration Invariant
+  console.assert(
+    Array.isArray(guidedTourSteps) && guidedTourSteps.length === 6 && guidedTourSteps.reduce((acc, s) => acc + s.duration, 0) === 180,
+    'SelfCheck: guidedTourSteps must total 180 seconds'
+  );
   return true;
 }
+
+// ═══════════════════════════════════════════════════════════════════════════
+// 10. GUIDED WALKTHROUGH ENGINE (一鍵式 3 分鐘人生旅程導覽)
+// ═══════════════════════════════════════════════════════════════════════════
+
+const guidedTourSteps = [
+  {
+    id: 'intro',
+    age: '前導概念',
+    stageKey: 'starter',
+    badge: '🚀 導覽啟程 · SPACE-AS-A-SERVICE',
+    stepNumber: '00',
+    title: 'TAYACRAFT 模組化居住概念 ── 空間隨人生章節自由演進',
+    subtitle: '打破傳統一次性泥作買斷固化格局，以預埋鋁合金軌道與長效 DLC 訂閱重塑住宅全生命週期',
+    points: [
+      { icon: '🔩', strong: '大雅 6063-T6 工業級預埋軌道：', text: '雙工字鋁合金高抗彎剛性，±0.5mm 製造公差預埋於主牆' },
+      { icon: '🎮', strong: '遊戲化 DLC 擴充包隱喻：', text: '25~65 歲隨生涯無塵插拔 WORK / FAMILY / SAFE 模組' },
+      { icon: '♻️', strong: '封閉式循環供應鏈：', text: '舊模組殘值折抵、原廠檢驗整新與次級市場二手租賃' }
+    ],
+    metrics: { budget: '§ 800', space: '80 分', esg: '🌱 30 kg', benefit: '預埋軌道基底' },
+    targetSection: 'game',
+    duration: 12,
+    run: () => {
+      simState.xrayMode = true;
+      renderSim();
+      playSimSound('buff');
+      spawnFloatingText('⚡ 6063-T6 工業級預埋軌道', 4.5, 3.5, 1.8, '#38bdf8');
+    }
+  },
+  {
+    id: 'starter',
+    age: '25 歲',
+    stageKey: 'starter',
+    badge: '🌱 STAGE 01 · 25~40 歲首購探索期',
+    stepNumber: '01',
+    title: '25 歲首購客廳 ── WORK DLC 彈性職住混和中樞',
+    subtitle: '18 坪都會小宅首購族：白天展開工作桌高效辦公，晚間收合還原開闊客廳與社交吧台',
+    points: [
+      { icon: '💻', strong: '隱藏壁掛摺疊工作桌：', text: '隨需展開高承載檯面，免買固定笨重書桌，白天專注辦公' },
+      { icon: '🛋️', strong: '客廳機能坪效翻倍：', text: '收合即還原寬敞放鬆客廳，破除都會小宅單一格局限制' },
+      { icon: '⚡', strong: '30 分鐘無塵自鎖快拆：', text: 'Snap-Fit 重力安全卡扣，單人極速快裝、100% 零粉塵受災' }
+    ],
+    metrics: { budget: '§ 800', space: '82 分', esg: '🌱 30 kg', benefit: '坪效提升 100%' },
+    targetSection: 'game',
+    duration: 40,
+    run: () => {
+      simState.xrayMode = false;
+      switchLifeStage('starter');
+      simState.minutes = 570; // 09:30 ☀️ morning sunlight
+      saveSimState();
+      renderSim();
+      playSimSound('snap');
+      simState.player.targetX = 5.0;
+      simState.player.targetY = 1.6;
+      spawnFloatingText('🌱 25歲首購客廳 · 職住混和', 5.0, 1.6, 1.8, '#fde047');
+      setTimeout(() => {
+        if (!isTourActive) return;
+        spawnFloatingText('💻 WORK DLC 摺疊桌解鎖', 4.8, 1.2, 1.6, '#38bdf8');
+      }, 2500);
+    }
+  },
+  {
+    id: 'family',
+    age: '40 歲',
+    stageKey: 'family',
+    badge: '👨‍👩‍👧 STAGE 02 · 40~65 歲家庭轉換期',
+    stepNumber: '02',
+    title: '40 歲家庭料理中島 ── FAMILY DLC 空間動態重組',
+    subtitle: '育兒換裝與多代共生：免敲牆打地，原軌道擴充大型料理中島與頂天立地收納牆',
+    points: [
+      { icon: '🍳', strong: '複合延伸料理中島：', text: '打通餐廚動線，打造伴侶親子共同備餐情感生活核心' },
+      { icon: '📦', strong: '頂天立地滑軌收納：', text: '沿軌道自由位移擴容 150%，徹底解決育兒雜物暴增' },
+      { icon: '🛡️', strong: '0 泥作 0 外宿受災：', text: '無需拆裝打牆，30 分鐘卡扣定位，當日安裝當日享受' }
+    ],
+    metrics: { budget: '§ 650', space: '100 分', esg: '🌱 45 kg', benefit: '收納擴容 150%' },
+    targetSection: 'game',
+    duration: 42,
+    run: () => {
+      simState.xrayMode = false;
+      switchLifeStage('family');
+      simState.minutes = 1050; // 17:30 🌇 dusk golden hour
+      saveSimState();
+      renderSim();
+      playSimSound('buff');
+      simState.player.targetX = 2.4;
+      simState.player.targetY = 2.2;
+      spawnFloatingText('👨‍👩‍👧 40歲家庭轉換 · 料理中島擴充', 2.4, 2.2, 1.8, '#fde047');
+      setTimeout(() => {
+        if (!isTourActive) return;
+        spawnFloatingText('🍳 親子共煮 · 頂天立地收納牆', 2.6, 2.5, 1.6, '#86efac');
+      }, 2500);
+    }
+  },
+  {
+    id: 'senior',
+    age: '65 歲',
+    stageKey: 'senior',
+    badge: '🌿 STAGE 03 · 65 歲以上樂齡安老期',
+    stepNumber: '03',
+    title: '65 歲樂齡防跌安全軌道 ── SAFE DLC 全齡人因工程防護',
+    subtitle: '超高齡社會在地老化：30分鐘無痛扣入夜間感應引導扶手與防撞護套，守護長者安全尊嚴',
+    points: [
+      { icon: '🦯', strong: '夜間感應安全引導扶手：', text: '軌道 24V 安全弱電供電，夜間起身長者動線自動亮起' },
+      { icon: '🛡️', strong: '人因跌倒防撞導角：', text: '消除居家銳角死角，100% 杜絕長者居家跌倒事故' },
+      { icon: '🏡', strong: '零門檻在地老化：', text: '長者無需被迫搬遷或忍受數十萬敲牆改建，落實 WHO 準則' }
+    ],
+    metrics: { budget: '§ 550', space: '100 分', esg: '🌱 60 kg', benefit: '杜絕跌倒死角' },
+    targetSection: 'game',
+    duration: 42,
+    run: () => {
+      simState.xrayMode = false;
+      switchLifeStage('senior');
+      simState.minutes = 1350; // 22:30 🌙 night time - SAFE DLC glowing lights activate!
+      saveSimState();
+      renderSim();
+      playSimSound('confirm');
+      simState.player.targetX = 3.6;
+      simState.player.targetY = 3.8;
+      spawnFloatingText('🌿 65歲樂齡安老 · SAFE DLC 防跌軌道', 3.6, 3.8, 1.8, '#86efac');
+      setTimeout(() => {
+        if (!isTourActive) return;
+        spawnFloatingText('💡 夜間感應引導燈 · 在地老化零障礙', 3.4, 4.0, 1.6, '#fde047');
+      }, 2500);
+    }
+  },
+  {
+    id: 'benefits',
+    age: '30 年',
+    stageKey: 'senior',
+    badge: '📊 STAGE 04 · 30 年生命週期財務與 ESG 閉環',
+    stepNumber: '04',
+    title: '財務效益省 71% ＆ ESG 減廢 74% ── 三方共贏量化實證',
+    subtitle: '模組化長效訂閱 (SpaaS) 搭配大雅原廠逆向物流整新，創造住戶、大雅與環境三贏閉環',
+    points: [
+      { icon: '💰', strong: '長期改裝支出降低 71%：', text: '30 年累積節省 NT$ 2,589,000，徹底破除裝修沉沒成本' },
+      { icon: '♻️', strong: '營建固體廢棄物減量 74%：', text: '減少 17.8 噸瓦礫垃圾，鋁合金與模組 100% 回廠整新' },
+      { icon: '⏱️', strong: '居住受災停擺減少 99%：', text: '從傳統 270 天外宿搬遷縮減至僅 1.5 天快拆換裝' },
+      { icon: '📈', strong: '大雅 CLV 顧客終身價值延展：', text: '突破單次 15 萬買斷，轉型為 30~40 年持續服務營收' }
+    ],
+    metrics: { budget: '省 259 萬', space: '71% 節省', esg: '🌱 減廢 74%', benefit: 'CLV 放大 7x' },
+    targetSection: 'lifecycleCalculator',
+    duration: 34,
+    run: () => {
+      calcYears = 30;
+      calcArea = 25;
+      document.querySelectorAll('#calcYearBtns .calc-btn').forEach(b => {
+        b.classList.toggle('active', parseInt(b.dataset.years, 10) === 30);
+      });
+      document.querySelectorAll('#calcAreaBtns .calc-btn').forEach(b => {
+        b.classList.toggle('active', parseInt(b.dataset.area, 10) === 25);
+      });
+      updateLifecycleCalc();
+      playSimSound('buff');
+      const calcEl = document.getElementById('lifecycleCalculator');
+      if (calcEl) calcEl.classList.add('tour-spotlight-active');
+      const barCost = document.getElementById('barTayaCost');
+      const barWaste = document.getElementById('barTayaWaste');
+      if (barCost) barCost.classList.add('tour-chart-pulse');
+      if (barWaste) barWaste.classList.add('tour-chart-pulse');
+    }
+  },
+  {
+    id: 'summary',
+    age: '評審總結',
+    stageKey: 'senior',
+    badge: '🏆 STAGE 05 · 評審推薦綜合評估',
+    stepNumber: '05',
+    title: '居家空間魔術師 ── TAYACRAFT 提案精華總結',
+    subtitle: '將大雅數十年頂尖製造公差 control 轉化為數位規格與服務閉環，引領台灣傳產雙軸轉型',
+    points: [
+      { icon: '⭐', strong: '大雅製造護城河：', text: '高精密鋁合金擠型與智慧木工能量，±0.5mm 工業級精度延伸' },
+      { icon: '⭐', strong: '創新商業模式：', text: 'Space-as-a-Service 長效訂閱、逆向物流與次級市場二手租賃' },
+      { icon: '⭐', strong: 'ESG 雙重永續：', text: '74% 營建減廢低碳循環 ＋ 守護超高齡社會在地老化 (Aging-in-Place)' }
+    ],
+    metrics: { budget: '省 71%', space: '極致坪效', esg: '減廢 74%', benefit: '終身相伴' },
+    targetSection: 'hero',
+    duration: 10,
+    run: () => {
+      playSimSound('confirm');
+      const calcEl = document.getElementById('lifecycleCalculator');
+      if (calcEl) calcEl.classList.remove('tour-spotlight-active');
+      const barCost = document.getElementById('barTayaCost');
+      const barWaste = document.getElementById('barTayaWaste');
+      if (barCost) barCost.classList.remove('tour-chart-pulse');
+      if (barWaste) barWaste.classList.remove('tour-chart-pulse');
+    }
+  }
+];
+
+let isTourActive = false;
+let isTourPaused = false;
+let tourCurrentStep = 0;
+let tourStepElapsed = 0;
+let tourTotalElapsed = 0;
+let tourSpeed = 1; // 1, 2, 4
+let tourSound = true;
+let tourTimerInterval = null;
+const tourTotalSeconds = 180; // 3 minutes total
+
+function formatTourClock(secs) {
+  const s = Math.max(0, Math.floor(secs));
+  const m = Math.floor(s / 60);
+  const remS = s % 60;
+  return `${String(m).padStart(2, '0')}:${String(remS).padStart(2, '0')}`;
+}
+
+function startGuidedWalkthrough(initialStep = 0) {
+  isTourActive = true;
+  isTourPaused = false;
+  const overlay = document.getElementById('guidedTourOverlay');
+  if (overlay) overlay.style.display = 'flex';
+  
+  const playBtn = document.getElementById('btnTourPlayPause');
+  if (playBtn) playBtn.textContent = '⏸';
+
+  jumpToTourStep(initialStep);
+
+  if (tourTimerInterval) clearInterval(tourTimerInterval);
+  tourTimerInterval = setInterval(onTourTick, 100);
+}
+
+function stopGuidedWalkthrough() {
+  isTourActive = false;
+  isTourPaused = false;
+  if (tourTimerInterval) {
+    clearInterval(tourTimerInterval);
+    tourTimerInterval = null;
+  }
+  const overlay = document.getElementById('guidedTourOverlay');
+  if (overlay) overlay.style.display = 'none';
+
+  const calcEl = document.getElementById('lifecycleCalculator');
+  if (calcEl) calcEl.classList.remove('tour-spotlight-active');
+  const barCost = document.getElementById('barTayaCost');
+  const barWaste = document.getElementById('barTayaWaste');
+  if (barCost) barCost.classList.remove('tour-chart-pulse');
+  if (barWaste) barWaste.classList.remove('tour-chart-pulse');
+  if (simState) {
+    simState.xrayMode = false;
+    renderSim();
+  }
+}
+
+function pauseTour() {
+  isTourPaused = true;
+  const playBtn = document.getElementById('btnTourPlayPause');
+  if (playBtn) playBtn.textContent = '▶';
+  const hintEl = document.getElementById('tourCardHint');
+  if (hintEl) hintEl.textContent = '⏸ 導覽暫停中 · 點擊「▶」或空白鍵繼續';
+}
+
+function resumeTour() {
+  isTourPaused = false;
+  const playBtn = document.getElementById('btnTourPlayPause');
+  if (playBtn) playBtn.textContent = '⏸';
+  const hintEl = document.getElementById('tourCardHint');
+  if (hintEl) hintEl.textContent = '💡 提示：可隨時按空白鍵暫停，或切換「2×」快速巡弋';
+}
+
+function toggleTourPlayPause() {
+  if (!isTourActive) {
+    startGuidedWalkthrough(0);
+    return;
+  }
+  if (isTourPaused) resumeTour();
+  else pauseTour();
+}
+
+function onTourTick() {
+  if (!isTourActive || isTourPaused) return;
+  const dt = 0.1 * tourSpeed;
+  tourStepElapsed += dt;
+  tourTotalElapsed += dt;
+
+  if (tourTotalElapsed > tourTotalSeconds) tourTotalElapsed = tourTotalSeconds;
+
+  // Update progress bar
+  const progressFill = document.getElementById('tourProgressFill');
+  if (progressFill) {
+    const scale = Math.min(1, tourTotalElapsed / tourTotalSeconds);
+    progressFill.style.transform = `scaleX(${scale.toFixed(4)})`;
+  }
+
+  // Update timer display
+  const timerDisplay = document.getElementById('tourTimerDisplay');
+  if (timerDisplay) {
+    timerDisplay.textContent = `${formatTourClock(tourTotalElapsed)} / 03:00`;
+  }
+
+  // Check step completion
+  const currentStepDef = guidedTourSteps[tourCurrentStep];
+  if (currentStepDef && tourStepElapsed >= currentStepDef.duration) {
+    if (tourCurrentStep < guidedTourSteps.length - 1) {
+      jumpToTourStep(tourCurrentStep + 1);
+    } else {
+      pauseTour();
+      const hintEl = document.getElementById('tourCardHint');
+      if (hintEl) hintEl.textContent = '🎉 導覽圓滿完成！可點擊章節重播，或自由體驗 3D 模擬器';
+    }
+  }
+}
+
+function jumpToTourStep(index) {
+  if (index < 0) index = 0;
+  if (index >= guidedTourSteps.length) index = guidedTourSteps.length - 1;
+
+  tourCurrentStep = index;
+  tourStepElapsed = 0;
+
+  // Calculate cumulative elapsed time
+  let cum = 0;
+  for (let i = 0; i < index; i++) {
+    cum += guidedTourSteps[i].duration;
+  }
+  tourTotalElapsed = cum;
+
+  const step = guidedTourSteps[index];
+
+  // Update step navigation pills
+  document.querySelectorAll('#tourStepsNav .tour-step-pill').forEach((pill, idx) => {
+    pill.classList.toggle('active', idx === index);
+    pill.classList.toggle('completed', idx < index);
+  });
+
+  // Smooth scroll to target section
+  const targetId = step.targetSection;
+  const targetEl = document.getElementById(targetId);
+  if (targetEl) {
+    targetEl.scrollIntoView({ behavior: 'smooth', block: targetId === 'lifecycleCalculator' ? 'center' : 'start' });
+  }
+
+  // Execute step action
+  if (typeof step.run === 'function') {
+    step.run();
+  }
+
+  // Render narration card
+  renderTourPresenterCard(step);
+}
+
+function renderTourPresenterCard(step) {
+  const badgeEl = document.getElementById('tourStageBadge');
+  const ageEl = document.getElementById('tourStageAge');
+  const titleEl = document.getElementById('tourCardTitle');
+  const subtitleEl = document.getElementById('tourCardSubtitle');
+  const bulletsEl = document.getElementById('tourCardBullets');
+  const budgetEl = document.getElementById('tourMetricBudget');
+  const spaceEl = document.getElementById('tourMetricSpace');
+  const esgEl = document.getElementById('tourMetricEsg');
+  const benefitEl = document.getElementById('tourMetricBenefit');
+
+  if (badgeEl) badgeEl.textContent = step.badge;
+  if (ageEl) ageEl.textContent = step.age;
+  if (titleEl) titleEl.textContent = step.title;
+  if (subtitleEl) subtitleEl.textContent = step.subtitle;
+
+  if (bulletsEl) {
+    bulletsEl.innerHTML = step.points
+      .map(p => `<div class="tour-bullet-item"><span aria-hidden="true">${p.icon}</span><div><strong>${p.strong}</strong><span>${p.text}</span></div></div>`)
+      .join('');
+  }
+
+  if (budgetEl) budgetEl.textContent = step.metrics.budget;
+  if (spaceEl) spaceEl.textContent = step.metrics.space;
+  if (esgEl) esgEl.textContent = step.metrics.esg;
+  if (benefitEl) benefitEl.textContent = step.metrics.benefit;
+
+  const nextBtn = document.getElementById('btnTourCardNext');
+  if (nextBtn) {
+    nextBtn.textContent = tourCurrentStep >= guidedTourSteps.length - 1 ? '↺ 重新播放' : '下一階段 →';
+  }
+
+  if (typeof gsap !== 'undefined') {
+    gsap.fromTo('#tourPresenterCard', { y: 14, autoAlpha: 0.8 }, { y: 0, autoAlpha: 1, duration: 0.3, ease: 'power2.out' });
+  }
+}
+
+// Bind Walkthrough UI Events
+document.getElementById('btnHeroGuidedTour')?.addEventListener('click', () => startGuidedWalkthrough(0));
+document.getElementById('btnDockGuidedTour')?.addEventListener('click', () => startGuidedWalkthrough(0));
+document.getElementById('btnNavGuidedTour')?.addEventListener('click', () => startGuidedWalkthrough(0));
+document.getElementById('btnSimGuidedTour')?.addEventListener('click', () => startGuidedWalkthrough(1));
+
+document.getElementById('btnTourPlayPause')?.addEventListener('click', toggleTourPlayPause);
+document.getElementById('btnTourPrev')?.addEventListener('click', () => jumpToTourStep(tourCurrentStep - 1));
+document.getElementById('btnTourNext')?.addEventListener('click', () => jumpToTourStep(tourCurrentStep + 1));
+document.getElementById('btnTourCardNext')?.addEventListener('click', () => {
+  if (tourCurrentStep >= guidedTourSteps.length - 1) jumpToTourStep(0);
+  else jumpToTourStep(tourCurrentStep + 1);
+});
+
+document.getElementById('btnTourClose')?.addEventListener('click', stopGuidedWalkthrough);
+
+document.getElementById('btnTourSpeed')?.addEventListener('click', () => {
+  if (tourSpeed === 1) tourSpeed = 2;
+  else if (tourSpeed === 2) tourSpeed = 4;
+  else tourSpeed = 1;
+
+  const speedBtn = document.getElementById('btnTourSpeed');
+  if (speedBtn) speedBtn.textContent = `${tourSpeed}×`;
+  playSimSound('tap');
+  showRoomBanner(`⚡ 導覽巡弋速度已切換為 ${tourSpeed}×`);
+});
+
+document.getElementById('btnTourSound')?.addEventListener('click', () => {
+  tourSound = !tourSound;
+  const soundBtn = document.getElementById('btnTourSound');
+  if (soundBtn) soundBtn.textContent = tourSound ? '🔊' : '🔇';
+  playSimSound('tap');
+});
+
+document.querySelectorAll('#tourStepsNav .tour-step-pill').forEach(pill => {
+  pill.addEventListener('click', () => {
+    const idx = parseInt(pill.dataset.stepIndex, 10);
+    if (!isNaN(idx)) {
+      if (!isTourActive) startGuidedWalkthrough(idx);
+      else jumpToTourStep(idx);
+    }
+  });
+});
+
+document.addEventListener('keydown', e => {
+  if (!isTourActive) return;
+  if (e.target.matches('input, textarea, select')) return;
+  if (e.code === 'Space') {
+    e.preventDefault();
+    toggleTourPlayPause();
+  } else if (e.key === 'ArrowRight') {
+    e.preventDefault();
+    jumpToTourStep(tourCurrentStep + 1);
+  } else if (e.key === 'ArrowLeft') {
+    e.preventDefault();
+    jumpToTourStep(tourCurrentStep - 1);
+  } else if (e.key === 'Escape') {
+    e.preventDefault();
+    stopGuidedWalkthrough();
+  }
+});
+
+// Expose to window for external scripting or testing
+window.startGuidedWalkthrough = startGuidedWalkthrough;
+window.stopGuidedWalkthrough = stopGuidedWalkthrough;
+window.jumpToTourStep = jumpToTourStep;
+window.guidedTourSteps = guidedTourSteps;
+
 runSelfCheck();
 
 
