@@ -1,0 +1,2 @@
+.agents\ # Ignore all files in the .agents directory
+node_modules\ # Ignore all files in the node_modules directory
