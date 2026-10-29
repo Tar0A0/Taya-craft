@@ -2044,3 +2044,241 @@ textarea:focus-visible,
   }
   .tour-card-metrics { grid-template-columns: repeat(2, 1fr); }
 }
+
+/* ═══════════════ BEFORE / AFTER INTERACTIVE COMPARE SLIDER ═══════════════ */
+.ba-compare-card {
+  background: linear-gradient(172deg, #ffffff 0%, #faf8f3 60%, #f3ede1 100%);
+  border: 1px solid #dcd4c6;
+  border-radius: 12px;
+  padding: 1.8rem 2rem;
+  margin: 2rem 0 2.5rem;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 1),
+    0 12px 32px -8px rgba(45, 36, 26, 0.08);
+}
+
+.ba-compare-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 1.5rem;
+  margin-bottom: 1.25rem;
+  flex-wrap: wrap;
+}
+
+.ba-compare-title {
+  font-size: clamp(1.1rem, 1.6vw, 1.35rem);
+  font-weight: 800;
+  color: var(--text-primary);
+  letter-spacing: -0.01em;
+}
+
+.ba-quick-btns {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.ba-quick-btn {
+  background: #ffffff;
+  border: 1px solid #d5ccb9;
+  color: var(--text-secondary);
+  font-size: 0.78rem;
+  font-weight: 700;
+  padding: 0.45rem 0.85rem;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.ba-quick-btn:hover {
+  border-color: var(--amber);
+  color: var(--text-primary);
+}
+
+.ba-quick-btn.active {
+  background: var(--teal);
+  border-color: var(--teal);
+  color: #ffffff;
+}
+
+.ba-slider-viewport {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  border-radius: 10px;
+  overflow: hidden;
+  border: 1px solid #cbbda8;
+  user-select: none;
+  -webkit-user-select: none;
+  background: #1f1d1a;
+  box-shadow: 0 10px 28px rgba(0, 0, 0, 0.14);
+}
+
+.ba-img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  pointer-events: none;
+}
+
+.ba-before-clip {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  will-change: clip-path;
+}
+
+.ba-badge {
+  position: absolute;
+  bottom: 16px;
+  padding: 0.55rem 0.9rem;
+  border-radius: 8px;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+  pointer-events: none;
+  max-width: 44%;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.25);
+}
+
+.ba-badge strong {
+  font-size: 0.82rem;
+  font-weight: 800;
+  letter-spacing: 0.01em;
+}
+
+.ba-badge span {
+  font-size: 0.72rem;
+  opacity: 0.92;
+}
+
+.ba-badge-before {
+  left: 16px;
+  background: rgba(38, 27, 23, 0.84);
+  border: 1px solid rgba(239, 68, 68, 0.55);
+  color: #fff5f5;
+}
+
+.ba-badge-after {
+  right: 16px;
+  background: rgba(23, 43, 36, 0.86);
+  border: 1px solid rgba(16, 185, 129, 0.6);
+  color: #ecfdf5;
+  text-align: right;
+}
+
+.ba-divider {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 3px;
+  background: #ffffff;
+  transform: translateX(-50%);
+  pointer-events: none;
+  box-shadow: 0 0 12px rgba(0, 0, 0, 0.5);
+  z-index: 4;
+}
+
+.ba-handle {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+  background: #ffffff;
+  border: 3px solid var(--teal);
+  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.35);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--teal);
+  font-size: 0.78rem;
+  font-weight: 900;
+  letter-spacing: -1px;
+  transition: transform 0.15s ease, background 0.15s ease;
+}
+
+.ba-slider-viewport:hover .ba-handle {
+  transform: translate(-50%, -50%) scale(1.08);
+}
+
+.ba-range-input {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  cursor: ew-resize;
+  z-index: 6;
+  margin: 0;
+}
+
+.ba-metrics-strip {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0.85rem;
+  margin-top: 1.2rem;
+}
+
+.ba-metric-box {
+  background: #ffffff;
+  border: 1px solid #e2dacb;
+  border-radius: 8px;
+  padding: 0.75rem 0.9rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.ba-metric-label {
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.ba-metric-val {
+  font-size: 0.85rem;
+  font-weight: 800;
+  color: var(--text-primary);
+}
+
+.ba-metric-val .old {
+  color: #b45346;
+  text-decoration: line-through;
+  font-weight: 600;
+  opacity: 0.85;
+}
+
+.ba-metric-val .new {
+  color: var(--teal);
+}
+
+@media (max-width: 900px) {
+  .ba-metrics-strip {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .ba-badge span {
+    display: none;
+  }
+}
+
+@media (max-width: 600px) {
+  .ba-compare-card {
+    padding: 1.2rem;
+  }
+  .ba-metrics-strip {
+    grid-template-columns: 1fr;
+  }
+}

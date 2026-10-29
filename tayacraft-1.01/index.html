@@ -283,8 +283,66 @@
   </div>
 
   <div class="problem-showcase-grid">
-    <div class="problem-image">
-      <img src="assets/images/image4.png" alt="傳統空間 vs 現代生活" width="797" height="461" loading="lazy" decoding="async">
+    <!-- ═══════════════ INTERACTIVE BEFORE / AFTER COMPARE SLIDER ═══════════════ -->
+    <div class="ba-compare-card" id="baCompareCard">
+      <div class="ba-compare-header">
+        <div>
+          <span class="section-tag teal" style="margin-bottom:0.25rem;">REAL-SPACE SIMULATION // 同視角 12 坪實境對照</span>
+          <h3 class="ba-compare-title">左右拖曳滑桿：見證「傳統雜物堆積」vs「TAYA 鋁軌模組上牆」的坪效解放</h3>
+        </div>
+        <div class="ba-quick-btns" role="group" aria-label="快速切換對比視角">
+          <button type="button" class="ba-quick-btn" data-ba-pos="92">⚠ 看傳統凌亂 (Before)</button>
+          <button type="button" class="ba-quick-btn active" data-ba-pos="50">↔ 50:50 對照</button>
+          <button type="button" class="ba-quick-btn" data-ba-pos="8">✦ 看 TAYA 系統 (After)</button>
+        </div>
+      </div>
+
+      <div class="ba-slider-viewport" id="baSliderViewport">
+        <!-- 底層：After (使用 TAYA 系統) -->
+        <img src="assets/images/stage1-after.jpg" alt="使用 TAYA 鋁合金軌道系統後的整潔 12 坪空間" class="ba-img ba-img-after" width="1408" height="768" draggable="false">
+        <div class="ba-badge ba-badge-after">
+          <strong>✦ 使用 TAYA 軌道系統 (After)</strong>
+          <span>6063-T6 水平鋁軌 · Snap-Fit 折疊桌 · 模組書櫃上牆</span>
+        </div>
+
+        <!-- 上層裁切：Before (未使用 TAYA 系統) -->
+        <div class="ba-before-clip" id="baBeforeClip" style="clip-path: inset(0 50% 0 0);">
+          <img src="assets/images/stage1-before.jpg" alt="未使用 TAYA 系統前的雜物堆疊 12 坪空間" class="ba-img ba-img-before" width="1408" height="768" draggable="false">
+          <div class="ba-badge ba-badge-before">
+            <strong>⚠ 未使用 TAYA 系統 (Before)</strong>
+            <span>紙箱與塑膠櫃堆地 · 餐桌擠滿螢幕碗盤 · 延長線纏繞</span>
+          </div>
+        </div>
+
+        <!-- 分隔線與手把 -->
+        <div class="ba-divider" id="baDivider" style="left: 50%;" aria-hidden="true">
+          <div class="ba-handle">
+            <span class="ba-arrows">◀ ▶</span>
+          </div>
+        </div>
+
+        <!-- 無障礙與觸控滑桿控制 -->
+        <input type="range" min="0" max="100" value="50" class="ba-range-input" id="baRangeInput" aria-label="左右拖曳對比未使用與使用 TAYA 系統的空間差異">
+      </div>
+
+      <div class="ba-metrics-strip">
+        <div class="ba-metric-box">
+          <span class="ba-metric-label">地面可用走道</span>
+          <strong class="ba-metric-val"><span class="old">狹窄受阻</span> ➜ <span class="new">全面淨空</span></strong>
+        </div>
+        <div class="ba-metric-box">
+          <span class="ba-metric-label">書本與雜物收納</span>
+          <strong class="ba-metric-val"><span class="old">落地鐵架＋紙箱</span> ➜ <span class="new">鋁軌方格櫃上牆</span></strong>
+        </div>
+        <div class="ba-metric-box">
+          <span class="ba-metric-label">居家辦公區域</span>
+          <strong class="ba-metric-val"><span class="old">霸佔餐桌</span> ➜ <span class="new">Snap-Fit 折疊壁掛桌</span></strong>
+        </div>
+        <div class="ba-metric-box">
+          <span class="ba-metric-label">施工改造方式</span>
+          <strong class="ba-metric-val"><span class="old">傳統敲牆泥作</span> ➜ <span class="new">30–45 min 快拆換裝</span></strong>
+        </div>
+      </div>
     </div>
 
     <div class="pain-grid">

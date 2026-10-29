@@ -3697,6 +3697,54 @@ window.stopGuidedWalkthrough = stopGuidedWalkthrough;
 window.jumpToTourStep = jumpToTourStep;
 window.guidedTourSteps = guidedTourSteps;
 
+// ─── BEFORE / AFTER COMPARE SLIDER INTERACTION ───
+(function initBeforeAfterSlider() {
+  const rangeInput = document.getElementById('baRangeInput');
+  const beforeClip = document.getElementById('baBeforeClip');
+  const divider = document.getElementById('baDivider');
+  const quickBtns = document.querySelectorAll('.ba-quick-btn');
+
+  if (!rangeInput || !beforeClip || !divider) return;
+
+  function updateSlider(percent) {
+    const clamped = Math.max(0, Math.min(100, Number(percent)));
+    rangeInput.value = clamped;
+    beforeClip.style.clipPath = `inset(0 ${100 - clamped}% 0 0)`;
+    divider.style.left = `${clamped}%`;
+
+    quickBtns.forEach(btn => {
+      const targetPos = Number(btn.dataset.baPos);
+      btn.classList.toggle('active', Math.abs(clamped - targetPos) <= 8);
+    });
+  }
+
+  rangeInput.addEventListener('input', e => {
+    updateSlider(e.target.value);
+  });
+
+  quickBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      const targetPos = Number(btn.dataset.baPos);
+      if (!Number.isFinite(targetPos)) return;
+      if (typeof gsap !== 'undefined') {
+        const proxy = { val: Number(rangeInput.value) };
+        gsap.to(proxy, {
+          val: targetPos,
+          duration: 0.45,
+          ease: 'power2.out',
+          onUpdate: () => updateSlider(proxy.val)
+        });
+      } else {
+        updateSlider(targetPos);
+      }
+      if (typeof playSimSound === 'function') playSimSound('tap');
+    });
+  });
+
+  updateSlider(50);
+})();
+
 runSelfCheck();
+
 
 
