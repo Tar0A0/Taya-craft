@@ -1,7 +1,7 @@
 const { test, expect } = require('@playwright/test');
 const path = require('path');
 
-const fileUrl = 'file:///' + path.resolve(__dirname, '..', 'tayacraft-1.01', 'index.html').replace(/\\/g, '/');
+const fileUrl = 'file:///' + path.resolve(__dirname, '..', 'index.html').replace(/\\/g, '/');
 
 test.describe('TAYACRAFT E2E 自動化測試套件', () => {
 

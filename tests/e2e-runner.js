@@ -11,7 +11,7 @@ async function runE2ETests() {
   console.log('🚀 Starting TAYACRAFT Playwright E2E Test Suite');
   console.log('====================================================\n');
 
-  const htmlPath = path.resolve(__dirname, '..', 'tayacraft-1.01', 'index.html');
+  const htmlPath = path.resolve(__dirname, '..', 'index.html');
   if (!fs.existsSync(htmlPath)) {
     throw new Error('Target index.html not found at: ' + htmlPath);
   }

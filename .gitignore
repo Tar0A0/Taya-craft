@@ -1,2 +1,5 @@
-.agents\ # Ignore all files in the .agents directory
-node_modules\ # Ignore all files in the node_modules directory
+# 依賴套件
+node_modules/
+
+# 其他暫存與工具
+.agents/
