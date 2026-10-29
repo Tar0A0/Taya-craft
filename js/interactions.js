@@ -180,10 +180,10 @@ function loadSimState() {
         safe: Boolean(parsed.dlcs?.safe)
       },
       trackPos: {
-        work: Number.isFinite(Number(parsed.trackPos?.work)) ? Math.max(1.8, Math.min(11.0, Number(parsed.trackPos.work))) : 5.1,
-        family: Number.isFinite(Number(parsed.trackPos?.family)) ? Math.max(1.75, Math.min(9.0, Number(parsed.trackPos.family))) : 2.1,
-        storage: Number.isFinite(Number(parsed.trackPos?.storage)) ? Math.max(1.8, Math.min(11.6, Number(parsed.trackPos.storage))) : 7.35,
-        safe: Number.isFinite(Number(parsed.trackPos?.safe)) ? Math.max(1.85, Math.min(7.0, Number(parsed.trackPos.safe))) : 2.05
+        work: Number.isFinite(Number(parsed.trackPos?.work)) ? Math.max(0.22, Math.min(11.6, Number(parsed.trackPos.work))) : 5.1,
+        family: Number.isFinite(Number(parsed.trackPos?.family)) ? Math.max(0.22, Math.min(11.6, Number(parsed.trackPos.family))) : 2.1,
+        storage: Number.isFinite(Number(parsed.trackPos?.storage)) ? Math.max(0.22, Math.min(11.8, Number(parsed.trackPos.storage))) : 7.35,
+        safe: Number.isFinite(Number(parsed.trackPos?.safe)) ? Math.max(0.22, Math.min(7.5, Number(parsed.trackPos.safe))) : 2.05
       },
       esgScore: Number.isFinite(Number(parsed.esgScore)) ? Math.max(0, Math.round(Number(parsed.esgScore))) : 30,
       xrayMode: Boolean(parsed.xrayMode),

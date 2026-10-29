@@ -230,61 +230,113 @@ function getSceneObjects() {
   const clampIY = y => Math.max(1.15, Math.min(roomD - 0.65, y));
   const customPos = simState.v4Positions || {};
 
+  const hasShower = simState.furniture.includes('shower-pod');
+  const showerRot = getObjRotation('shower-pod');
+  const showerDx = (showerRot % 2 === 1) ? 1.55 : 1.45;
+  const showerDy = (showerRot % 2 === 1) ? 1.45 : 1.55;
+  const showerCp = customPos['shower-pod'];
+  const showerX = clampX(showerCp && Number.isFinite(showerCp.x) ? showerCp.x : 0.22, showerDx);
+  const showerY = clampY(showerCp && Number.isFinite(showerCp.y) ? showerCp.y : 0.25, showerDy);
+  const backTrackMinX = (hasShower && showerX < 1.5 && showerY < 1.4)
+    ? Number((showerX + showerDx + 0.08).toFixed(2))
+    : 0.22;
+  const hasPillar = Boolean(simState.hardscape?.pillar);
+  const leftTrackMinY = hasPillar
+    ? 2.55
+    : ((hasShower && showerX < 1.4 && showerY < 1.5) ? Number((showerY + showerDy + 0.05).toFixed(2)) : 0.22);
+
+  // Prevent back-wall track modules from ever overlapping shower or each other
+  const occupiedBackRanges = [];
+  if (hasShower && showerY < 1.65) {
+    occupiedBackRanges.push({ start: showerX, end: showerX + showerDx });
+  }
+  const resolveBackWallX = (id, desiredX, dx, sMin, sMax) => {
+    const clamped = Math.max(sMin, Math.min(sMax, clampX(desiredX, dx)));
+    const overlaps = x => occupiedBackRanges.some(r => x < r.end + 0.04 && x + dx + 0.04 > r.start);
+    let finalX = clamped;
+    if (overlaps(clamped)) {
+      let bestX = null;
+      let bestDist = Infinity;
+      for (let stepX = sMin; stepX <= sMax + 0.001; stepX += 0.05) {
+        const cx = Number(Math.min(sMax, stepX).toFixed(2));
+        if (!overlaps(cx)) {
+          const d = Math.abs(cx - clamped);
+          if (d < bestDist) {
+            bestDist = d;
+            bestX = cx;
+          }
+        }
+      }
+      if (bestX !== null) {
+        finalX = bestX;
+        if (simState.trackPos) simState.trackPos[id] = finalX;
+      }
+    }
+    occupiedBackRanges.push({ start: finalX, end: finalX + dx });
+    return finalX;
+  };
+
   const tp = simState.trackPos || { work: 5.1, family: 2.1, storage: 7.35, safe: 2.05 };
-  // 1. WORK Zone (Slidable along Back Wall Track!)
-  if (isDlcActive('work')) {
-    const dx = Math.min(2.0, roomW * 0.38), dy = 1.05;
-    const sMin = Math.min(4.3, Math.max(1.8, roomW - dx - 1.8));
-    const sMax = Math.max(sMin, roomW - dx - 0.25);
-    const wx = clampX(tp.work ?? 5.1, dx);
-    list.push({
-      id: 'work', storeKey: 'work',
+  const backDlcDefs = [
+    {
+      id: 'work',
+      active: isDlcActive('work'),
+      dx: Number(Math.min(2.0, roomW * 0.28).toFixed(2)),
+      dy: 1.05, dz: 1.55, y: 0.22, iy: 1.65,
+      defX: 5.1,
       label: 'WORK DLC · 壁掛折疊工作桌 (可沿軌道滑移)',
-      action: 'work',
-      x: wx, y: 0.22, z: 0, dx, dy, dz: 1.55,
-      ix: clampIX(wx + dx * 0.5), iy: clampIY(1.65),
-      isDlc: true, slideAxis: 'x', slideMin: sMin, slideMax: sMax
-    });
-  }
-
-  // 2. FAMILY Zone (Slidable along Back Wall Track!)
-  if (isDlcActive('family')) {
-    const dx = Math.min(2.3, roomW * 0.42), dy = 1.55;
-    const sMin = 1.75;
-    const sMax = Math.max(sMin, Math.min(3.9, roomW - dx - 0.3));
-    const fx = clampX(tp.family ?? 2.1, dx);
-    list.push({
-      id: 'family', storeKey: 'family',
+      action: 'work'
+    },
+    {
+      id: 'family',
+      active: isDlcActive('family'),
+      dx: Number(Math.min(2.3, roomW * 0.30).toFixed(2)),
+      dy: 1.55, dz: 1.25, y: 0.25, iy: 2.15,
+      defX: 2.1,
       label: 'FAMILY DLC · 變形延伸料理中島 (可沿軌道滑移)',
-      action: 'eat',
-      x: fx, y: 0.25, z: 0, dx, dy, dz: 1.25,
-      ix: clampIX(fx + dx * 0.5), iy: clampIY(2.15),
-      isDlc: true, slideAxis: 'x', slideMin: sMin, slideMax: sMax
-    });
-  }
-
-  // 3. STORAGE Zone (Slidable along Back Wall Track!)
-  if (isDlcActive('storage')) {
-    const dx = 1.4, dy = 0.82;
-    const sMax = Math.max(2.2, roomW - dx - 0.2);
-    const sMin = Math.max(1.8, sMax - 1.2);
-    const sx = clampX(tp.storage ?? (roomW - dx - 0.25), dx);
-    list.push({
-      id: 'storage', storeKey: 'storage',
+      action: 'eat'
+    },
+    {
+      id: 'storage',
+      active: isDlcActive('storage'),
+      dx: Number(Math.min(1.4, roomW * 0.20).toFixed(2)),
+      dy: 0.82, dz: 2.35, y: 0.22, iy: 1.4,
+      defX: Number((roomW - Math.min(1.4, roomW * 0.20) - 0.25).toFixed(2)),
       label: 'STORAGE DLC · 頂天立地收納櫃 (可沿軌道滑移)',
-      action: 'relax',
-      x: sx, y: 0.22, z: 0, dx, dy, dz: 2.35,
-      ix: clampIX(sx + 0.65), iy: clampIY(1.4),
-      isDlc: true, slideAxis: 'x', slideMin: sMin, slideMax: sMax
-    });
-  }
+      action: 'relax'
+    }
+  ].filter(d => d.active);
 
-  // 4. SAFE DLC Handrails (Slidable along Left Wall Track!)
+  // Resolve stationary modules first, then currently dragged module so dragged module stops flush against stationary ones
+  const activeDragId = draggingModule?.id;
+  const orderedBackDlcs = [
+    ...backDlcDefs.filter(d => d.id !== activeDragId),
+    ...backDlcDefs.filter(d => d.id === activeDragId)
+  ];
+  const resolvedBackMap = {};
+  orderedBackDlcs.forEach(d => {
+    const sMin = backTrackMinX;
+    const sMax = Math.max(sMin, Number((roomW - d.dx - 0.22).toFixed(2)));
+    const wx = resolveBackWallX(d.id, tp[d.id] ?? d.defX, d.dx, sMin, sMax);
+    resolvedBackMap[d.id] = {
+      id: d.id, storeKey: d.id,
+      label: d.label,
+      action: d.action,
+      x: wx, y: d.y, z: 0, dx: d.dx, dy: d.dy, dz: d.dz,
+      ix: clampIX(wx + d.dx * 0.5), iy: clampIY(d.iy),
+      isDlc: true, slideAxis: 'x', slideMin: sMin, slideMax: sMax
+    };
+  });
+  backDlcDefs.forEach(d => {
+    if (resolvedBackMap[d.id]) list.push(resolvedBackMap[d.id]);
+  });
+
+  // 4. SAFE DLC Handrails (Slidable along full Left Wall Track!)
   if (isDlcActive('safe')) {
     const dy = 1.35;
-    const sMin = 1.85;
-    const sMax = Math.max(sMin, roomD - dy - 0.35);
-    const sy = clampY(tp.safe ?? 2.05, dy);
+    const sMin = leftTrackMinY;
+    const sMax = Math.max(sMin, Number((roomD - dy - 0.25).toFixed(2)));
+    const sy = Math.max(sMin, Math.min(sMax, clampY(tp.safe ?? 2.05, dy)));
     list.push({
       id: 'safe', storeKey: 'safe',
       label: 'SAFE DLC · 樂齡感應扶手與夜燈組 (可沿軌道滑移)',
@@ -319,7 +371,7 @@ function getSceneObjects() {
   addBaseFurn('sofa', 'sofa-set', '北歐雙人舒適沙發', 'relax', 0.55, Math.min(3.55, roomD - 2.35), 1.2, Math.min(2.0, roomD * 0.38), 0.95);
   addBaseFurn('tv', 'tv-wall', '智慧影音電視櫃', 'chat', Math.min(2.55, roomW * 0.38), Math.min(3.9, roomD - 1.75), 0.72, Math.min(1.4, roomD * 0.32), 1.15);
   addBaseFurn('bed', 'bed-set', isDlcActive('storage') ? '掀床高密度收納雙人床' : '舒適雙人臥床', 'sleep', roomW - 2.55, Math.min(3.65, roomD - 2.2), Math.min(2.2, roomW * 0.38), Math.min(1.85, roomD * 0.38), 1.15);
-  addBaseFurn('cart', 'kitchen-cart', '移動式料理推車', 'eat', Math.min(4.45, roomW * 0.52), Math.min(1.5, roomD * 0.35), 0.75, 0.65, 0.85);
+  addBaseFurn('cart', 'kitchen-cart', '移動式料理推車', 'eat', Math.min(4.45, roomW * 0.52), Math.min(1.95, roomD * 0.38), 0.75, 0.65, 0.85);
   addBaseFurn('plant', 'plant-deco', '琴葉榕大型植栽', 'relax', roomW - 0.95, Math.min(2.3, roomD * 0.45), 0.65, 0.65, 1.45);
 
   // Include all placed V4 Themed Catalog Items so they are clickable, draggable, rotatable & interactive!
@@ -1716,7 +1768,7 @@ function renderGameRoom(now = performance.now()) {
     for (let sy = 0.8; sy < roomD; sy += 1.2) {
       iso.drawBox(-0.16, sy, 0, 0.12, 0.1, curWallH - 0.05, '#475569');
     }
-    const pipeLen = Math.min(4.5, roomW - 0.4);
+    const pipeLen = Math.max(0.8, roomW - 0.4);
     iso.drawBox(0.2, -0.12, 0.38, pipeLen, 0.06, 0.06, '#0ea5e9');
     iso.drawBox(0.2, -0.12, 0.52, pipeLen, 0.06, 0.06, '#f97316');
   } else {
@@ -1755,9 +1807,9 @@ function renderGameRoom(now = performance.now()) {
     });
   }
 
-  // Upper wall module rail (clamped to roomW so it never sticks past the wall!)
-  const upRailX = Math.min(4.6, roomW * 0.48);
-  const upRailW = Math.max(0.8, roomW - upRailX - 0.2);
+  // Upper wall module rail (spans available back wall track and clamped to roomW!)
+  const upRailX = Math.min(2.05, 0.65 + Math.min(1.35, roomW * 0.32) + 0.08);
+  const upRailW = Math.max(0.8, roomW - upRailX - 0.15);
   iso.drawBox(upRailX, 0.0, 2.05, upRailW, 0.1, 0.1, '#94a3b8');
 
   // SAFE DLC Glowing Baseboard Nightlight along walls
@@ -1769,15 +1821,39 @@ function renderGameRoom(now = performance.now()) {
   // 5. Collect & Depth-Sort All 3D Furniture, V4 Props & Characters Together (Zero Z-Order Glitch!)
   const renderables = [];
 
-  // When wallMode is 'full': push foreground perimeter walls to renderables so interior furniture is properly occluded!
+  // When wallMode is 'full' or 'none': push foreground perimeter walls to renderables with true foreground depth so interior furniture never clips through!
   if (wallMode === 'full') {
+    const fgDepthBase = iso.project(roomW + 1, roomD + 1, wallH).depth + 100;
+    const fgXOpts = xray ? {
+      topColor: 'rgba(56, 189, 248, 0.18)',
+      rightColor: 'rgba(15, 23, 42, 0.28)',
+      leftColor: 'rgba(30, 58, 95, 0.25)',
+      stroke: 'rgba(56, 189, 248, 0.55)'
+    } : {};
+    const fgCol = xray ? '#0f172a' : wallColor;
     renderables.push({
-      depth: iso.project(roomW * 0.5, roomD, wallH * 0.5).depth,
-      draw: () => iso.drawBox(0, roomD - 0.08, 0, roomW, 0.16, wallH, wallColor)
+      depth: fgDepthBase,
+      draw: () => iso.drawBox(roomW, -0.2, 0, 0.2, roomD + 0.2, curWallH, fgCol, fgXOpts)
     });
     renderables.push({
-      depth: iso.project(roomW, roomD * 0.5, wallH * 0.5).depth,
-      draw: () => iso.drawBox(roomW - 0.08, 0, 0, 0.16, roomD, wallH, wallColor)
+      depth: fgDepthBase + 1,
+      draw: () => iso.drawBox(-0.2, roomD, 0, roomW + 0.4, 0.2, curWallH, fgCol, fgXOpts)
+    });
+  } else if (wallMode === 'none') {
+    const fgDepthBase = iso.project(roomW + 1, roomD + 1, curWallH).depth + 100;
+    renderables.push({
+      depth: fgDepthBase,
+      draw: () => {
+        iso.drawBox(roomW, -0.2, 0, 0.2, roomD + 0.2, curWallH, wallColor);
+        iso.drawBox(roomW, -0.2, curWallH, 0.2, roomD + 0.2, 0.02, '#994639', { topColor: '#b91c1c' });
+      }
+    });
+    renderables.push({
+      depth: fgDepthBase + 1,
+      draw: () => {
+        iso.drawBox(-0.2, roomD, 0, roomW + 0.4, 0.2, curWallH, wallColor);
+        iso.drawBox(-0.2, roomD, curWallH, roomW + 0.4, 0.2, 0.02, '#994639', { topColor: '#b91c1c' });
+      }
     });
   }
 
@@ -1796,7 +1872,7 @@ function renderGameRoom(now = performance.now()) {
       iso.project(activeInspectObj.x - pad, activeInspectObj.y + activeInspectObj.dy + pad, 0.015)
     ];
     const isDraggingNow = Boolean(draggingFloorObj || draggingModule);
-    const isCollidingNow = isDraggingNow && Boolean(draggingFloorObj?.isColliding);
+    const isCollidingNow = isDraggingNow && Boolean(draggingFloorObj?.isColliding || draggingModule?.isColliding);
     iso.drawPoly(
       fPts,
       isCollidingNow ? 'rgba(239, 68, 68, 0.38)' : (isDraggingNow ? 'rgba(56, 189, 248, 0.28)' : 'rgba(100, 136, 121, 0.22)'),
@@ -1809,14 +1885,15 @@ function renderGameRoom(now = performance.now()) {
       roomCtx.font = '700 11px "Noto Sans TC", sans-serif';
       roomCtx.fillStyle = '#ef4444';
       roomCtx.textAlign = 'center';
-      roomCtx.fillText('⚠️ 碰撞衝突：與建築承重結構/隔間重疊', topPt.x, topPt.y);
+      roomCtx.fillText('⚠️ 碰撞衝突：已貼齊鄰近模組/結構邊界', topPt.x, topPt.y);
       roomCtx.restore();
     }
   }
 
   sceneObjs.forEach(obj => {
     if (obj.isV4) return; // Rendered with full 3D models inside drawV4HardscapeAndProps
-    const centerDepth = iso.project(obj.x + obj.dx / 2, obj.y + obj.dy / 2, obj.dz / 2).depth;
+    const zDepth = (obj.z || 0) > 0.1 ? (obj.z * 3.0) : 0;
+    const centerDepth = iso.project(obj.x + obj.dx / 2, obj.y + obj.dy / 2, zDepth).depth;
     renderables.push({
       depth: centerDepth,
       draw: () => draw3DFurnitureObject(iso, obj, now, isNight)
@@ -1824,7 +1901,7 @@ function renderGameRoom(now = performance.now()) {
   });
 
   // Main Player 3D Character
-  const playerDepth = iso.project(simState.player.x, simState.player.y, 0.6).depth;
+  const playerDepth = iso.project(simState.player.x, simState.player.y, 0.05).depth;
   renderables.push({
     depth: playerDepth,
     draw: () => draw3DCharacter(iso, simState.player.x, simState.player.y, now, true, null)
@@ -1834,7 +1911,7 @@ function renderGameRoom(now = performance.now()) {
   const activeCompCount = Math.max(0, Math.min(companionAgents.length, (simState.profile.people || 2) - 1));
   for (let ci = 0; ci < activeCompCount; ci++) {
     const comp = companionAgents[ci];
-    const compDepth = iso.project(comp.x, comp.y, 0.6).depth;
+    const compDepth = iso.project(comp.x, comp.y, 0.05).depth;
     renderables.push({
       depth: compDepth,
       draw: () => draw3DCharacter(iso, comp.x, comp.y, now + ci * 400, false, comp)
@@ -1849,76 +1926,74 @@ function renderGameRoom(now = performance.now()) {
     drawV4PostOverlays(iso, now, isNight, isDusk, roomW, roomD);
   }
 
-  // 5B. Volumetric Wall Hitbox Rendering (CAD / High-tech Engine Wireframe)
+  // 5B. Volumetric Wall Hitbox Rendering (CAD / High-tech Engine Wireframe — only when showHitbox is enabled)
   const allWallBoxes = getWallHitboxes();
   const isHitboxGloballyOn = Boolean(simState.showHitbox);
   const selWallId = selectedObjectId;
   const hovWallId = hoveredObject?.id;
 
-  allWallBoxes.forEach(box => {
-    const isTargeted = (box.id === selWallId || box.id === hovWallId);
-    if (!isHitboxGloballyOn && !isTargeted) return;
+  if (isHitboxGloballyOn) {
+    allWallBoxes.forEach(box => {
+      const isTargeted = (box.id === selWallId || box.id === hovWallId);
+      const isDoorLeaf = Boolean(box.isDoorLeaf);
+      const isOpen = Boolean(box.isOpen);
+      let color = '#38bdf8';
+      let fillColor = 'rgba(56, 189, 248, 0.12)';
+      let strokeColor = '#0284c7';
 
-    const isDoorLeaf = Boolean(box.isDoorLeaf);
-    const isOpen = Boolean(box.isOpen);
-    let color = '#38bdf8';
-    let fillColor = 'rgba(56, 189, 248, 0.12)';
-    let strokeColor = '#0284c7';
+      if (box.isRoomWall) {
+        color = isTargeted ? '#f59e0b' : '#38bdf8';
+        fillColor = isTargeted ? 'rgba(245, 158, 11, 0.22)' : 'rgba(56, 189, 248, 0.10)';
+        strokeColor = isTargeted ? '#d97706' : '#0284c7';
+      } else if (isDoorLeaf) {
+        color = isOpen ? '#34d399' : '#f43f5e';
+        fillColor = isOpen ? 'rgba(52, 211, 153, 0.20)' : 'rgba(244, 63, 94, 0.20)';
+        strokeColor = isOpen ? '#059669' : '#e11d48';
+      } else if (box.isPartition) {
+        color = isTargeted ? '#a855f7' : '#6366f1';
+        fillColor = isTargeted ? 'rgba(168, 85, 247, 0.24)' : 'rgba(99, 102, 241, 0.12)';
+        strokeColor = isTargeted ? '#9333ea' : '#4f46e5';
+      }
 
-    if (box.isRoomWall) {
-      color = isTargeted ? '#f59e0b' : '#38bdf8';
-      fillColor = isTargeted ? 'rgba(245, 158, 11, 0.22)' : 'rgba(56, 189, 248, 0.10)';
-      strokeColor = isTargeted ? '#d97706' : '#0284c7';
-    } else if (isDoorLeaf) {
-      color = isOpen ? '#34d399' : '#f43f5e';
-      fillColor = isOpen ? 'rgba(52, 211, 153, 0.20)' : 'rgba(244, 63, 94, 0.20)';
-      strokeColor = isOpen ? '#059669' : '#e11d48';
-    } else if (box.isPartition) {
-      color = isTargeted ? '#a855f7' : '#6366f1';
-      fillColor = isTargeted ? 'rgba(168, 85, 247, 0.24)' : 'rgba(99, 102, 241, 0.12)';
-      strokeColor = isTargeted ? '#9333ea' : '#4f46e5';
-    }
-
-    draw3DHitbox(iso, box, {
-      color,
-      fillColor,
-      strokeColor,
-      isSolid: box.isSolid,
-      showBadge: isTargeted || isHitboxGloballyOn,
-      label: box.label,
-      dashed: !isTargeted
+      draw3DHitbox(iso, box, {
+        color,
+        fillColor,
+        strokeColor,
+        isSolid: box.isSolid,
+        showBadge: true,
+        label: box.label,
+        dashed: !isTargeted
+      });
     });
-  });
 
-  // 5C. Furniture & DLC Modular Unit Hitboxes (CAD Wireframe for all active items)
-  sceneObjs.forEach(obj => {
-    if (obj.isPartition) return; // Handled under partition wall boxes above
-    const isTargeted = (obj.id === selWallId || obj.id === hovWallId);
-    if (!isHitboxGloballyOn && !isTargeted) return;
+    // 5C. Furniture & DLC Modular Unit Hitboxes (CAD Wireframe for all active items)
+    sceneObjs.forEach(obj => {
+      if (obj.isPartition) return; // Handled under partition wall boxes above
+      const isTargeted = (obj.id === selWallId || obj.id === hovWallId);
+      const fBox = {
+        id: obj.id,
+        storeKey: obj.storeKey || obj.id,
+        x: obj.x,
+        y: obj.y,
+        z: obj.z || 0,
+        dx: obj.dx,
+        dy: obj.dy,
+        dz: obj.dz || 0.85,
+        label: obj.label || '家具模組',
+        isSolid: true
+      };
 
-    const fBox = {
-      id: obj.id,
-      storeKey: obj.storeKey || obj.id,
-      x: obj.x,
-      y: obj.y,
-      z: obj.z || 0,
-      dx: obj.dx,
-      dy: obj.dy,
-      dz: obj.dz || 0.85,
-      label: obj.label || '家具模組',
-      isSolid: true
-    };
-
-    draw3DHitbox(iso, fBox, {
-      color: isTargeted ? '#f59e0b' : '#0ea5e9',
-      fillColor: isTargeted ? 'rgba(245, 158, 11, 0.24)' : 'rgba(14, 165, 233, 0.12)',
-      strokeColor: isTargeted ? '#d97706' : '#0284c7',
-      isSolid: true,
-      showBadge: isTargeted || isHitboxGloballyOn,
-      label: fBox.label,
-      dashed: !isTargeted
+      draw3DHitbox(iso, fBox, {
+        color: isTargeted ? '#f59e0b' : '#0ea5e9',
+        fillColor: isTargeted ? 'rgba(245, 158, 11, 0.24)' : 'rgba(14, 165, 233, 0.12)',
+        strokeColor: isTargeted ? '#d97706' : '#0284c7',
+        isSolid: true,
+        showBadge: true,
+        label: fBox.label,
+        dashed: !isTargeted
+      });
     });
-  });
+  }
 
   // 5D. Living Entities Hitboxes (Player, Companions, Robot Vac)
   if (isHitboxGloballyOn) {
@@ -2211,11 +2286,11 @@ function getWallHitboxes() {
       label: '建築前側外牆',
       isRoomWall: true,
       wallType: 'front',
-      x: 0,
-      y: roomD - 0.22,
+      x: -0.2,
+      y: roomD,
       z: 0,
-      dx: roomW,
-      dy: 0.22,
+      dx: roomW + 0.4,
+      dy: 0.2,
       dz: perimeterWallH,
       isSolid: true
     });
@@ -2225,11 +2300,11 @@ function getWallHitboxes() {
       label: '建築右側外牆',
       isRoomWall: true,
       wallType: 'right',
-      x: roomW - 0.22,
-      y: 0,
+      x: roomW,
+      y: -0.2,
       z: 0,
-      dx: 0.22,
-      dy: roomD,
+      dx: 0.2,
+      dy: roomD + 0.2,
       dz: perimeterWallH,
       isSolid: true
     });
@@ -2637,11 +2712,11 @@ function resolveWallCollisions(curX, curY, nextX, nextY, radius = 0.22, roomW, r
 
 // Test furniture AABB collision against solid structural walls, pillars, partitions AND other furniture
 function checkFurnitureCollision(testBox, ignoreId = null) {
-  // 1. Check solid wall boxes (including pillars, L-shape, partition walls)
+  // 1. Check solid wall boxes (including pillars, L-shape, partition walls; skip outer perimeter walls)
   const solidBoxes = getWallHitboxes().filter(b => b.isSolid && b.id !== ignoreId);
   for (let i = 0; i < solidBoxes.length; i++) {
     const b = solidBoxes[i];
-    if (b.id === 'room-wall-back' || b.id === 'room-wall-left') continue;
+    if (b.wallType) continue;
     // 2D AABB overlap with 0.02m margin
     if (testBox.x < b.x + b.dx - 0.02 && testBox.x + testBox.dx > b.x + 0.02 &&
         testBox.y < b.y + b.dy - 0.02 && testBox.y + testBox.dy > b.y + 0.02) {
@@ -3034,9 +3109,9 @@ function getCanvasMouse3D(event) {
     }
   });
 
-  // If no foreground furniture/partition hit with high confidence, test Room Perimeter Walls & Pillar Hitboxes
+  // If no foreground furniture/partition hit with high confidence, test Pillar & (when showHitbox is on) Room Perimeter Walls
   if (!hit || bestScreenDist > 22) {
-    const roomWallBoxes = getWallHitboxes().filter(b => b.isRoomWall);
+    const roomWallBoxes = getWallHitboxes().filter(b => b.isPillar || (simState.showHitbox && b.isRoomWall));
     roomWallBoxes.forEach(w => {
       const wHit = getProjectedBoxHitDist(iso, sx, sy, w, 6);
       if (wHit.insideBounds && wHit.dist < bestScreenDist) {
@@ -3435,11 +3510,20 @@ roomCanvas.addEventListener('pointerdown', event => {
     updateObjInspectorUI();
 
     if (res.hit.isDlc && res.hit.slideAxis) {
+      let grabOffset = res.hit.slideAxis === 'x' ? 0.8 : 0.6;
+      if (window._currentRoomIso) {
+        const rect = roomCanvas.getBoundingClientRect();
+        const sx0 = (event.clientX - rect.left) * (roomCanvas.width / rect.width);
+        const sy0 = (event.clientY - rect.top) * (roomCanvas.height / rect.height);
+        const fl0 = window._currentRoomIso.unprojectFloor(sx0, sy0);
+        grabOffset = res.hit.slideAxis === 'x' ? (fl0.x - res.hit.x) : (fl0.y - res.hit.y);
+      }
       draggingModule = {
         id: res.hit.id,
         axis: res.hit.slideAxis,
         min: res.hit.slideMin,
-        max: res.hit.slideMax
+        max: res.hit.slideMax,
+        grabOffset
       };
       lastSlideTickVal = simState.trackPos[res.hit.id] || 0;
       roomCanvas.setPointerCapture(event.pointerId);
@@ -3567,12 +3651,57 @@ roomCanvas.addEventListener('pointermove', event => {
       const sx = (event.clientX - rect.left) * (roomCanvas.width / rect.width);
       const sy = (event.clientY - rect.top) * (roomCanvas.height / rect.height);
       const fl = window._currentRoomIso.unprojectFloor(sx, sy);
-      const raw = draggingModule.axis === 'x' ? fl.x - 0.8 : fl.y - 0.6;
-      const clamped = Math.round(Math.max(draggingModule.min, Math.min(draggingModule.max, raw)) * 10) / 10;
+      const offset = Number.isFinite(draggingModule.grabOffset)
+        ? draggingModule.grabOffset
+        : (draggingModule.axis === 'x' ? 0.8 : 0.6);
+      const raw = (draggingModule.axis === 'x' ? fl.x : fl.y) - offset;
+      const clamped = Math.round(Math.max(draggingModule.min, Math.min(draggingModule.max, raw)) * 20) / 20;
       if (!simState.trackPos) simState.trackPos = { work: 5.1, family: 2.1, storage: 7.35, safe: 2.05 };
-      simState.trackPos[draggingModule.id] = clamped;
-      if (Math.abs(clamped - lastSlideTickVal) >= 0.2) {
-        lastSlideTickVal = clamped;
+      const curObjs = getSceneObjects();
+      const modObj = curObjs.find(o => o.id === draggingModule.id);
+      let appliedPos = clamped;
+      if (modObj) {
+        const makeBox = pos => ({
+          x: draggingModule.axis === 'x' ? pos : modObj.x,
+          y: draggingModule.axis === 'y' ? pos : modObj.y,
+          dx: modObj.dx,
+          dy: modObj.dy
+        });
+        const directHit = checkFurnitureCollision(makeBox(clamped), draggingModule.id);
+        draggingModule.isColliding = Boolean(directHit);
+        if (directHit) {
+          const curPos = Number.isFinite(simState.trackPos[draggingModule.id]) ? simState.trackPos[draggingModule.id] : (draggingModule.axis === 'x' ? modObj.x : modObj.y);
+          let bestPos = curPos;
+          const step = clamped > curPos ? 0.02 : -0.02;
+          const count = Math.min(300, Math.ceil(Math.abs(clamped - curPos) / 0.02));
+          for (let s = 1; s <= count; s++) {
+            const p = Number((curPos + step * s).toFixed(2));
+            if (p < draggingModule.min || p > draggingModule.max) break;
+            if (!checkFurnitureCollision(makeBox(p), draggingModule.id)) {
+              bestPos = p;
+            }
+          }
+          appliedPos = bestPos;
+        }
+        // Push characters out if module slid onto their position
+        const finalBox = makeBox(appliedPos);
+        const pushEntityOut = ent => {
+          if (!ent) return;
+          if (ent.x > finalBox.x - 0.24 && ent.x < finalBox.x + finalBox.dx + 0.24 &&
+              ent.y > finalBox.y - 0.24 && ent.y < finalBox.y + finalBox.dy + 0.24) {
+            if (draggingModule.axis === 'x') {
+              ent.y = finalBox.y + finalBox.dy + 0.32;
+            } else {
+              ent.x = finalBox.x + finalBox.dx + 0.32;
+            }
+          }
+        };
+        pushEntityOut(simState.player);
+        if (typeof companionAgents !== 'undefined') companionAgents.forEach(pushEntityOut);
+      }
+      simState.trackPos[draggingModule.id] = appliedPos;
+      if (Math.abs(appliedPos - lastSlideTickVal) >= 0.2) {
+        lastSlideTickVal = appliedPos;
         playSimSound('tap');
       }
     }
@@ -3883,7 +4012,8 @@ function drawV4HardscapeAndProps(iso, now, isNight, isDusk, renderables = [], ro
     const bounce = isInteracting ? Math.sin((now - activeInteraction.startAt) / 80) * 0.035 : 0;
     const x = pos.x, y = pos.y, z0 = pos.z + lift + Math.max(0, bounce);
     const dx = pos.dx, dy = pos.dy, dz = item.dz;
-    const itemDepth = iso.project(x + dx * 0.5, y + dy * 0.5, z0 + dz * 0.5).depth;
+    const zDepth = pos.z > 0.1 ? (pos.z * 3.0) : 0;
+    const itemDepth = iso.project(x + dx * 0.5, y + dy * 0.5, zDepth).depth;
 
     renderables.push({
       depth: itemDepth,
