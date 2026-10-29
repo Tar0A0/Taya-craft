@@ -10,7 +10,7 @@ const path = require('path');
   const context = await browser.newContext({ viewport: { width: 1366, height: 900 } });
   const page = await context.newPage();
 
-  const fileUrl = 'file:///' + path.resolve(__dirname, '../tayacraft-1.01/index.html').replace(/\\/g, '/');
+  const fileUrl = 'file:///' + path.resolve(__dirname, '../index.html').replace(/\\/g, '/');
   await page.goto(fileUrl, { waitUntil: 'domcontentloaded' });
   await page.waitForTimeout(1000);
 
