@@ -6,11 +6,11 @@
 <title>TAYACRAFT — 3D 空間裝潢與人生模擬遊戲</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Noto+Sans+TC:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Noto+Sans+TC:wght@300;400;500;700;900&display=swap" rel="stylesheet">
 <script src="js/vendor/gsap.min.js"></script>
 <script src="js/vendor/ScrollTrigger.min.js"></script>
 <link rel="stylesheet" href="css/main.css">
-  <link rel="stylesheet" href="css/components.css">
+<link rel="stylesheet" href="css/components.css">
 </head>
 <body>
 
@@ -24,9 +24,14 @@
     <li><a href="#prototype">結構原型</a></li>
     <li><a href="#benefits">循環效益</a></li>
     <li><a href="#game" class="nav-cta-pill">▶ 3D 模擬空間</a></li>
-    <li><button type="button" class="nav-tour-pill" id="btnNavGuidedTour" title="啟動 3 分鐘人生旅程導覽（評審推薦）">🎬 3分鐘導覽</button></li>
+    <li>
+      <button type="button" class="nav-tour-pill" id="btnNavGuidedTour" title="啟動 3 分鐘人生旅程導覽">
+        <svg class="ui-icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10"/><polygon points="10 8 16 12 10 16 10 8" fill="currentColor" stroke="none"/></svg>
+        <span>3分鐘導覽</span>
+      </button>
+    </li>
   </ul>
-  <button class="hamburger" id="hamburger" aria-label="Toggle menu">
+  <button class="hamburger" id="hamburger" aria-label="切換選單" aria-expanded="false" aria-controls="navLinks">
     <span></span><span></span><span></span>
   </button>
 </nav>
@@ -38,19 +43,19 @@
     <div class="hero-copy-col">
       <div class="hero-badge">2026 InnoConnect+ 全國服務創新跨界共創大賽</div>
       <h1><span class="brand-light">TAYA</span><span class="brand-heavy">CRAFT</span></h1>
-      <p class="hero-chinese">居 家 空 間 魔 術 師</p>
+      <p class="hero-chinese">居家空間魔術師</p>
       <p class="hero-tagline">
         <span class="quote-mark">「</span>如果你的家，是一款持續更新的遊戲...?<span class="quote-mark">」</span>
       </p>
-      <p class="hero-sub">依託<strong>大雅廚具全台頂尖的鋁合金擠型與高精密木工製造能量</strong>，開創「模組化空間長效訂閱服務 (Space-as-a-Service)」。將實體製造優勢延伸至數位 3D 模擬與快拆工藝，免除傳統敲牆動工與粉塵廢料，讓居住空間隨人生歷程自由擴充升級。</p>
+      <p class="hero-sub">結合<strong>大雅廚具頂尖的鋁合金擠型與高精密木工製造能量</strong>，開創「模組化空間長效訂閱服務 (Space-as-a-Service)」。以預埋結構軌道與快拆工藝取代敲牆泥作，讓居住空間隨人生階段自由擴充升級。</p>
       <div class="hero-cta-group">
         <button type="button" class="hero-cta-tour" id="btnHeroGuidedTour">
-          <span class="tour-icon">🎬</span>
+          <svg class="ui-icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10"/><polygon points="10 8 16 12 10 16 10 8" fill="currentColor" stroke="none"/></svg>
           <span>3 分鐘人生旅程導覽</span>
-          <span class="tour-badge-pill">評審推薦</span>
+          <span class="tour-badge-pill">建議先看</span>
         </button>
         <a href="#game" class="hero-cta">▶ 立即遊玩 3D 模擬器</a>
-        <a href="#prototype" class="hero-cta-secondary">🔩 檢視軌道結構原型</a>
+        <a href="#prototype" class="hero-cta-link">檢視軌道結構原型 →</a>
       </div>
       <div class="hero-spec-strip">
         <div class="hero-spec-item">
@@ -70,25 +75,30 @@
 
     <div class="hero-showcase-card">
       <div class="hero-showcase-frame">
-        <img src="assets/images/image3.jpeg" alt="不同人生階段的木質居家空間" id="heroBgImg" width="967" height="645">
+        <img src="assets/images/image3.jpeg" alt="不同人生階段的木質居家空間" id="heroBgImg" width="967" height="645" fetchpriority="high">
         <span class="hero-showcase-tag">MODULAR TRACK ARCHITECTURE · 跨世代空間演進</span>
       </div>
       <div class="hero-stage-dock" aria-label="快速切換體驗三大階段">
-        <button type="button" class="hero-dock-pill hero-dock-tour" id="btnDockGuidedTour">
-          <small>一鍵全自動巡弋</small>
-          <strong>🎬 3分鐘旅程導覽 (25歲首購 ➜ 40歲中島 ➜ 65歲樂齡 ➜ ESG 74%)</strong>
-        </button>
         <button type="button" class="hero-dock-pill" data-goto-stage="starter">
           <small>STAGE 01 · 25~40歲</small>
-          <strong>🌱 建立生活 · WORK DLC</strong>
+          <strong>
+            <svg class="ui-icon" viewBox="0 0 24 24" aria-hidden="true"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>
+            建立生活 · WORK DLC
+          </strong>
         </button>
         <button type="button" class="hero-dock-pill" data-goto-stage="family">
           <small>STAGE 02 · 40~65歲</small>
-          <strong>👨‍👩‍👧 家庭轉換 · FAMILY DLC</strong>
+          <strong>
+            <svg class="ui-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+            家庭轉換 · FAMILY DLC
+          </strong>
         </button>
         <button type="button" class="hero-dock-pill" data-goto-stage="senior">
           <small>STAGE 03 · 65歲+</small>
-          <strong>🌿 樂齡安老 · SAFE DLC</strong>
+          <strong>
+            <svg class="ui-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="m9 12 2 2 4-4"/></svg>
+            樂齡安老 · SAFE DLC
+          </strong>
         </button>
       </div>
     </div>
@@ -99,10 +109,10 @@
 <section class="section" id="concept">
   <div class="section-header-split">
     <div>
-      <span class="section-tag amber">MOD-SPEC // 01 · 模組化居住概念</span>
+      <span class="section-tag amber">01 / 模組化居住概念</span>
       <h2 class="section-title"><span class="title-light">打破一次性裝修定型 ──</span><span class="title-heavy">空間隨人生章節自由擴充演進</span></h2>
     </div>
-    <p class="section-subtitle">打破傳統裝修一次性買斷的線性消費模式，建立<strong>「模組化空間長效訂閱服務 (Space-as-a-Service)」</strong>。以年輕世代熟悉的「遊戲 DLC 擴充包」為趣味隱喻，底層結合大雅廚具高精度預埋鋁合金軌道工藝，讓居家空間隨家庭成長動態解鎖、終身相伴。</p>
+    <p class="section-subtitle">打破傳統裝修一次性買斷的線性消費模式，建立<strong>「模組化空間長效訂閱服務 (Space-as-a-Service)」</strong>。以年輕世代熟悉的「遊戲 DLC 擴充包」為設計隱喻，底層結合大雅廚具高精度預埋鋁合金軌道工藝，讓居家空間隨家庭成長動態解鎖、終身相伴。</p>
   </div>
   
   <div class="concept-intro">
@@ -110,7 +120,7 @@
   </div>
 
   <div class="dlc-grid">
-    <div class="dlc-card amber pixel-corner">
+    <div class="dlc-card amber">
       <span class="dlc-label">DLC PACK 01 · 空間訂閱服務</span>
       <h3 class="dlc-name">STARTER DLC</h3>
       <p class="dlc-age">25 ~ 40 歲 ─ 建立生活（職住混合／彈性社交）</p>
@@ -124,7 +134,7 @@
         ▶ 在 3D 模擬器體驗 (WORK DLC) →
       </button>
     </div>
-    <div class="dlc-card teal pixel-corner teal">
+    <div class="dlc-card teal">
       <span class="dlc-label">DLC PACK 02 · 空間動態重組</span>
       <h3 class="dlc-name">FAMILY DLC</h3>
       <p class="dlc-age">40 ~ 65 歲 ─ 家庭轉換（多代共生／育兒換裝）</p>
@@ -138,7 +148,7 @@
         ▶ 在 3D 模擬器體驗 (FAMILY DLC) →
       </button>
     </div>
-    <div class="dlc-card green pixel-corner green">
+    <div class="dlc-card green">
       <span class="dlc-label">DLC PACK 03 · 人因工程防護</span>
       <h3 class="dlc-name">LIFE+ DLC</h3>
       <p class="dlc-age">65 歲以上 ─ 樂齡安老（全齡無障礙／在地老化）</p>
@@ -155,9 +165,12 @@
   </div>
 
   <div class="vr-feature">
-    <img src="assets/images/image2.jpeg" alt="VR 體驗場景" class="pixel-corner" width="1048" height="699" loading="lazy" decoding="async">
+    <img src="assets/images/image2.jpeg" alt="VR 體驗場景" width="1048" height="699" loading="lazy" decoding="async">
     <div class="vr-text">
-      <h3>🎮 <span>虛實融合接觸點：VR 沉浸式預覽與 3D 即時模擬</span></h3>
+      <h3>
+        <svg class="ui-icon ui-icon-lg" viewBox="0 0 24 24" aria-hidden="true"><rect x="2" y="6" width="20" height="12" rx="3"/><path d="M6 12h4m-2-2v4m7-1h.01M18 11h.01"/></svg>
+        <span>虛實融合接觸點：VR 沉浸式預覽與 3D 即時模擬</span>
+      </h3>
       <p>落實服務科學線上線下（O2O）全通路體驗：消費者在官網透過 3D 空間配置引擎自主探索與預算試算，亦可至大雅廚具實體門市配戴 VR 設備，1:1 沉浸式體驗 25歲、40歲、65歲不同人生階段的空間尺度與動線，在決策初期即達成「零認知落差」的服務承諾。</p>
     </div>
   </div>
@@ -170,24 +183,33 @@
   <div class="section-inner">
     <div class="section-header-split">
       <div>
-        <span class="section-tag teal">LIFE-DATA // 02 · 跨世代尺度研析</span>
+        <span class="section-tag teal">02 / 跨世代尺度研析</span>
         <h2 class="section-title"><span class="title-light">格局不動，需求隨世代轉折 ──</span><span class="title-heavy">25歲到65歲的居住空間實證診斷</span></h2>
       </div>
       <p class="section-subtitle">每個年齡層都有截然不同的居住需求，但傳統住宅往往只為「買房裝修那一刻」的自己而設計，導致空間逐漸與生活脫節。</p>
     </div>
 
     <div class="insight-image">
-      <img src="assets/images/image3.jpeg" alt="三個人生階段的房間對比" width="967" height="645" loading="lazy" decoding="async">
+      <img src="assets/images/image4.png" alt="傳統封閉隔間與現代複合彈性空間對照" width="1376" height="768" loading="lazy" decoding="async">
     </div>
 
-    <div class="age-tabs">
-      <button class="age-tab active" data-tab="young">🏠 25~40歲 建立生活</button>
-      <button class="age-tab" data-tab="family">👨‍👩‍👧‍👦 40~65歲 家庭轉換</button>
-      <button class="age-tab" data-tab="senior">🌿 65歲以上 樂齡生活</button>
+    <div class="age-tabs" role="tablist" aria-label="人生階段居住需求切換">
+      <button class="age-tab active" role="tab" aria-selected="true" aria-controls="panel-young" data-tab="young">
+        <svg class="ui-icon" viewBox="0 0 24 24" aria-hidden="true"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>
+        25~40歲 建立生活
+      </button>
+      <button class="age-tab" role="tab" aria-selected="false" aria-controls="panel-family" data-tab="family">
+        <svg class="ui-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+        40~65歲 家庭轉換
+      </button>
+      <button class="age-tab" role="tab" aria-selected="false" aria-controls="panel-senior" data-tab="senior">
+        <svg class="ui-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="m9 12 2 2 4-4"/></svg>
+        65歲以上 樂齡生活
+      </button>
     </div>
 
     <div class="age-panels">
-      <div class="age-panel active" id="panel-young">
+      <div class="age-panel active" id="panel-young" role="tabpanel">
         <h4>25~40歲 ─ 建立生活階段</h4>
         <div class="insight-compare-grid">
           <div class="pain-points">
@@ -208,11 +230,11 @@
           </div>
         </div>
         <div class="insight-action-bar">
-          <span style="font-size:0.8rem; color:var(--text-secondary);">💡 想親眼看看 18 坪單身／新婚宅如何透過 WORK DLC 翻倍坪效？</span>
+          <span class="insight-action-hint">想親眼看看 18 坪單身／新婚宅如何透過 WORK DLC 翻倍坪效？</span>
           <button type="button" class="insight-to-game-btn" data-goto-stage="starter">▶ 在 3D 遊戲中體驗「25~40歲 建立生活」</button>
         </div>
       </div>
-      <div class="age-panel" id="panel-family">
+      <div class="age-panel" id="panel-family" role="tabpanel">
         <h4>40~65歲 ─ 家庭轉換階段</h4>
         <div class="insight-compare-grid">
           <div class="pain-points">
@@ -233,11 +255,11 @@
           </div>
         </div>
         <div class="insight-action-bar">
-          <span style="font-size:0.8rem; color:var(--text-secondary);">💡 立即在 3D 房間一鍵扣入「變形料理中島」與「頂天立地收納櫃」：</span>
+          <span class="insight-action-hint">立即在 3D 房間一鍵扣入「變形料理中島」與「頂天立地收納櫃」：</span>
           <button type="button" class="insight-to-game-btn" data-goto-stage="family">▶ 在 3D 遊戲中體驗「40~65歲 家庭轉換」</button>
         </div>
       </div>
-      <div class="age-panel" id="panel-senior">
+      <div class="age-panel" id="panel-senior" role="tabpanel">
         <h4>65歲以上 ─ 樂齡生活階段</h4>
         <div class="insight-compare-grid">
           <div class="pain-points">
@@ -258,7 +280,7 @@
           </div>
         </div>
         <div class="insight-action-bar">
-          <span style="font-size:0.8rem; color:var(--text-secondary);">💡 在 3D 房間體驗「樂齡感應扶手」與「夜間自動導引燈帶」：</span>
+          <span class="insight-action-hint">在 3D 房間體驗「樂齡感應扶手」與「夜間自動導引燈帶」：</span>
           <button type="button" class="insight-to-game-btn" data-goto-stage="senior">▶ 在 3D 遊戲中體驗「65歲+ 樂齡生活」</button>
         </div>
       </div>
@@ -276,7 +298,7 @@
 <section class="section" id="problem">
   <div class="section-header-split">
     <div>
-      <span class="section-tag amber">STRUCT-DIAG // 03 · 傳統裝修病灶檢討</span>
+      <span class="section-tag amber">03 / 傳統裝修病灶檢討</span>
       <h2 class="section-title"><span class="title-light">拆牆清運不是唯一的路 ──</span><span class="title-heavy">傳統泥作木工固化小宅生活機能</span></h2>
     </div>
     <p class="section-subtitle">傳統居家空間在泥作與木工完成後便完全定型，每當家庭結構改變，屋主就得面臨「將就忍耐」或「打掉重練」的兩難。</p>
@@ -287,7 +309,7 @@
     <div class="ba-compare-card" id="baCompareCard">
       <div class="ba-compare-header">
         <div>
-          <span class="section-tag teal" style="margin-bottom:0.25rem;">REAL-SPACE SIMULATION // 同視角 12 坪實境對照</span>
+          <span class="section-tag teal ba-tag-compact">REAL-SPACE SIMULATION // 同視角 12 坪實境對照</span>
           <h3 class="ba-compare-title">左右拖曳滑桿：見證「傳統雜物堆積」vs「TAYA 鋁軌模組上牆」的坪效解放</h3>
         </div>
         <div class="ba-quick-btns" role="group" aria-label="快速切換對比視角">
@@ -347,7 +369,9 @@
 
     <div class="pain-grid">
       <div class="pain-card">
-        <span class="pain-icon" aria-hidden="true">🔒</span>
+        <span class="pain-icon" aria-hidden="true">
+          <svg class="ui-icon ui-icon-lg" viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+        </span>
         <div>
           <span class="pain-tag">PAIN 01 · 空間固化</span>
           <h4>空間功能固定僵化</h4>
@@ -355,7 +379,9 @@
         </div>
       </div>
       <div class="pain-card">
-        <span class="pain-icon" aria-hidden="true">🍳</span>
+        <span class="pain-icon" aria-hidden="true">
+          <svg class="ui-icon ui-icon-lg" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg>
+        </span>
         <div>
           <span class="pain-tag">PAIN 02 · 孤立動線</span>
           <h4>廚房偏向單一功能導向</h4>
@@ -363,7 +389,9 @@
         </div>
       </div>
       <div class="pain-card">
-        <span class="pain-icon" aria-hidden="true">🔧</span>
+        <span class="pain-icon" aria-hidden="true">
+          <svg class="ui-icon ui-icon-lg" viewBox="0 0 24 24"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
+        </span>
         <div>
           <span class="pain-tag">PAIN 03 · 沉沒成本</span>
           <h4>裝修完成後難以改變</h4>
@@ -373,7 +401,7 @@
     </div>
   </div>
 
-  <div class="core-problem pixel-corner">
+  <div class="core-problem">
     <p>「核心痛點：家的物理結構，無法跟著居住者的人生階段自由演進。」</p>
   </div>
 </section>
@@ -385,10 +413,10 @@
   <div class="section-inner">
     <div class="section-header-split">
       <div>
-        <span class="section-tag teal">TRACK-ENG // 04 · 6063-T6 鋁合金軌道工藝</span>
+        <span class="section-tag teal">04 / 6063-T6 鋁合金軌道工藝</span>
         <h2 class="section-title"><span class="title-light">預埋鋁合金基底滑軌 ──</span><span class="title-heavy">免動泥作的實體模組裝配工藝</span></h2>
       </div>
-      <p class="section-subtitle">依託<strong>大雅廚具全台頂尖的鋁合金擠型與高精密木工製造能量</strong>，將傳統泥作改裝進化為高精度「工業化裝配工藝」。透過 6063-T6 結構滑軌與標準化卡扣，實現模組隨插即用、水電隱蔽整合與終身相容相承。</p>
+      <p class="section-subtitle">將傳統耗時數月的現場泥作改裝，革新為標準化的<strong>「工業級預製裝配系統」</strong>。透過陽極氧化 6063-T6 雙工字結構滑軌、隱蔽式水電匯流槽與重力自鎖卡扣，達成 ±0.5mm 精密咬合，讓大型家具與安全輔具皆可在 30 分鐘內無塵快拆升級。</p>
     </div>
 
     <!-- ═══════════════ SERVICE BLUEPRINT: 全通路服務接觸點地圖 ═══════════════ -->
@@ -485,9 +513,12 @@
     </div>
 
     <div class="track-system">
-      <img src="assets/images/image5.png" alt="基底軌道牆體模組系統" class="pixel-corner teal" width="1248" height="832" loading="lazy" decoding="async">
+      <img src="assets/images/image5.png" alt="基底軌道牆體模組系統" width="1248" height="832" loading="lazy" decoding="async">
       <div class="track-info">
-        <h3>🔩 核心技術：大雅製造優勢的數位與工程延伸</h3>
+        <h3>
+          <svg class="ui-icon ui-icon-lg" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+          核心技術：大雅製造優勢的數位與工程延伸
+        </h3>
         <p><strong>出題企業實體製造能量的全新維度</strong>：大雅廚具具備全台頂尖的鋁合金擠型、板金加工與高精密木工製造能量。預埋軌道正是大雅實體製造優勢的數位延伸 ── 透過工業級 ±0.5mm 公差控制，家具模組能在預埋鋁滑軌上滑動、咬合與快拆，徹底免除傳統裝修打牆破壞與粉塵噪音。</p>
         <p>牆體模組內部無縫整合隱蔽式水電匯流槽與重力自鎖安全卡扣，更串接<strong>「逆向物流與回廠整新機制」</strong>，讓工作桌、料理中島、收納櫃到樂齡安全扶手，在跨越 40 年的生命週期中皆可無縫相容、原廠回收整新再利用。</p>
         <div class="tech-tags">
@@ -550,35 +581,43 @@
     <!-- 整合版：四大 DLC 解鎖卡片 + 3D 結構爆炸與卡扣實測模型展示器 -->
     <div class="snap-simulator" id="snapSimulator">
       <div class="snap-sim-header">
-        <span class="section-tag teal">DWG-3D // ASSEMBLY · 實體軌道裝配模組</span>
-        <h3>⚡ 四大 DLC 模組解鎖 ＆ 3D 軌道卡扣拆解互動模型</h3>
+        <span class="section-tag teal">DWG-3D // 實體軌道裝配模組</span>
+        <h3>四大 DLC 模組解鎖 ＆ 3D 軌道卡扣拆解互動模型</h3>
         <p>直接點擊下方任一 DLC 擴充卡，即可切換 3D 模型、拖曳旋轉視角或展開「3D 結構爆炸圖」：</p>
       </div>
 
       <div class="snap-unlock-grid" role="tablist" aria-label="四大 DLC 3D 結構模型切換">
         <button type="button" class="unlock-card snap-sim-btn active" data-mod="work">
-          <span class="unlock-icon">💻</span>
+          <span class="unlock-icon" aria-hidden="true">
+            <svg class="ui-icon ui-icon-lg" viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>
+          </span>
           <h4>WORK DLC</h4>
           <p class="unlock-name">隱藏式工作桌</p>
           <p class="unlock-desc">從牆面展開的專業工作區</p>
           <span class="unlock-tag">點擊檢視 3D 結構</span>
         </button>
         <button type="button" class="unlock-card snap-sim-btn" data-mod="family">
-          <span class="unlock-icon">🍳</span>
+          <span class="unlock-icon" aria-hidden="true">
+            <svg class="ui-icon ui-icon-lg" viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+          </span>
           <h4>FAMILY DLC</h4>
           <p class="unlock-name">家庭共享中島</p>
           <p class="unlock-desc">多功能家庭互動料理核心</p>
           <span class="unlock-tag">點擊檢視 3D 結構</span>
         </button>
         <button type="button" class="unlock-card snap-sim-btn" data-mod="storage">
-          <span class="unlock-icon">📦</span>
+          <span class="unlock-icon" aria-hidden="true">
+            <svg class="ui-icon ui-icon-lg" viewBox="0 0 24 24"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg>
+          </span>
           <h4>STORAGE DLC</h4>
           <p class="unlock-name">彈性收納櫃</p>
           <p class="unlock-desc">頂天立地高密度收納系統</p>
           <span class="unlock-tag">點擊檢視 3D 結構</span>
         </button>
         <button type="button" class="unlock-card snap-sim-btn" data-mod="safe">
-          <span class="unlock-icon">🛡️</span>
+          <span class="unlock-icon" aria-hidden="true">
+            <svg class="ui-icon ui-icon-lg" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="m9 12 2 2 4-4"/></svg>
+          </span>
           <h4>SAFE DLC</h4>
           <p class="unlock-name">夜間安全扶手</p>
           <p class="unlock-desc">感應式動線引導與防撞護航</p>
@@ -590,11 +629,11 @@
         <div class="snap-visual-box" id="snapVisualBox">
           <canvas class="snap-3d-canvas" id="snap3DCanvas" width="560" height="350" aria-label="3D 軌道與 DLC 模組結構互動模型"></canvas>
           <div class="snap-view-toolbar">
-            <div style="display:flex; gap:0.35rem;">
-              <button type="button" class="snap-view-btn active" id="snapBtnLocked">🔒 扣合鎖定視圖</button>
-              <button type="button" class="snap-view-btn" id="snapBtnExploded">💥 3D 結構爆炸圖</button>
+            <div class="snap-view-group">
+              <button type="button" class="snap-view-btn active" id="snapBtnLocked">扣合鎖定視圖</button>
+              <button type="button" class="snap-view-btn" id="snapBtnExploded">3D 結構爆炸圖</button>
             </div>
-            <button type="button" class="snap-view-btn" id="snapBtnReplay">🔄 重播扣合動畫</button>
+            <button type="button" class="snap-view-btn" id="snapBtnReplay">↻ 重播扣合動畫</button>
           </div>
         </div>
 
@@ -602,8 +641,8 @@
           <div class="snap-status-badge locked" id="snapStatusBadge">
             <span>✓</span> 3D 模型狀態：卡扣已咬合鎖定
           </div>
-          <h4 id="snapModTitle" style="font-size:1.15rem; color:var(--text-primary); margin:0;">WORK DLC · 隱藏壁掛折疊工作桌</h4>
-          <p id="snapModDesc" style="font-size:0.84rem; color:var(--text-secondary); margin:0;">展開即變身人體工學獨立工作檯，附設雙螢幕支架與閱讀燈，收起僅佔牆面厚度 8cm。</p>
+          <h4 id="snapModTitle" class="snap-mod-title">WORK DLC · 隱藏壁掛折疊工作桌</h4>
+          <p id="snapModDesc" class="snap-mod-desc">展開即變身人體工學獨立工作檯，附設雙螢幕支架與閱讀燈，收起僅佔牆面厚度 8cm。</p>
           <div class="snap-data-table">
             <div class="snap-data-cell">
               <span>換裝作業時間</span>
@@ -622,8 +661,8 @@
               <strong id="snapDataValue">支援舊件回收折抵</strong>
             </div>
           </div>
-          <p style="margin:0; font-size:0.8rem; color:var(--teal); font-weight:600;" id="snapModNote">
-            💡 提示：可在左側 3D 模型上按住滑鼠左右拖曳旋轉視角，或點擊「3D 結構爆炸圖」檢視內部軌道構造。
+          <p class="snap-mod-note" id="snapModNote">
+            提示：可在左側 3D 模型上按住滑鼠左右拖曳旋轉視角，或點擊「3D 結構爆炸圖」檢視內部軌道構造。
           </p>
         </div>
       </div>
@@ -637,7 +676,7 @@
 <section class="section" id="game">
   <div class="section-header-split">
     <div>
-      <span class="section-tag amber">SIM-LAB // 05 · 空間演進數位模擬艙</span>
+      <span class="section-tag amber">05 / 空間演進數位模擬艙</span>
       <h2 class="section-title"><span class="title-light">3D 實時空間配置驗證 ──</span><span class="title-heavy">親手裝配升級每一段人生模組</span></h2>
     </div>
     <p class="section-subtitle">支援「畸零格局／輕隔間／材質分區／水電插座」、「20+ 款 3D 主題家具（電競RGB、公仔展示櫃、掃地機器人、貓跳台）」、「二手拍賣＆盲盒」、「動線測試＆空間 Combo 加成」與「估價單匯出」。</p>
@@ -654,10 +693,13 @@
         </div>
       </div>
       <div class="sim-controls">
-        <button class="sim-guided-tour-btn" id="btnSimGuidedTour" type="button" title="一鍵啟動 3 分鐘人生旅程導覽（評審推薦）">🎬 3分鐘人生導覽</button>
+        <button class="sim-guided-tour-btn" id="btnSimGuidedTour" type="button" title="一鍵啟動 3 分鐘人生旅程導覽">
+          <svg class="ui-icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10"/><polygon points="10 8 16 12 10 16 10 8" fill="currentColor" stroke="none"/></svg>
+          <span>3分鐘人生導覽</span>
+        </button>
         <button class="sim-play" id="simToggle" type="button" aria-pressed="false" aria-label="開始生活">▶ 開始生活</button>
         <button id="simSpeed" type="button" aria-label="切換遊戲速度">速度 1×</button>
-        <button id="simTriggerEvent" type="button" title="立即體驗人生轉折突發事件" aria-label="觸發人生突發事件">🎲 人生突發事件</button>
+        <button id="simTriggerEvent" type="button" title="立即體驗人生轉折突發事件" aria-label="觸發人生突發事件">人生突發事件</button>
         <button id="simSound" type="button" aria-label="切換音效" aria-pressed="true">♫ 音效開</button>
         <button id="simReset" type="button" aria-label="重新開始模擬">↺ 重新開始</button>
       </div>
@@ -666,21 +708,27 @@
     <!-- 人生階段一鍵切換列 -->
     <div class="sim-stage-bar" role="tablist" aria-label="人生階段情境切換">
       <button type="button" class="sim-stage-btn active" data-stage="starter" id="stageBtnStarter">
-        <span class="sim-stage-icon">🌱</span>
+        <span class="sim-stage-icon" aria-hidden="true">
+          <svg class="ui-icon" viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>
+        </span>
         <div>
           <strong>STAGE 1 · 25~40歲 建立生活</strong>
           <small>小宅高效辦公與電競娛樂 · 推薦 WORK DLC</small>
         </div>
       </button>
       <button type="button" class="sim-stage-btn" data-stage="family" id="stageBtnFamily">
-        <span class="sim-stage-icon">👨‍👩‍👧</span>
+        <span class="sim-stage-icon" aria-hidden="true">
+          <svg class="ui-icon" viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+        </span>
         <div>
           <strong>STAGE 2 · 40~65歲 家庭轉換</strong>
           <small>伴侶親子共煮與高密度收納 · 推薦 FAMILY + STORAGE</small>
         </div>
       </button>
       <button type="button" class="sim-stage-btn" data-stage="senior" id="stageBtnSenior">
-        <span class="sim-stage-icon">🌿</span>
+        <span class="sim-stage-icon" aria-hidden="true">
+          <svg class="ui-icon" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="m9 12 2 2 4-4"/></svg>
+        </span>
         <div>
           <strong>STAGE 3 · 65歲+ 樂齡安老</strong>
           <small>夜間感應引導與防撞安全護航 · 推薦 SAFE DLC</small>
@@ -701,55 +749,54 @@
     <!-- 遊戲主體：左 3D 房間視窗 + 右 四分頁整合控制艙 -->
     <div class="sim-layout">
       <div class="sim-viewport-col">
-        <!-- 想法 E：傳統敲牆裝修 vs TAYACRAFT 軌道快拆 同場對照列 -->
-        <div class="sim-compare-bar">
-          <span class="sim-compare-label">⚡ 換裝實測＆動線診斷：</span>
+        <!-- 整合型單一主工具列：左側換裝診斷＆估價單，右側牆面視角與收納式光影/輔助檢視選單 -->
+        <div class="sim-compare-bar sim-unified-toolbar" id="simTopBar">
           <div class="sim-compare-actions">
-            <button type="button" class="sim-cmp-btn trad" id="btnDemoTradRenov">💥 傳統打牆裝修 (粉塵/清運費)</button>
-            <button type="button" class="sim-cmp-btn taya" id="btnDemoTayaSnap">⚡ TAYA 軌道快拆 (零粉塵鎖定)</button>
-            <button type="button" class="sim-tool-pill" id="btnPathCheck" title="派小人從玄關大門走往床、書桌、衛浴，檢測動線是否卡死">🚶 動線檢查</button>
-            <button type="button" class="sim-tool-pill quote" id="btnExportQuote" title="切換視角拍照並生成裝潢購物車估價單">📸 截圖＆估價單</button>
+            <button type="button" class="sim-cmp-btn trad" id="btnDemoTradRenov">傳統打牆裝修</button>
+            <button type="button" class="sim-cmp-btn taya" id="btnDemoTayaSnap">⚡ TAYA 軌道快拆</button>
+            <button type="button" class="sim-tool-pill" id="btnPathCheck" title="派小人從玄關大門走往床、書桌、衛浴，檢測動線是否卡死">動線檢查</button>
+            <button type="button" class="sim-tool-pill quote" id="btnExportQuote" title="切換視角拍照並生成裝潢購物車估價單">截圖＆估價單</button>
+          </div>
+
+          <div class="sim-toolbar-right">
+            <div class="sim-topbar-modes" role="group" aria-label="牆面剖切模式">
+              <button type="button" class="sim-topbar-mode-btn active" id="btnWallModeCutaway" title="切牆模式：自動剖切前方牆體與隔間，保留背牆與視野">剖面</button>
+              <button type="button" class="sim-topbar-mode-btn" id="btnWallModeFull" title="全牆模式：完整升起所有四面牆壁">全牆</button>
+              <button type="button" class="sim-topbar-mode-btn" id="btnWallModeNone" title="去牆模式：降下所有牆壁至踢腳板高度">去牆</button>
+            </div>
+            <button type="button" class="sim-tool-pill" id="simCamBlueprint" title="切換 3D 等距視角 / 2D 平面藍圖視角">2D 藍圖</button>
+
+            <details class="sim-view-popover">
+              <summary class="sim-tool-pill">⚙ 光影與檢視</summary>
+              <div class="sim-view-popover-panel">
+                <div class="sim-env-bar">
+                  <div class="sim-env-group">
+                    <label for="simTimeSlider">光影時刻 (<span id="simTimePeriodLabel">☀️ 白天</span>)</label>
+                    <input type="range" id="simTimeSlider" min="0" max="1410" step="30" value="510" title="拖曳切換白天、黃昏與深夜" />
+                  </div>
+                  <div class="sim-env-group">
+                    <label for="simBlindsSlider">百葉窗開合 (<span id="simBlindsValLabel">80%</span>)</label>
+                    <input type="range" id="simBlindsSlider" min="0" max="100" step="10" value="80" title="調整落地百葉窗角度，改變陽光進光量" />
+                  </div>
+                </div>
+                <div class="sim-topbar-tools">
+                  <button type="button" class="sim-topbar-tool-btn active" id="btnToggleGrid" title="開關 0.5m 建築地面參考網格">建築網格</button>
+                  <button type="button" class="sim-topbar-tool-btn" id="btnToggleHitbox" title="切換顯示牆壁與結構 3D 碰撞箱 (Hitbox)">碰撞箱 (Hitbox)</button>
+                  <button type="button" class="sim-topbar-tool-btn" id="btnTogglePanoramic" title="切換全景大視野（隱藏右側控制艙，改以底部商品抽屜操作）">全景大視野</button>
+                </div>
+              </div>
+            </details>
           </div>
         </div>
 
-        <!-- 日夜燈光滑桿 ＆ 百葉窗進光量滑桿 -->
-        <div class="sim-env-bar">
-          <div class="sim-env-group">
-            <label for="simTimeSlider">🌅 光影時刻 (<span id="simTimePeriodLabel">☀️ 白天</span>)</label>
-            <input type="range" id="simTimeSlider" min="0" max="1410" step="30" value="510" title="拖曳切換白天、黃昏與深夜；深夜時 RGB 主機、展示櫃與霓虹燈條會真正發光！" />
-          </div>
-          <div class="sim-env-group">
-            <label for="simBlindsSlider">🪟 百葉窗開合 (<span id="simBlindsValLabel">80%</span>)</label>
-            <input type="range" id="simBlindsSlider" min="0" max="100" step="10" value="80" title="調整落地百葉窗角度，改變陽光進光量與光影條紋" />
-          </div>
-          <div class="sim-env-actions">
-            <button type="button" class="sim-tool-pill" id="simCamBlueprint" title="切換 3D 等距視角 / 2D 平面藍圖視角">🗺️ 2D 藍圖視角</button>
-          </div>
-        </div>
-
-        <!-- 3D 視窗頂部快速分頁跳轉膠囊列 (不用滑動即可一鍵跳轉右側各大功能艙) -->
+        <!-- 行動裝置快速分頁跳轉列 (桌面版右側分頁已常駐顯示，僅於窄螢幕顯示) -->
         <div class="sim-deck-quickpills" aria-label="右側功能分頁快速切換">
-          <span class="quickpill-label">⚡ 快速分頁跳轉：</span>
-          <button type="button" class="quickpill-btn active" data-jump-deck="live">🕹️ 生活＆劇本</button>
-          <button type="button" class="quickpill-btn" data-jump-deck="hardscape">🧱 硬裝＆水電</button>
-          <button type="button" class="quickpill-btn" data-jump-deck="shop">🛋️ 商城＆盲盒</button>
-          <button type="button" class="quickpill-btn" data-jump-deck="build">⚡ 軌道＆循環</button>
-          <button type="button" class="quickpill-btn quote" id="btnQuickQuoteModal" title="開啟 3D 空間截圖與裝潢購物清單估價單">🧾 裝潢估價單</button>
-        </div>
-
-        <!-- Sims 4 頂部建造與視角工具列 (The Sims 4 Builder Toolbar) -->
-        <div class="sim-sims-topbar" id="simTopBar">
-          <div class="sim-topbar-modes">
-            <span style="font-size:0.74rem; font-weight:800; color:#8e5b38;">🏰 模擬市民模式：</span>
-            <button type="button" class="sim-topbar-mode-btn active" id="btnWallModeCutaway" title="切牆模式：自動剖切前方牆體與隔間，保留背牆與視野，家具不被遮擋">✂️ 剖面 (Cutaway)</button>
-            <button type="button" class="sim-topbar-mode-btn" id="btnWallModeFull" title="全牆模式：完整升起所有四面牆壁">🧱 全牆 (Full)</button>
-            <button type="button" class="sim-topbar-mode-btn" id="btnWallModeNone" title="去牆模式：降下所有牆壁至踢腳板高度">📐 去牆 (None)</button>
-          </div>
-          <div class="sim-topbar-tools">
-            <button type="button" class="sim-topbar-tool-btn active" id="btnToggleGrid" title="開關 0.5m 建築地面參考網格">📐 建築網格</button>
-            <button type="button" class="sim-topbar-tool-btn" id="btnToggleHitbox" title="切換顯示牆壁與結構 3D 碰撞箱 (Hitbox)">📦 牆壁碰撞箱</button>
-            <button type="button" class="sim-topbar-tool-btn" id="btnTogglePanoramic" title="切換模擬市民全景沉浸大視野（隱藏右側深度控制艙，改以底部商品抽屜操作）">🖥️ 全景大視野</button>
-          </div>
+          <span class="quickpill-label">快速分頁：</span>
+          <button type="button" class="quickpill-btn active" data-jump-deck="live">生活＆劇本</button>
+          <button type="button" class="quickpill-btn" data-jump-deck="hardscape">硬裝＆水電</button>
+          <button type="button" class="quickpill-btn" data-jump-deck="shop">商城＆盲盒</button>
+          <button type="button" class="quickpill-btn" data-jump-deck="build">軌道＆循環</button>
+          <button type="button" class="quickpill-btn quote" id="btnQuickQuoteModal" title="開啟 3D 空間截圖與裝潢購物清單估價單">裝潢估價單</button>
         </div>
 
         <div class="sim-room" id="simRoom" data-period="day" aria-label="3D 互動居家空間">
@@ -761,9 +808,9 @@
               <div class="sim-buff-tags" id="simBuffTags"></div>
             </div>
             <div class="sim-cam-controls">
-              <button type="button" class="sim-cam-btn" id="simCamXray" title="透視牆內預埋鋁合金軌道、水電匯流槽與自鎖卡扣">🔍 軌道 X 光透視</button>
-              <button type="button" class="sim-cam-btn" id="simCamRotate" title="切換 4 向視角（亦可在空白處按住滑鼠拖曳旋轉）">🎥 旋轉視角</button>
-              <button type="button" class="sim-cam-btn" id="simCamTime" title="快速切換白天／黃昏／深夜燈光秀">🌓 日夜燈光</button>
+              <button type="button" class="sim-cam-btn" id="simCamXray" title="透視牆內預埋鋁合金軌道、水電匯流槽與自鎖卡扣">軌道 X 光透視</button>
+              <button type="button" class="sim-cam-btn" id="simCamRotate" title="切換 4 向視角（亦可在空白處按住滑鼠拖曳旋轉）">旋轉視角</button>
+              <button type="button" class="sim-cam-btn" id="simCamTime" title="快速切換白天／黃昏／深夜燈光秀">日夜燈光</button>
             </div>
           </div>
 
@@ -781,23 +828,23 @@
 
           <!-- 空屋快速開始引導列 (當房間為 0 家具時自動顯示) -->
           <div class="sim-empty-guide" id="simEmptyGuide">
-            <span>🏠 目前為空屋狀態！你可以：</span>
+            <span>目前為空屋狀態！你可以：</span>
             <button type="button" id="btnQuickStarterKit">⚡ 一鍵體驗「TAYA 軌道＋基礎家具組」</button>
-            <button type="button" class="alt" id="btnQuickOpenShop">🛋️ 開啟商城從零自由擺設</button>
+            <button type="button" class="alt" id="btnQuickOpenShop">開啟商城從零自由擺設</button>
           </div>
 
           <!-- 3D 物件選取浮動工具列 (點擊任一 3D 家具時顯示：互動 / 旋轉 90° / 跳轉分頁 / 回收) -->
           <div class="sim-obj-inspector" id="simObjInspector" role="toolbar" aria-label="3D 家具操作工具列">
             <span class="sim-obj-inspector-title" id="simInspectorTitle">已選取家具</span>
             <button type="button" id="btnInspectInteract" title="派角色走過去互動">⚡ 互動</button>
-            <button type="button" id="btnInspectRotate" title="旋轉 90° (快捷鍵 R)">🔄 旋轉 90° (R)</button>
-            <button type="button" id="btnInspectJumpTab" title="在右側控制艙中跳轉至此物件所屬分頁與分類">📂 前往分頁</button>
-            <button type="button" class="danger" id="btnInspectRemove" title="拆卸或回收變現">♻️ 拆卸／回收</button>
+            <button type="button" id="btnInspectRotate" title="旋轉 90° (快捷鍵 R)">↻ 旋轉 90° (R)</button>
+            <button type="button" id="btnInspectJumpTab" title="在右側控制艙中跳轉至此物件所屬分頁與分類">前往分頁</button>
+            <button type="button" class="danger" id="btnInspectRemove" title="拆卸或回收變現">拆卸／回收</button>
             <button type="button" id="btnInspectClose" aria-label="關閉選取">✕</button>
           </div>
 
           <div class="sim-room-hud-bottom">
-            <span class="sim-interaction-prompt" id="simInteractionPrompt">💡 按住任意 3D 家具可直接拖曳移位 · 按 R 鍵旋轉 90° · 點擊家具派角色互動</span>
+            <span class="sim-interaction-prompt" id="simInteractionPrompt">按住任意 3D 家具可直接拖曳移位 · 按 R 鍵旋轉 90° · 點擊家具派角色互動</span>
           </div>
         </div>
 
@@ -808,25 +855,25 @@
             <button type="button" data-direction="down" aria-label="向下">▼</button>
             <button type="button" data-direction="right" aria-label="向右">▶</button>
           </div>
-          <span class="sim-controls-hint">🖱️ 點擊家具互動 · ↔️ 拖曳 DLC 滑軌移位 · 📦 拖曳桌上小物自由堆疊</span>
+          <span class="sim-controls-hint">點擊家具互動 · 拖曳 DLC 滑軌移位 · 拖曳桌上小物自由堆疊</span>
           <button class="sim-interact-btn" id="simInteract" type="button">⚡ E 互動</button>
         </div>
 
-        <!-- Sims 4 底部橫向家具商品欄 / 建築抽屜 (The Sims 4 Bottom Catalog Shelf Dock) -->
-        <div class="sim-bottom-dock" id="simBottomDock">
+        <!-- 底部橫向家具商品欄 / 建築抽屜 (預設收合以保持視覺清爽，點擊或全景模式可展開) -->
+        <div class="sim-bottom-dock collapsed" id="simBottomDock">
           <div class="sim-dock-header">
             <div class="sim-dock-funds" id="simDockFunds">§ 800</div>
-            <span style="font-size:0.75rem; font-weight:800; color:#4a3f35;">🛋️ 建造與購買目錄 (點擊直接放置至房間)</span>
-            <input type="text" class="sim-dock-search" id="simDockSearch" placeholder="🔍 搜尋家具/隔間..." />
-            <button type="button" class="sim-dock-toggle-btn" id="btnToggleDockShelf">收合商品欄 ▼</button>
+            <span class="sim-dock-title">建造與購買快捷目錄 (點擊直接放置至房間)</span>
+            <input type="text" class="sim-dock-search" id="simDockSearch" placeholder="搜尋家具/隔間..." />
+            <button type="button" class="sim-dock-toggle-btn" id="btnToggleDockShelf">展開商品欄 ▲</button>
           </div>
           <div class="sim-dock-cats" id="simDockCats">
-            <button type="button" class="sim-dock-cat-btn active" data-cat="all">🌟 全部</button>
-            <button type="button" class="sim-dock-cat-btn" data-cat="structure">🧱 隔間＆結構</button>
-            <button type="button" class="sim-dock-cat-btn" data-cat="appliance">🍳 廚房＆家電</button>
-            <button type="button" class="sim-dock-cat-btn" data-cat="comfort">🛋️ 舒適＆起居</button>
-            <button type="button" class="sim-dock-cat-btn" data-cat="work">💻 工作＆電競</button>
-            <button type="button" class="sim-dock-cat-btn" data-cat="decor">🪴 裝飾＆綠化</button>
+            <button type="button" class="sim-dock-cat-btn active" data-cat="all">全部</button>
+            <button type="button" class="sim-dock-cat-btn" data-cat="structure">隔間＆結構</button>
+            <button type="button" class="sim-dock-cat-btn" data-cat="appliance">廚房＆家電</button>
+            <button type="button" class="sim-dock-cat-btn" data-cat="comfort">舒適＆起居</button>
+            <button type="button" class="sim-dock-cat-btn" data-cat="work">工作＆電競</button>
+            <button type="button" class="sim-dock-cat-btn" data-cat="decor">裝飾＆綠化</button>
             <button type="button" class="sim-dock-cat-btn" data-cat="track">⚡ TAYA 軌道DLC</button>
           </div>
           <div class="sim-dock-shelf" id="simDockShelf">
@@ -840,9 +887,9 @@
       <!-- 右側：四分頁深度控制艙 -->
       <aside class="sim-deck">
         <div class="sim-deck-tabs" role="tablist">
-          <button type="button" class="sim-deck-tab active" data-deck-tab="live" id="tabBtnLive">🕹️ 生活＆劇本</button>
-          <button type="button" class="sim-deck-tab" data-deck-tab="hardscape" id="tabBtnHardscape">🧱 硬裝＆水電</button>
-          <button type="button" class="sim-deck-tab" data-deck-tab="shop" id="tabBtnShop">🛋️ 商城＆盲盒</button>
+          <button type="button" class="sim-deck-tab active" data-deck-tab="live" id="tabBtnLive">生活＆劇本</button>
+          <button type="button" class="sim-deck-tab" data-deck-tab="hardscape" id="tabBtnHardscape">硬裝＆水電</button>
+          <button type="button" class="sim-deck-tab" data-deck-tab="shop" id="tabBtnShop">商城＆盲盒</button>
           <button type="button" class="sim-deck-tab" data-deck-tab="build" id="tabBtnBuild">⚡ 軌道＆循環</button>
         </div>
 
@@ -850,32 +897,32 @@
         <div class="sim-deck-panel active" id="deckPanelLive">
           <!-- 劇本與挑戰委託選擇器 -->
           <div class="scenario-box">
-            <div style="display:flex; justify-content:space-between; align-items:center;">
-              <label for="scenarioSelect">🎬 挑戰劇本／委託模式</label>
-              <span id="scenarioStatusBadge" style="font-size:0.68rem; font-weight:800; color:#527464;">進行中</span>
+            <div class="scenario-box-head">
+              <label for="scenarioSelect">挑戰劇本／委託模式</label>
+              <span id="scenarioStatusBadge" class="scenario-status-badge">進行中</span>
             </div>
             <select id="scenarioSelect">
-              <option value="sandbox">🏖️ 自由沙盒模式 (無限制自由設計)</option>
-              <option value="micro5">📦 關卡1：極限 5 坪套房改造 (預算§380 · 承重柱限制)</option>
-              <option value="streamer">🎙️ 關卡2：委託人A 硬核實況主 (需極致電競角+吸音牆)</option>
-              <option value="catlover">🐱 關卡3：委託人B 收藏家與貓奴 (展示櫃+貓跳台+全木地板)</option>
-              <option value="moving">🚚 關卡4：無痛搬家挑戰 (鎖定舊家具不可賣 · 評分達88)</option>
+              <option value="sandbox">自由沙盒模式 (無限制自由設計)</option>
+              <option value="micro5">關卡1：極限 5 坪套房改造 (預算§380 · 承重柱限制)</option>
+              <option value="streamer">關卡2：委託人A 硬核實況主 (需極致電競角+吸音牆)</option>
+              <option value="catlover">關卡3：委託人B 收藏家與貓奴 (展示櫃+貓跳台+全木地板)</option>
+              <option value="moving">關卡4：無痛搬家挑戰 (鎖定舊家具不可賣 · 評分達88)</option>
             </select>
             <ul class="scenario-goals" id="scenarioGoalsList"></ul>
           </div>
 
           <!-- 空間 Combo 加成即時標籤 -->
           <div>
-            <div class="sim-actions-head" style="margin-bottom:0.25rem;">
+            <div class="sim-actions-head">
               <h4>✨ 空間加乘 (Room Combos)</h4>
-              <span id="comboBonusSummary" style="color:#d97706; font-weight:800;">目前加成 +0 分</span>
+              <span id="comboBonusSummary" class="combo-bonus-summary">目前加成 +0 分</span>
             </div>
             <div class="combo-tags-box" id="comboTagsBox"></div>
           </div>
 
           <div class="sim-profile">
             <div class="sim-portrait" id="simPortrait" aria-hidden="true">😄</div>
-            <div style="flex:1;">
+            <div class="sim-profile-body">
               <input id="simName" aria-label="角色名字" maxlength="18" value="小日" />
               <small id="simStageLabel">25~40歲 建立生活階段 · 18 坪住宅</small>
             </div>
@@ -900,10 +947,10 @@
 
           <div>
             <div class="sim-actions-head">
-              <h4>🎯 點擊執行生活行動</h4>
+              <h4>點擊執行生活行動</h4>
               <span>賺取資金添購家具</span>
             </div>
-            <div class="sim-actions" id="simActions" style="margin-top:0.4rem;"></div>
+            <div class="sim-actions" id="simActions"></div>
           </div>
         </div>
 
@@ -911,7 +958,7 @@
         <div class="sim-deck-panel" id="deckPanelHardscape">
           <div class="build-settings-row">
             <div class="build-field">
-              <label for="plannerArea">📐 住宅坪數規模</label>
+              <label for="plannerArea">住宅坪數規模</label>
               <select id="plannerArea">
                 <option value="5">5 坪｜極限微型套房</option>
                 <option value="12">12 坪｜都會小宅</option>
@@ -921,7 +968,7 @@
               </select>
             </div>
             <div class="build-field">
-              <label for="plannerPeople">👥 同住家庭人數</label>
+              <label for="plannerPeople">同住家庭人數</label>
               <select id="plannerPeople">
                 <option value="1">1 人｜獨居生活</option>
                 <option value="2" selected>2 人｜伴侶同住</option>
@@ -932,169 +979,167 @@
           </div>
 
           <div class="hardscape-section">
-            <h4><span>🧩 房型格局與畸零地設定</span><small style="color:#777168;">考驗空間利用</small></h4>
+            <h4><span>房型格局與畸零地設定</span><small>考驗空間利用</small></h4>
             <div class="hardscape-grid" id="layoutShapeBtns">
-              <button type="button" class="hardscape-btn active" data-shape="rect">📐 標準矩形</button>
-              <button type="button" class="hardscape-btn" data-shape="lshape">🧩 L型畸零格局</button>
-              <button type="button" class="hardscape-btn" data-shape="balcony">🌤️ 陽台外推</button>
+              <button type="button" class="hardscape-btn active" data-shape="rect">標準矩形</button>
+              <button type="button" class="hardscape-btn" data-shape="lshape">L型畸零格局</button>
+              <button type="button" class="hardscape-btn" data-shape="balcony">陽台外推</button>
             </div>
           </div>
 
           <div class="hardscape-section">
-            <h4><span>🧱 輕隔間牆與結構限制</span><small style="color:#994639;">可自由複數建造 · 拆牆付清運費</small></h4>
-            <div class="hardscape-grid" style="grid-template-columns:1fr 1fr;">
-              <button type="button" class="hardscape-btn" id="btnAddSolidPartition" style="font-size:0.72rem;">🧱 + 新增純隔間牆 (§40)</button>
-              <button type="button" class="hardscape-btn" id="btnAddDoorPartition" style="font-size:0.72rem;">🚪 + 新增房門隔間牆 (§60)</button>
+            <h4><span>輕隔間牆與結構限制</span><small class="text-danger-muted">可自由複數建造 · 拆牆付清運費</small></h4>
+            <div class="hardscape-grid hardscape-grid-2">
+              <button type="button" class="hardscape-btn" id="btnAddSolidPartition">+ 新增純隔間牆 (§40)</button>
+              <button type="button" class="hardscape-btn" id="btnAddDoorPartition">+ 新增房門隔間牆 (§60)</button>
             </div>
-            <div class="hardscape-grid" style="margin-top:0.35rem; grid-template-columns:1fr 1fr;">
-              <button type="button" class="hardscape-btn active" id="btnTogglePillar">🏛️ 承重柱＆管道間</button>
-              <button type="button" class="hardscape-btn" id="btnToggleWalkup">🪜 無電梯公寓(+15%搬運費)</button>
+            <div class="hardscape-grid hardscape-grid-2">
+              <button type="button" class="hardscape-btn active" id="btnTogglePillar">承重柱＆管道間</button>
+              <button type="button" class="hardscape-btn" id="btnToggleWalkup">無電梯公寓(+15%搬運費)</button>
             </div>
 
-            <!-- 自訂隔間牆長度大小、方位與門扇設定面板 (建立隔間牆後自動展開，支援複數切換) -->
+            <!-- 自訂隔間牆長度大小、方位與門扇設定面板 -->
             <div class="partition-customizer-box" id="partitionCustomizerBox" style="display:none;">
-              <div style="display:flex; justify-content:space-between; align-items:center;">
-                <strong style="font-size:0.77rem; color:#4a3f35;">🧱 實體隔間牆規格與門扇設定</strong>
-                <span class="sim-badge" style="background:#e0edff; color:#1e40af; font-size:0.65rem;" id="partitionDimBadge">隔間 #1 · 縱向</span>
+              <div class="partition-head-row">
+                <strong>實體隔間牆規格與門扇設定</strong>
+                <span class="sim-badge partition-dim-badge" id="partitionDimBadge">隔間 #1 · 縱向</span>
               </div>
               
               <!-- 複數隔間牆切換標籤列 -->
-              <div class="partition-cfg-row" style="margin-top:0.25rem;">
+              <div class="partition-cfg-row">
                 <div class="partition-cfg-label">
-                  <span>📑 目前編輯之隔間牆段</span>
-                  <small style="color:#8c8274;">點擊切換選取／新增</small>
+                  <span>目前編輯之隔間牆段</span>
+                  <small>點擊切換選取／新增</small>
                 </div>
-                <div style="display:flex; flex-wrap:wrap; gap:0.25rem;" id="partitionWallSelectorBar"></div>
+                <div class="partition-selector-bar" id="partitionWallSelectorBar"></div>
               </div>
 
               <!-- 牆面種類切換：純實心牆 vs 房門牆面 -->
               <div class="partition-cfg-row">
-                <span class="partition-cfg-label">🧱 隔間牆面型態</span>
-                <div style="display:flex; gap:0.25rem;">
-                  <button type="button" class="partition-chip-btn partition-type-btn active" data-type="solid" style="flex:1;">🧱 純實心牆 (無門)</button>
-                  <button type="button" class="partition-chip-btn partition-type-btn" data-type="door" style="flex:1;">🚪 房門隔間牆 (含門)</button>
+                <span class="partition-cfg-label">隔間牆面型態</span>
+                <div class="partition-btn-row">
+                  <button type="button" class="partition-chip-btn partition-type-btn active" data-type="solid">純實心牆 (無門)</button>
+                  <button type="button" class="partition-chip-btn partition-type-btn" data-type="door">房門隔間牆 (含門)</button>
                 </div>
               </div>
 
-              <div style="font-size:0.69rem; color:#786f65; line-height:1.4;">
-                💡 <b>自選擺放位置</b>：可在 3D 畫面直接按住隔間牆拖曳到任意位置，或按鍵盤 <kbd style="background:#eee; padding:1px 4px; border-radius:3px; font-weight:700;">R</kbd> 鍵旋轉方位！
+              <div class="partition-hint-text">
+                <b>自選擺放位置</b>：可在 3D 畫面直接按住隔間牆拖曳到任意位置，或按鍵盤 <kbd>R</kbd> 鍵旋轉方位！
               </div>
 
               <!-- 1. 長度大小選擇 -->
               <div class="partition-cfg-row">
                 <div class="partition-cfg-label">
-                  <span>📏 隔間長度大小</span>
-                  <span id="partitionLenText" style="color:#8e5b38;">2.6 公尺</span>
+                  <span>隔間長度大小</span>
+                  <span id="partitionLenText" class="text-amber">2.6 公尺</span>
                 </div>
-                <div style="display:grid; grid-template-columns:repeat(4, 1fr); gap:0.25rem;">
+                <div class="partition-len-grid">
                   <button type="button" class="partition-chip-btn partition-len-btn" data-len="1.8">1.8m 玄關</button>
                   <button type="button" class="partition-chip-btn partition-len-btn active" data-len="2.6">2.6m 標準</button>
                   <button type="button" class="partition-chip-btn partition-len-btn" data-len="3.4">3.4m 兩房</button>
                   <button type="button" class="partition-chip-btn partition-len-btn" data-len="4.2">4.2m 大隔間</button>
                 </div>
-                <div style="display:flex; align-items:center; gap:0.4rem; margin-top:0.2rem;">
-                  <button type="button" class="partition-chip-btn" id="btnPartitionLenMinus" style="padding:0.2rem 0.5rem;" title="縮短 0.2m">➖</button>
-                  <input type="range" id="partitionLenSlider" min="1.4" max="4.8" step="0.2" value="2.6" style="flex:1; accent-color:#8e5b38; cursor:pointer;" />
-                  <button type="button" class="partition-chip-btn" id="btnPartitionLenPlus" style="padding:0.2rem 0.5rem;" title="加長 0.2m">➕</button>
+                <div class="partition-slider-row">
+                  <button type="button" class="partition-chip-btn" id="btnPartitionLenMinus" title="縮短 0.2m">−</button>
+                  <input type="range" id="partitionLenSlider" min="1.4" max="4.8" step="0.2" value="2.6" />
+                  <button type="button" class="partition-chip-btn" id="btnPartitionLenPlus" title="加長 0.2m">+</button>
                 </div>
               </div>
 
               <!-- 2. 方位 -->
               <div class="partition-cfg-row">
-                <span class="partition-cfg-label">🧭 牆面方向</span>
-                <div style="display:flex; gap:0.25rem;">
-                  <button type="button" class="partition-chip-btn partition-orient-btn active" data-orient="y" style="flex:1;">↕️ 縱向(Y)</button>
-                  <button type="button" class="partition-chip-btn partition-orient-btn" data-orient="x" style="flex:1;">↔️ 橫向(X)</button>
+                <span class="partition-cfg-label">牆面方向</span>
+                <div class="partition-btn-row">
+                  <button type="button" class="partition-chip-btn partition-orient-btn active" data-orient="y">↕ 縱向(Y)</button>
+                  <button type="button" class="partition-chip-btn partition-orient-btn" data-orient="x">↔ 橫向(X)</button>
                 </div>
               </div>
 
-              <!-- 3. 房門專屬設定區塊 (僅在房門隔間牆時顯示) -->
-              <div id="partitionDoorSettingsRow" style="display:flex; flex-direction:column; gap:0.45rem;">
-                <!-- 門洞位置 -->
+              <!-- 3. 房門專屬設定區塊 -->
+              <div id="partitionDoorSettingsRow" class="partition-door-settings">
                 <div class="partition-cfg-row">
-                  <span class="partition-cfg-label">🚪 門洞位置</span>
-                  <div style="display:flex; gap:0.2rem;">
-                    <button type="button" class="partition-chip-btn partition-dpos-btn" data-dpos="start" style="flex:1;">靠左</button>
-                    <button type="button" class="partition-chip-btn partition-dpos-btn active" data-dpos="center" style="flex:1;">置中</button>
-                    <button type="button" class="partition-chip-btn partition-dpos-btn" data-dpos="end" style="flex:1;">靠右</button>
+                  <span class="partition-cfg-label">門洞位置</span>
+                  <div class="partition-btn-row">
+                    <button type="button" class="partition-chip-btn partition-dpos-btn" data-dpos="start">靠左</button>
+                    <button type="button" class="partition-chip-btn partition-dpos-btn active" data-dpos="center">置中</button>
+                    <button type="button" class="partition-chip-btn partition-dpos-btn" data-dpos="end">靠右</button>
                   </div>
                 </div>
 
-                <!-- 門扇款式與開關狀態 -->
-                <div style="display:grid; grid-template-columns:1.5fr 1fr; gap:0.4rem;">
+                <div class="partition-door-split">
                   <div class="partition-cfg-row">
-                    <span class="partition-cfg-label">🚪 門扇款式</span>
-                    <div style="display:flex; gap:0.2rem;">
-                      <button type="button" class="partition-chip-btn partition-dstyle-btn active" data-style="glass-sliding" style="flex:1;">🪟 玻璃拉門</button>
-                      <button type="button" class="partition-chip-btn partition-dstyle-btn" data-style="wood-hinged" style="flex:1;">🚪 實木門</button>
-                      <button type="button" class="partition-chip-btn partition-dstyle-btn" data-style="open-arch" style="flex:1;">⛩️ 穿透洞</button>
+                    <span class="partition-cfg-label">門扇款式</span>
+                    <div class="partition-btn-row">
+                      <button type="button" class="partition-chip-btn partition-dstyle-btn active" data-style="glass-sliding">玻璃拉門</button>
+                      <button type="button" class="partition-chip-btn partition-dstyle-btn" data-style="wood-hinged">實木門</button>
+                      <button type="button" class="partition-chip-btn partition-dstyle-btn" data-style="open-arch">穿透洞</button>
                     </div>
                   </div>
                   <div class="partition-cfg-row">
-                    <span class="partition-cfg-label">🔓 門扇狀態</span>
-                    <button type="button" class="partition-chip-btn" id="btnTogglePartitionDoor" style="width:100%;">🔒 闔上 (點擊開門)</button>
+                    <span class="partition-cfg-label">門扇狀態</span>
+                    <button type="button" class="partition-chip-btn full-width" id="btnTogglePartitionDoor">闔上 (點擊開門)</button>
                   </div>
                 </div>
               </div>
 
               <!-- 4. 拆除按鈕 -->
-              <div style="margin-top:0.35rem; pt:0.35rem; border-top:1px dashed #e2d9c8;">
-                <button type="button" class="hardscape-btn" id="btnDeleteCurrentPartition" style="width:100%; color:#b91c1c; font-size:0.72rem; padding:0.38rem;">
-                  🗑️ 拆除此段隔間牆
+              <div class="partition-delete-row">
+                <button type="button" class="hardscape-btn btn-danger-outline" id="btnDeleteCurrentPartition">
+                  拆除此段隔間牆
                 </button>
               </div>
             </div>
           </div>
 
           <div class="hardscape-section">
-            <h4><span>🪵 地板分區鋪設材質</span><small style="color:#527464;">玄關磁磚＋分區地板</small></h4>
+            <h4><span>地板分區鋪設材質</span><small class="text-teal">玄關磁磚＋分區地板</small></h4>
             <div class="hardscape-grid" id="floorMatBtns">
-              <button type="button" class="hardscape-btn active" data-floor="wood">🪵 全室超耐磨木</button>
-              <button type="button" class="hardscape-btn" data-floor="zoned">✨ 磁磚+木+電競毯</button>
-              <button type="button" class="hardscape-btn" data-floor="tile">🪨 現代拋光石材</button>
+              <button type="button" class="hardscape-btn active" data-floor="wood">全室超耐磨木</button>
+              <button type="button" class="hardscape-btn" data-floor="zoned">磁磚+木+電競毯</button>
+              <button type="button" class="hardscape-btn" data-floor="tile">現代拋光石材</button>
             </div>
           </div>
 
           <div class="hardscape-section">
-            <h4><span>🎨 牆面塗裝與聲學工程</span><small style="color:#527464;">實況主必備吸音棉</small></h4>
+            <h4><span>牆面塗裝與聲學工程</span><small class="text-teal">實況主必備吸音棉</small></h4>
             <div class="hardscape-grid" id="wallMatBtns">
-              <button type="button" class="hardscape-btn active" data-wall="warm">🎨 溫潤跳色乳膠</button>
-              <button type="button" class="hardscape-btn" data-wall="stone">🧱 北歐文化石牆</button>
-              <button type="button" class="hardscape-btn" data-wall="acoustic">🔇 六角吸音棉牆</button>
+              <button type="button" class="hardscape-btn active" data-wall="warm">溫潤跳色乳膠</button>
+              <button type="button" class="hardscape-btn" data-wall="stone">北歐文化石牆</button>
+              <button type="button" class="hardscape-btn" data-wall="acoustic">六角吸音棉牆</button>
             </div>
           </div>
 
           <div class="hardscape-section">
-            <h4><span>⚡ 水電插座＆延長線壓條配置</span><small id="mepBadgeText">供電正常</small></h4>
+            <h4><span>水電插座＆延長線壓條配置</span><small id="mepBadgeText">供電正常</small></h4>
             <div class="mep-status-bar" id="mepStatusBar">
-              🔌 牆面設有 2 組固定插座；高階電器若遠離插座需加裝壓條或啟用 TAYA 軌道供電。
+              牆面設有 2 組固定插座；高階電器若遠離插座需加裝壓條或啟用 TAYA 軌道供電。
             </div>
-            <button type="button" class="hardscape-btn" id="btnBuyCableRaceway" style="width:100%;">🔌 鋪設「隱藏式延長線與地板壓條」(§25 · 消除跨區接電扣分)</button>
+            <button type="button" class="hardscape-btn full-width" id="btnBuyCableRaceway">鋪設「隱藏式延長線與地板壓條」(§25 · 消除跨區接電扣分)</button>
           </div>
         </div>
 
         <!-- 分頁 3：主題家具商城 ＆ 二手拍賣網 ＆ 特價盲盒 -->
         <div class="sim-deck-panel" id="deckPanelShop">
           <div class="shop-channel-tabs" role="tablist">
-            <button type="button" class="shop-channel-btn active" data-channel="new">🏬 全新家具行</button>
+            <button type="button" class="shop-channel-btn active" data-channel="new">全新家具行</button>
             <button type="button" class="shop-channel-btn" data-channel="used">♻️ 二手拍賣(3~7折)</button>
-            <button type="button" class="shop-channel-btn" data-channel="blindbox">🎁 特價盲盒(§35)</button>
+            <button type="button" class="shop-channel-btn" data-channel="blindbox">特價盲盒(§35)</button>
           </div>
 
           <div class="shop-cat-pills" id="shopCatPills">
             <button type="button" class="shop-cat-pill active" data-cat="all">全部</button>
-            <button type="button" class="shop-cat-pill" data-cat="basic">🏠 基礎家具</button>
-            <button type="button" class="shop-cat-pill" data-cat="tech">🎮 電競科技</button>
-            <button type="button" class="shop-cat-pill" data-cat="collect">🏆 收藏娛樂</button>
-            <button type="button" class="shop-cat-pill" data-cat="appliance">☕ 生活家電</button>
-            <button type="button" class="shop-cat-pill" data-cat="lighting">💡 照明氛圍</button>
-            <button type="button" class="shop-cat-pill" data-cat="pet">🐾 寵物植栽</button>
+            <button type="button" class="shop-cat-pill" data-cat="basic">基礎家具</button>
+            <button type="button" class="shop-cat-pill" data-cat="tech">電競科技</button>
+            <button type="button" class="shop-cat-pill" data-cat="collect">收藏娛樂</button>
+            <button type="button" class="shop-cat-pill" data-cat="appliance">生活家電</button>
+            <button type="button" class="shop-cat-pill" data-cat="lighting">照明氛圍</button>
+            <button type="button" class="shop-cat-pill" data-cat="pet">寵物植栽</button>
             <button type="button" class="shop-cat-pill" data-cat="dlc" title="前往 TAYA 專利軌道滑動模組工坊">⚡ 軌道模組 →</button>
           </div>
 
-          <div id="shopChannelHeader" style="display:flex; justify-content:space-between; align-items:center; font-size:0.71rem; color:#655e54;">
-            <span id="shopChannelHint">💡 標註 [桌上小物] 可在 3D 畫面拖曳微調座標並自動疊上桌面！</span>
-            <button type="button" class="sim-tool-pill" id="btnRefreshUsed" style="display:none; padding:2px 8px; font-size:0.68rem;">🔄 刷新拍賣</button>
+          <div id="shopChannelHeader" class="shop-channel-header">
+            <span id="shopChannelHint">標註 [桌上小物] 可在 3D 畫面拖曳微調座標並自動疊上桌面！</span>
+            <button type="button" class="sim-tool-pill btn-refresh-used" id="btnRefreshUsed" style="display:none;">↻ 刷新拍賣</button>
           </div>
 
           <div class="shop-items-grid" id="shopItemsGrid"></div>
@@ -1103,14 +1148,14 @@
         <!-- 分頁 4：TAYA 軌道核心 DLC ＆ 原廠循環交易所 -->
         <div class="sim-deck-panel" id="deckPanelBuild">
           <div>
-            <div class="sim-actions-head" style="margin-bottom:0.4rem;">
+            <div class="sim-actions-head">
               <h4>⚡ TAYA 軌道核心 DLC 模組</h4>
               <span>安裝後可在 3D 牆上按住拖曳滑動位置</span>
             </div>
             <div class="dlc-loadout-grid">
               <button type="button" class="dlc-pill-btn work" data-dlc="work" id="dlcBtnWork">
                 <div class="dlc-pill-top">
-                  <span>💻 WORK DLC · 壁掛折疊工作桌</span>
+                  <span>WORK DLC · 壁掛折疊工作桌</span>
                   <span class="dlc-status-tag" id="tagDlcWork">未安裝</span>
                 </div>
                 <div class="dlc-pill-buff" id="buffDlcWork">未安裝：餐桌彎腰筆電辦公，精力消耗大</div>
@@ -1118,7 +1163,7 @@
 
               <button type="button" class="dlc-pill-btn family" data-dlc="family" id="dlcBtnFamily">
                 <div class="dlc-pill-top">
-                  <span>🍳 FAMILY DLC · 變形料理中島</span>
+                  <span>FAMILY DLC · 變形料理中島</span>
                   <span class="dlc-status-tag" id="tagDlcFamily">未安裝</span>
                 </div>
                 <div class="dlc-pill-buff" id="buffDlcFamily">未安裝：流理台狹窄，僅能簡單微波點心</div>
@@ -1126,7 +1171,7 @@
 
               <button type="button" class="dlc-pill-btn storage" data-dlc="storage" id="dlcBtnStorage">
                 <div class="dlc-pill-top">
-                  <span>📦 STORAGE DLC · 頂天立地收納櫃</span>
+                  <span>STORAGE DLC · 頂天立地收納櫃</span>
                   <span class="dlc-status-tag" id="tagDlcStorage">未安裝</span>
                 </div>
                 <div class="dlc-pill-buff" id="buffDlcStorage">未安裝：紙箱雜物散落地面，阻礙動線</div>
@@ -1134,7 +1179,7 @@
 
               <button type="button" class="dlc-pill-btn safe" data-dlc="safe" id="dlcBtnSafe">
                 <div class="dlc-pill-top">
-                  <span>🛡️ SAFE DLC · 樂齡扶手與夜燈</span>
+                  <span>SAFE DLC · 樂齡扶手與夜燈</span>
                   <span class="dlc-status-tag" id="tagDlcSafe">未安裝</span>
                 </div>
                 <div class="dlc-pill-buff" id="buffDlcSafe">未安裝：夜間視線昏暗，缺乏防撞與引導</div>
@@ -1149,27 +1194,27 @@
             </div>
             <p class="circular-market-desc">舊階段模組可由大雅原廠 <strong>8 折回購整新</strong>，或以 <strong>7 折優惠租購認證整新模組</strong>，且免收無電梯樓層搬運費：</p>
             <div class="circular-trade-actions">
-              <button type="button" class="circular-btn" id="btnCircularTradeIn">🔄 舊模組回售折抵 (+§90 · 🌱+20kg)</button>
-              <button type="button" class="circular-btn" id="btnCircularRefurb">♻️ 租購認證整新包 (省30% · 🌱+25kg)</button>
+              <button type="button" class="circular-btn" id="btnCircularTradeIn">↻ 舊模組回售折抵 (+§90 · +20kg)</button>
+              <button type="button" class="circular-btn" id="btnCircularRefurb">♻️ 租購認證整新包 (省30% · +25kg)</button>
             </div>
-            <button type="button" class="sync-calc-btn" id="btnSyncToCalc">📊 將目前坪數與階段同步至下方 30 年成本試算 ↓</button>
+            <button type="button" class="sync-calc-btn" id="btnSyncToCalc">將目前坪數與階段同步至下方 30 年成本試算 ↓</button>
           </div>
 
           <div class="furn-catalog-box">
             <h4>
-              <span>🛋️ 全室家具整體配置狀態</span>
-              <span id="buildFitSummary" style="color:var(--teal); font-size:0.72rem;">空間適配良好</span>
+              <span>全室家具整體配置狀態</span>
+              <span id="buildFitSummary" class="text-teal">空間適配良好</span>
             </h4>
-            <div id="buildFurnSummaryText" style="font-size:0.75rem; color:#605a50; line-height:1.5; margin-bottom:0.6rem;">
+            <div id="buildFurnSummaryText" class="build-furn-summary">
               已啟用 0 項 TAYA 軌道模組，並在 3D 空間擺放 0 件家具。所有家具均已整合至「商城＆盲盒」，可在 3D 地板自由拖曳與旋轉。
             </div>
-            <div style="display:flex; flex-direction:column; gap:0.4rem;">
-              <button type="button" id="btnJumpToShopFromBuild" style="width:100%; text-align:center; padding:0.5rem; background:var(--amber); color:#fffefa; border:none; border-radius:8px; font-weight:800; cursor:pointer; font-size:0.74rem;">
-                🛋️ 前往「商城＆盲盒」瀏覽／購買全系列家具 (含基礎與 21 款主題單品) →
+            <div class="build-furn-actions">
+              <button type="button" id="btnJumpToShopFromBuild" class="btn-jump-shop">
+                前往「商城＆盲盒」瀏覽／購買全系列家具 (含基礎與 21 款主題單品) →
               </button>
-              <div style="display:grid; grid-template-columns:1fr 1fr; gap:0.4rem;">
+              <div class="hardscape-grid hardscape-grid-2">
                 <button type="button" class="hardscape-btn" id="btnQuickKitFromBuild">⚡ 套用基礎生活組</button>
-                <button type="button" class="hardscape-btn" id="btnClearAllFurnFromBuild" style="color:#b91c1c;">🧹 一鍵清空家具</button>
+                <button type="button" class="hardscape-btn btn-danger-outline" id="btnClearAllFurnFromBuild">一鍵清空家具</button>
               </div>
             </div>
             <div class="plan-furniture" id="planFurniture" style="display:none;"></div>
@@ -1179,21 +1224,21 @@
     </div>
   </div>
 
-  <!-- 🧾 裝潢估價單與截圖匯出 Modal -->
+  <!-- 裝潢估價單與截圖匯出 Modal -->
   <div class="sim-quote-modal" id="simQuoteModal" role="dialog" aria-modal="true" aria-labelledby="simQuoteTitle">
     <div class="sim-quote-dialog">
       <div class="sim-quote-head">
         <div>
-          <span class="section-tag amber" style="margin:0;">BOM-SPEC // ESTIMATE · 模組化裝潢工程估價清單</span>
-          <h3 id="simQuoteTitle" style="font-size:1.2rem; color:#38352f;">🧾 空間裝潢估價單 ＆ 3D 配置截圖</h3>
+          <span class="section-tag amber ba-tag-compact">BOM-SPEC // 模組化裝潢工程估價清單</span>
+          <h3 id="simQuoteTitle" class="sim-quote-title">空間裝潢估價單 ＆ 3D 配置截圖</h3>
         </div>
-        <button type="button" class="sim-tool-pill" id="btnCloseQuote">✕ 關閉</button>
+        <button type="button" class="sim-tool-pill" id="btnCloseQuoteModal">✕ 關閉</button>
       </div>
       <img id="simQuotePreviewImg" class="sim-quote-preview" alt="3D 空間配置截圖預覽" width="880" height="550" loading="lazy" decoding="async" />
       <div id="simQuoteSummaryBox"></div>
-      <div style="display:flex; justify-content:flex-end; gap:0.6rem; margin-top:0.8rem;">
-        <button type="button" class="sim-tool-pill" id="btnQuoteSwitchBlueprint">🗺️ 切換 2D 藍圖／3D 等距重拍</button>
-        <a id="btnDownloadQuoteImg" class="sim-tool-pill quote" download="tayacraft-room-design.png" style="text-decoration:none;">💾 下載 PNG 配置設計圖</a>
+      <div class="sim-quote-footer">
+        <button type="button" class="sim-tool-pill" id="btnQuoteSwitchBlueprint">切換 2D 藍圖／3D 等距重拍</button>
+        <a id="btnDownloadQuoteImg" class="sim-tool-pill quote" download="tayacraft-room-design.png">下載 PNG 配置設計圖</a>
       </div>
     </div>
   </div>
@@ -1205,16 +1250,18 @@
 <section class="section" id="benefits">
   <div class="section-header-split">
     <div>
-      <span class="section-tag green">CLV-EVAL // 06 · 循環生態與永續價值</span>
+      <span class="section-tag green">06 / 循環生態與永續價值</span>
       <h2 class="section-title"><span class="title-light">全生命週期價值閉環 ──</span><span class="title-heavy">住戶、品牌與環境永續的三方共贏</span></h2>
     </div>
     <p class="section-subtitle">TAYACRAFT 透過<strong>「大雅高精密軌道基底 ＋ 跨世代 DLC 空間模組 ＋ 逆向物流回廠整新」</strong>，將傳統線性消費模式轉化為「模組化空間長效訂閱服務 (Space-as-a-Service)」，創造住戶、大雅廚具與環境永續的三方共贏閉環。</p>
   </div>
 
   <div class="benefits-grid">
-    <div class="benefit-card pixel-corner">
-      <span class="benefit-icon">🏠</span>
-      <span class="benefit-tag">USER & SPACE · 空間效益</span>
+    <div class="benefit-card">
+      <span class="benefit-icon" aria-hidden="true">
+        <svg class="ui-icon ui-icon-lg" viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+      </span>
+      <span class="benefit-tag">USER &amp; SPACE · 空間效益</span>
       <h4>極致坪效與動態生涯適配</h4>
       <div class="stat-row">
         <div class="stat-item">
@@ -1224,9 +1271,11 @@
         <p class="stat-desc">破除單一用途格局限制，以模組快拆消除裝修壁壘，小宅每坪空間均可隨遠距辦公、親子共融與樂齡安老靈活轉換，生活坪效極大化。</p>
       </div>
     </div>
-    <div class="benefit-card pixel-corner teal">
-      <span class="benefit-icon">📈</span>
-      <span class="benefit-tag">BUSINESS & OPS · 商業效益</span>
+    <div class="benefit-card teal">
+      <span class="benefit-icon" aria-hidden="true">
+        <svg class="ui-icon ui-icon-lg" viewBox="0 0 24 24"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg>
+      </span>
+      <span class="benefit-tag">BUSINESS &amp; OPS · 商業效益</span>
       <h4>CLV 顧客終身價值延展</h4>
       <div class="stat-row">
         <div class="stat-item">
@@ -1236,9 +1285,11 @@
         <p class="stat-desc">顛覆「10~15 年單次交易即斷聯」的產業痛點；藉由 DLC 模組隨需升級、逆向物流殘值折抵與二手租賃，創造高頻次二次營收，大幅提升大雅顧客終身價值 (CLV)。</p>
       </div>
     </div>
-    <div class="benefit-card pixel-corner green">
-      <span class="benefit-icon">♻️</span>
-      <span class="benefit-tag">ESG & SOCIETY · 永續效益</span>
+    <div class="benefit-card green">
+      <span class="benefit-icon" aria-hidden="true">
+        <svg class="ui-icon ui-icon-lg" viewBox="0 0 24 24"><path d="M7 19H4.815a1.83 1.83 0 0 1-1.57-.881 1.785 1.785 0 0 1-.004-1.784L7.196 9.5"/><path d="M11 19h8.203a1.83 1.83 0 0 0 1.556-.89 1.784 1.784 0 0 0 0-1.775l-1.226-2.12"/><path d="m14 16-3 3 3 3"/><path d="M8.293 13.596 7.196 9.5 3.1 10.598"/><path d="m9.344 5.811 1.093-1.892A1.83 1.83 0 0 1 11.985 3a1.784 1.784 0 0 1 1.546.888l3.943 6.843"/><path d="m13.378 9.633 4.096 1.098 1.097-4.096"/></svg>
+      </span>
+      <span class="benefit-tag">ESG &amp; SOCIETY · 永續效益</span>
       <h4>循環減廢與無痛在地老化</h4>
       <div class="stat-row">
         <div class="stat-item">
@@ -1253,8 +1304,8 @@
   <!-- 30年居住生命週期與 ESG 成本計算機 -->
   <div class="lifecycle-calculator" id="lifecycleCalculator">
     <div class="calc-header">
-      <span class="section-tag green">LCC-ESG // AUDIT · 30年全週期裝修試算</span>
-      <h3>💰 30年居住生命週期：傳統裝修 vs. TAYACRAFT 成本與 ESG 效益對照</h3>
+      <span class="section-tag green">LCC-ESG // 30年全週期裝修試算</span>
+      <h3>30年居住生命週期：傳統裝修 vs. TAYACRAFT 成本與 ESG 效益對照</h3>
       <p class="calc-subtitle">
         以新婚成家、育兒轉換與樂齡安老三階段進行情境模擬，比較傳統拆除重做與 TAYACRAFT 軌道模組升級的長期差異：
       </p>
@@ -1262,7 +1313,7 @@
 
     <div class="calc-filter-row">
       <div class="filter-group">
-        <span class="filter-label">⏱️ 居住年限試算：</span>
+        <span class="filter-label">居住年限試算：</span>
         <div class="filter-btn-group" id="calcYearBtns">
           <button type="button" class="calc-btn" data-years="10">10 年｜單身／新婚期</button>
           <button type="button" class="calc-btn" data-years="20">20 年｜育兒家庭期</button>
@@ -1271,7 +1322,7 @@
         </div>
       </div>
       <div class="filter-group">
-        <span class="filter-label">📐 住宅坪數格局：</span>
+        <span class="filter-label">住宅坪數格局：</span>
         <div class="filter-btn-group" id="calcAreaBtns">
           <button type="button" class="calc-btn" data-area="15">15 坪｜都會小宅</button>
           <button type="button" class="calc-btn active" data-area="25">25 坪｜標準家庭戶</button>
@@ -1285,7 +1336,7 @@
         <div class="calc-card-head">
           <div>
             <h4>傳統線性一次性裝潢 (Linear Model)</h4>
-            <small style="color:var(--text-secondary);">每隔 10~15 年全面打牆拆除重做 · 售後即斷聯無任何循環價值</small>
+            <small class="calc-card-sub">每隔 10~15 年全面打牆拆除重做 · 售後即斷聯無任何循環價值</small>
           </div>
           <span class="calc-card-badge">高成本 · 高破壞 · 高停擺</span>
         </div>
@@ -1297,19 +1348,19 @@
 
         <ul class="calc-detail-list">
           <li>
-            <span>🛠️ 泥作打牆施工次數</span>
+            <span>泥作打牆施工次數</span>
             <strong id="calcTradRenovations">3 次大規模拆除施工</strong>
           </li>
           <li>
-            <span>⏱️ 施工受災停擺天數</span>
+            <span>施工受災停擺天數</span>
             <strong id="calcTradDays">270 天 (需外宿租屋)</strong>
           </li>
           <li>
-            <span>🗑️ 裝修固體廢棄物</span>
+            <span>裝修固體廢棄物</span>
             <strong id="calcTradWaste">24.0 噸營建廢料</strong>
           </li>
           <li>
-            <span>🤝 品牌與顧客關係</span>
+            <span>品牌與顧客關係</span>
             <strong>單次買斷，交易完成即斷聯</strong>
           </li>
         </ul>
@@ -1319,7 +1370,7 @@
         <div class="calc-card-head">
           <div>
             <h4>TAYACRAFT 模組化長效空間服務 (Space-as-a-Service)</h4>
-            <small style="color:var(--text-secondary);">初期高精密基底鋪設 ＋ DLC 隨需快拆升級 ＋ 逆向物流殘值折抵</small>
+            <small class="calc-card-sub">初期高精密基底鋪設 ＋ DLC 隨需快拆升級 ＋ 逆向物流殘值折抵</small>
           </div>
           <span class="calc-card-badge">循環經濟 · CLV 延展 · 終身相伴</span>
         </div>
@@ -1335,19 +1386,19 @@
 
         <ul class="calc-detail-list">
           <li>
-            <span>🛠️ 模組換裝更換次數</span>
+            <span>模組換裝更換次數</span>
             <strong id="calcTayaRenovations">0 次打牆（2 次快拆升級）</strong>
           </li>
           <li>
-            <span>⏱️ 施工更換受災天數</span>
+            <span>施工更換受災天數</span>
             <strong id="calcTayaDays">僅 1.5 天（單次 30~45 分鐘極速無塵換裝）</strong>
           </li>
           <li>
-            <span>♻️ 材料廢棄率降低</span>
+            <span>材料廢棄率降低</span>
             <strong id="calcTayaWasteReduction">減廢 74%（舊模組回廠整新）</strong>
           </li>
           <li>
-            <span>📈 大雅 CLV 顧客終身價值</span>
+            <span>大雅 CLV 顧客終身價值</span>
             <strong id="calcTayaClv">從單次 15 萬擴展至 30~40 年持續服務營收</strong>
           </li>
         </ul>
@@ -1360,42 +1411,45 @@
           <span>累積總支出金額比較 (低者為優)</span>
           <span id="chartCostDiffLabel">節省 71% 長期預算</span>
         </div>
-        <div style="font-size:0.75rem; color:var(--text-secondary); margin-bottom:2px;">傳統模式：<span id="chartTradCostLabel">363萬</span> ｜ TAYACRAFT：<span id="chartTayaCostLabel">105萬</span></div>
+        <div class="calc-bar-legend">傳統模式：<span id="chartTradCostLabel">363萬</span> ｜ TAYACRAFT：<span id="chartTayaCostLabel">105萬</span></div>
         <div class="calc-bar-track">
           <div class="calc-bar-fill-trad" id="barTradCost" style="width: 100%;"></div>
         </div>
-        <div class="calc-bar-track" style="margin-top:4px;">
+        <div class="calc-bar-track calc-bar-track-sub">
           <div class="calc-bar-fill-taya" id="barTayaCost" style="width: 100%; transform-origin: left center; transform: scaleX(0.29);"></div>
         </div>
       </div>
 
-      <div class="calc-bar-group" style="margin-top:0.5rem;">
+      <div class="calc-bar-group">
         <div class="calc-bar-title">
           <span>建築固體廢棄物產生量 (低者為優 · ESG 減廢指標)</span>
           <span id="chartWasteDiffLabel">減廢 74%（減少 17.8 噸廢棄物）</span>
         </div>
-        <div style="font-size:0.75rem; color:var(--text-secondary); margin-bottom:2px;">傳統模式：<span id="chartTradWasteLabel">24.0噸</span> ｜ TAYACRAFT：<span id="chartTayaWasteLabel">6.2噸</span></div>
+        <div class="calc-bar-legend">傳統模式：<span id="chartTradWasteLabel">24.0噸</span> ｜ TAYACRAFT：<span id="chartTayaWasteLabel">6.2噸</span></div>
         <div class="calc-bar-track">
           <div class="calc-bar-fill-trad" id="barTradWaste" style="width: 100%;"></div>
         </div>
-        <div class="calc-bar-track" style="margin-top:4px;">
+        <div class="calc-bar-track calc-bar-track-sub">
           <div class="calc-bar-fill-taya" id="barTayaWaste" style="width: 100%; transform-origin: left center; transform: scaleX(0.26);"></div>
         </div>
       </div>
     </div>
 
     <!-- 試算結果一鍵跳轉同步至 3D 模擬器驗證 -->
-    <div style="margin-top:1.4rem; text-align:center;">
-      <button type="button" class="hero-cta" id="btnSyncCalcToSimGame" style="padding:0.72rem 1.6rem; font-size:0.86rem; border:none; cursor:pointer;">
-        🎮 將此試算規格同步至上方 3D 空間遊戲驗證格局 ↑
+    <div class="calc-sync-footer">
+      <button type="button" class="hero-cta btn-sync-calc-sim" id="btnSyncCalcToSimGame">
+        將此試算規格同步至上方 3D 空間遊戲驗證格局 ↑
       </button>
     </div>
   </div>
 
   <div class="circular-economy">
-    <img src="assets/images/image6.jpeg" alt="循環經濟示意圖" class="pixel-corner green" width="1040" height="693" loading="lazy" decoding="async">
+    <img src="assets/images/image6.jpeg" alt="循環經濟示意圖" width="1040" height="693" loading="lazy" decoding="async">
     <div class="circular-info">
-      <h3>♻️ 封閉式循環經濟：逆向物流與回廠整新閉環 (Closed-Loop System)</h3>
+      <h3>
+        <svg class="ui-icon ui-icon-lg" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 19H4.815a1.83 1.83 0 0 1-1.57-.881 1.785 1.785 0 0 1-.004-1.784L7.196 9.5"/><path d="M11 19h8.203a1.83 1.83 0 0 0 1.556-.89 1.784 1.784 0 0 0 0-1.775l-1.226-2.12"/><path d="m14 16-3 3 3 3"/><path d="M8.293 13.596 7.196 9.5 3.1 10.598"/><path d="m9.344 5.811 1.093-1.892A1.83 1.83 0 0 1 11.985 3a1.784 1.784 0 0 1 1.546.888l3.943 6.843"/><path d="m13.378 9.633 4.096 1.098 1.097-4.096"/></svg>
+        封閉式循環經濟：逆向物流與回廠整新閉環 (Closed-Loop System)
+      </h3>
       <p>結合大雅廚具強大的原廠製造、品質檢驗與木工重工能量，打造全台首座住宅模組封閉式循環供應鏈。透過舊模組殘值折抵與逆向物流，讓高品質建材與五金結構持續創造商業與生態雙重價值：</p>
       <ul class="cycle-steps">
         <li><span class="cycle-step-num">01</span> <strong>空間隨需升級</strong>：住戶因應新婚、育兒或樂齡轉換，線上 3D 模擬確認後選購新版 DLC 模組</li>
@@ -1413,13 +1467,13 @@
     <div class="footer-brand">
       <h3>TAYACRAFT</h3>
       <p>居家空間魔術師</p>
-      <p style="margin-top:0.5rem;">你的人生，值得一個持續進化的家。</p>
+      <p class="footer-tagline">你的人生，值得一個持續進化的家。</p>
     </div>
     <div class="footer-competition">
       <h4>Competition</h4>
       <p>2026 InnoConnect+</p>
       <p>全國服務創新跨界共創大賽</p>
-      <p style="margin-top:0.5rem;">主辦單位</p>
+      <p class="footer-org-label">主辦單位</p>
       <p>社團法人台灣服務科學學會</p>
       <img src="assets/images/image1.png" alt="台灣服務科學學會 Logo" width="1601" height="390" loading="lazy" decoding="async">
     </div>
@@ -1444,10 +1498,12 @@
   <div class="tour-dock">
     <div class="tour-dock-left">
       <div class="tour-brand">
-        <span class="tour-brand-icon">🎬</span>
+        <span class="tour-brand-icon" aria-hidden="true">
+          <svg class="ui-icon ui-icon-lg" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polygon points="10 8 16 12 10 16 10 8" fill="currentColor" stroke="none"/></svg>
+        </span>
         <div class="tour-brand-info">
           <span class="tour-title-text">3 分鐘人生旅程導覽</span>
-          <span class="tour-badge-tag">評審展示模式 · GUIDED WALKTHROUGH</span>
+          <span class="tour-badge-tag">互動展示模式 · GUIDED WALKTHROUGH</span>
         </div>
       </div>
       <!-- 章節膠囊導覽列 -->
@@ -1468,14 +1524,14 @@
           <span class="step-num">04</span><span class="step-txt">財務 &amp; ESG 74%</span>
         </button>
         <button type="button" class="tour-step-pill" data-step-index="5">
-          <span class="step-num">05</span><span class="step-txt">評審總結</span>
+          <span class="step-num">05</span><span class="step-txt">效益總結</span>
         </button>
       </div>
     </div>
 
     <div class="tour-dock-right">
       <div class="tour-timer-box" title="導覽計時器 (3 分鐘全覽)">
-        <span class="tour-timer-icon">⏱️</span>
+        <span class="tour-timer-icon">⏱</span>
         <span class="tour-timer-display" id="tourTimerDisplay">00:00 / 03:00</span>
       </div>
       <div class="tour-player-btns">
@@ -1493,16 +1549,16 @@
     </div>
   </div>
 
-  <!-- 浮動解說字幕與評審資訊卡 (Floating Presenter Card) -->
+  <!-- 浮動解說字幕與資訊卡 (Floating Presenter Card) -->
   <div class="tour-presenter-card" id="tourPresenterCard">
     <div class="tour-card-header">
       <div class="tour-card-badge-wrap">
-        <span class="tour-stage-indicator" id="tourStageBadge">🌱 STAGE 01 · 25~40 歲</span>
+        <span class="tour-stage-indicator" id="tourStageBadge">STAGE 01 · 25~40 歲</span>
         <span class="tour-card-age" id="tourStageAge">25 歲</span>
       </div>
       <div class="tour-speaking-indicator" title="導覽講解進行中">
         <span class="wave-bar"></span><span class="wave-bar"></span><span class="wave-bar"></span>
-        <span style="font-size:0.75rem; font-weight:700; color:var(--teal);">GUIDED TOUR</span>
+        <span class="tour-speaking-label">GUIDED TOUR</span>
       </div>
     </div>
     <h3 class="tour-card-title" id="tourCardTitle">25 歲首購客廳 ── WORK DLC 彈性職住混和中樞</h3>
@@ -1520,7 +1576,7 @@
     </div>
 
     <div class="tour-card-footer">
-      <span class="tour-hint-text" id="tourCardHint">💡 提示：可隨時按空白鍵暫停，或切換「2×」快速巡弋</span>
+      <span class="tour-hint-text" id="tourCardHint">提示：可隨時按空白鍵暫停，或切換「2×」快速巡弋</span>
       <button type="button" class="tour-card-next-btn" id="btnTourCardNext">下一階段 →</button>
     </div>
   </div>
@@ -1528,6 +1584,6 @@
 
 <!-- ═══════════════════ SCRIPTS ═══════════════════ -->
 <script src="js/room-canvas.js"></script>
-  <script src="js/interactions.js"></script>
+<script src="js/interactions.js"></script>
 </body>
 </html>

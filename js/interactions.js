@@ -2486,14 +2486,20 @@ function openQuoteModal() {
     `;
   }
 
-  document.getElementById('simQuoteModal')?.classList.add('open');
+  const qModal = document.getElementById('simQuoteModal'); if (qModal) { qModal.classList.add('open'); qModal.style.display = 'flex'; }
   playSimSound('confirm');
 }
 
 document.getElementById('btnExportQuote')?.addEventListener('click', openQuoteModal);
-document.getElementById('btnCloseQuote')?.addEventListener('click', () => {
-  document.getElementById('simQuoteModal')?.classList.remove('open');
-});
+const closeQuoteFn = () => {
+  const qModal = document.getElementById('simQuoteModal');
+  if (qModal) {
+    qModal.classList.remove('open');
+    qModal.style.display = 'none';
+  }
+};
+document.getElementById('btnCloseQuote')?.addEventListener('click', closeQuoteFn);
+document.getElementById('btnCloseQuoteModal')?.addEventListener('click', closeQuoteFn);
 document.getElementById('btnQuoteSwitchBlueprint')?.addEventListener('click', () => {
   ensureV4State();
   simState.hardscape.blueprintMode = !simState.hardscape.blueprintMode;
@@ -2517,6 +2523,14 @@ function syncSimTopBarUI() {
   const layoutEl = document.querySelector('.sim-layout');
   if (layoutEl) {
     layoutEl.classList.toggle('sims-panoramic', Boolean(simState.panoramic));
+  }
+  if (simState.panoramic) {
+    const dock = document.getElementById('simBottomDock');
+    const btn = document.getElementById('btnToggleDockShelf');
+    if (dock && dock.classList.contains('collapsed')) {
+      dock.classList.remove('collapsed');
+      if (btn) btn.textContent = '收合商品欄 ▼';
+    }
   }
 }
 
@@ -2977,14 +2991,16 @@ window.addEventListener('scroll', () => {
 });
 
 hamburger.addEventListener('click', () => {
-  hamburger.classList.toggle('open');
-  navLinks.classList.toggle('open');
+  const isOpen = hamburger.classList.toggle('open');
+  navLinks.classList.toggle('open', isOpen);
+  hamburger.setAttribute('aria-expanded', String(isOpen));
 });
 
 navLinks.querySelectorAll('a').forEach(a => {
   a.addEventListener('click', () => {
     hamburger.classList.remove('open');
     navLinks.classList.remove('open');
+    hamburger.setAttribute('aria-expanded', 'false');
   });
 });
 
@@ -3134,9 +3150,10 @@ const tabs = document.querySelectorAll('.age-tab');
 const panels = document.querySelectorAll('.age-panel');
 tabs.forEach(tab => {
   tab.addEventListener('click', () => {
-    tabs.forEach(t => t.classList.remove('active'));
+    tabs.forEach(t => { t.classList.remove('active'); t.setAttribute('aria-selected', 'false'); });
     panels.forEach(p => p.classList.remove('active'));
     tab.classList.add('active');
+    tab.setAttribute('aria-selected', 'true');
     const map = { young: 'panel-young', family: 'panel-family', senior: 'panel-senior' };
     const panel = document.getElementById(map[tab.dataset.tab]);
     if (panel && !reduceMotionMQ.matches) {
