@@ -2860,3 +2860,102 @@ textarea:focus-visible,
   font-weight: 700;
   color: var(--teal);
 }
+
+
+/* ═══════════════════ INTERIOR ARCHITECTURE & JAPANDI EDITORIAL STYLE (ui-ux-pro-max #161 / #84) ═══════════════════ */
+
+/* 1. Editorial Serif Pull Quotes & Headlines */
+.hero-tagline,
+.concept-intro .big-quote,
+.insight-quote p,
+.core-problem p {
+  font-family: var(--font-display);
+  letter-spacing: 0.015em;
+}
+
+/* 2. Technical Blueprint Monospace Labels & Spec Numbers */
+.blueprint-phase-num,
+.arch-card-layer,
+.hero-spec-item strong,
+.hero-showcase-tag,
+.calc-cost-number,
+.stat-number {
+  font-family: var(--font-mono), var(--font-sans);
+}
+
+/* 3. Tactile Interior Material Swatch Strip in Hero Showcase */
+.hero-material-strip {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: 0.65rem;
+  padding: 0.45rem 0.75rem;
+  background: var(--surface-subtle);
+  border: 1px solid var(--card-border);
+  border-radius: 10px;
+}
+
+.material-strip-label {
+  font-family: var(--font-mono);
+  font-size: 0.64rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  color: var(--text-muted);
+}
+
+.material-swatch-group {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
+.material-swatch {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.38rem;
+  font-size: 0.73rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+}
+
+.swatch-dot {
+  width: 13px;
+  height: 13px;
+  border-radius: 50%;
+  display: inline-block;
+  box-shadow: inset 0 1px 2px rgba(255, 255, 255, 0.6), 0 1px 2px rgba(31, 28, 24, 0.18);
+  border: 1px solid rgba(31, 28, 24, 0.15);
+}
+
+.swatch-dot.aluminum {
+  background: linear-gradient(135deg, #d8dde0 0%, #9aa3a8 50%, #cdd3d6 100%);
+}
+
+.swatch-dot.oak {
+  background: linear-gradient(135deg, #a6734b 0%, #6d4428 60%, #8e5b38 100%);
+}
+
+.swatch-dot.linen {
+  background: linear-gradient(135deg, #f7f3eb 0%, #dfd6c6 100%);
+}
+
+/* 4. Architectural Gallery Matting for Interior Visuals */
+.vr-feature img,
+.track-system img,
+.circular-economy img,
+.insight-image {
+  background: var(--card-bg);
+  padding: 8px;
+  border: 1px solid var(--card-border);
+  border-radius: 16px;
+  box-shadow:
+    inset 0 0 0 1px rgba(255, 255, 255, 0.8),
+    0 16px 36px -10px rgba(42, 33, 24, 0.1);
+}
+
+.insight-image img {
+  border-radius: 10px;
+}
