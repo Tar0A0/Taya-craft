@@ -157,6 +157,11 @@ test.describe('TAYACRAFT E2E 自動化測試套件', () => {
     await page.click('#snapBtnExploded');
     await page.waitForTimeout(150);
     await page.click('#snapBtnLocked');
+    await page.click('#simReset');
+    await expect(page.locator('#simMoney')).toContainText('800');
+    await page.click('#btnExportQuote');
+    await expect(page.locator('#simQuoteModal')).toBeVisible();
+    await page.click('#btnCloseQuoteModal');
     await page.waitForTimeout(150);
 
     expect(pageErrors).toHaveLength(0);

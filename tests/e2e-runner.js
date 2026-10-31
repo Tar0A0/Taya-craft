@@ -369,6 +369,17 @@ async function runE2ETests() {
     });
     assert(tourClosed, '點擊關閉按鈕 (✕) 後，導覽控制艙已正確退出並還原正常瀏覽狀態');
 
+    // 測試 F：驗證重置、購買與 BOM 報價單一致性
+    await page.click('#simReset');
+    await page.waitForTimeout(150);
+    const resetBudget = await page.evaluate(() => simState.money);
+    assert(resetBudget === 800, '點擊 #simReset 後預算重置為 §800 並與沙盒預設一致');
+    await page.click('#btnExportQuote');
+    await page.waitForTimeout(150);
+    const quoteVisible = await page.evaluate(() => document.getElementById('simQuoteModal')?.style.display !== 'none');
+    assert(quoteVisible, '點擊 #btnExportQuote 成功開啟 BOM 工程報價單視窗');
+    await page.click('#btnCloseQuoteModal');
+
     assert(
       pageErrors.length === 0,
       `頁面 JavaScript 執行階段無任何未捕捉錯誤 (Page Errors: ${pageErrors.length})`,

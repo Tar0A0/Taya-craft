@@ -220,7 +220,7 @@ function isPartitionWall(id) {
 
 // shortcut: painter's algorithm depth sort on 2D canvas (<60 AABB boxes), switch to Three.js WebGL z-buffer if object count >200
 // Returns interactive 3D furniture, DLC & V4 models in the room (all draggable, clickable & depth-sorted)
-function getSceneObjects() {
+function getSceneObjects() { if (window._inFrameLoop && window._frameSceneObjs) return window._frameSceneObjs;
   ensureV4State();
   const list = [];
   const { w: roomW, d: roomD } = getRoomDimensions(simState.profile?.area || 18);
@@ -2846,7 +2846,7 @@ function draw3DHitbox(iso, box, opts = {}) {
 }
 
 let lastLoopTime = performance.now();
-function gameFrameLoop(now) {
+function gameFrameLoop(now) { if (!window._roomObs && typeof IntersectionObserver !== 'undefined' && roomCanvas) { window._roomVis = true; (window._roomObs = new IntersectionObserver(e => { window._roomVis = e[0].isIntersecting; })).observe(roomCanvas); } if (window._roomVis === false && !(typeof isTourActive !== 'undefined' && isTourActive)) { lastLoopTime = now; requestAnimationFrame(gameFrameLoop); return; } window._inFrameLoop = false; ensureV4State(); window._frameSceneObjs = getSceneObjects(); window._inFrameLoop = true;
   const dt = Math.min(0.05, (now - lastLoopTime) / 1000);
   lastLoopTime = now;
 
@@ -2992,7 +2992,7 @@ function gameFrameLoop(now) {
       : '💡 點擊 3D 家具模型自動尋路互動，或按 WASD／方向鍵移動';
   }
 
-  renderGameRoom(now);
+  renderGameRoom(now); window._inFrameLoop = false; window._frameSceneObjs = null;
   requestAnimationFrame(gameFrameLoop);
 }
 
@@ -3177,8 +3177,8 @@ function updateObjInspectorUI() {
         interactBtn.textContent = '🧱 結構承重柱';
         interactBtn.title = '建築承重柱（無法拆除）';
       } else {
-        const curFinish = simState.hardscape?.wallFinish || 'accent';
-        const finishName = curFinish === 'brick' ? '文化石' : curFinish === 'acoustic' ? '吸音木質' : '北歐跳色漆';
+        const curFinish = simState.hardscape?.wallMat || 'warm';
+        const finishName = curFinish === 'stone' ? '文化石' : curFinish === 'acoustic' ? '吸音木質' : '跳色乳膠漆';
         interactBtn.textContent = `🎨 切換飾面 (${finishName})`;
         interactBtn.title = '點擊循環切換牆面材質飾面 (跳色漆 / 文化石 / 吸音棉木格柵)';
       }
@@ -3410,16 +3410,16 @@ document.getElementById('btnInspectInteract')?.addEventListener('click', () => {
     }
     ensureV4State();
     if (!simState.hardscape) simState.hardscape = {};
-    const finishes = ['accent', 'brick', 'acoustic'];
-    const curIdx = finishes.indexOf(simState.hardscape.wallFinish || 'accent');
-    simState.hardscape.wallFinish = finishes[(curIdx + 1) % finishes.length];
+    const finishes = ['warm', 'stone', 'acoustic'];
+    const curIdx = finishes.indexOf(simState.hardscape.wallMat || 'warm');
+    simState.hardscape.wallMat = finishes[(curIdx + 1) % finishes.length];
     saveSimState();
     playSimSound('snap');
     renderSim();
     renderV4Panels();
     updateObjInspectorUI();
-    const finishNames = { accent: '北歐跳色漆 (鼠尾草綠)', brick: '文化石造型壁貼 (英倫白磚)', acoustic: '木質吸音格柵板 (溫潤柚木)' };
-    showRoomBanner(`🎨 已變更建築主牆飾面為「${finishNames[simState.hardscape.wallFinish]}」！`);
+    const finishNames = { warm: '溫潤跳色乳膠漆', stone: '北歐文化石牆', acoustic: '專業六角吸音棉牆' };
+    showRoomBanner(`🎨 已變更建築主牆飾面為「${finishNames[simState.hardscape.wallMat]}」！`);
     return;
   }
   if (isPartitionWall(obj.id)) {
@@ -4278,7 +4278,7 @@ const snapModulesData = {
   }
 };
 
-function renderSnap3DModel() {
+function renderSnap3DModel() { const sh = `${snapCurrentMod}:${snapAnimState.yaw.toFixed(4)}:${snapAnimState.progress.toFixed(4)}`; if (sh === window._lastSnapHash) { requestAnimationFrame(renderSnap3DModel); return; } window._lastSnapHash = sh;
   if (!snapCtx || !snapCanvas) return;
   const W = snapCanvas.width;
   const H = snapCanvas.height;

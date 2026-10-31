@@ -216,7 +216,7 @@ function saveSimState() {
 }
 
 async function playSimSound(tone = 'tap') {
-  if (!simSoundEnabled) return;
+  if (!simSoundEnabled || (typeof isTourActive !== 'undefined' && isTourActive && !tourSound)) return;
   const AudioCtx = window.AudioContext || window.webkitAudioContext;
   if (!AudioCtx) return;
   try {
@@ -800,7 +800,7 @@ document.getElementById('simReset').addEventListener('click', () => {
   simState.flawedItems = [];
   selectedObjectId = null;
   ensureV4State();
-  simState.hardscape.partition = false;
+  simState.hardscape.partition = false; simState.hardscape.partitions = [];
   simState.hardscape.pillar = false;
   simState.hardscape.cableRaceway = false;
   simState.scenario = 'sandbox';
@@ -1169,7 +1169,7 @@ const WALL_OUTLETS = [
 const V4_SCENARIOS = {
   sandbox: {
     title: '🏖️ 自由沙盒模式',
-    budget: 650,
+    budget: 800,
     area: 18,
     shape: 'rect',
     lockedItems: [],
@@ -1232,7 +1232,7 @@ const V4_SCENARIOS = {
 };
 
 // Initialize & sanitize V4 state fields defensively (handles legacy localStorage snapshots without NaN)
-function ensureV4State() {
+function ensureV4State() { if (window._inFrameLoop && simState.hardscape && Array.isArray(simState.v4Items) && simState.v4Positions) return;
   if (!simState.profile || typeof simState.profile !== 'object') {
     simState.profile = { area: 18, people: 2 };
   }
@@ -1774,7 +1774,7 @@ function renderV4Panels() {
       const pool = unowned.length > 0 ? unowned : V4_SHOP_CATALOG;
       const prize = pool[Math.floor(Math.random() * pool.length)];
       simState.money -= 35;
-      if (!hasV4Item(prize.id)) simState.v4Items.push(prize.id);
+      if (!hasV4Item(prize.id)) simState.v4Items.push(prize.id); simState.blindBoxItems = (simState.blindBoxItems || []).concat(prize.id);
       triggerSnapEffect(prize.id);
       spawnFloatingText(`🎁 開出：${prize.name}！`, simState.player.x, simState.player.y, 1.85, '#fde047');
       saveSimState();
@@ -1877,7 +1877,7 @@ function renderV4Panels() {
       if (owned) {
         simState.v4Items = simState.v4Items.filter(i => i !== item.id);
         simState.flawedItems = (simState.flawedItems || []).filter(i => i !== item.id);
-        const refund = Math.round(item.price * 0.5);
+        const refund = simState.blindBoxItems?.includes(item.id) ? 18 : Math.round((isFlawed ? (item.usedPrice || item.price * 0.35) : item.price) * 0.5);
         simState.money += refund;
         playSimSound('tap');
         showSimMessage(`已售出「${item.name}」，退回 §${refund}。`);
@@ -2393,10 +2393,10 @@ function openQuoteModal() {
 
   // 1. TAYA DLCs
   const dlcPrices = {
-    work: { name: 'TAYA WORK DLC 壁掛折疊工作桌', price: 180 },
-    family: { name: 'TAYA FAMILY DLC 變形延伸料理中島', price: 240 },
-    storage: { name: 'TAYA STORAGE DLC 頂天立地收納櫃', price: 210 },
-    safe: { name: 'TAYA SAFE DLC 樂齡感應扶手夜燈', price: 150 }
+    work: { name: 'TAYA WORK DLC 壁掛折疊工作桌', price: 80 },
+    family: { name: 'TAYA FAMILY DLC 變形延伸料理中島', price: 120 },
+    storage: { name: 'TAYA STORAGE DLC 頂天立地收納櫃', price: 90 },
+    safe: { name: 'TAYA SAFE DLC 樂齡感應扶手夜燈', price: 70 }
   };
   Object.entries(dlcPrices).forEach(([k, v]) => {
     if (isDlcActive(k)) {
@@ -2434,7 +2434,8 @@ function openQuoteModal() {
     totalSpent += 25;
   }
 
-  // 3. V4 Themed Items
+  // 3. Basic & V4 Themed Items
+  (simState.furniture || []).forEach(id => { const b = extraFurnitureCatalog.find(m => m.id === id); if (b) rows.push({ cat: '🏠 基礎家具', name: `${b.icon} ${b.name}`, note: '基礎隨附家具 (免購置費)', cost: 0 }); });
   simState.v4Items.forEach(id => {
     const item = V4_SHOP_CATALOG.find(m => m.id === id);
     if (!item) return;
@@ -2618,7 +2619,7 @@ function renderSimDockShelf(cat = currentDockCat, query = currentDockSearch) {
       cat: b.id === 'kitchen-cart' ? 'appliance' : b.id === 'plant-deco' ? 'decor' : 'comfort',
       name: b.name,
       icon: b.icon,
-      price: b.price || 90,
+      price: 0,
       desc: b.desc,
       isPlaced: () => simState.furniture.includes(b.id),
       onPlace: () => {
@@ -2680,7 +2681,7 @@ function renderSimDockShelf(cat = currentDockCat, query = currentDockSearch) {
     const card = document.createElement('div');
     card.className = `sim-dock-card${placed ? ' placed' : ''}${isDoorPartition ? ' partition-door-card' : ''}`;
 
-    let priceBadgeText = placed ? '✓ 已放置' : `§ ${item.price}`;
+    let priceBadgeText = placed ? '✓ 已放置' : (item.price ? `§ ${item.price}` : '免費');
     let priceBadgeStyle = '';
     if (isDoorPartition) {
       priceBadgeText = pCfg.doorOpen ? '🚪 門已開 (點擊關門)' : '🔒 門已關 (點擊開門)';
@@ -2880,7 +2881,7 @@ function updateLifecycleCalc() {
   const wasteScale = gsap.utils.clamp(0.15, 1, parseFloat(tayaWaste) / parseFloat(tradWaste));
 
   // 透過 gsap.matchMedia() 支援 prefers-reduced-motion: reduce
-  const mm = gsap.matchMedia();
+  if (window._calcMM) window._calcMM.revert(); const mm = (window._calcMM = gsap.matchMedia());
   mm.add(
     {
       canAnimate: "(prefers-reduced-motion: no-preference)",
@@ -3245,7 +3246,8 @@ function runSelfCheck() {
     'SelfCheck: findRoomPath must return valid waypoints array'
   );
 
-  // 9. Guided Walkthrough 180s Total Duration Invariant
+  // 9. Guided Walkthrough 180s Total Duration Invariant & Sandbox Budget Invariant
+  console.assert(V4_SCENARIOS.sandbox.budget === simDefaultState.money, 'SelfCheck: sandbox budget must match simDefaultState.money');
   console.assert(
     Array.isArray(guidedTourSteps) && guidedTourSteps.length === 6 && guidedTourSteps.reduce((acc, s) => acc + s.duration, 0) === 180,
     'SelfCheck: guidedTourSteps must total 180 seconds'

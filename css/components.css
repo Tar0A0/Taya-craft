@@ -338,17 +338,17 @@ img {
   margin: 0;
 }
 
-.step-flow { display: grid; grid-template-columns: 1fr auto 1fr; gap: 2rem; align-items: center; margin-bottom: 4rem; }
 
-.step-box { background: var(--card-bg); border: 1px solid var(--card-border); padding: 2.5rem; border-radius: 4px; text-align: center; }
 
-.step-number { font-family: 'Inter', 'Noto Sans TC', system-ui, -apple-system, sans-serif; font-variant-numeric: tabular-nums; font-size: 0.65rem; letter-spacing: 3px; color: #98633f; text-transform: uppercase; margin-bottom: 0.5rem; }
 
-.step-box p { color: var(--text-secondary); font-size: 0.9rem; }
 
-.step-arrow { font-size: 2rem; color: #a66f45; font-family: 'Inter', 'Noto Sans TC', system-ui, -apple-system, sans-serif; font-variant-numeric: tabular-nums; }
 
-.unlock-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.2rem; margin-bottom: 4rem; }
+
+
+
+
+
+
 
 .unlock-card { background: var(--card-bg); border: 1px solid var(--card-border); padding: 1.5rem; border-radius: 4px; text-align: center; position: relative; overflow: hidden; transition: all 0.4s; cursor: default; }
 
