@@ -3763,6 +3763,50 @@ window.guidedTourSteps = guidedTourSteps;
   updateSlider(50);
 })();
 
+
+// ─── JUDGE FLOW & SIMULATOR ONBOARDING QUICK ACTIONS ───
+(function initUxOnboardingAndQuickTriggers() {
+  document.querySelectorAll('[data-trigger-guided-tour]').forEach(btn => {
+    btn.addEventListener('click', () => {
+      if (typeof startGuidedWalkthrough === 'function') startGuidedWalkthrough(0);
+    });
+  });
+
+  const onboardBar = document.getElementById('simOnboardingBar');
+  const dismissBtn = document.getElementById('btnDismissSimOnboard');
+  if (dismissBtn && onboardBar) {
+    dismissBtn.addEventListener('click', () => {
+      onboardBar.style.display = 'none';
+    });
+  }
+
+  document.querySelectorAll('[data-sim-onboard]').forEach(stepBtn => {
+    stepBtn.addEventListener('click', () => {
+      const action = stepBtn.getAttribute('data-sim-onboard');
+      stepBtn.classList.add('is-done');
+      if (action === 'snap') {
+        const snapBtn = document.getElementById('btnDemoTayaSnap') || document.getElementById('btnQuickStarterKit');
+        if (snapBtn) snapBtn.click();
+      } else if (action === 'canvas') {
+        const canvas = document.getElementById('simRoomCanvas');
+        if (canvas) {
+          canvas.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          canvas.focus({ preventScroll: true });
+        }
+      } else if (action === 'quote') {
+        const quoteBtn = document.getElementById('btnExportQuote');
+        if (quoteBtn) quoteBtn.click();
+      }
+    });
+  });
+
+  document.addEventListener('click', e => {
+    document.querySelectorAll('details.sim-view-popover[open]').forEach(det => {
+      if (!det.contains(e.target)) det.removeAttribute('open');
+    });
+  });
+})();
+
 runSelfCheck();
 
 

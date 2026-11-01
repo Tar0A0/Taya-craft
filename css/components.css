@@ -2959,3 +2959,523 @@ textarea:focus-visible,
 .insight-image img {
   border-radius: 10px;
 }
+
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   5. COMPREHENSIVE UX, WCAG 2.2 AA CONTRAST & MOBILE/TABLET OPTIMIZATIONS
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+/* 5.1 Terminology Quick-Scan Pills in Hero */
+.hero-term-pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+  margin-bottom: 1.35rem;
+}
+
+.term-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.32rem 0.72rem;
+  border-radius: 999px;
+  background: rgba(255, 254, 250, 0.86);
+  border: 1px solid var(--card-border);
+  font-size: 0.76rem;
+  color: var(--text-secondary);
+  line-height: 1.35;
+  box-shadow: var(--shadow-sm);
+}
+
+.term-pill strong {
+  font-family: var(--font-mono);
+  color: var(--amber-dark);
+  font-weight: 700;
+}
+
+/* 5.2 Judge 3-Minute Flow: Section Next-Step Progression Bar */
+.section-next-bar {
+  margin-top: 2.5rem;
+  padding: 0.95rem 1.35rem;
+  border-radius: 14px;
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  border-left: 4px solid var(--amber);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
+  box-shadow: var(--shadow-sm);
+}
+
+.next-step-meta {
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+}
+
+.next-step-meta strong {
+  font-family: var(--font-mono);
+  color: var(--amber-dark);
+  font-weight: 700;
+  letter-spacing: 0.04em;
+}
+
+.next-step-links {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  flex-wrap: wrap;
+}
+
+.next-step-primary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 40px;
+  padding: 0.5rem 1.1rem;
+  border-radius: 999px;
+  background: var(--amber);
+  color: #fffefa;
+  font-size: 0.84rem;
+  font-weight: 700;
+  text-decoration: none;
+  white-space: nowrap;
+  transition: transform 0.18s ease, background 0.18s ease, box-shadow 0.18s ease;
+}
+
+.next-step-primary:hover {
+  background: var(--amber-dark);
+  transform: translateY(-1px);
+  box-shadow: 0 6px 16px rgba(142, 91, 56, 0.22);
+}
+
+.next-step-secondary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 40px;
+  padding: 0.5rem 0.95rem;
+  border-radius: 999px;
+  background: var(--surface);
+  color: var(--text-primary);
+  border: 1px solid var(--card-border);
+  font-family: inherit;
+  font-size: 0.82rem;
+  font-weight: 700;
+  text-decoration: none;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: transform 0.18s ease, border-color 0.18s ease, background 0.18s ease;
+}
+
+.next-step-secondary:hover {
+  border-color: var(--amber);
+  background: var(--card-bg);
+  color: var(--amber-dark);
+  transform: translateY(-1px);
+}
+
+/* 5.3 3D Simulator 3-Step Quick Onboarding Strip */
+.sim-onboarding-bar {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  flex-wrap: wrap;
+  padding: 0.42rem 0.68rem;
+  margin-bottom: 0.55rem;
+  border-radius: 12px;
+  background: linear-gradient(90deg, rgba(142, 91, 56, 0.08), rgba(59, 95, 80, 0.07));
+  border: 1px solid var(--amber-border);
+}
+
+.sim-onboard-label {
+  font-size: 0.78rem;
+  font-weight: 800;
+  color: var(--amber-dark);
+  white-space: nowrap;
+}
+
+.sim-onboard-step {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.32rem;
+  min-height: 34px;
+  padding: 0.26rem 0.58rem;
+  border-radius: 999px;
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  color: var(--text-primary);
+  font-family: inherit;
+  font-size: 0.72rem;
+  font-weight: 600;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: all 0.18s ease;
+}
+
+.sim-onboard-step:hover {
+  border-color: var(--amber);
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-sm);
+}
+
+.sim-onboard-step.is-done {
+  border-color: var(--green);
+  background: var(--green-bg);
+  color: var(--green-dark);
+}
+
+.onboard-num {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: var(--amber);
+  color: #fffefa;
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  font-weight: 700;
+  flex-shrink: 0;
+}
+
+.sim-onboard-step.is-done .onboard-num {
+  background: var(--green);
+}
+
+.sim-onboard-arrow {
+  color: var(--text-muted);
+  font-size: 0.75rem;
+  font-weight: 700;
+}
+
+.sim-onboard-dismiss {
+  margin-left: auto;
+  min-width: 32px;
+  min-height: 32px;
+  border-radius: 8px;
+  border: 1px solid transparent;
+  background: transparent;
+  color: var(--text-muted);
+  cursor: pointer;
+  font-size: 0.82rem;
+  font-weight: 700;
+}
+
+.sim-onboard-dismiss:hover {
+  background: rgba(31, 28, 24, 0.06);
+  color: var(--text-primary);
+}
+
+/* 5.4 WCAG 2.2 AA Contrast & Tactile Micro-Interaction Fixes */
+.hero-showcase-tag {
+  background: rgba(29, 26, 22, 0.88) !important;
+  color: #fffefa !important;
+}
+
+.combo-chip {
+  color: #3f3931 !important;
+  font-weight: 600;
+}
+
+.pain-card .pain-tag {
+  color: #8f3b2e !important;
+  font-weight: 700;
+}
+
+.sim-brand small,
+.sim-stage-btn small {
+  color: #524b41 !important;
+}
+
+.hero-spec-item strong {
+  white-space: nowrap;
+}
+
+:where(button, .hero-cta, .hero-cta-tour, .nav-cta-pill, .nav-tour-pill, .sim-tool-pill, .sim-cmp-btn):active {
+  transform: scale(0.98);
+}
+
+/* 5.5 Navigation Bar & Tablet (<= 1080px) Anti-Wrap Protection */
+.nav-logo,
+.nav-links a,
+.nav-cta-pill,
+.nav-tour-pill {
+  white-space: nowrap;
+}
+
+.nav-mobile-actions {
+  display: none;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.nav-mobile-tour-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 38px;
+  padding: 0.35rem 0.75rem;
+  border-radius: 999px;
+  background: var(--amber);
+  color: #fffefa;
+  border: none;
+  font-family: inherit;
+  font-size: 0.76rem;
+  font-weight: 700;
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+.nav-mobile-sim-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 38px;
+  padding: 0.35rem 0.7rem;
+  border-radius: 999px;
+  background: var(--surface);
+  color: var(--text-primary);
+  border: 1px solid var(--card-border);
+  font-size: 0.76rem;
+  font-weight: 700;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+@media (max-width: 1080px) {
+  .nav {
+    padding: 0 1rem;
+  }
+  .nav-links {
+    display: none;
+    flex-direction: column;
+    align-items: stretch;
+    position: absolute;
+    top: var(--nav-height);
+    left: 0;
+    width: 100%;
+    background: rgba(250, 249, 246, 0.98);
+    padding: 1rem 1.5rem;
+    border-bottom: 1px solid var(--card-border);
+    box-shadow: 0 12px 24px rgba(75, 61, 45, 0.08);
+    gap: 0.65rem;
+  }
+  .nav-links.open {
+    display: flex;
+  }
+  .nav-mobile-actions {
+    display: inline-flex;
+  }
+  .hamburger {
+    display: flex;
+    min-width: 42px;
+    min-height: 42px;
+    align-items: center;
+    justify-content: center;
+    border-radius: 8px;
+  }
+}
+
+/* 5.6 Mobile (<= 768px & <= 480px) Layout & Simulator Rescue */
+@media (max-width: 768px) {
+  /* Hero mobile polish */
+  .hero {
+    padding: calc(var(--nav-height) + 1.25rem) 1rem 2.5rem;
+  }
+  .hero-tagline {
+    font-size: clamp(1.04rem, 4.3vw, 1.25rem);
+    text-wrap: balance;
+  }
+  .hero-spec-strip {
+    gap: 0.5rem;
+  }
+  .hero-spec-item strong {
+    font-size: clamp(0.95rem, 3.8vw, 1.15rem);
+  }
+  .hero-spec-item span {
+    font-size: 0.72rem;
+    line-height: 1.35;
+  }
+  .hero-showcase-tag {
+    font-size: 0.64rem;
+    padding: 0.26rem 0.62rem;
+    white-space: nowrap;
+    max-width: calc(100% - 1.2rem);
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  /* Insight CTA single-line fit */
+  .insight-to-game-btn {
+    width: 100%;
+    justify-content: center;
+    white-space: nowrap;
+    font-size: 0.82rem;
+    padding: 0.65rem 0.9rem;
+  }
+
+  /* Problem Before/After slider mobile fit (prevent right badge clipping) */
+  .ba-quick-btns {
+    display: flex;
+    flex-wrap: wrap;
+    width: 100%;
+    gap: 0.38rem;
+  }
+  .ba-quick-btn {
+    flex: 1 1 auto;
+    min-height: 38px;
+    padding: 0.35rem 0.55rem;
+    font-size: 0.72rem;
+    white-space: nowrap;
+    justify-content: center;
+  }
+  .ba-slider-viewport .ba-badge {
+    max-width: 43%;
+    padding: 0.35rem 0.5rem;
+    bottom: 0.5rem;
+  }
+  .ba-slider-viewport .ba-badge strong {
+    font-size: 0.68rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: block;
+  }
+  .ba-slider-viewport .ba-badge span {
+    display: none;
+  }
+
+  /* 3D Simulator mobile canvas & HUD anti-collision */
+  .sim-onboarding-bar {
+    padding: 0.5rem 0.65rem;
+    gap: 0.35rem;
+  }
+  .sim-onboard-arrow {
+    display: none;
+  }
+  .sim-onboard-step {
+    width: 100%;
+    justify-content: flex-start;
+  }
+  .sim-room {
+    min-height: 360px !important;
+  }
+  .sim-room-canvas {
+    min-height: 360px !important;
+  }
+  .sim-room-hud-top {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0.35rem;
+    top: 0.45rem;
+    left: 0.45rem;
+    right: 0.45rem;
+  }
+  .sim-cam-controls {
+    display: flex;
+    flex-wrap: nowrap;
+    gap: 0.35rem;
+    overflow-x: auto;
+    max-width: 100%;
+    padding-bottom: 2px;
+  }
+  .sim-cam-btn {
+    white-space: nowrap;
+    flex-shrink: 0;
+    padding: 0.3rem 0.6rem;
+    font-size: 0.72rem;
+  }
+  .sim-empty-guide {
+    width: calc(100% - 1.5rem) !important;
+    max-width: 280px !important;
+    padding: 0.65rem 0.8rem !important;
+    top: 55% !important;
+    gap: 0.4rem !important;
+  }
+  .sim-empty-guide span {
+    font-size: 0.76rem !important;
+  }
+  .sim-empty-guide button {
+    width: 100%;
+    white-space: nowrap;
+    font-size: 0.74rem !important;
+    padding: 0.45rem 0.65rem !important;
+  }
+  .sim-room-hud-bottom {
+    bottom: 0.4rem;
+    left: 0.45rem;
+    right: 0.45rem;
+  }
+  .sim-interaction-prompt {
+    font-size: 0.66rem !important;
+    line-height: 1.3 !important;
+    padding: 0.26rem 0.55rem !important;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 100%;
+  }
+
+  /* Fix Bottom Dock Header 1-character vertical column squash */
+  .sim-dock-header {
+    flex-wrap: wrap !important;
+    gap: 0.45rem !important;
+    padding: 0.6rem 0.7rem !important;
+  }
+  .sim-dock-funds {
+    white-space: nowrap !important;
+    flex-shrink: 0 !important;
+  }
+  .sim-dock-title {
+    flex: 1 1 120px !important;
+    font-size: 0.76rem !important;
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+  }
+  .sim-dock-toggle-btn {
+    white-space: nowrap !important;
+    flex-shrink: 0 !important;
+    min-height: 36px;
+  }
+  .sim-dock-search {
+    flex: 1 1 100% !important;
+    width: 100% !important;
+    order: 4;
+    min-height: 38px;
+  }
+
+  /* Keep all 4 deck tabs on a single crisp row */
+  .sim-deck-tab {
+    white-space: nowrap !important;
+    font-size: 0.75rem !important;
+    padding: 0.55rem 0.3rem !important;
+  }
+
+  /* 30-Year Calculator card header mobile stacking */
+  .calc-card-head {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.45rem;
+  }
+  .calc-card-badge {
+    white-space: nowrap;
+  }
+
+  /* Section Next-Step Bar mobile layout */
+  .section-next-bar {
+    padding: 0.85rem 1rem;
+  }
+  .next-step-links {
+    width: 100%;
+  }
+  .next-step-primary,
+  .next-step-secondary {
+    flex: 1 1 auto;
+    font-size: 0.78rem;
+    padding: 0.5rem 0.75rem;
+  }
+}

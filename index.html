@@ -7,8 +7,8 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@500;700&family=Noto+Sans+TC:wght@300;400;500;700;900&family=Noto+Serif+TC:wght@600;700;900&display=swap" rel="stylesheet">
-<script src="js/vendor/gsap.min.js"></script>
-<script src="js/vendor/ScrollTrigger.min.js"></script>
+<script src="js/vendor/gsap.min.js" defer></script>
+<script src="js/vendor/ScrollTrigger.min.js" defer></script>
 <link rel="stylesheet" href="css/main.css">
 <link rel="stylesheet" href="css/components.css">
 </head>
@@ -31,9 +31,13 @@
       </button>
     </li>
   </ul>
-  <button class="hamburger" id="hamburger" aria-label="切換選單" aria-expanded="false" aria-controls="navLinks">
-    <span></span><span></span><span></span>
-  </button>
+  <div class="nav-mobile-actions">
+    <button type="button" class="nav-mobile-tour-btn" data-trigger-guided-tour="true" aria-label="啟動 3 分鐘導覽">▶ 3分鐘導覽</button>
+    <a href="#game" class="nav-mobile-sim-btn">3D 模擬</a>
+    <button class="hamburger" id="hamburger" aria-label="切換選單" aria-expanded="false" aria-controls="navLinks">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
 </nav>
 <div class="scroll-track" aria-hidden="true"><div class="scroll-track-fill"></div></div>
 
@@ -48,6 +52,11 @@
         <span class="quote-mark">「</span>如果你的家，是一款持續更新的遊戲...?<span class="quote-mark">」</span>
       </p>
       <p class="hero-sub">結合<strong>大雅廚具頂尖的鋁合金擠型與高精密木工製造能量</strong>，開創「模組化空間長效訂閱服務 (Space-as-a-Service)」。以預埋結構軌道與快拆工藝取代敲牆泥作，讓居住空間隨人生階段自由擴充升級。</p>
+      <div class="hero-term-pills" aria-label="核心創新術語速覽">
+        <span class="term-pill"><strong>Space-as-a-Service</strong> 空間長效訂閱（免打牆擴充）</span>
+        <span class="term-pill"><strong>6063-T6 鋁軌</strong> ±0.5mm 航太級快拆滑軌</span>
+        <span class="term-pill"><strong>LCC × CLV</strong> 省 71% 改裝費 · 延展 40 年服務</span>
+      </div>
       <div class="hero-cta-group">
         <button type="button" class="hero-cta-tour" id="btnHeroGuidedTour">
           <svg class="ui-icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10"/><polygon points="10 8 16 12 10 16 10 8" fill="currentColor" stroke="none"/></svg>
@@ -182,6 +191,14 @@
       <p>落實服務科學線上線下（O2O）全通路體驗：消費者在官網透過 3D 空間配置引擎自主探索與預算試算，亦可至大雅廚具實體門市配戴 VR 設備，1:1 沉浸式體驗 25歲、40歲、65歲不同人生階段的空間尺度與動線，在決策初期即達成「零認知落差」的服務承諾。</p>
     </div>
   </div>
+
+  <div class="section-next-bar">
+    <span class="next-step-meta"><strong>STEP 01 / 06</strong> · 已了解 DLC 模組化居住概念</span>
+    <div class="next-step-links">
+      <a href="#insight" class="next-step-primary">下一步：02 跨世代居住需求診斷 ↓</a>
+      <a href="#game" class="next-step-secondary">▶ 直接跳至 3D 模擬器</a>
+    </div>
+  </div>
 </section>
 
 <div class="section-divider"></div>
@@ -297,6 +314,14 @@
     <div class="insight-quote">
       <p>「新世代缺的可能不是更大的家，而是<strong>更有彈性、更適合每一階段自己</strong>的家。」</p>
     </div>
+
+    <div class="section-next-bar">
+      <span class="next-step-meta"><strong>STEP 02 / 06</strong> · 已掌握 25–65 歲三大階段空間轉折</span>
+      <div class="next-step-links">
+        <a href="#problem" class="next-step-primary">下一步：03 傳統裝修病灶與實境對比 ↓</a>
+        <a href="#game" class="next-step-secondary">▶ 直接跳至 3D 模擬器</a>
+      </div>
+    </div>
   </div>
 </section>
 
@@ -329,7 +354,7 @@
 
       <div class="ba-slider-viewport" id="baSliderViewport">
         <!-- 底層：After (使用 TAYA 系統) -->
-        <img src="assets/images/stage1-after.jpg" alt="使用 TAYA 鋁合金軌道系統後的整潔 12 坪空間" class="ba-img ba-img-after" width="1408" height="768" draggable="false">
+        <img src="assets/images/stage1-after.jpg" alt="使用 TAYA 鋁合金軌道系統後的整潔 12 坪空間" class="ba-img ba-img-after" width="1408" height="768" loading="lazy" decoding="async" draggable="false">
         <div class="ba-badge ba-badge-after">
           <strong>✦ 使用 TAYA 軌道系統 (After)</strong>
           <span>6063-T6 水平鋁軌 · Snap-Fit 折疊桌 · 模組書櫃上牆</span>
@@ -337,7 +362,7 @@
 
         <!-- 上層裁切：Before (未使用 TAYA 系統) -->
         <div class="ba-before-clip" id="baBeforeClip" style="clip-path: inset(0 50% 0 0);">
-          <img src="assets/images/stage1-before.jpg" alt="未使用 TAYA 系統前的雜物堆疊 12 坪空間" class="ba-img ba-img-before" width="1408" height="768" draggable="false">
+          <img src="assets/images/stage1-before.jpg" alt="未使用 TAYA 系統前的雜物堆疊 12 坪空間" class="ba-img ba-img-before" width="1408" height="768" loading="lazy" decoding="async" draggable="false">
           <div class="ba-badge ba-badge-before">
             <strong>⚠ 未使用 TAYA 系統 (Before)</strong>
             <span>紙箱與塑膠櫃堆地 · 餐桌擠滿螢幕碗盤 · 延長線纏繞</span>
@@ -411,6 +436,14 @@
 
   <div class="core-problem">
     <p>「核心痛點：家的物理結構，無法跟著居住者的人生階段自由演進。」</p>
+  </div>
+
+  <div class="section-next-bar">
+    <span class="next-step-meta"><strong>STEP 03 / 06</strong> · 已診斷傳統泥作裝修固化痛點</span>
+    <div class="next-step-links">
+      <a href="#prototype" class="next-step-primary">下一步：04 檢視 6063-T6 鋁軌結構原型 ↓</a>
+      <a href="#game" class="next-step-secondary">▶ 直接跳至 3D 模擬器</a>
+    </div>
   </div>
 </section>
 
@@ -675,6 +708,14 @@
         </div>
       </div>
     </div>
+
+    <div class="section-next-bar">
+      <span class="next-step-meta"><strong>STEP 04 / 06</strong> · 已了解 6063-T6 預埋滑軌與 Snap-Fit 快拆結構</span>
+      <div class="next-step-links">
+        <a href="#game" class="next-step-primary">下一步：05 親手遊玩 3D 空間模擬艙 ↓</a>
+        <a href="#benefits" class="next-step-secondary">跳至 30 年財務＆ESG 效益 →</a>
+      </div>
+    </div>
   </div>
 </section>
 
@@ -752,6 +793,26 @@
       <div class="sim-hud-item score" aria-live="polite" aria-atomic="true"><span>空間評分</span><strong id="simSpaceScore">78 分</strong></div>
       <div class="sim-hud-item esg" aria-live="polite" aria-atomic="true"><span>ESG 減碳累積</span><strong id="simEsgScore">🌱 30 kg</strong></div>
       <div class="sim-hud-item"><span>居民心情</span><strong id="simMood">愉快 ✨</strong></div>
+    </div>
+
+    <!-- 新手 3 步快速上手引導條 (不遮擋畫布、點擊可直接執行對應動作) -->
+    <div class="sim-onboarding-bar" id="simOnboardingBar" role="region" aria-label="模擬器 3 步快速上手指南">
+      <span class="sim-onboard-label">新手 3 步上手：</span>
+      <button type="button" class="sim-onboard-step" data-sim-onboard="snap">
+        <span class="onboard-num">1</span>
+        <span>點選「⚡ TAYA 軌道快拆」一鍵佈置</span>
+      </button>
+      <span class="sim-onboard-arrow" aria-hidden="true">→</span>
+      <button type="button" class="sim-onboard-step" data-sim-onboard="canvas">
+        <span class="onboard-num">2</span>
+        <span>拖曳牆上 DLC 滑軌或點擊家具互動</span>
+      </button>
+      <span class="sim-onboard-arrow" aria-hidden="true">→</span>
+      <button type="button" class="sim-onboard-step" data-sim-onboard="quote">
+        <span class="onboard-num">3</span>
+        <span>匯出「截圖＆BOM 估價單」</span>
+      </button>
+      <button type="button" class="sim-onboard-dismiss" id="btnDismissSimOnboard" aria-label="隱藏上手提示" title="隱藏提示">✕</button>
     </div>
 
     <!-- 遊戲主體：左 3D 房間視窗 + 右 四分頁整合控制艙 -->
@@ -1250,6 +1311,14 @@
       </div>
     </div>
   </div>
+
+  <div class="section-next-bar">
+    <span class="next-step-meta"><strong>STEP 05 / 06</strong> · 完成 3D 空間配置與動線體驗後，檢視商業與永續價值</span>
+    <div class="next-step-links">
+      <a href="#benefits" class="next-step-primary">下一步：06 檢視 30 年 LCC 財務與 ESG 減廢試算 ↓</a>
+      <button type="button" class="next-step-secondary" data-trigger-guided-tour="true">▶ 啟動 3 分鐘全自動導覽</button>
+    </div>
+  </div>
 </section>
 
 <div class="section-divider"></div>
@@ -1591,7 +1660,7 @@
 </div>
 
 <!-- ═══════════════════ SCRIPTS ═══════════════════ -->
-<script src="js/room-canvas.js"></script>
-<script src="js/interactions.js"></script>
+<script src="js/room-canvas.js" defer></script>
+<script src="js/interactions.js" defer></script>
 </body>
 </html>
