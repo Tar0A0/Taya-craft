@@ -4,6 +4,11 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>TAYACRAFT — 3D 空間裝潢與人生模擬遊戲</title>
+<meta name="description" content="TAYACRAFT 居家空間魔術師 — 結合大雅廚具 6063-T6 預埋鋁合金滑軌與 Space-as-a-Service 模組化空間長效訂閱服務，提供 2.5D 即時空間配置與全生命週期試算。">
+<meta property="og:type" content="website">
+<meta property="og:title" content="TAYACRAFT — 3D 空間裝潢與人生模擬遊戲">
+<meta property="og:description" content="以預埋結構軌道與快拆工藝取代敲牆泥作，讓居住空間隨 25～65 歲人生階段自由擴充升級。">
+<meta property="og:image" content="assets/images/image3.jpeg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@500;700&family=Noto+Sans+TC:wght@300;400;500;700;900&family=Noto+Serif+TC:wght@600;700;900&display=swap" rel="stylesheet">
@@ -40,6 +45,7 @@
   </div>
 </nav>
 <div class="scroll-track" aria-hidden="true"><div class="scroll-track-fill"></div></div>
+<main id="mainContent">
 
 <!-- ═══════════════════ HERO (SPLIT ARCHITECTURAL SHOWCASE) ═══════════════════ -->
 <section class="hero" id="hero">
@@ -628,7 +634,7 @@
       </div>
 
       <div class="snap-unlock-grid" role="tablist" aria-label="四大 DLC 3D 結構模型切換">
-        <button type="button" class="unlock-card snap-sim-btn active" data-mod="work">
+        <button type="button" class="unlock-card snap-sim-btn active" role="tab" aria-selected="true" data-mod="work">
           <span class="unlock-icon" aria-hidden="true">
             <svg class="ui-icon ui-icon-lg" viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>
           </span>
@@ -637,7 +643,7 @@
           <p class="unlock-desc">從牆面展開的專業工作區</p>
           <span class="unlock-tag">點擊檢視 3D 結構</span>
         </button>
-        <button type="button" class="unlock-card snap-sim-btn" data-mod="family">
+        <button type="button" class="unlock-card snap-sim-btn" role="tab" aria-selected="false" data-mod="family">
           <span class="unlock-icon" aria-hidden="true">
             <svg class="ui-icon ui-icon-lg" viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
           </span>
@@ -646,7 +652,7 @@
           <p class="unlock-desc">多功能家庭互動料理核心</p>
           <span class="unlock-tag">點擊檢視 3D 結構</span>
         </button>
-        <button type="button" class="unlock-card snap-sim-btn" data-mod="storage">
+        <button type="button" class="unlock-card snap-sim-btn" role="tab" aria-selected="false" data-mod="storage">
           <span class="unlock-icon" aria-hidden="true">
             <svg class="ui-icon ui-icon-lg" viewBox="0 0 24 24"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg>
           </span>
@@ -655,7 +661,7 @@
           <p class="unlock-desc">頂天立地高密度收納系統</p>
           <span class="unlock-tag">點擊檢視 3D 結構</span>
         </button>
-        <button type="button" class="unlock-card snap-sim-btn" data-mod="safe">
+        <button type="button" class="unlock-card snap-sim-btn" role="tab" aria-selected="false" data-mod="safe">
           <span class="unlock-icon" aria-hidden="true">
             <svg class="ui-icon ui-icon-lg" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="m9 12 2 2 4-4"/></svg>
           </span>
@@ -756,7 +762,7 @@
 
     <!-- 人生階段一鍵切換列 -->
     <div class="sim-stage-bar" role="tablist" aria-label="人生階段情境切換">
-      <button type="button" class="sim-stage-btn active" data-stage="starter" id="stageBtnStarter">
+      <button type="button" class="sim-stage-btn active" role="tab" aria-selected="true" data-stage="starter" id="stageBtnStarter">
         <span class="sim-stage-icon" aria-hidden="true">
           <svg class="ui-icon" viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>
         </span>
@@ -765,7 +771,7 @@
           <small>小宅高效辦公與電競娛樂 · 推薦 WORK DLC</small>
         </div>
       </button>
-      <button type="button" class="sim-stage-btn" data-stage="family" id="stageBtnFamily">
+      <button type="button" class="sim-stage-btn" role="tab" aria-selected="false" data-stage="family" id="stageBtnFamily">
         <span class="sim-stage-icon" aria-hidden="true">
           <svg class="ui-icon" viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
         </span>
@@ -774,7 +780,7 @@
           <small>伴侶親子共煮與高密度收納 · 推薦 FAMILY + STORAGE</small>
         </div>
       </button>
-      <button type="button" class="sim-stage-btn" data-stage="senior" id="stageBtnSenior">
+      <button type="button" class="sim-stage-btn" role="tab" aria-selected="false" data-stage="senior" id="stageBtnSenior">
         <span class="sim-stage-icon" aria-hidden="true">
           <svg class="ui-icon" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="m9 12 2 2 4-4"/></svg>
         </span>
@@ -956,10 +962,10 @@
       <!-- 右側：四分頁深度控制艙 -->
       <aside class="sim-deck">
         <div class="sim-deck-tabs" role="tablist">
-          <button type="button" class="sim-deck-tab active" data-deck-tab="live" id="tabBtnLive">生活＆劇本</button>
-          <button type="button" class="sim-deck-tab" data-deck-tab="hardscape" id="tabBtnHardscape">硬裝＆水電</button>
-          <button type="button" class="sim-deck-tab" data-deck-tab="shop" id="tabBtnShop">商城＆盲盒</button>
-          <button type="button" class="sim-deck-tab" data-deck-tab="build" id="tabBtnBuild">⚡ 軌道＆循環</button>
+          <button type="button" class="sim-deck-tab active" role="tab" aria-selected="true" data-deck-tab="live" id="tabBtnLive">生活＆劇本</button>
+          <button type="button" class="sim-deck-tab" role="tab" aria-selected="false" data-deck-tab="hardscape" id="tabBtnHardscape">硬裝＆水電</button>
+          <button type="button" class="sim-deck-tab" role="tab" aria-selected="false" data-deck-tab="shop" id="tabBtnShop">商城＆盲盒</button>
+          <button type="button" class="sim-deck-tab" role="tab" aria-selected="false" data-deck-tab="build" id="tabBtnBuild">⚡ 軌道＆循環</button>
         </div>
 
         <!-- 分頁 1：生活互動 ＆ 挑戰劇本關卡 -->
@@ -1190,9 +1196,9 @@
         <!-- 分頁 3：主題家具商城 ＆ 二手拍賣網 ＆ 特價盲盒 -->
         <div class="sim-deck-panel" id="deckPanelShop">
           <div class="shop-channel-tabs" role="tablist">
-            <button type="button" class="shop-channel-btn active" data-channel="new">全新家具行</button>
-            <button type="button" class="shop-channel-btn" data-channel="used">♻️ 二手拍賣(3~7折)</button>
-            <button type="button" class="shop-channel-btn" data-channel="blindbox">特價盲盒(§35)</button>
+            <button type="button" class="shop-channel-btn active" role="tab" aria-selected="true" data-channel="new">全新家具行</button>
+            <button type="button" class="shop-channel-btn" role="tab" aria-selected="false" data-channel="used">♻️ 二手拍賣(3~7折)</button>
+            <button type="button" class="shop-channel-btn" role="tab" aria-selected="false" data-channel="blindbox">特價盲盒(§35)</button>
           </div>
 
           <div class="shop-cat-pills" id="shopCatPills">
@@ -1286,7 +1292,7 @@
                 <button type="button" class="hardscape-btn btn-danger-outline" id="btnClearAllFurnFromBuild">一鍵清空家具</button>
               </div>
             </div>
-            <div class="plan-furniture" id="planFurniture" style="display:none;"></div>
+
           </div>
         </div>
       </aside>
@@ -1303,7 +1309,7 @@
         </div>
         <button type="button" class="sim-tool-pill" id="btnCloseQuoteModal">✕ 關閉</button>
       </div>
-      <img id="simQuotePreviewImg" class="sim-quote-preview" alt="3D 空間配置截圖預覽" width="880" height="550" loading="lazy" decoding="async" />
+      <img id="simQuotePreviewImg" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" class="sim-quote-preview" alt="3D 空間配置截圖預覽" width="880" height="550" loading="lazy" decoding="async" />
       <div id="simQuoteSummaryBox"></div>
       <div class="sim-quote-footer">
         <button type="button" class="sim-tool-pill" id="btnQuoteSwitchBlueprint">切換 2D 藍圖／3D 等距重拍</button>
@@ -1538,6 +1544,7 @@
   </div>
 </section>
 
+</main>
 <!-- ═══════════════════ FOOTER ═══════════════════ -->
 <footer class="footer">
   <div class="footer-inner">
@@ -1585,22 +1592,22 @@
       </div>
       <!-- 章節膠囊導覽列 -->
       <div class="tour-steps-nav" id="tourStepsNav" role="tablist" aria-label="導覽章節切換">
-        <button type="button" class="tour-step-pill" data-step-index="0">
+        <button type="button" class="tour-step-pill" role="tab" aria-selected="false" data-step-index="0">
           <span class="step-num">00</span><span class="step-txt">概念前導</span>
         </button>
-        <button type="button" class="tour-step-pill" data-step-index="1">
+        <button type="button" class="tour-step-pill" role="tab" aria-selected="false" data-step-index="1">
           <span class="step-num">01</span><span class="step-txt">25歲首購客廳</span>
         </button>
-        <button type="button" class="tour-step-pill" data-step-index="2">
+        <button type="button" class="tour-step-pill" role="tab" aria-selected="false" data-step-index="2">
           <span class="step-num">02</span><span class="step-txt">40歲料理中島</span>
         </button>
-        <button type="button" class="tour-step-pill" data-step-index="3">
+        <button type="button" class="tour-step-pill" role="tab" aria-selected="false" data-step-index="3">
           <span class="step-num">03</span><span class="step-txt">65歲樂齡軌道</span>
         </button>
-        <button type="button" class="tour-step-pill" data-step-index="4">
+        <button type="button" class="tour-step-pill" role="tab" aria-selected="false" data-step-index="4">
           <span class="step-num">04</span><span class="step-txt">財務 &amp; ESG 74%</span>
         </button>
-        <button type="button" class="tour-step-pill" data-step-index="5">
+        <button type="button" class="tour-step-pill" role="tab" aria-selected="false" data-step-index="5">
           <span class="step-num">05</span><span class="step-txt">效益總結</span>
         </button>
       </div>

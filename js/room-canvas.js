@@ -336,7 +336,22 @@ function getSceneObjects() { if (window._inFrameLoop && window._frameSceneObjs) 
     const dy = 1.35;
     const sMin = leftTrackMinY;
     const sMax = Math.max(sMin, Number((roomD - dy - 0.25).toFixed(2)));
-    const sy = Math.max(sMin, Math.min(sMax, clampY(tp.safe ?? 2.05, dy)));
+    const occupiedLeft = [];
+    if (hasPillar) occupiedLeft.push({ start: 1.9, end: 2.52 });
+    if (hasShower && showerX < 1.4) occupiedLeft.push({ start: showerY, end: showerY + showerDy });
+    if (simState.furniture.includes('sofa-set')) {
+      const sCp = customPos['sofa-set'];
+      const sX = sCp && Number.isFinite(sCp.x) ? sCp.x : 0.45;
+      const sY = sCp && Number.isFinite(sCp.y) ? sCp.y : 3.45;
+      if (sX < 0.7) occupiedLeft.push({ start: sY, end: sY + (getObjRotation('sofa-set') % 2 === 1 ? 1.85 : 1.05) });
+    }
+    let sy = Math.max(sMin, Math.min(sMax, clampY(tp.safe ?? 2.05, dy)));
+    if (occupiedLeft.some(r => sy < r.end + 0.04 && sy + dy + 0.04 > r.start)) {
+      for (let stepY = 0.22; stepY <= sMax + 0.001; stepY += 0.05) {
+        const cy = Number(Math.min(sMax, stepY).toFixed(2));
+        if (!occupiedLeft.some(r => cy < r.end + 0.04 && cy + dy + 0.04 > r.start)) { sy = cy; break; }
+      }
+    }
     list.push({
       id: 'safe', storeKey: 'safe',
       label: 'SAFE DLC · 樂齡感應扶手與夜燈組 (可沿軌道滑移)',
@@ -2485,7 +2500,11 @@ function findRoomPath(startX, startY, destX, destY) {
   const { w: roomW, d: roomD } = getRoomDimensions(simState.profile?.area || 18);
 
   // Check if direct straight line intersects any partition wall
-  const hitWalls = partitions.filter(p => lineIntersectsWall(startX, startY, destX, destY, p));
+  const structObstacles = [
+    ...(simState.hardscape?.pillar ? [{ id: 'room-pillar', orient: 'x', type: 'solid', x: 0.1, y: 2.18, length: 0.75, fixedWp: { x: 1.25, y: 2.25 } }] : []),
+    ...(simState.hardscape?.shape === 'lshape' ? [{ id: 'room-wall-lshape', orient: 'y', type: 'solid', x: roomW - 2.35, y: 0.1, length: 1.8, fixedWp: { x: Math.max(1.2, roomW - 2.65), y: 2.25 } }] : [])
+  ];
+  const hitWalls = [...partitions, ...structObstacles].filter(p => lineIntersectsWall(startX, startY, destX, destY, p));
   if (hitWalls.length === 0) {
     return [{ x: destX, y: destY }];
   }
@@ -2504,7 +2523,7 @@ function findRoomPath(startX, startY, destX, destY) {
     const isHoriz = wall.orient === 'x';
     const len = wall.length || 2.6;
 
-    if (wall.type === 'door') {
+    if (wall.fixedWp) { waypoints.push(wall.fixedWp); curX = wall.fixedWp.x; curY = wall.fixedWp.y; } else if (wall.type === 'door') {
       const dg = getDoorwayGeom(wall);
       if (isHoriz) {
         const approach1 = { x: dg.cx, y: curY < wall.y ? wall.y - 0.5 : wall.y + 0.16 + 0.5 };
@@ -2899,7 +2918,7 @@ function gameFrameLoop(now) { if (!window._roomObs && typeof IntersectionObserve
         if (simState.player.pendingAction) {
           const act = simState.player.pendingAction;
           simState.player.pendingAction = null;
-          executeSimAction(act.action, act.objId);
+          executeSimAction(act.action, act.objId); window._frameSceneObjs = null; window._frameSceneObjs = getSceneObjects();
         }
       }
     } else {
@@ -2992,7 +3011,14 @@ function gameFrameLoop(now) { if (!window._roomObs && typeof IntersectionObserve
       : '💡 點擊 3D 家具模型自動尋路互動，或按 WASD／方向鍵移動';
   }
 
-  renderGameRoom(now); window._inFrameLoop = false; window._frameSceneObjs = null;
+  try {
+    const isIdle = simState.paused && roomKeys.size === 0 && simState.player.targetX === null && !draggingFloorObj && !draggingModule && !cameraDragging && Math.abs(targetYaw - currentYaw) < 0.001 && !activeInteraction && snapRings.length === 0 && snapDropEffects.length === 0 && dustParticles.length === 0 && floatingTexts.length === 0 && !pathCheckAnim && now >= trackPulseUntil && now >= renovShakeUntil;
+    const idleKey = isIdle ? `${simState.stage}:${simState.minutes}:${simState.wallMode}:${simState.xrayMode}:${simState.showGrid}:${simState.showHitbox}:${selectedObjectId}:${hoveredObject?.id}:${hoveredSubpart}:${simState.profile?.area}:${simState.hardscape?.shape}:${simState.hardscape?.floorMat}:${simState.hardscape?.wallMat}:${simState.hardscape?.pillar}:${simState.hardscape?.blindsOpen}:${simState.hardscape?.blueprintMode}:${(simState.hardscape?.partitions || []).map(p => `${p.id}${p.x}${p.y}${p.length}${p.orient}${p.type}${p.doorOpen}${p.doorStyle}${p.doorPos}`).join(',')}:${Object.values(simState.dlcs || {}).join(',')}:${Object.values(simState.trackPos || {}).join(',')}:${(simState.furniture || []).join(',')}:${(simState.v4Items || []).join(',')}:${JSON.stringify(simState.v4Positions)}:${JSON.stringify(simState.rotatedItems)}` : '';
+    if (!isIdle || idleKey !== window._lastRoomIdleKey) {
+      window._lastRoomIdleKey = idleKey;
+      renderGameRoom(now);
+    }
+  } finally { window._inFrameLoop = false; window._frameSceneObjs = null; }
   requestAnimationFrame(gameFrameLoop);
 }
 
@@ -3379,7 +3405,9 @@ function removeSelectedObject() {
       return;
     }
     const meta = typeof V4_SHOP_CATALOG !== 'undefined' ? V4_SHOP_CATALOG.find(m => m.id === obj.id) : null;
-    const refund = meta ? Math.round(meta.price * 0.5) : 35;
+    const refund = simState.blindBoxItems?.includes(obj.id) ? 18 : (meta ? Math.round((simState.flawedItems?.includes(obj.id) ? meta.price * 0.35 : meta.price) * 0.5) : 35);
+    simState.flawedItems = (simState.flawedItems || []).filter(k => k !== obj.id);
+    simState.blindBoxItems = (simState.blindBoxItems || []).filter(k => k !== obj.id);
     simState.v4Items = (simState.v4Items || []).filter(k => k !== obj.id);
     simState.money += refund;
     selectedObjectId = null;
@@ -4278,7 +4306,7 @@ const snapModulesData = {
   }
 };
 
-function renderSnap3DModel() { const sh = `${snapCurrentMod}:${snapAnimState.yaw.toFixed(4)}:${snapAnimState.progress.toFixed(4)}`; if (sh === window._lastSnapHash) { requestAnimationFrame(renderSnap3DModel); return; } window._lastSnapHash = sh;
+function renderSnap3DModel() { if (!window._snapObs && typeof IntersectionObserver !== 'undefined' && snapCanvas) { window._snapVis = true; (window._snapObs = new IntersectionObserver(e => { window._snapVis = e[0].isIntersecting; })).observe(snapCanvas); } if (window._snapVis === false) { requestAnimationFrame(renderSnap3DModel); return; } const sh = `${snapCurrentMod}:${snapAnimState.yaw.toFixed(4)}:${snapAnimState.progress.toFixed(4)}`; if (sh === window._lastSnapHash) { requestAnimationFrame(renderSnap3DModel); return; } window._lastSnapHash = sh;
   if (!snapCtx || !snapCanvas) return;
   const W = snapCanvas.width;
   const H = snapCanvas.height;
@@ -4420,7 +4448,7 @@ function updateSnapSimUI(modKey, replay = false) {
 
 document.querySelectorAll('.snap-sim-btn').forEach(btn => {
   btn.addEventListener('click', () => {
-    document.querySelectorAll('.snap-sim-btn').forEach(b => b.classList.remove('active'));
+    document.querySelectorAll('.snap-sim-btn').forEach(b => { b.classList.remove('active'); b.setAttribute('aria-selected', String(b === btn)); });
     btn.classList.add('active');
     updateSnapSimUI(btn.dataset.mod, true);
   });

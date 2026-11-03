@@ -524,7 +524,7 @@ function renderSim() {
 
   // Stage buttons active state
   document.querySelectorAll('.sim-stage-btn').forEach(btn => {
-    btn.classList.toggle('active', btn.dataset.stage === simState.stage);
+    btn.classList.toggle('active', btn.dataset.stage === simState.stage); btn.setAttribute('aria-selected', String(btn.dataset.stage === simState.stage));
   });
 
   // Play/Pause & Speed buttons
@@ -617,7 +617,7 @@ function renderSim() {
 function switchDeckTab(target, category = null) {
   const tabs = document.querySelectorAll('.sim-deck-tab');
   const targetTab = Array.from(tabs).find(t => t.dataset.deckTab === target) || tabs[0];
-  tabs.forEach(t => t.classList.remove('active'));
+  tabs.forEach(t => { t.classList.remove('active'); t.setAttribute('aria-selected', String(t === targetTab)); });
   targetTab?.classList.add('active');
 
   document.getElementById('deckPanelLive')?.classList.toggle('active', target === 'live');
@@ -791,6 +791,8 @@ simSoundButton.addEventListener('click', () => {
 document.getElementById('simReset').addEventListener('click', () => {
   localStorage.removeItem(simStorageKey);
   simState = loadSimState();
+  window.simState = simState;
+  simState.blindBoxItems = [];
   simState.furniture = [];
   simState.dlcs = { work: false, family: false, storage: false, safe: false };
   simState.v4Items = [];
@@ -814,6 +816,7 @@ document.getElementById('simReset').addEventListener('click', () => {
 });
 
 document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') { closeQuoteFn(); document.getElementById('simEventModal')?.classList.remove('open'); }
   if (e.target.matches('input, textarea, select')) return;
   const dir = keyDirectionMap[e.key];
   if (dir && document.activeElement === roomCanvas) {
@@ -966,7 +969,7 @@ function triggerLifeEvent(forcedStage = null) {
 
   choicesEl.appendChild(btnPrimary);
   choicesEl.appendChild(btnSecondary);
-  modal.classList.add('open');
+  modal.classList.add('open'); btnPrimary.focus();
   playSimSound('confirm');
 }
 
@@ -1404,7 +1407,7 @@ let currentShopCat = 'all';
 let usedMarketPool = [];
 let robotVacState = { x: 4.2, y: 3.1, vx: 0.75, vy: 0.55 };
 let pathCheckAnim = null; // { startAt, waypoints, blocked, reason }
-let draggingSubgridItem = null; // { id }
+
 
 function hasV4Item(id) {
   ensureV4State();
@@ -1519,6 +1522,9 @@ function isPathBlocked() {
       return `實心隔間牆 #${i + 1} 貫穿全室無任何開口通道，動線完全阻隔！建議切換為房門牆或縮短長度。`;
     }
   }
+  if (typeof resolveWallCollisions === 'function' && resolveWallCollisions(0.85, Math.min(5.7, roomD - 0.65), 1.35, Math.min(4.5, roomD * 0.68), 0.2, roomW, roomD).collided) {
+    return '玄關入口或主要走道被大型家具阻擋，動線無法通行！';
+  }
   if (!isDlcActive('storage') && simState.profile.area <= 12 && hasV4Item('mahjong-table')) {
     return '地面未收納的紙箱雜物與電動麻將桌卡住臥床走道（建議安裝 STORAGE DLC）！';
   }
@@ -1614,7 +1620,7 @@ function renderV4Panels() {
   document.querySelectorAll('#wallMatBtns .hardscape-btn').forEach(b => {
     b.classList.toggle('active', b.dataset.wall === hs.wallMat);
   });
-  document.getElementById('btnTogglePartition')?.classList.toggle('active', Boolean(hs.partition));
+
   document.getElementById('btnTogglePillar')?.classList.toggle('active', Boolean(hs.pillar));
   document.getElementById('btnToggleWalkup')?.classList.toggle('active', Boolean(hs.walkup));
 
@@ -1878,6 +1884,7 @@ function renderV4Panels() {
         simState.v4Items = simState.v4Items.filter(i => i !== item.id);
         simState.flawedItems = (simState.flawedItems || []).filter(i => i !== item.id);
         const refund = simState.blindBoxItems?.includes(item.id) ? 18 : Math.round((isFlawed ? (item.usedPrice || item.price * 0.35) : item.price) * 0.5);
+        simState.blindBoxItems = (simState.blindBoxItems || []).filter(i => i !== item.id);
         simState.money += refund;
         playSimSound('tap');
         showSimMessage(`已售出「${item.name}」，退回 §${refund}。`);
@@ -1908,7 +1915,7 @@ function renderV4Panels() {
 // 4. Bind V4 Controls: Sliders, Hardscape, Shop, Scenarios, Path Check & Quote Export
 document.querySelectorAll('.shop-channel-btn').forEach(btn => {
   btn.addEventListener('click', () => {
-    document.querySelectorAll('.shop-channel-btn').forEach(b => b.classList.remove('active'));
+    document.querySelectorAll('.shop-channel-btn').forEach(b => { b.classList.remove('active'); b.setAttribute('aria-selected', String(b === btn)); });
     btn.classList.add('active');
     currentShopChannel = btn.dataset.channel;
     playSimSound('tap');
@@ -2349,7 +2356,7 @@ document.getElementById('simCamBlueprint')?.addEventListener('click', () => {
 // Pathfinding Circulation Check (🚶 動線測試：大門 -> 床 -> 書桌 -> 衛浴)
 document.getElementById('btnPathCheck')?.addEventListener('click', () => {
   const blockReason = isPathBlocked();
-  const tp = simState.trackPos || { work: 5.1 };
+  const tp = simState.trackPos || { work: 5.1 }; const { w: rW, d: rD } = getRoomDimensions(simState.profile?.area || 18);
   const waypoints = [
     { x: 0.85, y: 5.7, label: '玄關大門' },
     { x: 3.5, y: 4.5, label: '客廳走道' },
@@ -2359,7 +2366,7 @@ document.getElementById('btnPathCheck')?.addEventListener('click', () => {
   ];
   pathCheckAnim = {
     startAt: performance.now(),
-    waypoints,
+    waypoints: waypoints.map(w => ({ ...w, x: Math.min(w.x, rW - 0.75), y: Math.min(w.y, rD - 0.65) })),
     blocked: Boolean(blockReason),
     reason: blockReason
   };
@@ -2466,7 +2473,7 @@ function openQuoteModal() {
   const box = document.getElementById('simQuoteSummaryBox');
   if (box) {
     box.innerHTML = `
-      <div style="display:flex; justify-content:space-between; flex-wrap:wrap; gap:0.5rem; margin-bottom:0.65rem; font-size:0.8rem; color:#4b443b;">
+      <div style="display:flex; justify-content:space-between; flex-wrap:wrap; gap:0.5rem; margin-bottom:0.65rem; font-size:0.8rem; color:var(--text-secondary);">
         <span>📐 <strong>格局規模：</strong>${simState.profile.area} 坪 (${simState.hardscape.shape === 'lshape' ? 'L型畸零格局' : simState.hardscape.shape === 'balcony' ? '陽台外推格局' : '標準矩形'})</span>
         <span>🏆 <strong>空間綜合評分：</strong><strong style="color:#527464;">${getSpaceScore()} 分</strong></span>
         <span>✨ <strong>觸發 Combo：</strong><strong style="color:#d97706;">${comboStr}</strong></span>
@@ -2476,17 +2483,17 @@ function openQuoteModal() {
           <tr><th>分類</th><th>項目名稱</th><th>備註說明</th><th>估值 (§)</th></tr>
         </thead>
         <tbody>
-          ${rows.map(r => `<tr><td>${r.cat}</td><td><strong>${r.name}</strong></td><td>${r.note}</td><td>§ ${r.cost}</td></tr>`).join('')}
+          ${rows.map(r => { const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c])); return `<tr><td>${esc(r.cat)}</td><td><strong>${esc(r.name)}</strong></td><td>${esc(r.note)}</td><td>§ ${Number(r.cost) || 0}</td></tr>`; }).join('')}
         </tbody>
       </table>
       <div style="display:flex; justify-content:space-between; align-items:center; padding:0.65rem 0.85rem; background:#f5f1e8; border-radius:10px; font-size:0.85rem;">
         <span>🌱 <strong>ESG 循環減碳貢獻：</strong>累計減碳 ${simState.esgScore || 30} kg CO₂e</span>
-        <strong style="font-size:1.05rem; color:#98633f;">🧾 裝潢配置總估值：§ ${totalSpent}（剩餘可用預算 § ${simState.money}）</strong>
+        <strong style="font-size:1.05rem; color:var(--amber);">🧾 裝潢配置總估值：§ ${totalSpent}（剩餘可用預算 § ${simState.money}）</strong>
       </div>
     `;
   }
 
-  const qModal = document.getElementById('simQuoteModal'); if (qModal) { qModal.classList.add('open'); qModal.style.display = 'flex'; }
+  const qModal = document.getElementById('simQuoteModal'); if (qModal) { qModal.classList.add('open'); qModal.style.display = 'flex'; document.getElementById('btnCloseQuoteModal')?.focus(); }
   playSimSound('confirm');
 }
 
@@ -3264,7 +3271,7 @@ function runSelfCheck() {
   );
 
   // 9. Guided Walkthrough 180s Total Duration Invariant & Sandbox Budget Invariant
-  console.assert(V4_SCENARIOS.sandbox.budget === simDefaultState.money, 'SelfCheck: sandbox budget must match simDefaultState.money');
+  console.assert(V4_SCENARIOS.sandbox.budget === simDefaultState.money && window.simState === simState, 'SelfCheck: sandbox budget and window.simState sync must hold');
   console.assert(
     Array.isArray(guidedTourSteps) && guidedTourSteps.length === 6 && guidedTourSteps.reduce((acc, s) => acc + s.duration, 0) === 180,
     'SelfCheck: guidedTourSteps must total 180 seconds'
@@ -3591,7 +3598,7 @@ function jumpToTourStep(index) {
 
   // Update step navigation pills
   document.querySelectorAll('#tourStepsNav .tour-step-pill').forEach((pill, idx) => {
-    pill.classList.toggle('active', idx === index);
+    pill.classList.toggle('active', idx === index); pill.setAttribute('aria-selected', String(idx === index));
     pill.classList.toggle('completed', idx < index);
   });
 
@@ -3678,7 +3685,7 @@ document.getElementById('btnTourSpeed')?.addEventListener('click', () => {
 document.getElementById('btnTourSound')?.addEventListener('click', () => {
   tourSound = !tourSound;
   const soundBtn = document.getElementById('btnTourSound');
-  if (soundBtn) soundBtn.textContent = tourSound ? '🔊' : '🔇';
+  if (soundBtn) soundBtn.textContent = tourSound ? '🔊' : '🔇'; if (!tourSound) return;
   playSimSound('tap');
 });
 
@@ -3694,6 +3701,7 @@ document.querySelectorAll('#tourStepsNav .tour-step-pill').forEach(pill => {
 
 document.addEventListener('keydown', e => {
   if (!isTourActive) return;
+  if (e.key === 'Escape') { closeQuoteFn(); document.getElementById('simEventModal')?.classList.remove('open'); }
   if (e.target.matches('input, textarea, select')) return;
   if (e.code === 'Space') {
     e.preventDefault();
