@@ -109,8 +109,8 @@ html { scroll-behavior: smooth; font-size: 16px; overflow-x: clip; }
 
 body { overflow-x: hidden; line-height: 1.7; font-family: var(--font-sans); background: var(--dark-bg); color: var(--text-primary); letter-spacing: -0.008em; -webkit-font-smoothing: antialiased; }
 
-body::before { content: ''; position: fixed; inset: 0; pointer-events: none; z-index: -1; background-image: linear-gradient(to right, rgba(142, 91, 56, 0.03) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(142, 91, 56, 0.03) 1px, transparent 1px); background-size: 72px 72px; }
+body::before { content: ''; position: fixed; inset: 0; pointer-events: none; z-index: -1; background-image: linear-gradient(to right, rgba(142, 91, 56, 0.028) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(142, 91, 56, 0.028) 1px, transparent 1px); background-size: 72px 72px; }
 
 .nav-logo { font-variant-numeric: tabular-nums; text-decoration: none; display: inline-flex; align-items: center; gap: 0.55rem; font-size: 1.18rem; color: var(--text-primary); letter-spacing: 0.04em; }
 

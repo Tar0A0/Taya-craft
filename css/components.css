@@ -932,9 +932,9 @@ img {
 
 .sim-topbar-tool-btn { padding: 0.28rem 0.6rem; border-radius: 999px; border: 1px solid #dcd4c6; background: #ffffff; color: #524b42; font: inherit; font-size: 0.71rem; font-weight: 700; cursor: pointer; transition: all 0.15s ease; display: inline-flex; align-items: center; gap: 0.25rem; }
 
-.sim-topbar-tool-btn:hover { border-color: #0284c7; color: #0284c7; }
+.sim-topbar-tool-btn:hover { border-color: var(--teal); color: var(--teal); }
 
-.sim-topbar-tool-btn.active { background: #e0f2fe; border-color: #0284c7; color: #0369a1; }
+.sim-topbar-tool-btn.active { background: var(--teal-bg); border-color: var(--teal); color: var(--teal-dark); }
 
 .sim-bottom-dock { background: #fffefa; border: 2px solid #d5cab8; border-radius: 16px; box-shadow: 0 8px 24px rgba(65, 50, 35, 0.12); display: flex; flex-direction: column; overflow: hidden; margin-top: 0.65rem; transition: all 0.22s cubic-bezier(0.2, 0.8, 0.3, 1); }
 
@@ -962,7 +962,7 @@ img {
 
 .sim-dock-card { flex: 0 0 106px; height: 98px; background: #fffefa; border: 1.5px solid #dfd6c8; border-radius: 12px; padding: 0.35rem 0.3rem; display: flex; flex-direction: column; align-items: center; justify-content: space-between; cursor: pointer; position: relative; transition: all 0.16s ease; user-select: none; }
 
-.sim-dock-card:hover { border-color: #0284c7; transform: translateY(-2px); box-shadow: 0 4px 12px rgba(2, 132, 199, 0.18); }
+.sim-dock-card:hover { border-color: var(--amber); transform: translateY(-2px); box-shadow: 0 4px 12px rgba(142, 91, 56, 0.16); }
 
 .sim-dock-card.placed { border-color: var(--teal-light); background: #f2f7f4; }
 
@@ -1295,7 +1295,7 @@ img {
 
 .sim-cam-btn:hover { background: #fffefa; border-color: var(--amber); color: var(--amber); }
 
-.sim-cam-btn.active { box-shadow: 0 0 12px rgba(56, 189, 248, 0.45); background: var(--amber); border-color: var(--amber); color: #fffefa; }
+.sim-cam-btn.active { box-shadow: var(--shadow-sm); background: var(--amber); border-color: var(--amber); color: var(--card-bg); }
 
 .sim-interaction-prompt { font-size: 0.72rem; font-weight: 600; background: rgba(255, 254, 250, 0.9); backdrop-filter: blur(12px); border: 1px solid rgba(142, 91, 56, 0.18); border-radius: 999px; color: #463f37; padding: 0.35rem 0.85rem; box-shadow: var(--shadow-sm); }
 
@@ -1844,7 +1844,7 @@ textarea:focus-visible,
 .tour-progress-fill {
   height: 100%;
   width: 100%;
-  background: linear-gradient(90deg, #d97706, #10b981, #38bdf8);
+  background: linear-gradient(90deg, var(--amber), var(--teal), var(--green));
   transform-origin: left center;
   transition: transform 0.1s linear;
 }
@@ -3478,4 +3478,201 @@ textarea:focus-visible,
     font-size: 0.78rem;
     padding: 0.5rem 0.75rem;
   }
+}
+
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   6. MASTER.MD DESIGN SYSTEM UNIFICATION (Warm Japandi × Blueprint Precision)
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+/* Rule 1: Eliminate remaining hardcoded hex/neon colors outside 3D Canvas */
+.tour-card-metrics .metric-item {
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+}
+
+.tour-card-metrics .metric-item.highlight {
+  border-color: var(--green);
+  background: var(--green-bg);
+}
+
+.tour-spotlight-active {
+  box-shadow: 0 0 0 3px var(--amber), var(--shadow-lg) !important;
+}
+
+@keyframes tourChartGlow {
+  0% { filter: drop-shadow(0 0 2px rgba(142, 91, 56, 0.35)); }
+  100% { filter: drop-shadow(0 0 8px rgba(142, 91, 56, 0.75)); }
+}
+
+.sim-dock-funds {
+  color: var(--green-dark);
+  background: var(--green-bg);
+  border-color: var(--green);
+}
+
+.sim-dock-card-price {
+  color: var(--amber-dark);
+  background: var(--amber-bg);
+  border-color: var(--amber-border);
+}
+
+.sim-dock-card.placed {
+  border-color: var(--teal);
+  background: var(--teal-bg);
+}
+
+.sim-dock-card.placed .sim-dock-card-price {
+  color: var(--green-dark);
+  background: var(--green-bg);
+  border-color: var(--green);
+}
+
+/* Rule 2: Strict 3-Font System (--font-display, --font-sans, --font-mono) */
+.section-title .title-heavy,
+.hero-tagline,
+.concept-intro .big-quote,
+.insight-quote p,
+.core-problem p {
+  font-family: var(--font-display);
+}
+
+.step-box h3,
+.problem-showcase-grid .pain-tag,
+.blueprint-phase-title {
+  font-family: var(--font-sans);
+}
+
+.section-tag,
+.blueprint-phase-num,
+.arch-card-layer,
+.hero-spec-item strong,
+.tour-step-pill .step-num,
+.tour-timer-box,
+.partition-dim-badge,
+.sim-dock-funds,
+.sim-dock-card-price {
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
+}
+
+.section-desc,
+.vr-text p,
+.track-info p,
+.circular-info p,
+.concept-intro p:not(.big-quote) {
+  line-height: 1.75;
+  max-width: 68ch;
+}
+
+/* Rule 4: Unified Component Families (Card, Modal, Primary/Secondary Button, Pill, Tab, Badge) */
+.dlc-card,
+.pain-card,
+.arch-card,
+.blueprint-card,
+.calc-card,
+.ba-compare-card,
+.unlock-card {
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-md);
+}
+
+.dlc-card:hover,
+.pain-card:hover,
+.arch-card:hover,
+.blueprint-card:hover,
+.calc-card:hover,
+.ba-compare-card:hover,
+.unlock-card:hover {
+  border-color: var(--amber-border);
+  box-shadow: var(--shadow-lg);
+}
+
+.sim-event-card,
+.sim-quote-dialog,
+.tour-presenter-card {
+  background: var(--card-bg);
+  border: 1.5px solid var(--amber);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-lg);
+}
+
+.age-tab.active,
+.calc-btn.active,
+.shop-channel-btn.active,
+.hardscape-btn.active {
+  background: var(--amber);
+  border-color: var(--amber);
+  color: var(--card-bg);
+}
+
+/* Rule 5: Gallery Mat Photo Framing (#FFFEFA background, 8px padding, 1px solid #E2D9CC) */
+.hero-showcase-frame,
+.insight-image,
+.vr-feature img,
+.track-system img,
+.circular-economy img {
+  background: var(--card-bg);
+  padding: 8px;
+  border: 1px solid var(--card-border);
+}
+
+/* Rule 7: Unified 200ms cubic-bezier(0.16, 1, 0.3, 1) Micro-Interactions */
+.nav-links a,
+.hero-cta,
+.hero-cta-secondary,
+.hero-cta-tour,
+.next-step-primary,
+.next-step-secondary,
+.sim-controls button,
+.sim-stage-btn,
+.sim-deck-tab,
+.sim-action,
+.hardscape-btn,
+.shop-channel-btn,
+.shop-cat-pill,
+.shop-buy-btn,
+.dlc-pill-btn,
+.sim-tool-pill,
+.sim-topbar-tool-btn,
+.sim-dock-cat-btn,
+.sim-dock-card,
+.sim-cmp-btn,
+.sim-cam-btn,
+.circular-btn,
+.sync-calc-btn,
+.calc-btn,
+.age-tab,
+.snap-sim-btn,
+.snap-view-btn,
+.ba-quick-btn,
+.insight-to-game-btn {
+  transition:
+    transform 200ms cubic-bezier(0.16, 1, 0.3, 1),
+    background-color 200ms cubic-bezier(0.16, 1, 0.3, 1),
+    border-color 200ms cubic-bezier(0.16, 1, 0.3, 1),
+    color 200ms cubic-bezier(0.16, 1, 0.3, 1),
+    box-shadow 200ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Rule 8: Accessibility — Visible :focus-visible & Comfortable Touch Targets */
+:where(a, button, input, select, summary, [tabindex]:not([tabindex="-1"])):focus-visible {
+  outline: 2px solid var(--amber);
+  outline-offset: 2px;
+}
+
+.hero-cta,
+.hero-cta-secondary,
+.hero-cta-tour,
+.next-step-primary,
+.next-step-secondary,
+.age-tab,
+.calc-btn,
+.sim-stage-btn,
+.sim-deck-tab,
+.insight-to-game-btn,
+.btn-sync-calc-sim {
+  min-height: 44px;
 }

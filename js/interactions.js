@@ -1607,7 +1607,7 @@ function renderV4Panels() {
   const scenBadge = document.getElementById('scenarioStatusBadge');
   if (scenBadge) {
     scenBadge.textContent = allDone ? '🎉 委託達標！' : '進行中';
-    scenBadge.style.color = allDone ? '#15803d' : '#98633f';
+    scenBadge.style.color = allDone ? 'var(--green)' : 'var(--amber)';
   }
 
   // C. Hardscape & MEP Status
@@ -1733,7 +1733,7 @@ function renderV4Panels() {
   }
   if (mepBadge) {
     mepBadge.textContent = mep.ok ? '⚡ 供電完美' : `⚠️ 扣減 ${mep.penalty} 分`;
-    mepBadge.style.color = mep.ok ? '#527464' : '#b45309';
+    mepBadge.style.color = mep.ok ? 'var(--teal)' : 'var(--amber-dark)';
   }
   const racewayBtn = document.getElementById('btnBuyCableRaceway');
   if (racewayBtn) {
@@ -2475,8 +2475,8 @@ function openQuoteModal() {
     box.innerHTML = `
       <div style="display:flex; justify-content:space-between; flex-wrap:wrap; gap:0.5rem; margin-bottom:0.65rem; font-size:0.8rem; color:var(--text-secondary);">
         <span>📐 <strong>格局規模：</strong>${simState.profile.area} 坪 (${simState.hardscape.shape === 'lshape' ? 'L型畸零格局' : simState.hardscape.shape === 'balcony' ? '陽台外推格局' : '標準矩形'})</span>
-        <span>🏆 <strong>空間綜合評分：</strong><strong style="color:#527464;">${getSpaceScore()} 分</strong></span>
-        <span>✨ <strong>觸發 Combo：</strong><strong style="color:#d97706;">${comboStr}</strong></span>
+        <span>🏆 <strong>空間綜合評分：</strong><strong style="color:var(--teal);">${getSpaceScore()} 分</strong></span>
+        <span>✨ <strong>觸發 Combo：</strong><strong style="color:var(--amber);">${comboStr}</strong></span>
       </div>
       <table class="sim-quote-table">
         <thead>
@@ -2486,7 +2486,7 @@ function openQuoteModal() {
           ${rows.map(r => { const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c])); return `<tr><td>${esc(r.cat)}</td><td><strong>${esc(r.name)}</strong></td><td>${esc(r.note)}</td><td>§ ${Number(r.cost) || 0}</td></tr>`; }).join('')}
         </tbody>
       </table>
-      <div style="display:flex; justify-content:space-between; align-items:center; padding:0.65rem 0.85rem; background:#f5f1e8; border-radius:10px; font-size:0.85rem;">
+      <div style="display:flex; justify-content:space-between; align-items:center; padding:0.65rem 0.85rem; background:var(--surface); border-radius:10px; font-size:0.85rem;">
         <span>🌱 <strong>ESG 循環減碳貢獻：</strong>累計減碳 ${simState.esgScore || 30} kg CO₂e</span>
         <strong style="font-size:1.05rem; color:var(--amber);">🧾 裝潢配置總估值：§ ${totalSpent}（剩餘可用預算 § ${simState.money}）</strong>
       </div>
@@ -2690,7 +2690,7 @@ function renderSimDockShelf(cat = currentDockCat, query = currentDockSearch) {
 
   shelf.innerHTML = '';
   if (filtered.length === 0) {
-    shelf.innerHTML = '<div style="font-size:0.75rem; color:#8c8274; padding:1.2rem; text-align:center; width:100%;">未找到相符的家具或模組</div>';
+    shelf.innerHTML = '<div style="font-size:0.75rem; color:var(--text-muted); padding:1.2rem; text-align:center; width:100%;">未找到相符的家具或模組</div>';
     return;
   }
 
@@ -2707,8 +2707,8 @@ function renderSimDockShelf(cat = currentDockCat, query = currentDockSearch) {
     if (isDoorPartition) {
       priceBadgeText = pCfg.doorOpen ? '🚪 門已開 (點擊關門)' : '🔒 門已關 (點擊開門)';
       priceBadgeStyle = pCfg.doorOpen
-        ? 'color:#15803d; background:#dcfce7; border-color:#86efac; font-size:0.62rem; font-weight:800;'
-        : 'color:#b45309; background:#fef3c7; border-color:#fde68a; font-size:0.62rem; font-weight:800;';
+        ? 'color:var(--green-dark); background:var(--green-bg); border-color:var(--green); font-size:0.62rem; font-weight:800;'
+        : 'color:var(--amber-dark); background:var(--amber-bg); border-color:var(--amber-border); font-size:0.62rem; font-weight:800;';
     }
 
     card.title = `${item.name}\n${item.desc}\n${placed ? (isDoorPartition ? '（點擊直接切換開門／關門，並可拖曳移位或按 R 旋轉）' : '（已放置於房間，點擊選取）') : `（點擊購買 §${item.price} 並放置）`}`;
