@@ -3006,9 +3006,10 @@ function gameFrameLoop(now) { if (!window._roomObs && typeof IntersectionObserve
   const nearObj = getNearestSceneObject();
   const promptEl = document.getElementById('simInteractionPrompt');
   if (promptEl) {
-    promptEl.textContent = nearObj
+    const s = nearObj
       ? `⚡ 按 E 或點擊互動：${nearObj.label}`
       : '💡 點擊 3D 家具模型自動尋路互動，或按 WASD／方向鍵移動';
+    if (promptEl.textContent !== s) promptEl.textContent = s;
   }
 
   try {

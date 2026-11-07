@@ -380,6 +380,22 @@ async function runE2ETests() {
     assert(quoteVisible, '點擊 #btnExportQuote 成功開啟 BOM 工程報價單視窗');
     await page.click('#btnCloseQuoteModal');
 
+    // 測試 G：驗證 loadSimState 對壞掉或舊版 localStorage 存檔的防禦清理邏輯
+    await page.evaluate(() => {
+      localStorage.setItem('tayacraft_sim_state_v2', '{"player":{"x":"abc"},"money":-5,"furniture":[1,null]}');
+    });
+    await page.reload({ waitUntil: 'load' });
+    const sanitizedState = await page.evaluate(() => ({
+      money: simState.money,
+      playerX: simState.player.x,
+      furnitureLen: Array.isArray(simState.furniture) ? simState.furniture.length : -1
+    }));
+    assert(
+      sanitizedState.money >= 0 && Number.isFinite(sanitizedState.playerX) && sanitizedState.furnitureLen === 0,
+      '讀取損毀 localStorage 存檔後自動清理還原安全數值 (money >= 0, player.x 有效, 非法家具過濾)',
+      JSON.stringify(sanitizedState)
+    );
+
     assert(
       pageErrors.length === 0,
       `頁面 JavaScript 執行階段無任何未捕捉錯誤 (Page Errors: ${pageErrors.length})`,

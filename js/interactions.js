@@ -3204,6 +3204,8 @@ document.querySelectorAll('.sim-stage-btn').forEach(btn => {
 const sections = document.querySelectorAll('section[id]');
 const navAnchors = document.querySelectorAll('.nav-links a:not(.nav-cta-pill)');
 window.addEventListener('scroll', () => {
+  if (window._navScrollRaf) return;
+  window._navScrollRaf = requestAnimationFrame(() => { window._navScrollRaf = 0; });
   let current = '';
   sections.forEach(sec => {
     if (window.scrollY >= sec.offsetTop - 140) current = sec.getAttribute('id');
