@@ -2431,20 +2431,6 @@ textarea:focus-visible,
 }
 
 /* 3. Warm Japandi Architectural Cards in Benefits Section */
-.benefits-grid .benefit-card {
-  background: var(--card-bg);
-  border: 1px solid var(--card-border);
-  border-radius: var(--radius-lg);
-  color: var(--text-primary);
-  box-shadow: var(--shadow-md);
-}
-
-.benefits-grid .benefit-card:hover {
-  transform: translateY(-4px);
-  border-color: var(--amber-border);
-  box-shadow: var(--shadow-lg);
-}
-
 .benefits-grid .benefit-card .benefit-icon {
   width: 46px;
   height: 46px;
@@ -2467,25 +2453,6 @@ textarea:focus-visible,
   background: var(--green-bg);
   border-color: var(--green-border);
   color: var(--green);
-}
-
-.benefits-grid .benefit-card:nth-child(1) .benefit-tag,
-.benefits-grid .benefit-card:nth-child(1) .stat-number {
-  color: var(--amber);
-}
-
-.benefits-grid .benefit-card:nth-child(2) .benefit-tag,
-.benefits-grid .benefit-card:nth-child(2) .stat-number {
-  color: var(--teal);
-}
-
-.benefits-grid .benefit-card:nth-child(3) .benefit-tag,
-.benefits-grid .benefit-card:nth-child(3) .stat-number {
-  color: var(--green);
-}
-
-.benefits-grid .benefit-card h4 {
-  color: var(--text-primary);
 }
 
 .benefits-grid .benefit-card .stat-number {

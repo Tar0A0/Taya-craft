@@ -3205,15 +3205,17 @@ const sections = document.querySelectorAll('section[id]');
 const navAnchors = document.querySelectorAll('.nav-links a:not(.nav-cta-pill)');
 window.addEventListener('scroll', () => {
   if (window._navScrollRaf) return;
-  window._navScrollRaf = requestAnimationFrame(() => { window._navScrollRaf = 0; });
-  let current = '';
-  sections.forEach(sec => {
-    if (window.scrollY >= sec.offsetTop - 140) current = sec.getAttribute('id');
+  window._navScrollRaf = requestAnimationFrame(() => {
+    window._navScrollRaf = 0;
+    let current = '';
+    sections.forEach(sec => {
+      if (window.scrollY >= sec.offsetTop - 140) current = sec.getAttribute('id');
+    });
+    navAnchors.forEach(a => {
+      a.classList.toggle('is-current', a.getAttribute('href') === '#' + current);
+    });
   });
-  navAnchors.forEach(a => {
-    a.classList.toggle('is-current', a.getAttribute('href') === '#' + current);
-  });
-});
+}, { passive: true });
 
 // ─── 9. PONYTAIL SELF-CHECK INVARIANT VERIFICATION ───
 function runSelfCheck() {

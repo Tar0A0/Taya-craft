@@ -140,10 +140,10 @@ test.describe('TAYACRAFT E2E 自動化測試套件', () => {
     await page.evaluate(async () => {
       const step = 450;
       for (let y = 0; y < document.body.scrollHeight; y += step) {
-        window.scrollTo(0, y);
+        window.scrollTo({ top: y, behavior: 'instant' });
         await new Promise(r => setTimeout(r, 50));
       }
-      window.scrollTo(0, 0);
+      window.scrollTo({ top: 0, behavior: 'instant' });
     });
     await page.waitForTimeout(500);
 
@@ -163,6 +163,19 @@ test.describe('TAYACRAFT E2E 自動化測試套件', () => {
     await expect(page.locator('#simQuoteModal')).toBeVisible();
     await page.click('#btnCloseQuoteModal');
     await page.waitForTimeout(150);
+
+    await page.evaluate(() => {
+      localStorage.setItem('tayacraft_sim_state_v2', '{"player":{"x":"abc"},"money":-5,"furniture":[1,null]}');
+    });
+    await page.reload({ waitUntil: 'load' });
+    const sanitized = await page.evaluate(() => ({
+      money: simState.money,
+      playerX: simState.player.x,
+      furnitureLen: Array.isArray(simState.furniture) ? simState.furniture.length : -1
+    }));
+    expect(sanitized.money).toBeGreaterThanOrEqual(0);
+    expect(Number.isFinite(sanitized.playerX)).toBe(true);
+    expect(sanitized.furnitureLen).toBe(0);
 
     expect(pageErrors).toHaveLength(0);
     expect(consoleErrors).toHaveLength(0);
